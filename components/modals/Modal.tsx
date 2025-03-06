@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -11,7 +12,17 @@ import { useEffect, useState } from "react";
  * @param onClose The useState hook that can change if the window is open or not
  * @returns
  */
-const Modal = ({ children }: { children: React.ReactNode }) => {
+const Modal = ({
+  children,
+  title,
+  backButton,
+  route,
+}: {
+  children: React.ReactNode;
+  title?: string;
+  backButton?: boolean;
+  route?: string;
+}) => {
   // The router hooks to handle the navigation
   const router = useRouter();
 
@@ -32,10 +43,36 @@ const Modal = ({ children }: { children: React.ReactNode }) => {
       <div className="relative p-4 container max-h-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
         <div className="relative bg-white rounded-lg shadow-md border border-neutral-300">
           {/** This is the header of the modal window which has a close button that changes the states of the modal window */}
-          <div className="flex items-center justify-between pt-4 pr-4 md:pr-5 md:pt-5 rounded-t">
+          <div className="grid grid-cols-3 items-center pt-4 px-4 md:px-5 md:pt-8 md:pb-5 rounded-t">
+            {backButton && (
+              <button
+                onClick={() => router.push(`?modal=${route}`)}
+                className="text-black bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  className="size-6"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M15.75 19.5 8.25 12l7.5-7.5"
+                  />
+                </svg>
+              </button>
+            )}
+            {title && (
+              <div className="col-start-2 justify-self-center font-semibold text-2xl">
+                {title}
+              </div>
+            )}
             <button
               type="button"
-              className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+              className="col-start-3 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
               data-modal-hide="default-modal"
               onClick={handleClosing}
             >

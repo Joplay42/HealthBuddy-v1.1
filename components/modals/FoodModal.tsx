@@ -2,7 +2,7 @@ import { Modal, AddFood } from "@/components";
 
 const FoodModal = () => {
   return (
-    <Modal>
+    <Modal title="Add food +">
       <AddFood />
     </Modal>
   );

@@ -105,9 +105,6 @@ const NewFood = () => {
 
   return (
     <div className="py-5 px-4 lg:px-10">
-      <h1 className="font-semibold text-2xl text-center mb-4 xl:mb-10">
-        New food +
-      </h1>
       <form onSubmit={handleSubmit}>
         <div className="lg:grid grid-cols-2 gap-x-6">
           <div className="space-y-4 mt-6 lg:mt-10 flex flex-col">

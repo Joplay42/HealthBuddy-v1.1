@@ -63,7 +63,6 @@ const AddFood = () => {
 
   return (
     <div className="w-full p-5">
-      <h1 className="font-semibold text-2xl text-center mb-10">Add food +</h1>
       <SearchBar
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}

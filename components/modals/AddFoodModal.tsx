@@ -3,7 +3,7 @@ import { Modal, NewFood } from "@/components";
 
 const AddFoodModal = () => {
   return (
-    <Modal>
+    <Modal title="New food +" backButton={true} route="food">
       <NewFood />
     </Modal>
   );
