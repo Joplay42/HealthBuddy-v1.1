@@ -110,6 +110,7 @@ export type dashboardButtonProps = {
 };
 
 export type foodProps = {
+  UserId?: string;
   Id?: string;
   Pending?: boolean;
   Meal?: string;
@@ -268,12 +269,17 @@ export type newObjectiveProps = {
   userId: string;
 };
 
-export type pendingItemContextProps = {
+export type adminPendingItemContextProps = {
   pendingItem: foodProps[];
   loading: boolean;
   updatePendingItem: (updatedItem: foodProps) => void;
   changePendingItem: (updatedItem: foodProps) => void;
   deletePendingItem: (id: string) => void;
+};
+
+export type userPendingItemContextProps = {
+  pendingItem: foodProps[];
+  loading: boolean;
 };
 
 export type pendingItemProps = {

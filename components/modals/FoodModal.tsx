@@ -1,9 +1,12 @@
 import { Modal, AddFood } from "@/components";
+import { UserPendingItemProvider } from "@/context/UserPendingItemContext";
 
 const FoodModal = () => {
   return (
     <Modal title="Add food +">
-      <AddFood />
+      <UserPendingItemProvider>
+        <AddFood />
+      </UserPendingItemProvider>
     </Modal>
   );
 };

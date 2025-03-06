@@ -1,5 +1,5 @@
 "use client";
-import { usePendingItemContext } from "@/context/PendingItemContext";
+import { useAdminPendingItemContext } from "@/context/AdminPendingItemContext";
 import React from "react";
 import { PendingItemListSqueleton } from "@/components";
 import Item from "./Item";
@@ -13,7 +13,7 @@ const PendingItemList = () => {
     updatePendingItem,
     changePendingItem,
     deletePendingItem,
-  } = usePendingItemContext();
+  } = useAdminPendingItemContext();
 
   if (loading) {
     return <PendingItemListSqueleton />;

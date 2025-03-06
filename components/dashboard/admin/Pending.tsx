@@ -1,4 +1,4 @@
-import { PendingItemProvider } from "@/context/PendingItemContext";
+import { AdminPendingItemProvider } from "@/context/AdminPendingItemContext";
 import React from "react";
 import { PendingItemList } from "@/components";
 
@@ -18,9 +18,9 @@ const Pending = () => {
           <h1 className="font-bold text-xl">Pending items</h1>
         </div>
         <div className="bg-white p-5 rounded-3xl border border-neutral-400">
-          <PendingItemProvider>
+          <AdminPendingItemProvider>
             <PendingItemList />
-          </PendingItemProvider>
+          </AdminPendingItemProvider>
         </div>
       </div>
     </>

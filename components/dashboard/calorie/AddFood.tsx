@@ -1,5 +1,10 @@
 "use client";
-import { FoodItemCard, FoodItemCardSqueleton, SearchBar } from "@/components";
+import {
+  DisplayPendingItemList,
+  FoodItemCard,
+  FoodItemCardSqueleton,
+  SearchBar,
+} from "@/components";
 import { foodProps } from "@/types";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -81,6 +86,12 @@ const AddFood = () => {
         New food +
       </button>
       <div className="mt-10">
+        <DisplayPendingItemList />
+        {foodList && (
+          <h4 className="font-bold text-lg text-neutral-500 my-4">
+            Results ({foodList.length})
+          </h4>
+        )}
         {loading && <FoodItemCardSqueleton />}
         {!error ? (
           foodList?.map((item, index) => (

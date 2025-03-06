@@ -1,12 +1,15 @@
 "use client";
+import { useFirebaseAuth } from "@/context/UserContext";
 import { foodProps } from "@/types";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, useEffect, useState } from "react";
 
 const NewFood = () => {
+  const user = useFirebaseAuth();
   // States for the new foodItem
   const [foodItem, setFoodItem] = useState<Partial<foodProps>>({
+    UserId: user?.uid,
     Name: "",
     Brand: "",
     Quantity: 0,
@@ -48,12 +51,7 @@ const NewFood = () => {
       }
 
       // Closing the modal when the operation is done
-      // Get the current params
-      const currentParams = new URLSearchParams(window.location.search);
-      // Delete the current param
-      currentParams.delete("modal");
-      // Push the router to the route without params
-      router.replace(window.location.pathname);
+      router.push("?modal=food");
     } catch (error: any) {
       console.error(error.message);
     } finally {

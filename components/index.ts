@@ -67,6 +67,7 @@ import Item from "./dashboard/admin/Item";
 import PendingItemListSqueleton from "./Squeleton/PendingItemListSqueleton";
 import AddFoodModal from "./modals/AddFoodModal";
 import NewFood from "./dashboard/calorie/NewFood";
+import DisplayPendingItemList from "./dashboard/calorie/DisplayPendingItemList";
 
 export {
   HeaderPage,
@@ -131,4 +132,5 @@ export {
   PendingItemListSqueleton,
   AddFoodModal,
   NewFood,
+  DisplayPendingItemList,
 };

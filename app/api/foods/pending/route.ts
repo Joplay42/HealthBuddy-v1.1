@@ -41,6 +41,7 @@ export const PATCH = async (request: Request) => {
       // Handle the update
       const updatedItem = updateDoc(docRef, {
         Pending: deleteField(),
+        UserId: deleteField(),
       });
 
       return NextResponse.json(
@@ -65,7 +66,17 @@ export const POST = async (request: Request) => {
   try {
     // Get the updated Item
     const body = await request.json();
-    const { Name, Brand, Quantity, Unit, Calories, Protein, Carbs, Fat } = body;
+    const {
+      UserId,
+      Name,
+      Brand,
+      Quantity,
+      Unit,
+      Calories,
+      Protein,
+      Carbs,
+      Fat,
+    } = body;
 
     // Error handling
     if (!body || Object.keys(body).length === 0) {
@@ -88,6 +99,7 @@ export const POST = async (request: Request) => {
     const collectionRef = collection(db, "FoodApiCollection");
     // Add the object to the database
     const newDoc = await addDoc(collectionRef, {
+      UserId: UserId,
       Brand: Brand,
       Name: Name,
       Quantity: Quantity,

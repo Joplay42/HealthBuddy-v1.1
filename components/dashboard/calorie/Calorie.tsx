@@ -1,7 +1,6 @@
 "use client";
 import { FoodEntries, Objective, Overview } from "@/components";
 import { useUserInformationContext } from "@/context/UserInformationContext";
-import NoObjective from "./NoObjective";
 import { UserConsumedFoodProvider } from "@/context/UserConsumedFoodContext";
 import { useRouter } from "next/navigation";
 

@@ -1,6 +1,6 @@
 "use client";
 import { db } from "@/config/firebase";
-import { foodProps, pendingItemContextProps } from "@/types";
+import { adminPendingItemContextProps, foodProps } from "@/types";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import {
   createContext,
@@ -11,16 +11,21 @@ import {
 } from "react";
 
 // The context creation
-export const PendingItemContext = createContext<pendingItemContextProps>({
-  pendingItem: [],
-  loading: true,
-  updatePendingItem: () => {},
-  changePendingItem: () => {},
-  deletePendingItem: () => {},
-});
+export const AdminPendingItemContext =
+  createContext<adminPendingItemContextProps>({
+    pendingItem: [],
+    loading: true,
+    updatePendingItem: () => {},
+    changePendingItem: () => {},
+    deletePendingItem: () => {},
+  });
 
 // The provider creation with a children attribute
-export const PendingItemProvider = ({ children }: { children: ReactNode }) => {
+export const AdminPendingItemProvider = ({
+  children,
+}: {
+  children: ReactNode;
+}) => {
   // The pendingItem list states
   const [pendingItem, setPendingItem] = useState<foodProps[]>([]);
   //The loading states
@@ -88,7 +93,7 @@ export const PendingItemProvider = ({ children }: { children: ReactNode }) => {
 
   // return a provider
   return (
-    <PendingItemContext.Provider
+    <AdminPendingItemContext.Provider
       value={{
         pendingItem,
         loading,
@@ -98,10 +103,10 @@ export const PendingItemProvider = ({ children }: { children: ReactNode }) => {
       }}
     >
       {children}
-    </PendingItemContext.Provider>
+    </AdminPendingItemContext.Provider>
   );
 };
 
-export function usePendingItemContext() {
-  return useContext(PendingItemContext);
+export function useAdminPendingItemContext() {
+  return useContext(AdminPendingItemContext);
 }
