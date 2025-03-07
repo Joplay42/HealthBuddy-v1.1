@@ -10,7 +10,7 @@ const FoodItemCard = ({ food }: foodItemCardProps) => {
   // Router hooks to handle navigation
   const router = useRouter();
   // Fetch the user
-  const user = useFirebaseAuth();
+  const { user, isAdmin } = useFirebaseAuth();
 
   // States for the multiplier
   const [multiplier, setMultiplier] = useState(1);

@@ -16,7 +16,7 @@ const SetObjective = () => {
   const router = useRouter();
 
   // Get the userId to set the objective
-  const user = useFirebaseAuth();
+  const { user, isAdmin } = useFirebaseAuth();
   const userId = user?.uid;
 
   // Managing the button loading stats

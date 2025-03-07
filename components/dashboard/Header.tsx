@@ -13,7 +13,7 @@ import { useRouter } from "next/navigation";
  */
 const Header = () => {
   // The context to get the currentUser
-  const user = useFirebaseAuth();
+  const { user, isAdmin } = useFirebaseAuth();
 
   // Create router hooks
   const router = useRouter();
