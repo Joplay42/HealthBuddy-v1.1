@@ -1,10 +1,5 @@
 import { auth, db } from "@/config/firebase";
-import { userProps } from "@/types";
-import {
-  createUserWithEmailAndPassword,
-  updateProfile,
-  User,
-} from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { NextResponse } from "next/server";
 

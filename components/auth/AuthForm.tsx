@@ -5,6 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { createUser, loginUser } from "@/utils";
 import { useRouter } from "next/navigation";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "@/config/firebase";
 
 const AuthForm = ({ type }: authFormProps) => {
   // Set all the hooks for the form attributes
@@ -42,13 +44,21 @@ const AuthForm = ({ type }: authFormProps) => {
     if (type == "signin") {
       // Handle the signin errors
       try {
-        // Create a new user
-        await createUser({
-          firstName,
-          lastName,
-          email,
-          password,
+        const res = await fetch("/api/users", {
+          method: "POST",
+          body: JSON.stringify({
+            firstName,
+            lastName,
+            email,
+            password,
+          }),
         });
+
+        // Store the data
+        const data = await res.json();
+        if (!res.ok) {
+          throw new Error(data.error);
+        }
 
         // Set the default value
         setFirstName("");
@@ -58,6 +68,9 @@ const AuthForm = ({ type }: authFormProps) => {
 
         // Turn the loading animation off
         setLoading(false);
+
+        // Sign in the user
+        await signInWithEmailAndPassword(auth, email, password);
 
         // Make a new route
         router.push("/dashboard");
