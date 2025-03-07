@@ -9,14 +9,10 @@ import {
   foodProps,
   userCalorieProps,
   userInformationContextProps,
-  foodListProps,
   objectiveProps,
   newObjectiveProps,
-  foodItem,
-  foodItemConsumed,
 } from "@/types";
 import { auth, db } from "@/config/firebase";
-import { client } from "@/config/algolia";
 import {
   createUserWithEmailAndPassword,
   updateProfile,
@@ -25,7 +21,6 @@ import {
   sendPasswordResetEmail,
   sendEmailVerification,
   deleteUser,
-  User,
 } from "firebase/auth";
 import {
   addDoc,

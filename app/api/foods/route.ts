@@ -1,7 +1,6 @@
 import { client } from "@/config/algolia";
 import { db } from "@/config/firebase";
 import { foodProps } from "@/types";
-import { createFood } from "@/utils";
 import { deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
 import { NextResponse } from "next/server";
 
