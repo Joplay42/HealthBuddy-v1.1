@@ -21,10 +21,17 @@ export const GET = async (request: Request) => {
     }
     // Use Algolia to search through the database
     const res = (await client.search({
-      requests: [{ indexName: "FoodApi", query: searchTerms }],
+      requests: [
+        {
+          indexName: "FoodApi",
+          query: searchTerms,
+        },
+      ],
     })) as { results: { hits: foodProps[] }[] };
 
-    const foodList = res.results[0].hits;
+    const foodList = res.results[0].hits.filter(
+      (item) => item.Pending === undefined
+    );
 
     // Manage if no result is found
     if (foodList.length === 0) {
