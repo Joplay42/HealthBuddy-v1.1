@@ -90,7 +90,7 @@ const SettingsCard = ({ card }: cardProps) => {
         scroll: false,
       });
     } else if (card.title == "Create food") {
-      const url = router.push("/dashboard/setting?modal=add", {
+      const url = router.push("/dashboard/setting?modal=addfood", {
         scroll: false,
       });
     }

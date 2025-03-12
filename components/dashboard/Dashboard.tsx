@@ -7,6 +7,7 @@ import {
   ObjectiveModals,
   AdminModal,
   AddFoodModal,
+  AddRecipeModal,
 } from "@/components";
 import { DashboardProps } from "@/types";
 import { FireBaseAuthProvider, useFirebaseAuth } from "@/context/UserContext";
@@ -25,7 +26,9 @@ const Dashboard = ({ children }: DashboardProps) => {
   const searchParams = useSearchParams();
   // Get the params
   const isFoodModalOpen = searchParams.get("modal") === "food";
-  const isAddFoodModalOpen = searchParams.get("modal") == "add";
+  const isRecipeModalOpen = searchParams.get("modal") === "recipe";
+  const isAddFoodModalOpen = searchParams.get("modal") == "addfood";
+  const isAddRecipeModalOpen = searchParams.get("modal") === "addrecipe";
   const isObjectiveModalOpen = searchParams.get("modal") === "objective";
   const isAdminModalOpen = searchParams.get("modal") == "admin";
 
@@ -47,9 +50,11 @@ const Dashboard = ({ children }: DashboardProps) => {
           </div>
           {/** Handle the foodMoal opening with url params */}
           {isFoodModalOpen && <FoodModal />}
+          {isRecipeModalOpen && <FoodModal />}
           {isObjectiveModalOpen && <ObjectiveModals />}
           {isAdminModalOpen && <AdminModal />}
           {isAddFoodModalOpen && <AddFoodModal />}
+          {isAddRecipeModalOpen && <AddRecipeModal />}
         </div>
       </UserInformationProvider>
     </FireBaseAuthProvider>

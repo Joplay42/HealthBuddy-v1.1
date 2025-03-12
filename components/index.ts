@@ -68,6 +68,10 @@ import PendingItemListSqueleton from "./Squeleton/PendingItemListSqueleton";
 import AddFoodModal from "./modals/AddFoodModal";
 import NewFood from "./dashboard/calorie/NewFood";
 import DisplayPendingItemList from "./dashboard/calorie/DisplayPendingItemList";
+import FoodModalNavigation from "./modals/FoodModalNavigation";
+import FoodSearch from "./modals/FoodSearch";
+import RecipeSearch from "./modals/RecipeSearch";
+import AddRecipeModal from "./modals/AddRecipeModal";
 
 export {
   HeaderPage,
@@ -133,4 +137,8 @@ export {
   AddFoodModal,
   NewFood,
   DisplayPendingItemList,
+  FoodModalNavigation,
+  FoodSearch,
+  RecipeSearch,
+  AddRecipeModal,
 };
