@@ -288,3 +288,8 @@ export type pendingItemProps = {
   onChange: (updatedItem: foodProps) => void;
   onDelete: () => void;
 };
+
+export type recipeProps = {
+  Name: string;
+  NbServing: number;
+};
