@@ -2,7 +2,13 @@
 import Image from "next/image";
 import React, { useState } from "react";
 
-const Final = () => {
+const Final = ({
+  index,
+  setIndex,
+}: {
+  index: number;
+  setIndex: React.Dispatch<React.SetStateAction<number>>;
+}) => {
   // Loading states
   const [loading, setLoading] = useState(false);
 
@@ -19,6 +25,7 @@ const Final = () => {
         className="mx-4 lg:mx-10 my-8 flex items-center gap-2 justify-center py-4 px-3 rounded-xl hover:opacity-75 hover:transition ease-in-out duration-300 bg-black text-white w-[95%] disabled:opacity-60"
         type="submit"
         disabled={loading}
+        onClick={() => setIndex(index++)}
       >
         Go back
         {loading && (

@@ -3,12 +3,17 @@ import { recipeProps } from "@/types";
 import Image from "next/image";
 import { ChangeEvent, useEffect, useState } from "react";
 
-const InitialForm = () => {
-  // States for  the recipe object
-  const [recipe, setRecipe] = useState<Partial<recipeProps>>({
-    Name: "",
-    NbServing: 0,
-  });
+const InitialForm = ({
+  index,
+  setIndex,
+  recipe,
+  setRecipe,
+}: {
+  index: number;
+  setIndex: React.Dispatch<React.SetStateAction<number>>;
+  recipe: recipeProps;
+  setRecipe: React.Dispatch<React.SetStateAction<recipeProps>>;
+}) => {
   //States for the error
   const [errors, setErrors] = useState<Partial<recipeProps>>();
   // The button states
@@ -16,8 +21,10 @@ const InitialForm = () => {
   // Button loading states
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = () => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     // TO DO
+    e.preventDefault();
+    setIndex(index++);
   };
 
   const handleChange = (
