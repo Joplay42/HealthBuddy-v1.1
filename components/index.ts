@@ -76,6 +76,7 @@ import InitialForm from "./modals/addRecipe/InitialForm";
 import SelectFood from "./modals/addRecipe/SelectFood";
 import FoodItem from "./modals/addRecipe/FoodItem";
 import FoodDesc from "./modals/addRecipe/FoodDesc";
+import Final from "./modals/addRecipe/Final";
 
 export {
   HeaderPage,
@@ -149,4 +150,5 @@ export {
   SelectFood,
   FoodItem,
   FoodDesc,
+  Final,
 };
