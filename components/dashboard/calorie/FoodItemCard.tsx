@@ -78,6 +78,8 @@ const FoodItemCard = ({ food }: foodItemCardProps) => {
           Protein={Math.round(food.Protein * multiplier) || 0}
           Carbs={Math.round(food.Carbs * multiplier) || 0}
           Fat={Math.round(food.Fat * multiplier) || 0}
+          size="h-20 w-auto"
+          fontSize="text-lg"
         />
         <p>Calories</p>
       </div>

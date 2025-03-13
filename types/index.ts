@@ -253,6 +253,8 @@ export type NutrientsChartsProps = {
   Protein: number;
   Carbs: number;
   Fat: number;
+  size: string;
+  fontSize: string;
 };
 
 export type userInformationContextProps = {

@@ -8,6 +8,8 @@ import {
   AdminModal,
   AddFoodModal,
   AddRecipeModal,
+  FoodItem,
+  FoodDesc,
 } from "@/components";
 import { DashboardProps } from "@/types";
 import { FireBaseAuthProvider, useFirebaseAuth } from "@/context/UserContext";
@@ -31,6 +33,10 @@ const Dashboard = ({ children }: DashboardProps) => {
   const isAddRecipeModalOpen = searchParams.get("modal") === "addrecipe";
   const isObjectiveModalOpen = searchParams.get("modal") === "objective";
   const isAdminModalOpen = searchParams.get("modal") == "admin";
+  // detect if a foodId Params is there
+  const foodIdParams = searchParams.get("Id");
+  const isFoodItemModalOpen =
+    typeof foodIdParams === "string" && foodIdParams.trim().length > 0;
 
   return (
     // The custom context to pass the user
@@ -55,6 +61,7 @@ const Dashboard = ({ children }: DashboardProps) => {
           {isAdminModalOpen && <AdminModal />}
           {isAddFoodModalOpen && <AddFoodModal />}
           {isAddRecipeModalOpen && <AddRecipeModal />}
+          {isFoodItemModalOpen && <FoodDesc Id={foodIdParams} />}
         </div>
       </UserInformationProvider>
     </FireBaseAuthProvider>

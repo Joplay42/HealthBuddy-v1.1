@@ -73,8 +73,9 @@ import FoodSearch from "./modals/FoodSearch";
 import RecipeSearch from "./modals/RecipeSearch";
 import AddRecipeModal from "./modals/AddRecipeModal";
 import InitialForm from "./modals/addRecipe/InitialForm";
-import { SelectFood } from "./modals/addRecipe/SelectFood";
-import FoodItem from "./modals/addRecipe/FoodList";
+import SelectFood from "./modals/addRecipe/SelectFood";
+import FoodItem from "./modals/addRecipe/FoodItem";
+import FoodDesc from "./modals/addRecipe/FoodDesc";
 
 export {
   HeaderPage,
@@ -147,4 +148,5 @@ export {
   InitialForm,
   SelectFood,
   FoodItem,
+  FoodDesc,
 };

@@ -208,6 +208,8 @@ const Item = ({ item, onApprove, onChange, onDelete }: pendingItemProps) => {
             Protein={foodItem.Protein}
             Carbs={foodItem.Carbs}
             Fat={foodItem.Fat}
+            size="h-20 w-auto"
+            fontSize="text-lg"
           />
         ) : (
           <input
