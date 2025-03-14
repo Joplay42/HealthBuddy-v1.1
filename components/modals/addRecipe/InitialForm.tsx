@@ -10,7 +10,7 @@ const InitialForm = ({
   setRecipe,
 }: {
   index: number;
-  setIndex: React.Dispatch<React.SetStateAction<number>>;
+  setIndex: (newIndex: number) => void;
   recipe: recipeProps;
   setRecipe: React.Dispatch<React.SetStateAction<recipeProps>>;
 }) => {
@@ -24,7 +24,7 @@ const InitialForm = ({
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     // TO DO
     e.preventDefault();
-    setIndex(index++);
+    setIndex(index + 1);
   };
 
   const handleChange = (

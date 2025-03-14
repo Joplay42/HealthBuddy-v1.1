@@ -46,7 +46,7 @@ const Modal = ({
           <div className="grid grid-cols-3 items-center pt-4 px-4 md:px-5 md:pt-8 md:pb-5 rounded-t">
             {backButton && (
               <button
-                onClick={() => router.push(`?modal=${route}`)}
+                onClick={() => router.back()}
                 className="text-black bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
               >
                 <svg

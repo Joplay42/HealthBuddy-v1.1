@@ -10,7 +10,7 @@ const RecipeSearch = () => {
       <button
         className="my-4 text-lg w-fit bg-black text-white px-4 py-3 rounded-2xl text-center hover:opacity-75 hover:cursor-pointer"
         onClick={() =>
-          router.push("?modal=addrecipe", {
+          router.push("?index=1", {
             scroll: false,
           })
         }

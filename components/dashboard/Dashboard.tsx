@@ -30,7 +30,7 @@ const Dashboard = ({ children }: DashboardProps) => {
   const isFoodModalOpen = searchParams.get("modal") === "food";
   const isRecipeModalOpen = searchParams.get("modal") === "recipe";
   const isAddFoodModalOpen = searchParams.get("modal") == "addfood";
-  const isAddRecipeModalOpen = searchParams.get("modal") === "addrecipe";
+  const isAddRecipeModalOpen = searchParams.get("index") === "1" || "2" || "3";
   const isObjectiveModalOpen = searchParams.get("modal") === "objective";
   const isAdminModalOpen = searchParams.get("modal") == "admin";
   // detect if a foodId Params is there

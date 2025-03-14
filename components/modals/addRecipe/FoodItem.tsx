@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import React from "react";
 
 const FoodItem = ({ style, food }: { style: string; food: foodProps }) => {
+  // Router hooks
   const router = useRouter();
 
   return (
