@@ -28,15 +28,10 @@ const Dashboard = ({ children }: DashboardProps) => {
   const searchParams = useSearchParams();
   // Get the params
   const isFoodModalOpen = searchParams.get("modal") === "food";
-  const isRecipeModalOpen = searchParams.get("modal") === "recipe";
   const isAddFoodModalOpen = searchParams.get("modal") == "addfood";
-  const isAddRecipeModalOpen = searchParams.get("index") === "1" || "2" || "3";
+  const isAddRecipeModalOpen = searchParams.get("modal") == "addrecipe";
   const isObjectiveModalOpen = searchParams.get("modal") === "objective";
   const isAdminModalOpen = searchParams.get("modal") == "admin";
-  // detect if a foodId Params is there
-  const foodIdParams = searchParams.get("Id");
-  const isFoodItemModalOpen =
-    typeof foodIdParams === "string" && foodIdParams.trim().length > 0;
 
   return (
     // The custom context to pass the user
@@ -56,12 +51,10 @@ const Dashboard = ({ children }: DashboardProps) => {
           </div>
           {/** Handle the foodMoal opening with url params */}
           {isFoodModalOpen && <FoodModal />}
-          {isRecipeModalOpen && <FoodModal />}
           {isObjectiveModalOpen && <ObjectiveModals />}
           {isAdminModalOpen && <AdminModal />}
           {isAddFoodModalOpen && <AddFoodModal />}
           {isAddRecipeModalOpen && <AddRecipeModal />}
-          {isFoodItemModalOpen && <FoodDesc Id={foodIdParams} />}
         </div>
       </UserInformationProvider>
     </FireBaseAuthProvider>

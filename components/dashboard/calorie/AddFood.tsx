@@ -72,7 +72,11 @@ const AddFood = () => {
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
         onSubmit={() => {
-          router.push(`?modal=food&search=${searchTerm}`);
+          if (searchTerm) {
+            router.push(`?modal=food&index=search&search=${searchTerm}`);
+          } else {
+            router.push("?modal=food&index=search");
+          }
         }}
       />
       <button

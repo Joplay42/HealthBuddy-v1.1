@@ -7,7 +7,7 @@ const FoodModalNavigation = ({
   setPage,
 }: {
   page: string;
-  setPage: Dispatch<SetStateAction<string>>;
+  setPage: (newIndex: string) => void;
 }) => {
   const router = useRouter();
 
@@ -15,9 +15,9 @@ const FoodModalNavigation = ({
     <div className="grid grid-cols-2 text-center text-neutral-600 text-xl font-semibold">
       <button
         className={`border border-neutral-200 py-6 ${
-          page === "food" && `bg-custom-green`
+          page === "search" && `bg-custom-green`
         }`}
-        onClick={() => router.push("?modal=food", { scroll: false })}
+        onClick={() => setPage("search")}
       >
         Search
       </button>
@@ -25,7 +25,7 @@ const FoodModalNavigation = ({
         className={`border border-neutral-200 py-6 ${
           page === "recipe" && `bg-custom-green`
         }`}
-        onClick={() => router.push("?modal=recipe", { scroll: false })}
+        onClick={() => setPage("recipe")}
       >
         My recipe
       </button>

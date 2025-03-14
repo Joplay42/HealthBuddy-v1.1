@@ -5,29 +5,32 @@ import {
   FoodSearch,
   RecipeSearch,
 } from "@/components";
-import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const FoodModal = () => {
-  // Search params hooks from next/navigation
+  // Hooks for the navigation
+  const pathName = usePathname();
   const searchParams = useSearchParams();
+  const router = useRouter();
   // Get the params
-  const modalParams = searchParams.get("modal");
+  const index = searchParams.get("index") || "search";
 
-  // States to handle the different page changes
-  const [page, setPage] = useState<string>("");
+  // Function to update the params state
+  const updateParams = (newIndex: string) => {
+    const params = new URLSearchParams(searchParams);
 
-  // UseEffect to update the ui with the params
-  useEffect(() => {
-    if (modalParams) {
-      setPage(modalParams);
-    }
-  }, [modalParams]);
+    // Set the new index
+    if (newIndex) params.set("index", newIndex);
+
+    // Redirect the route
+    router.replace(`${pathName}?${params.toString()}`, { scroll: false });
+  };
 
   return (
     <Modal title="Add food +">
-      <FoodModalNavigation page={page} setPage={setPage} />
-      {page === "food" ? <FoodSearch /> : <RecipeSearch />}
+      <FoodModalNavigation page={index} setPage={updateParams} />
+      {index === "search" && <FoodSearch />}
+      {index === "recipe" && <RecipeSearch />}
     </Modal>
   );
 };

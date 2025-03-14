@@ -4,15 +4,13 @@ import Image from "next/image";
 import { ChangeEvent, useEffect, useState } from "react";
 
 const InitialForm = ({
-  index,
-  setIndex,
   recipe,
   setRecipe,
+  setIndex,
 }: {
-  index: number;
-  setIndex: (newIndex: number) => void;
   recipe: recipeProps;
   setRecipe: React.Dispatch<React.SetStateAction<recipeProps>>;
+  setIndex: (newIndex: string) => void;
 }) => {
   //States for the error
   const [errors, setErrors] = useState<Partial<recipeProps>>();
@@ -24,7 +22,7 @@ const InitialForm = ({
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     // TO DO
     e.preventDefault();
-    setIndex(index + 1);
+    setIndex("2");
   };
 
   const handleChange = (
