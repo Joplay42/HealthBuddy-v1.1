@@ -3,14 +3,21 @@ import { foodProps } from "@/types";
 import { useRouter } from "next/navigation";
 import React from "react";
 
-const FoodItem = ({ style, food }: { style: string; food: foodProps }) => {
+const FoodItem = ({
+  style,
+  food,
+  action,
+}: {
+  style: string;
+  food: foodProps;
+  action: (id: string | undefined) => void;
+}) => {
   // Router hooks
   const router = useRouter();
 
   return (
     <div
-      onClick={() => router.push(`?Id=${food.Id}`, { scroll: false })}
-      className={`flex justify-between items-center py-6 px-4 lg:px-10 hover:cursor-pointer ${style}`}
+      className={`flex justify-between items-center py-6 px-4 lg:px-10 ${style}`}
     >
       <div>
         <h4 className="font-semibold text-xl">{food.Name}</h4>
@@ -20,11 +27,7 @@ const FoodItem = ({ style, food }: { style: string; food: foodProps }) => {
         </p>
       </div>
       <div className="flex space-x-2">
-        <button
-          onClick={() => {
-            /** TO DO */
-          }}
-        >
+        <button onClick={() => action(food.Id)}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -40,20 +43,28 @@ const FoodItem = ({ style, food }: { style: string; food: foodProps }) => {
             />
           </svg>
         </button>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth="1.5"
-          stroke="currentColor"
-          className="size-6"
+        <button
+          onClick={() =>
+            router.push(`?modal=addrecipe&index=2&id=${food.Id}`, {
+              scroll: false,
+            })
+          }
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="m8.25 4.5 7.5 7.5-7.5 7.5"
-          />
-        </svg>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth="1.5"
+            stroke="currentColor"
+            className="size-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="m8.25 4.5 7.5 7.5-7.5 7.5"
+            />
+          </svg>
+        </button>
       </div>
     </div>
   );

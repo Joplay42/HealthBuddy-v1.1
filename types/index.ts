@@ -112,6 +112,7 @@ export type dashboardButtonProps = {
 export type foodProps = {
   UserId?: string;
   Id?: string;
+  multiplier?: number;
   Pending?: boolean;
   Meal?: string;
   Name: string;

@@ -16,14 +16,6 @@ const InitialForm = ({
   const [errors, setErrors] = useState<Partial<recipeProps>>();
   // The button states
   const [buttonDisabled, setButtonDisabled] = useState(true);
-  // Button loading states
-  const [loading, setLoading] = useState(false);
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    // TO DO
-    e.preventDefault();
-    setIndex("2");
-  };
 
   const handleChange = (
     type: keyof recipeProps,
@@ -60,7 +52,7 @@ const InitialForm = ({
   }, [recipe]);
 
   return (
-    <form onSubmit={handleSubmit} className="py-5 px-4 lg:px-10">
+    <div className="py-5 px-4 lg:px-10">
       <div className="space-y-4 mt-6 lg:mt-10 flex flex-col">
         <label className="font-semibold text-lg">Name</label>
         <input
@@ -91,14 +83,12 @@ const InitialForm = ({
       <button
         className="my-8 flex items-center gap-2 justify-center py-4 px-3 rounded-xl hover:opacity-75 hover:transition ease-in-out duration-300 bg-black text-white w-full disabled:opacity-60"
         type="submit"
-        disabled={buttonDisabled || loading}
+        disabled={buttonDisabled}
+        onClick={() => setIndex("2")}
       >
         Next
-        {loading && (
-          <Image src="/loading.gif" width={35} height={35} alt="Loading gif" />
-        )}
       </button>
-    </form>
+    </div>
   );
 };
 
