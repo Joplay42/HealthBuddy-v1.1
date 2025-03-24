@@ -55,16 +55,15 @@ const SelectFood = ({
   const isSearching = searchParams.get("search");
 
   useEffect(() => {
+    // Function to find a food index in the list
+    const findFood = () => {
+      if (isDescription) {
+        const foundFood = foodList.find((food) => food.Id == isDescription);
+        if (foundFood) setFood(foundFood);
+      }
+    };
     findFood(); // Call findFood when the component mounts or when `isDescription` changes
   }, [isDescription, foodList]);
-
-  // Function to find a food index in the list
-  const findFood = () => {
-    if (isDescription) {
-      const foundFood = foodList.find((food) => food.Id == isDescription);
-      if (foundFood) setFood(foundFood);
-    }
-  };
 
   // Function to delete a food index in the list
   const deleteFood = (id: string | undefined) => {

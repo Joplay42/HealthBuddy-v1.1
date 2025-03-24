@@ -22,6 +22,11 @@ const FoodDesc = ({
   // Multiplier state
   const [multiplier, setMultiplier] = useState(food.multiplier ?? 1);
 
+  // UseEffect hooks to reset the multiplier when the food item changes
+  useEffect(() => {
+    setMultiplier(food.multiplier ?? 1);
+  }, [food]);
+
   // Handle multiplication
   const handleAmountChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newMultiplier = e.target.valueAsNumber;
@@ -31,7 +36,7 @@ const FoodDesc = ({
         ...prevFood,
         multiplier: newMultiplier,
         Quantity: (prevFood.Quantity / multiplier) * newMultiplier,
-        Calories: (prevFood.Calories / multiplier) * newMultiplier, // Normalize previous value
+        Calories: (prevFood.Calories / multiplier) * newMultiplier,
         Protein: (prevFood.Protein / multiplier) * newMultiplier,
         Carbs: (prevFood.Carbs / multiplier) * newMultiplier,
         Fat: (prevFood.Fat / multiplier) * newMultiplier,
@@ -94,7 +99,12 @@ const FoodDesc = ({
       <button
         onClick={() => {
           router.back();
-          if (food) update(food);
+          if (food) {
+            if (!food.multiplier) {
+              food.multiplier = 1;
+            }
+            update(food);
+          }
         }}
         className="mx-4 lg:mx-10 my-8 flex items-center gap-2 justify-center py-4 px-3 rounded-xl hover:opacity-75 hover:transition ease-in-out duration-300 bg-black text-white w-[95%] disabled:opacity-60"
         type="submit"
