@@ -77,6 +77,9 @@ import SelectFood from "./modals/addRecipe/SelectFood";
 import FoodItem from "./modals/addRecipe/FoodItem";
 import FoodDesc from "./modals/addRecipe/FoodDesc";
 import Final from "./modals/addRecipe/Final";
+import SearchFood from "./modals/addRecipe/SearchFood";
+import RecipeFoodItemCard from "./modals/addRecipe/RecipeFoodItemCard";
+import DisplayRecipePendingItemList from "./modals/addRecipe/DisplayRecipePendingItemList";
 
 export {
   HeaderPage,
@@ -151,4 +154,7 @@ export {
   FoodItem,
   FoodDesc,
   Final,
+  SearchFood,
+  RecipeFoodItemCard,
+  DisplayRecipePendingItemList,
 };

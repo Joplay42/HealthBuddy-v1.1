@@ -51,7 +51,7 @@ const NewFood = () => {
       }
 
       // Closing the modal when the operation is done
-      router.push("?modal=food&index=search");
+      router.back();
     } catch (error: any) {
       console.error(error.message);
     } finally {

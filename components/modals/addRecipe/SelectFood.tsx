@@ -1,9 +1,10 @@
 "use client";
-import { FoodDesc, FoodItem } from "@/components";
+import { FoodDesc, FoodItem, SearchFood } from "@/components";
 import { foodProps, recipeProps } from "@/types";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
+import { UserPendingItemProvider } from "@/context/UserPendingItemContext";
 
 const SelectFood = ({
   recipe,
@@ -15,30 +16,7 @@ const SelectFood = ({
   setIndex: (newIndex: string) => void;
 }) => {
   // States for the foodList item
-  const [foodList, setFoodList] = useState<foodProps[]>([
-    {
-      Id: "1",
-      Name: "Chicken",
-      Brand: "No Name",
-      Quantity: 100,
-      Unit: "g",
-      Calories: 230,
-      Protein: 45,
-      Carbs: 12,
-      Fat: 2,
-    },
-    {
-      Id: "2",
-      Name: "Beef",
-      Brand: "No Name",
-      Quantity: 200,
-      Unit: "g",
-      Calories: 600,
-      Protein: 67,
-      Carbs: 3,
-      Fat: 25,
-    },
-  ]);
+  const [foodList, setFoodList] = useState<foodProps[]>([]);
 
   // Single food item
   const [food, setFood] = useState<foodProps>({} as foodProps);
@@ -78,12 +56,19 @@ const SelectFood = ({
     );
   };
 
+  // Function to add food to list
+  const addFoodList = (food: foodProps) => {
+    setFoodList([...foodList, food]);
+  };
+
   return (
     <div className="py-5">
       {isDescription && food ? (
         <FoodDesc food={food} setFood={setFood} update={updateFoodItem} />
       ) : isSearching ? (
-        <h1>searching</h1>
+        <UserPendingItemProvider>
+          <SearchFood addFood={addFoodList} />
+        </UserPendingItemProvider>
       ) : (
         <>
           <button

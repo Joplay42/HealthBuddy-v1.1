@@ -22,8 +22,7 @@ const FoodItem = ({
       <div>
         <h4 className="font-semibold text-xl">{food.Name}</h4>
         <p>
-          {food.Quantity}
-          {food.Unit}, {food.Calories} calories
+          {food.Quantity} {food.Unit}, {food.Calories} calories
         </p>
       </div>
       <div className="flex space-x-2">
