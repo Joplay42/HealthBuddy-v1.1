@@ -80,6 +80,7 @@ import Final from "./modals/addRecipe/Final";
 import SearchFood from "./modals/addRecipe/SearchFood";
 import RecipeFoodItemCard from "./modals/addRecipe/RecipeFoodItemCard";
 import DisplayRecipePendingItemList from "./modals/addRecipe/DisplayRecipePendingItemList";
+import Summary from "./modals/addRecipe/Summary";
 
 export {
   HeaderPage,
@@ -157,4 +158,5 @@ export {
   SearchFood,
   RecipeFoodItemCard,
   DisplayRecipePendingItemList,
+  Summary,
 };

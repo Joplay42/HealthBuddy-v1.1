@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { SelectFood, InitialForm, Modal, Final } from "@/components";
+import { SelectFood, InitialForm, Modal, Final, Summary } from "@/components";
 import { recipeProps } from "@/types";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
@@ -27,15 +27,20 @@ const AddRecipeModal = () => {
   const [recipe, setRecipe] = useState<recipeProps>({
     Name: "",
     NbServing: 0,
+    foods: [],
   });
+
+  // UseEffect to on refresh restart the recipe
+  useEffect(() => {
+    if (!recipe.Name) {
+      // Redirect the route
+      router.push("?modal=addrecipe&index=1", { scroll: false });
+    }
+  }, [recipe, router]);
 
   return (
     <>
-      <Modal
-        title={recipe.Name || "New recipe + "}
-        backButton={true}
-        route="recipe"
-      >
+      <Modal title={"New recipe + "} backButton={true} route="recipe">
         {index === "1" && (
           <InitialForm
             recipe={recipe}
@@ -50,7 +55,14 @@ const AddRecipeModal = () => {
             setIndex={updateParams}
           />
         )}
-        {index === "3" && <Final />}
+        {index === "3" && (
+          <Summary
+            recipe={recipe}
+            setRecipe={setRecipe}
+            setIndex={updateParams}
+          />
+        )}
+        {index === "4" && <Final />}
       </Modal>
     </>
   );

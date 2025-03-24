@@ -295,4 +295,12 @@ export type pendingItemProps = {
 export type recipeProps = {
   Name: string;
   NbServing: number;
+  foods: foodProps[];
+};
+
+export type macronutrients = {
+  Calories: number;
+  Proteins: number;
+  Carbs: number;
+  Fat: number;
 };

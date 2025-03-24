@@ -570,3 +570,21 @@ export const setObjective = async ({
     );
   }
 };
+
+export const recipeTotalMacronutrients = (foods: foodProps[]) => {
+  let total = {
+    calories: 0,
+    proteins: 0,
+    carbs: 0,
+    fat: 0,
+  };
+
+  foods.map((item) => {
+    total.calories += item.Calories;
+    total.proteins += item.Protein;
+    total.carbs += item.Carbs;
+    total.fat += item.Fat;
+  });
+
+  return total;
+};
