@@ -3,7 +3,7 @@ import { FoodDesc, FoodItem } from "@/components";
 import { foodProps, recipeProps } from "@/types";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const SelectFood = ({
   recipe,
@@ -48,8 +48,11 @@ const SelectFood = ({
 
   // Get the current params using nextJs hooks
   const searchParams = useSearchParams();
+  // Router hooks
+  const router = useRouter();
   // Value to detect which page to display
   const isDescription = searchParams.get("id");
+  const isSearching = searchParams.get("search");
 
   useEffect(() => {
     findFood(); // Call findFood when the component mounts or when `isDescription` changes
@@ -80,9 +83,18 @@ const SelectFood = ({
     <div className="py-5">
       {isDescription && food ? (
         <FoodDesc food={food} setFood={setFood} update={updateFoodItem} />
+      ) : isSearching ? (
+        <h1>searching</h1>
       ) : (
         <>
-          <button className="mx-4 lg:mx-10 my-4 text-lg w-fit bg-black text-white px-4 py-3 rounded-2xl text-center hover:opacity-75 hover:cursor-pointer">
+          <button
+            className="mx-4 lg:mx-10 my-4 text-lg w-fit bg-black text-white px-4 py-3 rounded-2xl text-center hover:opacity-75 hover:cursor-pointer"
+            onClick={() =>
+              router.push(`?modal=addrecipe&index=2&search=true`, {
+                scroll: false,
+              })
+            }
+          >
             Select food
           </button>
 
