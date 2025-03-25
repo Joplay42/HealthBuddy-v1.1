@@ -5,6 +5,7 @@ import {
   FoodSearch,
   RecipeSearch,
 } from "@/components";
+import { UserRecipesProvider } from "@/context/UserRecipesContext";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const FoodModal = () => {
@@ -30,7 +31,11 @@ const FoodModal = () => {
     <Modal title="Add food +">
       <FoodModalNavigation page={index} setPage={updateParams} />
       {index === "search" && <FoodSearch />}
-      {index === "recipe" && <RecipeSearch />}
+      {index === "recipe" && (
+        <UserRecipesProvider>
+          <RecipeSearch />
+        </UserRecipesProvider>
+      )}
     </Modal>
   );
 };

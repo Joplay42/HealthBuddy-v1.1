@@ -21,6 +21,7 @@ export const POST = async (request: Request) => {
 
     // Check if some attributes are missing
     if (
+      !UserId ||
       !Name ||
       !NbServing ||
       !foods ||
@@ -36,12 +37,21 @@ export const POST = async (request: Request) => {
       );
     }
 
-    // Create a new collection in firebase
-    const collectionRef = collection(db, "UserRecipes");
-    // Add object to database
-    const docRef = doc(collectionRef, UserId);
+    // Create a new object to databases
+    const userRecipesRef = doc(db, "UserRecipes", UserId);
+    const recipesListRef = collection(userRecipesRef, "recipesList");
     // Set the doc with the recipe
-    await setDoc(docRef, body);
+    await addDoc(recipesListRef, {
+      UserId: UserId,
+      Brand: "Homemade",
+      Name: Name,
+      Quantity: 1,
+      Unit: "portion",
+      Calories: Math.round(macronutrients.Calories / NbServing),
+      Protein: Math.round(macronutrients.Protein / NbServing),
+      Carbs: Math.round(macronutrients.Carbs / NbServing),
+      Fat: Math.round(macronutrients.Fat / NbServing),
+    });
 
     return NextResponse.json(
       { message: "Item has beens added to the database" },

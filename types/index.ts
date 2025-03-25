@@ -293,7 +293,7 @@ export type pendingItemProps = {
 };
 
 export type recipeProps = {
-  UserId: string;
+  UserId: string | undefined;
   Name: string;
   NbServing: number;
   foods: foodProps[];
@@ -302,7 +302,7 @@ export type recipeProps = {
 
 export type macronutrients = {
   Calories: number;
-  Proteins: number;
+  Protein: number;
   Carbs: number;
   Fat: number;
 };

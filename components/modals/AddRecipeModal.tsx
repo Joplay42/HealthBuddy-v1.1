@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { SelectFood, InitialForm, Modal, Final, Summary } from "@/components";
 import { macronutrients, recipeProps } from "@/types";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useFirebaseAuth } from "@/context/UserContext";
 
 const AddRecipeModal = () => {
   // Hooks for the navigation
@@ -11,6 +12,9 @@ const AddRecipeModal = () => {
   const router = useRouter();
   // Get the params
   const index = searchParams.get("index") || "1";
+
+  // Get the current user
+  const { user, isAdmin } = useFirebaseAuth();
 
   // Function to update the params state
   const updateParams = (newIndex: string) => {
@@ -25,6 +29,7 @@ const AddRecipeModal = () => {
 
   // States for  the recipe object
   const [recipe, setRecipe] = useState<recipeProps>({
+    UserId: user?.uid,
     Name: "",
     NbServing: 0,
     foods: [],

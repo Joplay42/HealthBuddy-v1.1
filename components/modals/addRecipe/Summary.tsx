@@ -60,6 +60,24 @@ const Summary = ({
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
+    try {
+      const res = await fetch("/api/foods/recipes", {
+        method: "POST",
+        body: JSON.stringify(recipe),
+      });
+
+      // Store the data
+      const data = await res.json();
+      // Error handling
+      if (!res.ok) {
+        throw new Error(data.error);
+      }
+      setIndex("4");
+    } catch (error: any) {
+      console.error(error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -111,7 +129,7 @@ const Summary = ({
                         recipe.macronutrients.Calories / recipe.NbServing
                       )}
                       Protein={Math.round(
-                        recipe.macronutrients.Proteins / recipe.NbServing
+                        recipe.macronutrients.Protein / recipe.NbServing
                       )}
                       Carbs={Math.round(
                         recipe.macronutrients.Carbs / recipe.NbServing
@@ -132,7 +150,7 @@ const Summary = ({
                     <p>
                       <span className="font-semibold">
                         {Math.round(
-                          recipe.macronutrients.Proteins / recipe.NbServing
+                          recipe.macronutrients.Protein / recipe.NbServing
                         )}
                       </span>
                       g

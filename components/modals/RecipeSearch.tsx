@@ -1,8 +1,10 @@
 "use client";
-import { FoodItemCardSqueleton } from "@/components";
+import { DisplayRecipesList, FoodItemCardSqueleton } from "@/components";
+import { useUserRecipesContext } from "@/context/UserRecipesContext";
 import { useRouter } from "next/navigation";
 
 const RecipeSearch = () => {
+  // Router hooks
   const router = useRouter();
 
   return (
@@ -17,7 +19,7 @@ const RecipeSearch = () => {
       >
         New recipe +
       </button>
-      <FoodItemCardSqueleton />
+      <DisplayRecipesList />
     </div>
   );
 };
