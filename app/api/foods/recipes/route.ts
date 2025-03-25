@@ -1,4 +1,6 @@
+import { db } from "@/config/firebase";
 import { recipeProps } from "@/types";
+import { addDoc, collection, doc, setDoc } from "firebase/firestore";
 import { NextResponse } from "next/server";
 import macro from "styled-jsx/macro";
 
@@ -6,8 +8,9 @@ export const POST = async (request: Request) => {
   // Error handling
   try {
     // Get the body request
-    const body = await request.json();
-    const { Name, NbServing, foods, macronutrients }: recipeProps = body;
+    const body: recipeProps = await request.json();
+    const { UserId, Name, NbServing, foods, macronutrients }: recipeProps =
+      body;
 
     // Error handling
     if (!body || Object.keys(body).length === 0) {
@@ -32,6 +35,13 @@ export const POST = async (request: Request) => {
         { status: 400 }
       );
     }
+
+    // Create a new collection in firebase
+    const collectionRef = collection(db, "UserRecipes");
+    // Add object to database
+    const docRef = doc(collectionRef, UserId);
+    // Set the doc with the recipe
+    await setDoc(docRef, body);
 
     return NextResponse.json(
       { message: "Item has beens added to the database" },

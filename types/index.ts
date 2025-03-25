@@ -293,6 +293,7 @@ export type pendingItemProps = {
 };
 
 export type recipeProps = {
+  UserId: string;
   Name: string;
   NbServing: number;
   foods: foodProps[];
