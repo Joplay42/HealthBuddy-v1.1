@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { SelectFood, InitialForm, Modal, Final, Summary } from "@/components";
-import { recipeProps } from "@/types";
+import { macronutrients, recipeProps } from "@/types";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const AddRecipeModal = () => {
@@ -28,11 +28,12 @@ const AddRecipeModal = () => {
     Name: "",
     NbServing: 0,
     foods: [],
+    macronutrients: {} as macronutrients,
   });
 
   // UseEffect to on refresh restart the recipe
   useEffect(() => {
-    if (!recipe.Name) {
+    if (!recipe.NbServing) {
       // Redirect the route
       router.push("?modal=addrecipe&index=1", { scroll: false });
     }

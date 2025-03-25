@@ -11,6 +11,7 @@ import {
   userInformationContextProps,
   objectiveProps,
   newObjectiveProps,
+  macronutrients,
 } from "@/types";
 import { auth, db } from "@/config/firebase";
 import {
@@ -572,18 +573,18 @@ export const setObjective = async ({
 };
 
 export const recipeTotalMacronutrients = (foods: foodProps[]) => {
-  let total = {
-    calories: 0,
-    proteins: 0,
-    carbs: 0,
-    fat: 0,
+  let total: macronutrients = {
+    Calories: 0,
+    Proteins: 0,
+    Carbs: 0,
+    Fat: 0,
   };
 
   foods.map((item) => {
-    total.calories += item.Calories;
-    total.proteins += item.Protein;
-    total.carbs += item.Carbs;
-    total.fat += item.Fat;
+    total.Calories += item.Calories;
+    total.Proteins += item.Protein;
+    total.Carbs += item.Carbs;
+    total.Fat += item.Fat;
   });
 
   return total;

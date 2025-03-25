@@ -15,20 +15,11 @@ const Summary = ({
   setIndex: (newIndex: string) => void;
 }) => {
   //States for the error
-  const [errors, setErrors] = useState<Partial<foodProps>>();
+  const [errors, setErrors] = useState<Partial<recipeProps>>();
   // The button states
-  const [buttonDisabled, setButtonDisabled] = useState(true);
+  const [buttonDisabled, setButtonDisabled] = useState(false);
   // Button loading states
   const [loading, setLoading] = useState(false);
-  // Calculate the total macronutrient
-  const total = recipeTotalMacronutrients(recipe.foods);
-  // States for each macronutrients
-  const [macronutrients, setMacronutrients] = useState<macronutrients>({
-    Calories: Math.round(total.calories / recipe.NbServing),
-    Proteins: Math.round(total.proteins / recipe.NbServing),
-    Carbs: Math.round(total.carbs / recipe.NbServing),
-    Fat: Math.round(total.fat / recipe.NbServing),
-  });
 
   // Function to handle the form error
   const handleChange = (
@@ -57,9 +48,23 @@ const Summary = ({
     }
   };
 
+  useEffect(() => {
+    if (recipe.Name && recipe.NbServing) {
+      setButtonDisabled(false);
+    } else {
+      setButtonDisabled(true);
+    }
+  }, [recipe]);
+
+  // Function to handle the form submit
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+  };
+
   return (
     <div className="px-4 lg:px-10">
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="lg:grid grid-cols-2 gap-x-6">
           <div className="space-y-4 mt-6 lg:mt-10 flex flex-col">
             <label className="font-semibold text-lg">Name</label>
@@ -85,7 +90,7 @@ const Summary = ({
                 }
               }}
               className={`rounded-xl w-full ${
-                errors?.Name &&
+                errors?.NbServing &&
                 `border-red-500 focus:ring-red-500 focus:border-black`
               }`}
               placeholder="ex. 1"
@@ -102,10 +107,18 @@ const Summary = ({
                 <div className="space-y-4">
                   <div className="flex items-center space-x-4 justify-self-end sm:justify-self-auto">
                     <NutrientsCharts
-                      Calories={macronutrients.Calories}
-                      Protein={macronutrients.Proteins}
-                      Carbs={macronutrients.Carbs}
-                      Fat={macronutrients.Fat}
+                      Calories={Math.round(
+                        recipe.macronutrients.Calories / recipe.NbServing
+                      )}
+                      Protein={Math.round(
+                        recipe.macronutrients.Proteins / recipe.NbServing
+                      )}
+                      Carbs={Math.round(
+                        recipe.macronutrients.Carbs / recipe.NbServing
+                      )}
+                      Fat={Math.round(
+                        recipe.macronutrients.Fat / recipe.NbServing
+                      )}
                       size="h-28 w-28"
                       fontSize="text-2xl"
                     />
@@ -118,7 +131,9 @@ const Summary = ({
                     <h3 className="font-bold text-[#AFF921]">Protein</h3>
                     <p>
                       <span className="font-semibold">
-                        {macronutrients.Proteins}
+                        {Math.round(
+                          recipe.macronutrients.Proteins / recipe.NbServing
+                        )}
                       </span>
                       g
                     </p>
@@ -127,7 +142,9 @@ const Summary = ({
                     <h3 className="font-bold text-[#73af00]">Carbs</h3>
                     <p>
                       <span className="font-semibold">
-                        {macronutrients.Carbs}
+                        {Math.round(
+                          recipe.macronutrients.Carbs / recipe.NbServing
+                        )}
                       </span>
                       g
                     </p>
@@ -136,7 +153,9 @@ const Summary = ({
                     <h3 className="font-bold text-[#d7ff8a]">Fat</h3>
                     <p>
                       <span className="font-semibold">
-                        {macronutrients.Fat}
+                        {Math.round(
+                          recipe.macronutrients.Fat / recipe.NbServing
+                        )}
                       </span>
                       g
                     </p>
@@ -158,18 +177,22 @@ const Summary = ({
             </div>
           </div>
         </div>
+        <button
+          className=" my-10 flex items-center gap-2 justify-center py-4 px-3 rounded-xl hover:opacity-75 hover:transition ease-in-out duration-300 bg-black text-white w-full disabled:opacity-60"
+          type="submit"
+          disabled={buttonDisabled || loading}
+        >
+          Create a recipe
+          {loading && (
+            <Image
+              src="/loading.gif"
+              width={35}
+              height={35}
+              alt="Loading gif"
+            />
+          )}
+        </button>
       </form>
-      <button
-        className=" my-10 flex items-center gap-2 justify-center py-4 px-3 rounded-xl hover:opacity-75 hover:transition ease-in-out duration-300 bg-black text-white w-full disabled:opacity-60"
-        type="submit"
-        disabled={loading}
-        onClick={() => setIndex("4")}
-      >
-        Create a recipe
-        {loading && (
-          <Image src="/loading.gif" width={35} height={35} alt="Loading gif" />
-        )}
-      </button>
     </div>
   );
 };

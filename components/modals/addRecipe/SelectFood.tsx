@@ -50,13 +50,18 @@ const SelectFood = ({
     } else {
       setDisabled(true);
     }
-
-    // Calculate the total macronutrient
-    const total = recipeTotalMacronutrients(recipe.foods);
-    setCaloriesPerPortions(Math.round(total.calories / recipe.NbServing));
-
     findFood(); // Call findFood when the component mounts or when `isDescription` changes
   }, [isDescription, recipe]);
+
+  // Update the total macronutrients of the recipe
+  useEffect(() => {
+    // Calculate the total macronutrient
+    const total = recipeTotalMacronutrients(recipe.foods);
+    setRecipe((prevItem) => ({
+      ...prevItem,
+      macronutrients: total,
+    }));
+  }, [recipe.foods, setRecipe]);
 
   // Function to delete a food index in the list
   const deleteFood = (id: string | undefined) => {
@@ -122,8 +127,8 @@ const SelectFood = ({
           )}
           <p className="text-center mt-4">
             <span className="font-semibold">{recipe.Name} : </span>
-            {caloriesPerPortions} calories par portion - {recipe.NbServing}{" "}
-            portion
+            {Math.round(recipe.macronutrients.Calories / recipe.NbServing)}{" "}
+            calories par portion - {recipe.NbServing} portion
             {recipe.NbServing > 1 ? "s" : ""}
           </p>
           <button

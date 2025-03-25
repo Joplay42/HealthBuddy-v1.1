@@ -296,6 +296,7 @@ export type recipeProps = {
   Name: string;
   NbServing: number;
   foods: foodProps[];
+  macronutrients: macronutrients;
 };
 
 export type macronutrients = {
