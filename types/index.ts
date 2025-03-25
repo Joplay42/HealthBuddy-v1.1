@@ -305,3 +305,8 @@ export type macronutrients = {
   Carbs: number;
   Fat: number;
 };
+
+export type userRecipesContextProps = {
+  recipes: recipeProps[];
+  loading: boolean;
+};
