@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 /**
@@ -25,6 +25,8 @@ const Modal = ({
 }) => {
   // The router hooks to handle the navigation
   const router = useRouter();
+  // Get the params
+  const searchParams = useSearchParams();
 
   // Function to handle navigation
   const handleClosing = () => {
@@ -34,6 +36,33 @@ const Modal = ({
     currentParams.delete("modal");
     // Push the router to the route without params
     router.replace(window.location.pathname);
+  };
+
+  // Function to handle the back navigation
+  const handleBack = () => {
+    // Check if there is index params
+    const indexParams = searchParams.get("index");
+
+    if (indexParams) {
+      let index = parseInt(indexParams);
+      // Check if the user searched a term
+      const isSearch =
+        searchParams.get("search") ||
+        searchParams.get("term") ||
+        searchParams.get("id");
+
+      if (!isSearch) {
+        if (index != (1 || 4)) {
+          router.push(`?modal=addrecipe&index=${index - 1}`);
+        } else {
+          router.push("?modal=food&index=recipe");
+        }
+      } else {
+        router.push("?modal=addrecipe&index=2");
+      }
+    } else {
+      router.back();
+    }
   };
 
   return (
@@ -49,7 +78,7 @@ const Modal = ({
         <div className="grid grid-cols-3 items-center pt-4 px-4 md:px-5 md:pt-8 md:pb-5 rounded-t">
           {backButton && (
             <button
-              onClick={() => router.back()}
+              onClick={handleBack}
               className="text-black bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
             >
               <svg
