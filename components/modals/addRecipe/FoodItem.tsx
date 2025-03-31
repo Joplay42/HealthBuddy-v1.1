@@ -1,6 +1,6 @@
 "use client";
 import { foodProps } from "@/types";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 
 const FoodItem = ({
@@ -14,6 +14,8 @@ const FoodItem = ({
 }) => {
   // Router hooks
   const router = useRouter();
+  // PathName hooks
+  const pathName = usePathname();
 
   return (
     <div
@@ -43,11 +45,14 @@ const FoodItem = ({
           </svg>
         </button>
         <button
-          onClick={() =>
-            router.push(`?modal=addrecipe&index=2&id=${food.Id}`, {
+          onClick={() => {
+            // Get the current params
+            const currentParams = new URLSearchParams(window.location.search);
+            currentParams.set("id", food.Id!);
+            router.push(`${pathName}?${currentParams.toString()}`, {
               scroll: false,
-            })
-          }
+            });
+          }}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

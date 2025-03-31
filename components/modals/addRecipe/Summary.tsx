@@ -4,6 +4,8 @@ import Image from "next/image";
 import { foodProps, macronutrients, recipeProps } from "@/types";
 import NutrientsCharts from "@/components/charts/NutrientsCharts";
 import { recipeTotalMacronutrients } from "@/utils";
+import { useSearchParams } from "next/navigation";
+import { useFirebaseAuth } from "@/context/UserContext";
 
 const Summary = ({
   recipe,
@@ -20,6 +22,13 @@ const Summary = ({
   const [buttonDisabled, setButtonDisabled] = useState(false);
   // Button loading states
   const [loading, setLoading] = useState(false);
+
+  // Hooks to get the current params
+  const searchParams = useSearchParams();
+  const isUpdating = searchParams.get("recipeId");
+
+  // Get teh current userId
+  const { user, isAdmin } = useFirebaseAuth();
 
   // Function to handle the form error
   const handleChange = (
@@ -61,18 +70,35 @@ const Summary = ({
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await fetch("/api/foods/recipes", {
-        method: "POST",
-        body: JSON.stringify(recipe),
-      });
+      // Define the response
+      let res;
 
-      // Store the data
-      const data = await res.json();
-      // Error handling
-      if (!res.ok) {
-        throw new Error(data.error);
+      if (!isUpdating) {
+        // If a new recipe then post
+        res = await fetch("/api/foods/recipes", {
+          method: "POST",
+          body: JSON.stringify(recipe),
+        });
+      } else {
+        // If updating recipe then patch
+        res = await fetch(
+          `/api/foods/recipes?userid=${user?.uid}&id=${isUpdating}`,
+          {
+            method: "PATCH",
+            body: JSON.stringify(recipe),
+          }
+        );
       }
-      setIndex("4");
+
+      if (res) {
+        // Store the data
+        const data = await res.json();
+        // Error handling
+        if (!res.ok) {
+          throw new Error(data.error);
+        }
+        setIndex("4");
+      }
     } catch (error: any) {
       console.error(error.message);
     } finally {

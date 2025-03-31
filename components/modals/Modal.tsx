@@ -1,6 +1,11 @@
 "use client";
 import Image from "next/image";
-import { useParams, useRouter, useSearchParams } from "next/navigation";
+import {
+  useParams,
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
 import { useEffect, useState } from "react";
 
 /**
@@ -27,6 +32,8 @@ const Modal = ({
   const router = useRouter();
   // Get the params
   const searchParams = useSearchParams();
+  // Hooks for the navigation
+  const pathName = usePathname();
 
   // Function to handle navigation
   const handleClosing = () => {
@@ -40,25 +47,38 @@ const Modal = ({
 
   // Function to handle the back navigation
   const handleBack = () => {
+    // Get the current params
+    const currentParams = new URLSearchParams(window.location.search);
     // Check if there is index params
-    const indexParams = searchParams.get("index");
+    const indexParams = currentParams.get("index");
 
     if (indexParams) {
       let index = parseInt(indexParams);
       // Check if the user searched a term
       const isSearch =
-        searchParams.get("search") ||
-        searchParams.get("term") ||
-        searchParams.get("id");
+        currentParams.get("search") ||
+        currentParams.get("term") ||
+        currentParams.get("id");
 
       if (!isSearch) {
         if (index != (1 || 4)) {
-          router.push(`?modal=addrecipe&index=${index - 1}`);
+          const newIndex = (index - 1).toString();
+          currentParams.set("index", newIndex);
+
+          router.push(`${pathName}?${currentParams.toString()}`, {
+            scroll: false,
+          });
         } else {
           router.push("?modal=food&index=recipe");
         }
       } else {
-        router.push("?modal=addrecipe&index=2");
+        currentParams.delete("id");
+        currentParams.delete("search");
+        currentParams.delete("term");
+        currentParams.set("index", (2).toString());
+        router.push(`${pathName}?${currentParams.toString()}`, {
+          scroll: false,
+        });
       }
     } else {
       router.back();

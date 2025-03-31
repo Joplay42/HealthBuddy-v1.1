@@ -8,7 +8,7 @@ import {
   DisplayRecipePendingItemList,
 } from "@/components";
 import { foodProps } from "@/types";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const SearchFood = ({ addFood }: { addFood: (food: foodProps) => void }) => {
@@ -22,6 +22,8 @@ const SearchFood = ({ addFood }: { addFood: (food: foodProps) => void }) => {
   const router = useRouter();
   // Search params hooks from next/navigation
   const searchParams = useSearchParams();
+  // PathName hooks
+  const pathName = usePathname();
   // Get the params
   const searchQuery = searchParams.get("term");
 
@@ -73,11 +75,19 @@ const SearchFood = ({ addFood }: { addFood: (food: foodProps) => void }) => {
         setSearchTerm={setSearchTerm}
         onSubmit={() => {
           if (searchTerm) {
-            router.push(
-              `?modal=addrecipe&index=2&search=true&term=${searchTerm}`
-            );
+            // Get the current params
+            const currentParams = new URLSearchParams(window.location.search);
+            currentParams.set("term", searchTerm);
+            router.push(`${pathName}?${currentParams.toString()}`, {
+              scroll: false,
+            });
           } else {
-            router.push("?modal=addrecipe&index=2&search=true");
+            // Get the current params
+            const currentParams = new URLSearchParams(window.location.search);
+            currentParams.delete("term");
+            router.push(`${pathName}?${currentParams.toString()}`, {
+              scroll: false,
+            });
           }
         }}
       />

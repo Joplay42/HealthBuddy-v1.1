@@ -3,7 +3,7 @@ import { FoodDesc, FoodItem, SearchFood } from "@/components";
 import { foodProps, recipeProps } from "@/types";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { UserPendingItemProvider } from "@/context/UserPendingItemContext";
 import { recipeTotalMacronutrients } from "@/utils";
 
@@ -30,6 +30,9 @@ const SelectFood = ({
   const searchParams = useSearchParams();
   // Router hooks
   const router = useRouter();
+  // PathName hooks
+  const pathName = usePathname();
+
   // Value to detect which page to display
   const isDescription = searchParams.get("id");
   const isSearching = searchParams.get("search");
@@ -102,11 +105,14 @@ const SelectFood = ({
         <>
           <button
             className="mx-4 lg:mx-10 my-4 text-lg w-fit bg-black text-white px-4 py-3 rounded-2xl text-center hover:opacity-75 hover:cursor-pointer"
-            onClick={() =>
-              router.push(`?modal=addrecipe&index=2&search=true`, {
+            onClick={() => {
+              // Get the current params
+              const currentParams = new URLSearchParams(window.location.search);
+              currentParams.set("search", "true");
+              router.push(`${pathName}?${currentParams.toString()}`, {
                 scroll: false,
-              })
-            }
+              });
+            }}
           >
             Select food
           </button>

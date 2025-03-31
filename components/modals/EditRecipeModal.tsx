@@ -12,6 +12,8 @@ const EditRecipeModal = () => {
   const router = useRouter();
   // Get the params
   const index = searchParams.get("index") || "1";
+  // Get teh recipeId params
+  const recipeId = searchParams.get("recipeId");
 
   // Get the current user
   const { user, isAdmin } = useFirebaseAuth();
@@ -35,6 +37,32 @@ const EditRecipeModal = () => {
     foods: [],
     macronutrients: {} as macronutrients,
   });
+
+  // UseEffect to on refresh restart the recipe
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Fetch the data
+        const res = await fetch(
+          `/api/foods/recipes?userid=${user?.uid}&id=${recipeId}`,
+          { method: "GET" }
+        );
+        // Store the data
+        const data = await res.json();
+        if (!res.ok) {
+          throw new Error(data.error);
+        }
+        // Set the recipe
+        setRecipe(data);
+      } catch (error: any) {
+        // Error handling
+        console.error(error.message);
+      }
+    };
+
+    // Call the function to fetch
+    fetchData();
+  }, [user?.uid, recipeId, router]);
 
   return (
     <>

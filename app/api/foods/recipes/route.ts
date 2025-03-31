@@ -40,7 +40,7 @@ export const GET = async (request: Request) => {
 
     const recipe = docSnap.data();
 
-    return NextResponse.json({ recipe: recipe }, { status: 200 });
+    return new NextResponse(JSON.stringify(recipe), { status: 200 });
   } catch (error: any) {
     // Error message
     return new NextResponse(
@@ -92,7 +92,8 @@ export const POST = async (request: Request) => {
 
     // Filter the foods object
     const filteredFoods: foodProps[] = foods.map(
-      ({ Name, Brand, Quantity, Unit, Calories, Protein, Carbs, Fat }) => ({
+      ({ Id, Name, Brand, Quantity, Unit, Calories, Protein, Carbs, Fat }) => ({
+        Id,
         Name,
         Brand,
         Quantity,
