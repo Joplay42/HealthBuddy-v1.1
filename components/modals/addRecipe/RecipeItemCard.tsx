@@ -1,19 +1,11 @@
 "use client";
 import NutrientsCharts from "@/components/charts/NutrientsCharts";
 import { useFirebaseAuth } from "@/context/UserContext";
-import {
-  foodItemCardProps,
-  foodProps,
-  macronutrients,
-  recipeProps,
-} from "@/types";
-import {
-  addFoodToConsumedList,
-  addRecipeToConsumedList,
-  consumeFood,
-} from "@/utils";
+import { macronutrients, recipeProps } from "@/types";
+import { addRecipeToConsumedList, consumeFood } from "@/utils";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 const RecipeItemCard = ({ recipe }: { recipe: recipeProps }) => {
   // Router hooks to handle navigation
@@ -87,6 +79,30 @@ const RecipeItemCard = ({ recipe }: { recipe: recipeProps }) => {
     } else {
       // Set an error handling for empty meal
       setError(true);
+    }
+  };
+
+  // Function to handle the item deletion
+  const handleDeletion = async () => {
+    setDisableButton(true);
+    // Error handling
+    try {
+      // Call the api DELETE method
+      const res = await fetch(
+        `/api/foods/recipes?userid=${user?.uid}&del=${recipe.Id}`,
+        {
+          method: "DELETE",
+        }
+      );
+
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error);
+      }
+    } catch (error: any) {
+      console.error("Error deleting the item: ", error);
+    } finally {
+      setDisableButton(false);
     }
   };
 
@@ -173,13 +189,18 @@ const RecipeItemCard = ({ recipe }: { recipe: recipeProps }) => {
         </div>
       </div>
       {/** Add button */}
-      <button
-        className="disabled:opacity-50 bg-black text-white rounded-xl text-2xl h-10 lg:h-16 w-full lg:w-12 col-span-2 sm:col-span-3 md:col-span-4 lg:col-span-1 lg:justify-self-end"
-        onClick={() => handleSubmit(macros, multiplier)}
-        disabled={disableButton}
-      >
-        +
-      </button>
+      <div className="flex items-center space-x-4 h-10 lg:h-16 w-full lg:w-24 col-span-2 sm:col-span-3 md:col-span-4 lg:col-span-1 lg:justify-self-end">
+        <button onClick={handleDeletion}>
+          <Image src={"/trash.svg"} height={30} width={30} alt="Delete icon" />
+        </button>
+        <button
+          className="disabled:opacity-50 bg-black text-white rounded-xl text-2xl h-10 lg:h-16 w-full lg:w-12 col-span-2 sm:col-span-3 md:col-span-4 lg:col-span-1 lg:justify-self-end"
+          onClick={() => handleSubmit(macros, multiplier)}
+          disabled={disableButton}
+        >
+          +
+        </button>
+      </div>
     </div>
   );
 };

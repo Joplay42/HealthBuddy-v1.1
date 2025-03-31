@@ -82,7 +82,9 @@ export const POST = async (request: Request) => {
     };
 
     // Set the doc with the recipe
-    await addDoc(recipesListRef, recipeData);
+    const newDoc = await addDoc(recipesListRef, recipeData);
+    // Set the docId
+    await setDoc(newDoc, { Id: newDoc.id }, { merge: true });
 
     return NextResponse.json(
       { message: "Item has beens added to the database" },
