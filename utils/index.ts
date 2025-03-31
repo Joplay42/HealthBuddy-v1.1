@@ -297,7 +297,7 @@ export const deleteAccount = async () => {
  * @param userData The user information
  */
 export const consumeFood = async (
-  foodItem: foodProps,
+  macros: macronutrients,
   userId: string,
   multiplier: number
 ) => {
@@ -316,13 +316,13 @@ export const consumeFood = async (
 
     // Calculate the new total calories
     const updatedCalories = Math.round(
-      currentCalories + foodItem.Calories * multiplier
+      currentCalories + macros.Calories * multiplier
     );
     const updatedProtein = Math.round(
-      currentProtein + foodItem.Protein * multiplier
+      currentProtein + macros.Protein * multiplier
     );
-    const updatedCarbs = Math.round(currentCarbs + foodItem.Carbs * multiplier);
-    const updatedFat = Math.round(currentFat + foodItem.Fat * multiplier);
+    const updatedCarbs = Math.round(currentCarbs + macros.Carbs * multiplier);
+    const updatedFat = Math.round(currentFat + macros.Fat * multiplier);
 
     // Store the new total calorie
     await updateDoc(docRef, {
@@ -357,13 +357,47 @@ export const addFoodToConsumedList = async (
   const newFood = {
     Meal: meal,
     Name: food.Name,
-    Brand: food.Brand,
+    Brand: food.Brand || "Homemade recipe",
     Quantity: Math.round(food.Quantity * multiplier),
     Unit: food.Unit,
     Calories: Math.round(food.Calories * multiplier),
     Protein: Math.round(food.Protein * multiplier),
     Carbs: Math.round(food.Carbs * multiplier),
     Fat: Math.round(food.Fat * multiplier),
+  };
+  // Add a new document
+  await addDoc(foodListRef, newFood);
+};
+
+/**
+ * This functions is used to add the food into the firestore Document.
+ *
+ * @param food
+ * @param userId
+ */
+export const addRecipeToConsumedList = async (
+  meal: string,
+  recipe: recipeProps,
+  macros: macronutrients,
+  multiplier: number,
+  userId: string
+) => {
+  // Get the doc
+  const userConsumedFoodRef = doc(db, "UserConsumedFood", userId);
+  // The foodList subcollection
+  const foodListRef = collection(userConsumedFoodRef, "foodList");
+
+  // Multiplie the food
+  const newFood = {
+    Meal: meal,
+    Name: recipe.Name,
+    Brand: "Homemade recipe",
+    Quantity: 1,
+    Unit: "portion",
+    Calories: Math.round(macros.Calories * multiplier),
+    Protein: Math.round(macros.Protein * multiplier),
+    Carbs: Math.round(macros.Carbs * multiplier),
+    Fat: Math.round(macros.Fat * multiplier),
   };
   // Add a new document
   await addDoc(foodListRef, newFood);

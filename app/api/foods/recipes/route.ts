@@ -1,6 +1,15 @@
+import { Calorie } from "@/components";
 import { db } from "@/config/firebase";
-import { recipeProps } from "@/types";
-import { addDoc, collection, doc, setDoc } from "firebase/firestore";
+import { foodProps, macronutrients, recipeProps } from "@/types";
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  getDoc,
+  getDocs,
+  setDoc,
+} from "firebase/firestore";
 import { NextResponse } from "next/server";
 import macro from "styled-jsx/macro";
 
@@ -40,18 +49,40 @@ export const POST = async (request: Request) => {
     // Create a new object to databases
     const userRecipesRef = doc(db, "UserRecipes", UserId);
     const recipesListRef = collection(userRecipesRef, "recipesList");
+
+    // Filter the foods object
+    const filteredFoods: foodProps[] = foods.map(
+      ({ Name, Brand, Quantity, Unit, Calories, Protein, Carbs, Fat }) => ({
+        Name,
+        Brand,
+        Quantity,
+        Unit,
+        Calories,
+        Protein,
+        Carbs,
+        Fat,
+      })
+    );
+
+    // Filter the macronutrients
+    const filteredMacros: macronutrients = {
+      Calories: macronutrients.Calories,
+      Protein: macronutrients.Protein,
+      Carbs: macronutrients.Carbs,
+      Fat: macronutrients.Fat,
+    };
+
+    // Create the new recipe object
+    const recipeData: recipeProps = {
+      UserId,
+      Name,
+      NbServing,
+      foods: filteredFoods,
+      macronutrients: filteredMacros,
+    };
+
     // Set the doc with the recipe
-    await addDoc(recipesListRef, {
-      UserId: UserId,
-      Brand: "Homemade",
-      Name: Name,
-      Quantity: 1,
-      Unit: "portion",
-      Calories: Math.round(macronutrients.Calories / NbServing),
-      Protein: Math.round(macronutrients.Protein / NbServing),
-      Carbs: Math.round(macronutrients.Carbs / NbServing),
-      Fat: Math.round(macronutrients.Fat / NbServing),
-    });
+    await addDoc(recipesListRef, recipeData);
 
     return NextResponse.json(
       { message: "Item has beens added to the database" },
@@ -61,7 +92,44 @@ export const POST = async (request: Request) => {
     // Error message
     return new NextResponse(
       JSON.stringify({
-        message: "Ërror posting the item",
+        message: "Ërror posting the recipe",
+        error: error.message,
+      }),
+      { status: 500 }
+    );
+  }
+};
+
+export const DELETE = async (request: Request) => {
+  try {
+    // The new searchParams
+    const { searchParams } = new URL(request.url);
+    // Get the user id
+    const userId = searchParams.get("userid");
+    // Get the recipe id
+    const deleteId = searchParams.get("del");
+
+    if (!deleteId || !userId) {
+      return new NextResponse(
+        JSON.stringify({ message: "A userId and objectId is required" }),
+        { status: 400 }
+      );
+    }
+
+    // Delete the user recipes
+    const docRef = doc(db, "UserRecipes", userId, "recipesList", deleteId);
+    await deleteDoc(docRef);
+
+    // Return a response
+    return NextResponse.json(
+      { message: "Recipe deleted successfully" },
+      { status: 200 }
+    );
+  } catch (error: any) {
+    // Error message
+    return new NextResponse(
+      JSON.stringify({
+        message: "Ërror deleting the recipe",
         error: error.message,
       }),
       { status: 500 }

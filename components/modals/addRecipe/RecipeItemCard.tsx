@@ -1,16 +1,27 @@
 "use client";
 import NutrientsCharts from "@/components/charts/NutrientsCharts";
 import { useFirebaseAuth } from "@/context/UserContext";
-import { foodItemCardProps, foodProps, recipeProps } from "@/types";
-import { addFoodToConsumedList, consumeFood } from "@/utils";
+import {
+  foodItemCardProps,
+  foodProps,
+  macronutrients,
+  recipeProps,
+} from "@/types";
+import {
+  addFoodToConsumedList,
+  addRecipeToConsumedList,
+  consumeFood,
+} from "@/utils";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const RecipeItemCard = ({ recipe }: { recipe: foodProps }) => {
+const RecipeItemCard = ({ recipe }: { recipe: recipeProps }) => {
   // Router hooks to handle navigation
   const router = useRouter();
   // Fetch the user
   const { user, isAdmin } = useFirebaseAuth();
+  // The recipe macros
+  const [macros, setMacros] = useState<macronutrients>(recipe.macronutrients);
 
   // States for the multiplier
   const [multiplier, setMultiplier] = useState(1);
@@ -20,6 +31,16 @@ const RecipeItemCard = ({ recipe }: { recipe: foodProps }) => {
   const [meal, setMeal] = useState<string>("");
   // States for error handling
   const [error, setError] = useState<boolean>(false);
+
+  // UseEffect to set the right macros with the amount of servings
+  useEffect(() => {
+    setMacros({
+      Calories: recipe.macronutrients.Calories / recipe.NbServing,
+      Protein: recipe.macronutrients.Protein / recipe.NbServing,
+      Carbs: recipe.macronutrients.Carbs / recipe.NbServing,
+      Fat: recipe.macronutrients.Fat / recipe.NbServing,
+    });
+  }, [recipe, multiplier]);
 
   // The quantity change function
   const handleQuantityChange = (nb: number) => {
@@ -37,14 +58,20 @@ const RecipeItemCard = ({ recipe }: { recipe: foodProps }) => {
   };
 
   // THe function to add the food to the firestore
-  const handleSubmit = async (recipe: foodProps, multiplier: number) => {
+  const handleSubmit = async (macros: macronutrients, multiplier: number) => {
     if (meal) {
       // Remove the errors
       setError(false);
       try {
         if (user) {
-          await consumeFood(recipe, user.uid, multiplier);
-          await addFoodToConsumedList(meal, recipe, multiplier, user.uid);
+          await consumeFood(macros, user.uid, multiplier);
+          await addRecipeToConsumedList(
+            meal,
+            recipe,
+            macros,
+            multiplier,
+            user.uid
+          );
 
           // Close the modal when the operation is done
           // Get the current params
@@ -74,10 +101,10 @@ const RecipeItemCard = ({ recipe }: { recipe: foodProps }) => {
       {/** Food calorie chart */}
       <div className="flex items-center space-x-4 justify-self-end sm:justify-self-auto">
         <NutrientsCharts
-          Calories={Math.round(recipe.Calories * multiplier) || 0}
-          Protein={Math.round(recipe.Protein * multiplier) || 0}
-          Carbs={Math.round(recipe.Carbs * multiplier) || 0}
-          Fat={Math.round(recipe.Fat * multiplier) || 0}
+          Calories={Math.round(macros.Calories * multiplier) || 0}
+          Protein={Math.round(macros.Protein * multiplier) || 0}
+          Carbs={Math.round(macros.Carbs * multiplier) || 0}
+          Fat={Math.round(macros.Fat * multiplier) || 0}
           size="h-20 w-auto"
           fontSize="text-lg"
         />
@@ -89,7 +116,7 @@ const RecipeItemCard = ({ recipe }: { recipe: foodProps }) => {
           <h3 className="font-bold text-[#AFF921]">Protein</h3>
           <p>
             <span className="font-semibold">
-              {Math.round(recipe.Protein * multiplier) || 0}
+              {Math.round(macros.Protein * multiplier) || 0}
             </span>
             g
           </p>
@@ -98,7 +125,7 @@ const RecipeItemCard = ({ recipe }: { recipe: foodProps }) => {
           <h3 className="font-bold text-[#73af00]">Carbs</h3>
           <p>
             <span className="font-semibold">
-              {Math.round(recipe.Carbs * multiplier) || 0}
+              {Math.round(macros.Carbs * multiplier) || 0}
             </span>
             g
           </p>
@@ -107,7 +134,7 @@ const RecipeItemCard = ({ recipe }: { recipe: foodProps }) => {
           <h3 className="font-bold text-[#d7ff8a]">Fat</h3>
           <p>
             <span className="font-semibold">
-              {Math.round(recipe.Fat * multiplier) || 0}
+              {Math.round(macros.Fat * multiplier) || 0}
             </span>
             g
           </p>
@@ -148,7 +175,7 @@ const RecipeItemCard = ({ recipe }: { recipe: foodProps }) => {
       {/** Add button */}
       <button
         className="disabled:opacity-50 bg-black text-white rounded-xl text-2xl h-10 lg:h-16 w-full lg:w-12 col-span-2 sm:col-span-3 md:col-span-4 lg:col-span-1 lg:justify-self-end"
-        onClick={() => handleSubmit(recipe, multiplier)}
+        onClick={() => handleSubmit(macros, multiplier)}
         disabled={disableButton}
       >
         +
