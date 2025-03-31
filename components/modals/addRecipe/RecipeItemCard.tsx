@@ -189,7 +189,16 @@ const RecipeItemCard = ({ recipe }: { recipe: recipeProps }) => {
         </div>
       </div>
       {/** Add button */}
-      <div className="flex items-center space-x-4 h-10 lg:h-16 w-full lg:w-24 col-span-2 sm:col-span-3 md:col-span-4 lg:col-span-1 lg:justify-self-end">
+      <div className="flex items-center space-x-4 h-10 lg:h-16 w-full lg:w-32 col-span-2 sm:col-span-3 md:col-span-4 lg:col-span-1 lg:justify-self-end">
+        <button
+          onClick={() =>
+            router.push(`?modal=editrecipe&index=1&recipeId=${recipe.Id}`, {
+              scroll: false,
+            })
+          }
+        >
+          <Image src={"/edit.svg"} height={30} width={30} alt="Delete icon" />
+        </button>
         <button onClick={handleDeletion}>
           <Image src={"/trash.svg"} height={30} width={30} alt="Delete icon" />
         </button>

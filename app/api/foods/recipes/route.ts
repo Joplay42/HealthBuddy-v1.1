@@ -1,4 +1,3 @@
-import { Calorie } from "@/components";
 import { db } from "@/config/firebase";
 import { foodProps, macronutrients, recipeProps } from "@/types";
 import {
@@ -7,11 +6,52 @@ import {
   deleteDoc,
   doc,
   getDoc,
-  getDocs,
   setDoc,
 } from "firebase/firestore";
 import { NextResponse } from "next/server";
-import macro from "styled-jsx/macro";
+
+export const GET = async (request: Request) => {
+  // Error handling
+  try {
+    // The new searchParams
+    const { searchParams } = new URL(request.url);
+    // Get the user id
+    const userId = searchParams.get("userid");
+    // Get the recipe id
+    const recipeId = searchParams.get("id");
+
+    if (!recipeId || !userId) {
+      return NextResponse.json(
+        { message: "Missing parameter" },
+        { status: 400 }
+      );
+    }
+
+    // Get the docs
+    const docRef = doc(db, "UserRecipes", userId, "recipesList", recipeId);
+    const docSnap = await getDoc(docRef);
+
+    if (!docSnap.exists()) {
+      return NextResponse.json(
+        { message: "Recipes object has not been found" },
+        { status: 404 }
+      );
+    }
+
+    const recipe = docSnap.data();
+
+    return NextResponse.json({ recipe: recipe }, { status: 200 });
+  } catch (error: any) {
+    // Error message
+    return new NextResponse(
+      JSON.stringify({
+        message: "Ërror posting the recipe",
+        error: error.message,
+      }),
+      { status: 500 }
+    );
+  }
+};
 
 export const POST = async (request: Request) => {
   // Error handling
@@ -179,13 +219,16 @@ export const PATCH = async (request: Request) => {
     const docRef = doc(db, "UserRecipes", userId, "recipesList", recipeId);
 
     // Update the doc
-    const updatedFood = await setDoc(docRef, {
-      UserId,
-      Name,
-      NbServing,
-      foods: filteredFoods,
-      macronutrients,
-    });
+    const updatedFood = await setDoc(
+      docRef,
+      {
+        Name,
+        NbServing,
+        foods: filteredFoods,
+        macronutrients,
+      },
+      { merge: true }
+    );
 
     // Return a response
     return NextResponse.json(

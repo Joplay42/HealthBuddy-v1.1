@@ -83,6 +83,7 @@ import DisplayRecipePendingItemList from "./modals/addRecipe/DisplayRecipePendin
 import Summary from "./modals/addRecipe/Summary";
 import DisplayRecipesList from "./modals/addRecipe/DisplayRecipesList";
 import RecipeItemCard from "./modals/addRecipe/RecipeItemCard";
+import EditRecipeModal from "./modals/EditRecipeModal";
 
 export {
   HeaderPage,
@@ -163,4 +164,5 @@ export {
   Summary,
   DisplayRecipesList,
   RecipeItemCard,
+  EditRecipeModal,
 };

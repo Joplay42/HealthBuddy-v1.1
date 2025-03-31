@@ -10,6 +10,7 @@ import {
   AddRecipeModal,
   FoodItem,
   FoodDesc,
+  EditRecipeModal,
 } from "@/components";
 import { DashboardProps } from "@/types";
 import { FireBaseAuthProvider, useFirebaseAuth } from "@/context/UserContext";
@@ -30,6 +31,7 @@ const Dashboard = ({ children }: DashboardProps) => {
   const isFoodModalOpen = searchParams.get("modal") === "food";
   const isAddFoodModalOpen = searchParams.get("modal") == "addfood";
   const isAddRecipeModalOpen = searchParams.get("modal") == "addrecipe";
+  const isEditRecipeModalOpen = searchParams.get("modal") == "editrecipe";
   const isObjectiveModalOpen = searchParams.get("modal") === "objective";
   const isAdminModalOpen = searchParams.get("modal") == "admin";
 
@@ -55,6 +57,7 @@ const Dashboard = ({ children }: DashboardProps) => {
           {isAdminModalOpen && <AdminModal />}
           {isAddFoodModalOpen && <AddFoodModal />}
           {isAddRecipeModalOpen && <AddRecipeModal />}
+          {isEditRecipeModalOpen && <EditRecipeModal />}
         </div>
       </UserInformationProvider>
     </FireBaseAuthProvider>
