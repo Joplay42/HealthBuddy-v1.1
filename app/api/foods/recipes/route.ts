@@ -138,3 +138,68 @@ export const DELETE = async (request: Request) => {
     );
   }
 };
+
+export const PATCH = async (request: Request) => {
+  try {
+    // The new searchParams
+    const { searchParams } = new URL(request.url);
+    // Get the user id
+    const userId = searchParams.get("userid");
+    // Get the recipe id
+    const recipeId = searchParams.get("id");
+
+    // Handle null values
+    if (!recipeId || !userId) {
+      return new NextResponse(
+        JSON.stringify({ message: "Missing parameters" }),
+        { status: 400 }
+      );
+    }
+
+    // Get the body request
+    const body: recipeProps = await request.json();
+    const { UserId, Name, NbServing, foods, macronutrients }: recipeProps =
+      body;
+
+    // Filter the foods object
+    const filteredFoods: foodProps[] = foods.map(
+      ({ Name, Brand, Quantity, Unit, Calories, Protein, Carbs, Fat }) => ({
+        Name,
+        Brand,
+        Quantity,
+        Unit,
+        Calories,
+        Protein,
+        Carbs,
+        Fat,
+      })
+    );
+
+    // Get the doc
+    const docRef = doc(db, "UserRecipes", userId, "recipesList", recipeId);
+
+    // Update the doc
+    const updatedFood = await setDoc(docRef, {
+      UserId,
+      Name,
+      NbServing,
+      foods: filteredFoods,
+      macronutrients,
+    });
+
+    // Return a response
+    return NextResponse.json(
+      { message: "Recipe updated successfully" },
+      { status: 200 }
+    );
+  } catch (error: any) {
+    // Error message
+    return new NextResponse(
+      JSON.stringify({
+        message: "Ërror updating the recipe",
+        error: error.message,
+      }),
+      { status: 500 }
+    );
+  }
+};
