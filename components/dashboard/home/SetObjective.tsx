@@ -107,14 +107,6 @@ const SetObjective = () => {
 
       // Check if a user was found
       if (userId) {
-        // Write the new objective in the firestore database
-        await setObjective({
-          dailyCalorie: calorie,
-          protein: protein,
-          carb: carb,
-          fat: fat,
-          userId: userId,
-        });
         const res = await fetch(`/api/objective?userid=${userId}`, {
           method: "POST",
           body: JSON.stringify({
