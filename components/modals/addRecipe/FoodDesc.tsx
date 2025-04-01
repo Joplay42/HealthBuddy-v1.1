@@ -1,5 +1,4 @@
 "use client";
-import { Modal } from "@/components";
 import NutrientsCharts from "@/components/charts/NutrientsCharts";
 import { foodProps } from "@/types";
 import { ChangeEvent, useEffect, useState } from "react";
@@ -20,7 +19,7 @@ const FoodDesc = ({
   // Loading states
   const [loading, setLoading] = useState(false);
   // Multiplier state
-  const [multiplier, setMultiplier] = useState(food.multiplier ?? 1);
+  const [multiplier, setMultiplier] = useState(food.multiplier || 1);
 
   // UseEffect hooks to reset the multiplier when the food item changes
   useEffect(() => {

@@ -89,7 +89,7 @@ const SelectFood = ({
   const addFoodList = (food: foodProps) => {
     setRecipe((prev) => ({
       ...prev,
-      foods: [...prev.foods, food],
+      foods: [...prev.foods, { ...food, multiplier: food.multiplier ?? 1 }],
     }));
   };
 

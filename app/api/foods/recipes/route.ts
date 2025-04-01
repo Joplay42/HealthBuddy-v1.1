@@ -56,10 +56,23 @@ export const GET = async (request: Request) => {
 export const POST = async (request: Request) => {
   // Error handling
   try {
+    // The new searchParams
+    const { searchParams } = new URL(request.url);
+    // Get the user id
+    const UserId = searchParams.get("userid");
+
+    if (!UserId) {
+      return new NextResponse(
+        JSON.stringify({ message: "Missing parameter" }),
+        {
+          status: 400,
+        }
+      );
+    }
+
     // Get the body request
     const body: recipeProps = await request.json();
-    const { UserId, Name, NbServing, foods, macronutrients }: recipeProps =
-      body;
+    const { Name, NbServing, foods, macronutrients }: recipeProps = body;
 
     // Error handling
     if (!body || Object.keys(body).length === 0) {
@@ -70,7 +83,6 @@ export const POST = async (request: Request) => {
 
     // Check if some attributes are missing
     if (
-      !UserId ||
       !Name ||
       !NbServing ||
       !foods ||
@@ -92,8 +104,20 @@ export const POST = async (request: Request) => {
 
     // Filter the foods object
     const filteredFoods: foodProps[] = foods.map(
-      ({ Id, Name, Brand, Quantity, Unit, Calories, Protein, Carbs, Fat }) => ({
+      ({
         Id,
+        multiplier,
+        Name,
+        Brand,
+        Quantity,
+        Unit,
+        Calories,
+        Protein,
+        Carbs,
+        Fat,
+      }) => ({
+        Id,
+        multiplier,
         Name,
         Brand,
         Quantity,
@@ -204,7 +228,20 @@ export const PATCH = async (request: Request) => {
 
     // Filter the foods object
     const filteredFoods: foodProps[] = foods.map(
-      ({ Name, Brand, Quantity, Unit, Calories, Protein, Carbs, Fat }) => ({
+      ({
+        Id,
+        multiplier,
+        Name,
+        Brand,
+        Quantity,
+        Unit,
+        Calories,
+        Protein,
+        Carbs,
+        Fat,
+      }) => ({
+        Id,
+        multiplier,
         Name,
         Brand,
         Quantity,

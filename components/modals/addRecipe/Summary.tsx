@@ -75,7 +75,7 @@ const Summary = ({
 
       if (!isUpdating) {
         // If a new recipe then post
-        res = await fetch("/api/foods/recipes", {
+        res = await fetch(`/api/foods/recipes?userid=${user?.uid}`, {
           method: "POST",
           body: JSON.stringify(recipe),
         });
