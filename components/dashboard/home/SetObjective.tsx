@@ -84,48 +84,68 @@ const SetObjective = () => {
 
   // Function to handle the error when submiting the forms
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    // Clear the errors
-    setError("");
-    // Prevent page reload
-    e.preventDefault();
-    // enable the loading animation
-    setLoading(true);
+    try {
+      // Clear the errors
+      setError("");
+      // Prevent page reload
+      e.preventDefault();
+      // enable the loading animation
+      setLoading(true);
 
-    // Validate if all field are completed
-    if (calorie === 0 || protein === 0 || carb === 0 || fat === 0) {
-      setError("Please ensure all fields are filled out.");
+      // Validate if all field are completed
+      if (calorie === 0 || protein === 0 || carb === 0 || fat === 0) {
+        setError("Please ensure all fields are filled out.");
+        setLoading(false);
+        return;
+      }
+      // Validate if the pourcentage total is 100
+      if (pourcentage != 100) {
+        setError("Macronutrients should total 100%");
+        setLoading(false);
+        return;
+      }
+
+      // Check if a user was found
+      if (userId) {
+        // Write the new objective in the firestore database
+        await setObjective({
+          dailyCalorie: calorie,
+          protein: protein,
+          carb: carb,
+          fat: fat,
+          userId: userId,
+        });
+        const res = await fetch(`/api/objective?userid=${userId}`, {
+          method: "POST",
+          body: JSON.stringify({
+            calorie,
+            protein,
+            carbs: carb,
+            fat,
+          }),
+        });
+
+        // Store the data
+        const data = await res.json();
+        if (!res.ok) {
+          throw new Error(data.error);
+        }
+
+        // Closing the modal when the operation is done
+        // Get the current params
+        const currentParams = new URLSearchParams(window.location.search);
+        // Delete the current param
+        currentParams.delete("modal");
+        // Push the router to the route without params
+        router.replace(window.location.pathname);
+      }
+
+      // Disable the loading animation
       setLoading(false);
-      return;
+    } catch (error: any) {
+      console.error(error);
+      setError(error.message);
     }
-    // Validate if the pourcentage total is 100
-    if (pourcentage != 100) {
-      setError("Macronutrients should total 100%");
-      setLoading(false);
-      return;
-    }
-
-    // Check if a user was found
-    if (userId) {
-      // Write the new objective in the firestore database
-      await setObjective({
-        dailyCalorie: calorie,
-        protein: protein,
-        carb: carb,
-        fat: fat,
-        userId: userId,
-      });
-
-      // Closing the modal when the operation is done
-      // Get the current params
-      const currentParams = new URLSearchParams(window.location.search);
-      // Delete the current param
-      currentParams.delete("modal");
-      // Push the router to the route without params
-      router.replace(window.location.pathname);
-    }
-
-    // Disable the loading animation
-    setLoading(false);
   };
 
   return (

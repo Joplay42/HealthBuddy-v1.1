@@ -74,8 +74,8 @@ export const POST = async (request: Request) => {
     }
 
     // Get the body
-    const body: macronutrients = await request.json();
-    const { Calories, Protein, Carbs, Fat }: macronutrients = body;
+    const body = await request.json();
+    const { calorie, protein, carbs, fat } = body;
 
     // Error handling
     if (!body || Object.keys(body).length === 0) {
@@ -85,7 +85,7 @@ export const POST = async (request: Request) => {
     }
 
     // Check if some attributes are missing
-    if (!Calories || !Protein || !Carbs || !Fat) {
+    if (!calorie || !protein || !carbs || !fat) {
       return new NextResponse(
         JSON.stringify({
           message: "Missing object attribute",
@@ -111,7 +111,7 @@ export const POST = async (request: Request) => {
   } catch (error: any) {
     return new NextResponse(
       JSON.stringify({
-        message: "An error occured while trying to create the objective",
+        error: error.message,
       }),
       { status: 500 }
     );
