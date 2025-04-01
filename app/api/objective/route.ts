@@ -1,5 +1,6 @@
 import { db } from "@/config/firebase";
-import { doc, getDoc } from "firebase/firestore";
+import { macronutrients } from "@/types";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import { NextResponse } from "next/server";
 
 export const GET = async (request: Request) => {
@@ -48,6 +49,69 @@ export const GET = async (request: Request) => {
       JSON.stringify({
         message: "An error occured while trying to fetch the users objective",
         error: error.message,
+      }),
+      { status: 500 }
+    );
+  }
+};
+
+export const POST = async (request: Request) => {
+  // Error handling
+  try {
+    // The new searchParams
+    const { searchParams } = new URL(request.url);
+    // Get the user id
+    const userId = searchParams.get("userid");
+
+    // handle null values
+    if (!userId) {
+      return new NextResponse(
+        JSON.stringify({
+          message: "Missing parameters",
+        }),
+        { status: 422 }
+      );
+    }
+
+    // Get the body
+    const body: macronutrients = await request.json();
+    const { Calories, Protein, Carbs, Fat }: macronutrients = body;
+
+    // Error handling
+    if (!body || Object.keys(body).length === 0) {
+      return new NextResponse(JSON.stringify({ message: "Invalid data" }), {
+        status: 400,
+      });
+    }
+
+    // Check if some attributes are missing
+    if (!Calories || !Protein || !Carbs || !Fat) {
+      return new NextResponse(
+        JSON.stringify({
+          message: "Missing object attribute",
+        }),
+        { status: 400 }
+      );
+    }
+
+    // reference of the users doc
+    const userGoalDocRef = doc(db, "UserGoal", userId);
+
+    // Set the new doc
+    const userGoal = await setDoc(userGoalDocRef, body);
+
+    // Return success message
+    return new NextResponse(
+      JSON.stringify({
+        message: "Objective has been created",
+        data: userGoal,
+      }),
+      { status: 200 }
+    );
+  } catch (error: any) {
+    return new NextResponse(
+      JSON.stringify({
+        message: "An error occured while trying to create the objective",
       }),
       { status: 500 }
     );
