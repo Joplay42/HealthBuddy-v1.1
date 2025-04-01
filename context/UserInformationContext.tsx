@@ -66,6 +66,27 @@ export const UserInformationProvider = ({
     };
   }, []);
 
+  // Call the initial values using the api
+  useEffect(() => {
+    const fetchInitialData = async () => {
+      if (user && !userGoal) {
+        try {
+          // Fetch from the api
+          const res = await fetch(`/api/objective?userid=${user.uid}`);
+          const result = await res.json();
+          setUserGoal(result);
+        } catch (error: any) {
+          console.error(
+            "Error fetching the initial userGoal : ",
+            error.message
+          );
+        }
+      }
+    };
+
+    fetchInitialData();
+  }, [user, userGoal]);
+
   // Fetch the user doc
   useEffect(() => {
     if (user) {
