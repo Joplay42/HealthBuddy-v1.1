@@ -68,7 +68,7 @@ export const UserInformationProvider = ({
 
   // Call the initial values using the api
   useEffect(() => {
-    const fetchInitialData = async () => {
+    const fetchInitialGoal = async () => {
       if (user && !userGoal) {
         try {
           // Fetch from the api
@@ -84,8 +84,25 @@ export const UserInformationProvider = ({
       }
     };
 
-    fetchInitialData();
-  }, [user, userGoal]);
+    const fetchInitialCalorie = async () => {
+      if (user && !userCalorieInfo) {
+        try {
+          // Fetch from the api
+          const res = await fetch(`/api/calories?userid=${user.uid}`);
+          const result = await res.json();
+          setUserCalorieInfo(result);
+        } catch (error: any) {
+          console.error(
+            "Error fetching the initial userCalorie : ",
+            error.message
+          );
+        }
+      }
+    };
+
+    fetchInitialGoal();
+    fetchInitialCalorie();
+  }, [user, userGoal, userCalorieInfo]);
 
   // Fetch the user doc
   useEffect(() => {
