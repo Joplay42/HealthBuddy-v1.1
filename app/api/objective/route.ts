@@ -1,5 +1,4 @@
 import { db } from "@/config/firebase";
-import { macronutrients } from "@/types";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { NextResponse } from "next/server";
 
