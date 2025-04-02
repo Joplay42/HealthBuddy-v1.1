@@ -132,17 +132,7 @@ export const createUser = async ({
   );
 
   // Create UserCalorie Firestore doc
-  const fireStoreUserCalorieDoc = await doc(
-    db,
-    "UserCalorieData",
-    userCredential.user.uid
-  );
-  // Blank UserCalorie Firestore doc
-  await setDoc(
-    fireStoreUserCalorieDoc,
-    { calorie: 0, carbs: 0, fat: 0, protein: 0 },
-    { merge: true }
-  );
+  await fetch(`/api/calories?userid=${userCredential.user.uid}`);
 
   // Create UserGoal Firestore doc
   const fireStoreUserGoalDoc = await doc(
