@@ -72,7 +72,9 @@ export const UserInformationProvider = ({
       if (user && !userGoal) {
         try {
           // Fetch from the api
-          const res = await fetch(`/api/objective?userid=${user.uid}`);
+          const res = await fetch(`/api/objective?userid=${user.uid}`, {
+            method: "GET",
+          });
           const result = await res.json();
           setUserGoal(result);
         } catch (error: any) {
@@ -88,7 +90,9 @@ export const UserInformationProvider = ({
       if (user && !userCalorieInfo) {
         try {
           // Fetch from the api
-          const res = await fetch(`/api/calories?userid=${user.uid}`);
+          const res = await fetch(`/api/calories?userid=${user.uid}`, {
+            method: "GET",
+          });
           const result = await res.json();
           setUserCalorieInfo(result);
         } catch (error: any) {

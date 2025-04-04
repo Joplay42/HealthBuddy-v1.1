@@ -72,32 +72,15 @@ export const POST = async (request: Request) => {
       );
     }
 
-    // Get the body
-    const body = await request.json();
-    const { calorie, protein, carbs, fat } = body;
-
-    // Error handling
-    if (!body || Object.keys(body).length === 0) {
-      return new NextResponse(JSON.stringify({ message: "Invalid data" }), {
-        status: 400,
-      });
-    }
-
-    // Check if some attributes are missing
-    if (!calorie || !protein || !carbs || !fat) {
-      return new NextResponse(
-        JSON.stringify({
-          message: "Missing object attribute",
-        }),
-        { status: 400 }
-      );
-    }
-
     // reference of the users doc
     const userGoalDocRef = doc(db, "UserGoal", userId);
 
     // Set the new doc
-    const userGoal = await setDoc(userGoalDocRef, body);
+    const userGoal = await setDoc(
+      userGoalDocRef,
+      { calorie: 0, carbs: 0, fat: 0, protein: 0 },
+      { merge: true }
+    );
 
     // Return success message
     return new NextResponse(

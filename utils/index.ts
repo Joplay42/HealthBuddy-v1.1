@@ -38,6 +38,7 @@ import {
   updateDoc,
   where,
 } from "firebase/firestore";
+import { json } from "stream/consumers";
 
 /**
  * This functions is used to change tu current index using a timer and adding
@@ -131,21 +132,21 @@ export const createUser = async ({
     password
   );
 
-  // Create UserCalorie Firestore doc
-  await fetch(`/api/calories?userid=${userCredential.user.uid}`);
+  let res, data;
 
+  // Create UserCalorie Firestore doc
+  res = await fetch(`/api/calories?userid=${userCredential.user.uid}`, {
+    method: "POST",
+  });
   // Create UserGoal Firestore doc
-  const fireStoreUserGoalDoc = await doc(
-    db,
-    "UserGoal",
-    userCredential.user.uid
-  );
-  //Blank UserGoal firestore doc
-  await setDoc(
-    fireStoreUserGoalDoc,
-    { calorie: 0, carbs: 0, fat: 0, protein: 0, weight: 0 },
-    { merge: true }
-  );
+  res = await fetch(`/api/objective?userid=${userCredential.user.uid}`, {
+    method: "POST",
+  });
+
+  // Error handling
+  if (!res.ok) {
+    throw new Error("An error occured while trying to create the user");
+  }
 
   // Make a single name with firstName and LastName
   const displayName = firstName + " " + lastName;
