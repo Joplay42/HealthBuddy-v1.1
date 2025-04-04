@@ -184,7 +184,13 @@ export const loginUser = async ({ email, password }: loginUserProps) => {
   if (lastSignIn && hasADayPassed(lastSignIn)) {
     // The userCalorieDoc
     const docRef = doc(db, "UserCalorieData", user.uid);
-    await resetUserCalorieInformation(docRef);
+    // Delete the current calories and consumed food
+    await fetch(`/api/calories?userid=${auth.currentUser?.uid}`, {
+      method: "DELETE",
+    });
+    await fetch(`/api/foods/consumed?userid=${auth.currentUser?.uid}`, {
+      method: "DELETE",
+    });
   }
 
   // Get the current sign in
@@ -271,9 +277,9 @@ export const deleteAccount = async () => {
     });
 
     // The UserFoodList firestore doc
-    const userConsumedFood = doc(db, "UserConsumedFood", user.uid);
-    // Delete the userConsumedFood
-    await deleteDoc(userConsumedFood);
+    await fetch(`/api/foods/consumed?userid=${auth.currentUser?.uid}`, {
+      method: "DELETE",
+    });
 
     // The UserGoal firestoreDoc
     res = await fetch(`/api/objective?userid=${user.uid}`, {

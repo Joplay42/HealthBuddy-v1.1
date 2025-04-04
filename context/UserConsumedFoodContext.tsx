@@ -44,6 +44,32 @@ export const UserConsumedFoodProvider = ({
     };
   }, []);
 
+  // Call the initial values using the api
+  useEffect(() => {
+    const fetchInitialValues = async () => {
+      if (user && userConsumedFood) {
+        try {
+          // Fetch from the api
+          const res = await fetch(`/api/foods/consumed?userid=${user.uid}`, {
+            method: "GET",
+          });
+          const result = await res.json();
+
+          if (result.data && Array.isArray(result.data)) {
+            setuserConsumedFood(result.data);
+          }
+        } catch (error: any) {
+          console.error(
+            "Error fetching the initial userGoal : ",
+            error.message
+          );
+        }
+      }
+    };
+
+    fetchInitialValues();
+  }, [user]);
+
   // Fetch the user doc
   useEffect(() => {
     if (user) {
