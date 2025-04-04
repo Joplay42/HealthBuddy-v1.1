@@ -182,8 +182,6 @@ export const loginUser = async ({ email, password }: loginUserProps) => {
 
   // verify if a day has passed
   if (lastSignIn && hasADayPassed(lastSignIn)) {
-    // The userCalorieDoc
-    const docRef = doc(db, "UserCalorieData", user.uid);
     // Delete the current calories and consumed food
     await fetch(`/api/calories?userid=${auth.currentUser?.uid}`, {
       method: "DELETE",
@@ -323,25 +321,18 @@ export const addFoodToConsumedList = async (
   multiplier: number,
   userId: string
 ) => {
-  // Get the doc
-  const userConsumedFoodRef = doc(db, "UserConsumedFood", userId);
-  // The foodList subcollection
-  const foodListRef = collection(userConsumedFoodRef, "foodList");
+  const res = await fetch(`/api/foods/consumed?userid=${userId}`, {
+    method: "PATCH",
+    body: JSON.stringify({
+      meal: meal,
+      food: food,
+      multiplier: multiplier,
+    }),
+  });
 
-  // Multiplie the food
-  const newFood = {
-    Meal: meal,
-    Name: food.Name,
-    Brand: food.Brand || "Homemade recipe",
-    Quantity: Math.round(food.Quantity * multiplier),
-    Unit: food.Unit,
-    Calories: Math.round(food.Calories * multiplier),
-    Protein: Math.round(food.Protein * multiplier),
-    Carbs: Math.round(food.Carbs * multiplier),
-    Fat: Math.round(food.Fat * multiplier),
-  };
-  // Add a new document
-  await addDoc(foodListRef, newFood);
+  if (!res.ok) {
+    throw new Error("An error occured trying to stored into consumedFood");
+  }
 };
 
 /**
@@ -357,11 +348,6 @@ export const addRecipeToConsumedList = async (
   multiplier: number,
   userId: string
 ) => {
-  // Get the doc
-  const userConsumedFoodRef = doc(db, "UserConsumedFood", userId);
-  // The foodList subcollection
-  const foodListRef = collection(userConsumedFoodRef, "foodList");
-
   // Multiplie the food
   const newFood = {
     Meal: meal,
@@ -374,8 +360,19 @@ export const addRecipeToConsumedList = async (
     Carbs: Math.round(macros.Carbs * multiplier),
     Fat: Math.round(macros.Fat * multiplier),
   };
-  // Add a new document
-  await addDoc(foodListRef, newFood);
+
+  const res = await fetch(`/api/foods/consumed?userid=${userId}`, {
+    method: "PATCH",
+    body: JSON.stringify({
+      meal: meal,
+      food: newFood,
+      multiplier: multiplier,
+    }),
+  });
+
+  if (!res.ok) {
+    throw new Error("An error occured trying to stored into consumedFood");
+  }
 };
 
 /**
@@ -431,155 +428,6 @@ export const resetUserCalorieInformation = async (
     fat: 0,
     protein: 0,
   });
-};
-
-/**
- * This function is used to fetch the FoodApiCollection to the firestore
- * database.
- *
- * @returns an array
- */
-export const getFoodsItem = async (searchTerm: string) => {
-  // Handle the errors
-  try {
-    // Get the firestore collection
-    const collectionRef = collection(db, "FoodApiCollection");
-
-    // Query with the searchTerms
-    const querySnapshot = query(collectionRef, where("Name", "==", searchTerm));
-    // Get the snapshot of each doc
-    const snapshot = await getDocs(querySnapshot);
-
-    // Add to a list
-    const foodList = snapshot.docs.map((doc) => ({ ...doc.data() }));
-
-    // Return the list
-    return foodList;
-  } catch (error: any) {
-    // Display the errors message
-    console.log(error.message);
-  }
-};
-
-/**
- * This function is used to create a new food Item in the firestore.
- *
- * @param foodData The food item
- * @returns
- */
-export const createFood = async (foodData: foodProps) => {
-  // Handling the errors
-  try {
-    // Get the id of the document
-    const docId = `${foodData.Brand}_${foodData.Name}`;
-    // A collection reference
-    const collectionRef = collection(db, "FoodApiCollection");
-    // Get the collection reference
-    const foodRef = doc(collectionRef, docId);
-    // Add the new food to the firebase
-    await setDoc(foodRef, foodData);
-  } catch (error: any) {
-    // Display an error message
-    console.error(
-      "An error occured while trying to create the food",
-      error.message
-    );
-  }
-};
-
-/**
- * This function is used to modify the food Item passed in parameter of this
- * function.
- *
- * @param foodItem The food item to modify
- * @param updates The updates to modify the food
- */
-export const updateFood = async (
-  foodItem: foodProps,
-  updates: Partial<foodProps>
-) => {
-  try {
-    // The food id
-    const docId = `${foodItem.Brand}_${foodItem.Name}`;
-    // Find the food doc
-    const docRef = doc(db, "FoodApiCollection", docId);
-    // Fetch the document to see if it exist
-    const docSnapshot = await getDoc(docRef);
-    // Handle if the doc is not found
-    if (!docSnapshot.exists()) {
-      throw new Error("Missing or invalid food item");
-    }
-
-    // The new docId
-    const newDocId =
-      updates.Brand || updates.Name
-        ? `${updates.Brand || foodItem.Brand}_${updates.Name || foodItem.Name}`
-        : docId;
-
-    if (newDocId !== docId) {
-      // Create a new doc with the new id
-      const newDocRef = doc(db, "FoodApiCollection", newDocId);
-      await setDoc(newDocRef, { ...foodItem, ...updates });
-
-      // Delete the old doc
-      await deleteDoc(docRef);
-      // Return the new doc
-      return { id: newDocId, ...foodItem, updates };
-    } else {
-      // Update the changes
-      await updateDoc(docRef, updates);
-      return { id: docId, ...foodItem, updates };
-    }
-  } catch (error: any) {
-    console.error(
-      "An error occured while trying to update the food",
-      error.message
-    );
-  }
-};
-
-export const deleteFood = async (foodId: string) => {
-  try {
-    // Get the doc reference
-    const docRef = doc(db, "FoodApiCollection", foodId);
-    // The snapshot of the doc
-    const docSnapshot = await getDoc(docRef);
-    // delete the doc
-    const deletedDoc = docSnapshot.data();
-
-    await deleteDoc(docRef);
-
-    return deletedDoc;
-  } catch (error: any) {
-    console.error("An error occured while trying to delete the user");
-  }
-};
-
-export const setObjective = async ({
-  dailyCalorie,
-  protein,
-  carb,
-  fat,
-  userId,
-}: newObjectiveProps) => {
-  // Error handling
-  try {
-    // reference of the users doc
-    const docRef = doc(db, "UserGoal", userId);
-    // Set the new doc
-    await setDoc(docRef, {
-      calorie: dailyCalorie,
-      protein: protein,
-      carbs: carb,
-      fat: fat,
-      weight: 0,
-    });
-  } catch (error: any) {
-    console.error(
-      "An error occured while trying to create the new objective : ",
-      error.message
-    );
-  }
 };
 
 export const recipeTotalMacronutrients = (foods: foodProps[]) => {
