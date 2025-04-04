@@ -299,39 +299,10 @@ export const consumeFood = async (
   userId: string,
   multiplier: number
 ) => {
-  // Get the doc
-  const docRef = doc(db, "UserCalorieData", userId);
-  // Snapshot of the doc
-  const docSnap = await getDoc(docRef);
-
-  if (docSnap.exists()) {
-    // Store the current data
-    const userData = docSnap.data();
-    const currentCalories = userData.calorie;
-    const currentProtein = userData.protein;
-    const currentCarbs = userData.carbs;
-    const currentFat = userData.fat;
-
-    // Calculate the new total calories
-    const updatedCalories = Math.round(
-      currentCalories + macros.Calories * multiplier
-    );
-    const updatedProtein = Math.round(
-      currentProtein + macros.Protein * multiplier
-    );
-    const updatedCarbs = Math.round(currentCarbs + macros.Carbs * multiplier);
-    const updatedFat = Math.round(currentFat + macros.Fat * multiplier);
-
-    // Store the new total calorie
-    await updateDoc(docRef, {
-      calorie: updatedCalories,
-      protein: updatedProtein,
-      carbs: updatedCarbs,
-      fat: updatedFat,
-    });
-  } else {
-    console.log("User document not found");
-  }
+  const res = await fetch(`/api/calories?userid=${userId}`, {
+    method: "PATCH",
+    body: JSON.stringify({ macros, multiplier }),
+  });
 };
 
 /**
