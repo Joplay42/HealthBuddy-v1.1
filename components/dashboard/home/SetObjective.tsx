@@ -108,7 +108,7 @@ const SetObjective = () => {
       // Check if a user was found
       if (userId) {
         const res = await fetch(`/api/objective?userid=${userId}`, {
-          method: "POST",
+          method: "PATCH",
           body: JSON.stringify({
             calorie,
             protein,

@@ -266,9 +266,9 @@ export const deleteAccount = async () => {
     let res;
 
     // The UserCalorieData firestore doc
-    const userCalorieDataDoc = doc(db, "UserCalorieData", user.uid);
-    // Delete the UserCalorieData firestore doc
-    await deleteDoc(userCalorieDataDoc);
+    res = await fetch(`/api/calories?userid=${user.uid}`, {
+      method: "DELETE",
+    });
 
     // The UserFoodList firestore doc
     const userConsumedFood = doc(db, "UserConsumedFood", user.uid);

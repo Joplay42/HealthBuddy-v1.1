@@ -150,3 +150,67 @@ export const DELETE = async (request: Request) => {
     );
   }
 };
+
+export const PATCH = async (request: Request) => {
+  // Error handling
+  try {
+    // The new searchParams
+    const { searchParams } = new URL(request.url);
+    // Get the user id
+    const userId = searchParams.get("userid");
+
+    // handle null values
+    if (!userId) {
+      return new NextResponse(
+        JSON.stringify({
+          message: "Missing parameters",
+        }),
+        { status: 422 }
+      );
+    }
+
+    // Get the body
+    const body = await request.json();
+
+    // Error handling
+    if (!body || Object.keys(body).length === 0) {
+      return new NextResponse(JSON.stringify({ message: "Invalid data" }), {
+        status: 400,
+      });
+    }
+
+    const { calorie, protein, carbs, fat } = body;
+
+    // Check any missing attribute
+    if (!calorie || !protein || !carbs || !fat) {
+      return new NextResponse(
+        JSON.stringify({
+          message: "Missing object attribute",
+        }),
+        { status: 400 }
+      );
+    }
+
+    // reference of the users doc
+    const userGoalDocRef = doc(db, "UserGoal", userId);
+
+    // Set the new doc
+    const userGoal = await setDoc(userGoalDocRef, body);
+
+    // Return success message
+    return new NextResponse(
+      JSON.stringify({
+        message: "Objective has been created",
+        data: userGoal,
+      }),
+      { status: 200 }
+    );
+  } catch (error: any) {
+    return new NextResponse(
+      JSON.stringify({
+        error: error.message,
+      }),
+      { status: 500 }
+    );
+  }
+};

@@ -1,5 +1,5 @@
 import { db } from "@/config/firebase";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
 import { NextResponse } from "next/server";
 
 export const GET = async (request: Request) => {
@@ -107,6 +107,57 @@ export const POST = async (request: Request) => {
     return new NextResponse(
       JSON.stringify({
         message: "An error occured while trying to fetch the users objective",
+        error: error.message,
+      }),
+      { status: 500 }
+    );
+  }
+};
+
+export const DELETE = async (request: Request) => {
+  try {
+    // The new searchParams
+    const { searchParams } = new URL(request.url);
+    // Get the user id
+    const userId = searchParams.get("userid");
+
+    // handle null values
+    if (!userId) {
+      return new NextResponse(
+        JSON.stringify({
+          message: "Missing parameters",
+        }),
+        { status: 422 }
+      );
+    }
+
+    // Check if the user exists
+    // reference of the users doc
+    const userGoalDocRef = doc(db, "UserCalorieData", userId);
+    const data = await getDoc(userGoalDocRef);
+
+    // Handle null values
+    if (!data.exists()) {
+      return new NextResponse(
+        JSON.stringify({
+          message: `No document has been found with an id of ${userId}`,
+        }),
+        { status: 404 }
+      );
+    }
+
+    await deleteDoc(userGoalDocRef);
+
+    // Return success message
+    return new NextResponse(
+      JSON.stringify({
+        message: "Calories has been deleted",
+      }),
+      { status: 200 }
+    );
+  } catch (error: any) {
+    return new NextResponse(
+      JSON.stringify({
         error: error.message,
       }),
       { status: 500 }
