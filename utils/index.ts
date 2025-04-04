@@ -132,7 +132,7 @@ export const createUser = async ({
     password
   );
 
-  let res, data;
+  let res;
 
   // Create UserCalorie Firestore doc
   res = await fetch(`/api/calories?userid=${userCredential.user.uid}`, {
@@ -263,6 +263,8 @@ export const deleteAccount = async () => {
     // Use the firebase deleteUser function
     await deleteUser(user);
 
+    let res;
+
     // The UserCalorieData firestore doc
     const userCalorieDataDoc = doc(db, "UserCalorieData", user.uid);
     // Delete the UserCalorieData firestore doc
@@ -274,9 +276,14 @@ export const deleteAccount = async () => {
     await deleteDoc(userConsumedFood);
 
     // The UserGoal firestoreDoc
-    const userGoalDoc = doc(db, "UserGoal", user.uid);
-    // Dete the UserGoal firestore doc
-    await deleteDoc(userGoalDoc);
+    res = await fetch(`/api/objective?userid=${user.uid}`, {
+      method: "DELETE",
+    });
+
+    // Error handling
+    if (!res.ok) {
+      throw new Error("An error occured while trying to create the user");
+    }
   }
 };
 
