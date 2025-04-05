@@ -93,6 +93,10 @@ const SettingsCard = ({ card }: cardProps) => {
       const url = router.push("/dashboard/setting?modal=addfood", {
         scroll: false,
       });
+    } else if (card.title == "Create recipe") {
+      const url = router.push("/dashboard/setting?modal=addrecipe&index=1", {
+        scroll: false,
+      });
     }
     setFirstName("");
     setLastName("");
