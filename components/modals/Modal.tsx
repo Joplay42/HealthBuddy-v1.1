@@ -61,7 +61,7 @@ const Modal = ({
         currentParams.get("id");
 
       if (!isSearch) {
-        if (index != (1 || 4)) {
+        if (index != 1 && index != 4) {
           const newIndex = (index - 1).toString();
           currentParams.set("index", newIndex);
 
