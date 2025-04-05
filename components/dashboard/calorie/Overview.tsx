@@ -37,7 +37,11 @@ const Overview = ({ goal, data, loading }: overViewProps) => {
             <PieChart data={caloriesConsumed} remaining={caloriesRemaining} />
             {/** Display of the remaining calories */}
             <div className="absolute bottom-1/2 right-1/2 translate-x-1/2 translate-y-1/2 text-center">
-              <h1 className="font-bold text-4xl">{caloriesRemaining}</h1>
+              <h1 className="font-bold text-4xl">
+                {caloriesRemaining < 0
+                  ? `+${Math.abs(caloriesRemaining)}`
+                  : caloriesRemaining}
+              </h1>
               <p>Remaining</p>
             </div>
           </div>

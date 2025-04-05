@@ -7,12 +7,15 @@ import { Chart, ArcElement, Tooltip, Legend } from "chart.js";
 Chart.register(ArcElement, Tooltip, Legend);
 
 const PieChart = ({ data, remaining }: chartProps) => {
+  // Make a maximum to make it not exceed
+  const safeRemaining = Math.max(0, remaining);
+
   const value = {
     labels: ["consumed", "remaining"],
     datasets: [
       {
         label: "Calories",
-        data: [data, remaining],
+        data: [data, safeRemaining],
         backgroundColor: ["#AFF921", "#656565"],
         borderWidth: 1,
         cutout: "60%",
