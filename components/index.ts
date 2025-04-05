@@ -56,9 +56,6 @@ import SetObjective from "./dashboard/home/SetObjective";
 import ObjectiveModals from "./modals/ObjectiveModals";
 import FoodModal from "./modals/FoodModal";
 import AddFood from "./dashboard/calorie/AddFood";
-import AdminModal from "./modals/AdminModal";
-import AdminDatabase from "./admin/AdminDatabase";
-import Tablet from "./admin/Tablet";
 import Admin from "./dashboard/admin/Admin";
 import Pending from "./dashboard/admin/Pending";
 import Live from "./dashboard/admin/Live";
@@ -137,9 +134,6 @@ export {
   ObjectiveModals,
   FoodModal,
   AddFood,
-  AdminModal,
-  AdminDatabase,
-  Tablet,
   Admin,
   Pending,
   Live,

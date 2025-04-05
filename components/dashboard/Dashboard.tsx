@@ -5,15 +5,12 @@ import {
   Header,
   FoodModal,
   ObjectiveModals,
-  AdminModal,
   AddFoodModal,
   AddRecipeModal,
-  FoodItem,
-  FoodDesc,
   EditRecipeModal,
 } from "@/components";
 import { DashboardProps } from "@/types";
-import { FireBaseAuthProvider, useFirebaseAuth } from "@/context/UserContext";
+import { FireBaseAuthProvider } from "@/context/UserContext";
 import { UserInformationProvider } from "@/context/UserInformationContext";
 import { useSearchParams } from "next/navigation";
 
@@ -33,7 +30,6 @@ const Dashboard = ({ children }: DashboardProps) => {
   const isAddRecipeModalOpen = searchParams.get("modal") == "addrecipe";
   const isEditRecipeModalOpen = searchParams.get("modal") == "editrecipe";
   const isObjectiveModalOpen = searchParams.get("modal") === "objective";
-  const isAdminModalOpen = searchParams.get("modal") == "admin";
 
   return (
     // The custom context to pass the user
@@ -54,7 +50,6 @@ const Dashboard = ({ children }: DashboardProps) => {
           {/** Handle the foodMoal opening with url params */}
           {isFoodModalOpen && <FoodModal />}
           {isObjectiveModalOpen && <ObjectiveModals />}
-          {isAdminModalOpen && <AdminModal />}
           {isAddFoodModalOpen && <AddFoodModal />}
           {isAddRecipeModalOpen && <AddRecipeModal />}
           {isEditRecipeModalOpen && <EditRecipeModal />}

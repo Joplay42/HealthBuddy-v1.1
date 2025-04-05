@@ -25,29 +25,6 @@ const Header = () => {
     return <HeaderSqueleton />;
   }
 
-  /**
-   * This function is used only for development to populate the database for the food
-   */
-  const handleButtonClick = async () => {
-    router.push("/dashboard?modal=admin", { scroll: false });
-
-    /**try {
-      // First, fetch data from the API
-      const fetchedFoods = await fetchDataFromApi();
-      console.log(fetchedFoods);
-
-      // Then, write the fetched data to Firestore
-      if (fetchedFoods && fetchedFoods.length > 0) {
-        await writeToFirestoreWithRandomIds(fetchedFoods);
-        console.log("Data successfully written to Firestore.");
-      } else {
-        console.log("No valid foods to write.");
-      }
-    } catch (err) {
-      console.error(err);
-    }**/
-  };
-
   return (
     // Header container
     <div className="flex justify-between items-center pr-12">
@@ -60,8 +37,6 @@ const Header = () => {
           Welcome back <span className="font-bold">{user.displayName}👋</span>
         </p>
       </div>
-      {/** Only for development delete once in production */}
-      <button onClick={handleButtonClick}>Dev mode</button>
     </div>
   );
 };
