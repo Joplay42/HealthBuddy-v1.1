@@ -58,15 +58,15 @@ const RecipeFoodItemCard = ({
       {/** Food name */}
       <div className="text-lg w-40">
         <h3 className="font-semibold">{foodItem.Name.toLocaleLowerCase()}</h3>
-        <p>{(foodItem.Quantity || 0) + " " + foodItem.Unit}</p>
+        <p>{(Math.round(foodItem.Quantity) || 0) + " " + foodItem.Unit}</p>
       </div>
       {/** Food calorie chart */}
       <div className="flex items-center space-x-4 justify-self-auto">
         <NutrientsCharts
-          Calories={foodItem.Calories || 0}
-          Protein={foodItem.Protein || 0}
-          Carbs={foodItem.Carbs || 0}
-          Fat={foodItem.Fat || 0}
+          Calories={Math.round(foodItem.Calories) || 0}
+          Protein={Math.round(foodItem.Protein) || 0}
+          Carbs={Math.round(foodItem.Carbs) || 0}
+          Fat={Math.round(foodItem.Fat) || 0}
           size="h-20 w-auto"
           fontSize="text-lg"
         />
@@ -77,19 +77,28 @@ const RecipeFoodItemCard = ({
         <div className="text-center">
           <h3 className="font-bold text-[#AFF921]">Protein</h3>
           <p>
-            <span className="font-semibold">{foodItem.Protein || 0}</span>g
+            <span className="font-semibold">
+              {Math.round(foodItem.Protein) || 0}
+            </span>
+            g
           </p>
         </div>
         <div className="text-center">
           <h3 className="font-bold text-[#73af00]">Carbs</h3>
           <p>
-            <span className="font-semibold">{foodItem.Carbs || 0}</span>g
+            <span className="font-semibold">
+              {Math.round(foodItem.Carbs) || 0}
+            </span>
+            g
           </p>
         </div>
         <div className="text-center">
           <h3 className="font-bold text-[#d7ff8a]">Fat</h3>
           <p>
-            <span className="font-semibold">{foodItem.Fat || 0}</span>g
+            <span className="font-semibold">
+              {Math.round(foodItem.Fat) || 0}
+            </span>
+            g
           </p>
         </div>
       </div>

@@ -61,7 +61,7 @@ const FoodDesc = ({
       <div className="flex flex-col space-y-10 md:space-y-2 w-full md:w-auto justify-around mx-4 lg:mx-10 ">
         <div className="flex flex-col space-y-4">
           <h1 className="text-2xl font-semibold">
-            {food.Name} - {food.Brand}
+            {food.Name.toLowerCase()} - {food.Brand.toLowerCase()}
           </h1>
           <p className="text-xl font-semibold">
             Quantity ({food.Quantity + food.Unit})
@@ -77,19 +77,26 @@ const FoodDesc = ({
         <div className="flex space-x-16 md:space-x-8 ">
           <div className="text-2xl">
             <p>
-              <span className="font-semibold">{food.Protein || 0}</span>g
+              <span className="font-semibold">
+                {Math.round(food.Protein) || 0}
+              </span>
+              g
             </p>
             <h3 className="font-bold text-[#AFF921]">Protein</h3>
           </div>
           <div className="text-2xl">
             <p>
-              <span className="font-semibold">{food.Carbs || 0}</span>g
+              <span className="font-semibold">
+                {Math.round(food.Carbs) || 0}
+              </span>
+              g
             </p>
             <h3 className="font-bold text-[#73af00]">Carbs</h3>
           </div>
           <div className="text-2xl">
             <p>
-              <span className="font-semibold">{food.Fat || 0}</span>g
+              <span className="font-semibold">{Math.round(food.Fat) || 0}</span>
+              g
             </p>
             <h3 className="font-bold text-[#d7ff8a]">Fat</h3>
           </div>

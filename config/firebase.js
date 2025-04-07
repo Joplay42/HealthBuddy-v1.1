@@ -1,4 +1,4 @@
-import { seedDatabase } from "@/utils/seed";
+import { seedData } from "@/script/seedingDatabase";
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
@@ -16,5 +16,4 @@ export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 
-// Seeding the database initial food item
-//seedDatabase();
+//seedData();

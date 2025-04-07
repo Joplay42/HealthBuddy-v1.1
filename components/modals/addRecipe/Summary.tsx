@@ -214,7 +214,8 @@ const Summary = ({
               <div className="space-y-2 mt-2">
                 {recipe.foods.map((foods, index) => (
                   <h1 key={index}>
-                    {foods.Name} - {foods.Brand} ({foods.Quantity} {foods.Unit})
+                    {foods.Name.toLocaleLowerCase()} -{" "}
+                    {foods.Brand.toLowerCase()} ({foods.Quantity} {foods.Unit})
                   </h1>
                 ))}
               </div>

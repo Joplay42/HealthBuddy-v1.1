@@ -2,7 +2,6 @@
 // component import
 import { HeaderSqueleton, PageName } from "@/components";
 import { useFirebaseAuth } from "@/context/UserContext";
-import { fetchDataFromApi, writeToFirestoreWithRandomIds } from "@/utils/seed";
 import { useRouter } from "next/navigation";
 
 /**

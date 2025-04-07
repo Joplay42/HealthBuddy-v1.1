@@ -22,7 +22,7 @@ const FoodItem = ({
       className={`flex justify-between items-center py-6 px-4 lg:px-10 ${style}`}
     >
       <div>
-        <h4 className="font-semibold text-xl">{food.Name}</h4>
+        <h4 className="font-semibold text-xl">{food.Name.toLowerCase()}</h4>
         <p>
           {food.Quantity} {food.Unit}, {food.Calories} calories
         </p>

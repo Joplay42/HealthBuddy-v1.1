@@ -1,6 +1,6 @@
 import { client } from "@/config/algolia";
 import { db } from "@/config/firebase";
-import { foodProps } from "@/types";
+import { Algoliahit, foodProps } from "@/types";
 import { deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
 import { NextResponse } from "next/server";
 
@@ -41,12 +41,17 @@ export const GET = async (request: Request) => {
         },
       ],
     })) as unknown as {
-      results: { hits: foodProps[]; page: number; nbPages: number }[];
+      results: { hits: Algoliahit[]; page: number; nbPages: number }[];
     };
 
-    const foodList = res.results[0].hits.filter(
-      (item) => item.Pending === undefined
-    );
+    const foodList = res.results[0].hits
+      .filter((item) => item.Pending === undefined)
+      .map((item) => {
+        return {
+          ...item,
+          Id: item.objectID,
+        };
+      });
 
     // Manage if no result is found
     if (foodList.length === 0) {

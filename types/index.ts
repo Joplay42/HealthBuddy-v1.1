@@ -126,7 +126,8 @@ export type foodProps = {
 };
 
 export type Algoliahit = {
-  objectId: string;
+  objectID: string;
+  Pending?: boolean;
   Name: string;
   Brand: string;
   Quantity: number;

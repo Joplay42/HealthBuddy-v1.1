@@ -117,7 +117,9 @@ const AddFood = () => {
         )}
         {loading && <FoodItemCardSqueleton />}
         {!error ? (
-          foodList?.map((item) => <FoodItemCard food={item} key={item.Id} />)
+          foodList?.map((item, index) => (
+            <FoodItemCard food={item} key={index} />
+          ))
         ) : (
           <p className="text-red-500">{error}</p>
         )}

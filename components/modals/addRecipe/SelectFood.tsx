@@ -42,7 +42,9 @@ const SelectFood = ({
     const findFood = () => {
       if (isDescription) {
         // Find the food in the recipe
-        const foundFood = recipe.foods.find((food) => food.Id == isDescription);
+        const foundFood = recipe.foods.find(
+          (food) => food.Id === isDescription
+        );
         if (foundFood) setFood(foundFood);
       }
     };
