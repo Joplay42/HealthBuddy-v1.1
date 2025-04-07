@@ -1,6 +1,7 @@
 import {
   NavLinksWebsiteProps,
   cardsWebsiteProps,
+  foodProps,
   navLinksDashboardProps,
   quotesProps,
   settingCardProps,

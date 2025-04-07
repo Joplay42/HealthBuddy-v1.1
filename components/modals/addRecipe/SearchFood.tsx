@@ -6,6 +6,7 @@ import {
   FoodItemCardSqueleton,
   RecipeFoodItemCard,
   DisplayRecipePendingItemList,
+  Pagination,
 } from "@/components";
 import { foodProps } from "@/types";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -27,6 +28,18 @@ const SearchFood = ({ addFood }: { addFood: (food: foodProps) => void }) => {
   // Get the params
   const searchQuery = searchParams.get("term");
 
+  // Pagination states
+  const [currentPage, setCurrentPage] = useState(0);
+  // Calculate the total pages
+  const [totalPages, setTotalPages] = useState(0);
+
+  // Function to handle previous and next
+  const handlePageChange = (newPage: number) => {
+    if (searchQuery) {
+      getFood(searchQuery, newPage);
+    }
+  };
+
   // Search results stored
   const [foodList, setFoodList] = useState<foodProps[]>([]);
 
@@ -34,23 +47,27 @@ const SearchFood = ({ addFood }: { addFood: (food: foodProps) => void }) => {
   useEffect(() => {
     if (searchQuery) {
       setSearchTerm(searchQuery);
-      getFood(searchQuery);
+      getFood(searchQuery, 0);
     } else {
       setSearchTerm("");
       setError("");
       setFoodList([]);
+      setCurrentPage(0);
+      setTotalPages(0);
     }
   }, [searchQuery]);
 
   // The new API food fetching with the custom API we created
-  const getFood = async (term: string) => {
+  const getFood = async (term: string, page: number) => {
     setFoodList([]);
     setLoading(true);
     setError("");
 
     try {
       // Fetching the API
-      const res = await fetch(`/api/foods?search=${term}`);
+      const res = await fetch(
+        `/api/foods?search=${term}&page=${page}&limit=10`
+      );
 
       if (!res.ok) {
         const errorData = await res.json();
@@ -60,7 +77,9 @@ const SearchFood = ({ addFood }: { addFood: (food: foodProps) => void }) => {
       // Storing the data
       const data = await res.json();
 
-      setFoodList(data);
+      setFoodList(data.foodList);
+      setCurrentPage(data.page);
+      setTotalPages(data.totalPage);
     } catch (error: any) {
       setError(error.message);
     } finally {
@@ -117,6 +136,11 @@ const SearchFood = ({ addFood }: { addFood: (food: foodProps) => void }) => {
           <p className="text-red-500">{error}</p>
         )}
       </div>
+      <Pagination
+        handlePageChange={handlePageChange}
+        totalPage={totalPages}
+        currentPage={currentPage}
+      />
     </div>
   );
 };

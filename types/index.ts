@@ -312,3 +312,9 @@ export type userRecipesContextProps = {
   recipes: recipeProps[];
   loading: boolean;
 };
+
+export type paginationProps = {
+  handlePageChange: (newPage: number) => void;
+  currentPage: number;
+  totalPage: number;
+};

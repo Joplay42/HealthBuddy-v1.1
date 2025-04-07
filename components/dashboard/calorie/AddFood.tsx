@@ -3,6 +3,7 @@ import {
   DisplayPendingItemList,
   FoodItemCard,
   FoodItemCardSqueleton,
+  Pagination,
   SearchBar,
 } from "@/components";
 import { foodProps } from "@/types";
@@ -28,27 +29,43 @@ const AddFood = () => {
   // Loading state
   const [loading, setLoading] = useState(false);
 
+  // Pagination states
+  const [currentPage, setCurrentPage] = useState(0);
+  // Calculate the total pages
+  const [totalPages, setTotalPages] = useState(0);
+
+  // Function to handle previous and next
+  const handlePageChange = (newPage: number) => {
+    if (searchQuery) {
+      getFood(searchQuery, newPage);
+    }
+  };
+
   // UseEffect hooks to check if the url has params to fetch teh data
   useEffect(() => {
     if (searchQuery) {
       setSearchTerm(searchQuery);
-      getFood(searchQuery);
+      getFood(searchQuery, 0);
     } else {
       setSearchTerm("");
       setError("");
       setFoodList([]);
+      setCurrentPage(0);
+      setTotalPages(0);
     }
   }, [searchQuery]);
 
   // The new API food fetching with the custom API we created
-  const getFood = async (term: string) => {
+  const getFood = async (term: string, page: number) => {
     setFoodList([]);
     setLoading(true);
     setError("");
 
     try {
       // Fetching the API
-      const res = await fetch(`/api/foods?search=${term}`);
+      const res = await fetch(
+        `/api/foods?search=${term}&page=${page}&limit=10`
+      );
 
       if (!res.ok) {
         const errorData = await res.json();
@@ -58,7 +75,9 @@ const AddFood = () => {
       // Storing the data
       const data = await res.json();
 
-      setFoodList(data);
+      setFoodList(data.foodList);
+      setCurrentPage(data.page);
+      setTotalPages(data.totalPage);
     } catch (error: any) {
       setError(error.message);
     } finally {
@@ -98,13 +117,16 @@ const AddFood = () => {
         )}
         {loading && <FoodItemCardSqueleton />}
         {!error ? (
-          foodList?.map((item, index) => (
-            <FoodItemCard food={item} key={index} />
-          ))
+          foodList?.map((item) => <FoodItemCard food={item} key={item.Id} />)
         ) : (
           <p className="text-red-500">{error}</p>
         )}
       </div>
+      <Pagination
+        handlePageChange={handlePageChange}
+        totalPage={totalPages}
+        currentPage={currentPage}
+      />
     </div>
   );
 };

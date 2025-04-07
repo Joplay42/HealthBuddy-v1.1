@@ -1,6 +1,11 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Item, PendingItemListSqueleton, SearchBar } from "@/components";
+import {
+  Item,
+  Pagination,
+  PendingItemListSqueleton,
+  SearchBar,
+} from "@/components";
 import { useRouter, useSearchParams } from "next/navigation";
 import { foodProps } from "@/types";
 
@@ -19,6 +24,18 @@ const Live = () => {
   // Loading state
   const [loading, setLoading] = useState(false);
 
+  // Pagination states
+  const [currentPage, setCurrentPage] = useState(0);
+  // Calculate the total pages
+  const [totalPages, setTotalPages] = useState(0);
+
+  // Function to handle previous and next
+  const handlePageChange = (newPage: number) => {
+    if (searchQuery) {
+      getFood(searchQuery, newPage);
+    }
+  };
+
   // No result found error
   const [error, setError] = useState("");
   // Search params hooks from next/navigation
@@ -32,23 +49,27 @@ const Live = () => {
   useEffect(() => {
     if (searchQuery) {
       setSearchTerm(searchQuery);
-      getFood(searchQuery);
+      getFood(searchQuery, 0);
     } else {
       setSearchTerm("");
       setError("");
       setFoodList([]);
+      setCurrentPage(0);
+      setTotalPages(0);
     }
   }, [searchQuery]);
 
   // The new API food fetching with the custom API we created
-  const getFood = async (term: string) => {
+  const getFood = async (term: string, page: number) => {
     setFoodList([]);
     setLoading(true);
     setError("");
 
     try {
       // Fetching the API
-      const res = await fetch(`/api/foods?search=${term}`);
+      const res = await fetch(
+        `/api/foods?search=${term}&page=${page}&limit=10`
+      );
 
       if (!res.ok) {
         const errorData = await res.json();
@@ -58,7 +79,9 @@ const Live = () => {
       // Storing the data
       const data = await res.json();
 
-      setFoodList(data);
+      setFoodList(data.foodList);
+      setCurrentPage(data.page);
+      setTotalPages(data.totalPage);
     } catch (error: any) {
       setError(error.message);
     } finally {
@@ -82,6 +105,11 @@ const Live = () => {
             }}
           />
           <div className="mt-10">
+            {foodList && (
+              <h4 className="font-bold text-lg text-neutral-500 my-4">
+                Results ({foodList.length})
+              </h4>
+            )}
             {loading && <PendingItemListSqueleton />}
             {!error ? (
               foodList?.map((item, index) => (
@@ -97,6 +125,11 @@ const Live = () => {
               <p className="text-red-500">{error}</p>
             )}
           </div>
+          <Pagination
+            handlePageChange={handlePageChange}
+            totalPage={totalPages}
+            currentPage={currentPage}
+          />
         </div>
       </div>
     </>

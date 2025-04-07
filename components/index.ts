@@ -81,6 +81,7 @@ import Summary from "./modals/addRecipe/Summary";
 import DisplayRecipesList from "./modals/addRecipe/DisplayRecipesList";
 import RecipeItemCard from "./modals/addRecipe/RecipeItemCard";
 import EditRecipeModal from "./modals/EditRecipeModal";
+import Pagination from "./dashboard/calorie/Pagination";
 
 export {
   HeaderPage,
@@ -159,4 +160,5 @@ export {
   DisplayRecipesList,
   RecipeItemCard,
   EditRecipeModal,
+  Pagination,
 };
