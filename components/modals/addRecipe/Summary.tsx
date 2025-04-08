@@ -141,8 +141,8 @@ const Summary = ({
             />
           </div>
         </div>
-        <div className="mt-6 lg:mt-10">
-          <div className="my-6 grid md:grid-cols-2 gap-6 h-60">
+        <div className="mt-6 lg:mt-10 grid md:grid-cols-2">
+          <div className="my-6 gap-6 h-auto">
             <div className="space-y-4">
               <h1 className="font-semibold text-lg">
                 Macronutrient informations (per portions)
@@ -207,18 +207,18 @@ const Summary = ({
                 </div>
               </div>
             </div>
-            <div className="flex flex-col">
-              <div className="space-y-4">
-                <h1 className="font-semibold text-lg">List of ingredients</h1>
-              </div>
-              <div className="space-y-2 mt-2">
-                {recipe.foods.map((foods, index) => (
-                  <h1 key={index}>
-                    {capitalize(foods.Name)} - {capitalize(foods.Brand)} (
-                    {foods.Quantity} {foods.Unit})
-                  </h1>
-                ))}
-              </div>
+          </div>
+          <div className="flex flex-col my-6 h-auto">
+            <div className="space-y-4">
+              <h1 className="font-semibold text-lg">List of ingredients</h1>
+            </div>
+            <div className="space-y-2 mt-2">
+              {recipe.foods.map((foods, index) => (
+                <h1 key={index}>
+                  {capitalize(foods.Name)} - {capitalize(foods.Brand)} (
+                  {foods.Quantity} {foods.Unit})
+                </h1>
+              ))}
             </div>
           </div>
         </div>

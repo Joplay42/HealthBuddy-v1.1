@@ -69,7 +69,7 @@ const FoodItemCard = ({ food }: foodItemCardProps) => {
       {/** Food name */}
       <div className="text-lg w-40">
         <h3 className="font-semibold">{capitalize(food.Name)}</h3>
-        <p>{(Math.round(food.Quantity * multiplier) || 0) + food.Unit}</p>
+        <p>{(Math.round(food.Quantity * multiplier) || 0) + " " + food.Unit}</p>
       </div>
       {/** Food calorie chart */}
       <div className="flex items-center space-x-4 justify-self-end sm:justify-self-auto">
