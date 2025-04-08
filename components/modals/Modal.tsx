@@ -34,15 +34,25 @@ const Modal = ({
   const searchParams = useSearchParams();
   // Hooks for the navigation
   const pathName = usePathname();
+  const [isVisible, setIsVisible] = useState(false);
+
+  // Trigger fade-in animation after mount
+  useEffect(() => {
+    setTimeout(() => setIsVisible(true), 10); // slight delay to trigger transition
+  }, []);
 
   // Function to handle navigation
   const handleClosing = () => {
-    // Get the current params
-    const currentParams = new URLSearchParams(window.location.search);
-    // Delete the current param
-    currentParams.delete("modal");
-    // Push the router to the route without params
-    router.replace(window.location.pathname);
+    setIsVisible(false);
+
+    setTimeout(() => {
+      // Get the current params
+      const currentParams = new URLSearchParams(window.location.search);
+      // Delete the current param
+      currentParams.delete("modal");
+      // Push the router to the route without params
+      router.replace(window.location.pathname);
+    }, 200);
   };
 
   // Function to handle the back navigation
@@ -85,16 +95,33 @@ const Modal = ({
     }
   };
 
+  // Disable body scroll when the modal is open
+  useEffect(() => {
+    document.body.style.overflow = "hidden"; // Disable scrolling on body
+
+    // Clean up by resetting overflow when modal is closed
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, []);
+
   return (
     // This is the background of the modal window which is darker
     <>
       <div
-        className="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-0 justify-center items-center w-full md:inset-0 h-screen max-h-full bg-opacity-30 bg-black transition duration-150 hover:cursor-pointer"
+        className={`overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-0 justify-center items-center w-full md:inset-0 h-screen max-h-full bg-opacity-30 bg-black transition-opacity duration-00 ${
+          isVisible ? "opacity-100" : "opacity-0"
+        }`}
         onClick={handleClosing}
       />
       {/** This is the modal window which is centered and with a max width */}
-      <div className="fixed inset-0 z-10 flex justify-center items-center px-4">
-        <div className="bg-white max-h-[90vh] w-full max-w-6xl overflow-y-auto rounded-lg shadow-md border border-neutral-300">
+      <div className="fixed inset-0 z-10 flex justify-center items-center px-4 ">
+        <div
+          className={`bg-white max-h-[90vh] w-full max-w-6xl overflow-y-auto rounded-lg shadow-md border border-neutral-300 transition duration-200 ease-out transform ${
+            isVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"
+          }`}
+        >
+          {" "}
           {/** This is the header of the modal window which has a close button that changes the states of the modal window */}
           <div className="grid grid-cols-3 items-center py-4 px-2 md:px-5 md:pt-8 md:pb-5 rounded-t">
             {backButton && (

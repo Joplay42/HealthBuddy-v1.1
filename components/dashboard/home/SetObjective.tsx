@@ -141,7 +141,7 @@ const SetObjective = () => {
   };
 
   return (
-    <div className=" p-5 md:px-10 lg:px-20">
+    <div className="px-5 pb-5 md:px-10 lg:pb-10 lg:px-20">
       <div className="lg:grid lg:grid-cols-2 lg:items-center">
         <form onSubmit={(e) => handleSubmit(e)}>
           <div className="space-y-2 lg:space-y-4">

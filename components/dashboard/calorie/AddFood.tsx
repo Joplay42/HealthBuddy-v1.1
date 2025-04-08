@@ -8,7 +8,7 @@ import {
 } from "@/components";
 import { foodProps } from "@/types";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const AddFood = () => {
   // Naviagtion router
@@ -33,11 +33,19 @@ const AddFood = () => {
   const [currentPage, setCurrentPage] = useState(0);
   // Calculate the total pages
   const [totalPages, setTotalPages] = useState(0);
+  // Ref hooks to handle the scroll back
+  const modalContentRef = useRef<HTMLDivElement>(null);
 
   // Function to handle previous and next
-  const handlePageChange = (newPage: number) => {
+  const handlePageChange = async (newPage: number) => {
     if (searchQuery) {
-      getFood(searchQuery, newPage);
+      if (modalContentRef.current) {
+        modalContentRef.current.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+      await getFood(searchQuery, newPage);
     }
   };
 
@@ -86,7 +94,7 @@ const AddFood = () => {
   };
 
   return (
-    <div className="w-full px-5 pb-5">
+    <div className="w-full px-5 pb-5" ref={modalContentRef}>
       <SearchBar
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
@@ -115,7 +123,10 @@ const AddFood = () => {
             Results ({foodList.length})
           </h4>
         )}
-        {loading && <FoodItemCardSqueleton />}
+        {loading &&
+          Array(10)
+            .fill(0)
+            .map((_, index) => <FoodItemCardSqueleton key={index} />)}
         {!error ? (
           foodList?.map((item, index) => (
             <FoodItemCard food={item} key={index} />

@@ -43,9 +43,6 @@ const FoodItemCard = ({ food }: foodItemCardProps) => {
       setError(false);
       try {
         if (user) {
-          await consumeFood(food, user.uid, multiplier);
-          await addFoodToConsumedList(meal, food, multiplier, user.uid);
-
           // Close the modal when the operation is done
           // Get the current params
           const currentParams = new URLSearchParams(window.location.search);
@@ -53,6 +50,8 @@ const FoodItemCard = ({ food }: foodItemCardProps) => {
           currentParams.delete("modal");
           // Push the router to the route without params
           router.replace(window.location.pathname);
+          await consumeFood(food, user.uid, multiplier);
+          await addFoodToConsumedList(meal, food, multiplier, user.uid);
         }
       } catch (error: any) {
         console.error(error.message);
@@ -65,7 +64,7 @@ const FoodItemCard = ({ food }: foodItemCardProps) => {
 
   return (
     // Grid container
-    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-y-6 lg:gap-y-0 items-center justify-between py-5 border-neutral-300 border-t">
+    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-y-6 lg:gap-y-0 items-center justify-between py-5 border-neutral-300 border-t animate-fade-in">
       {/** Food name */}
       <div className="text-lg w-40">
         <h3 className="font-semibold line-clamp-3">{capitalize(food.Name)}</h3>

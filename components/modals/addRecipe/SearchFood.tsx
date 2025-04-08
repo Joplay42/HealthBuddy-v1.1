@@ -10,7 +10,7 @@ import {
 } from "@/components";
 import { foodProps } from "@/types";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 const SearchFood = ({ addFood }: { addFood: (food: foodProps) => void }) => {
   // Hooks for the search term
@@ -32,10 +32,18 @@ const SearchFood = ({ addFood }: { addFood: (food: foodProps) => void }) => {
   const [currentPage, setCurrentPage] = useState(0);
   // Calculate the total pages
   const [totalPages, setTotalPages] = useState(0);
+  // Ref hooks to handle the scroll back
+  const modalContentRef = useRef<HTMLDivElement>(null);
 
   // Function to handle previous and next
   const handlePageChange = (newPage: number) => {
     if (searchQuery) {
+      if (modalContentRef.current) {
+        modalContentRef.current.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
       getFood(searchQuery, newPage);
     }
   };
@@ -88,7 +96,7 @@ const SearchFood = ({ addFood }: { addFood: (food: foodProps) => void }) => {
   };
 
   return (
-    <div className="w-full p-5">
+    <div className="w-full p-5" ref={modalContentRef}>
       <SearchBar
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
@@ -127,7 +135,10 @@ const SearchFood = ({ addFood }: { addFood: (food: foodProps) => void }) => {
             Results ({foodList.length})
           </h4>
         )}
-        {loading && <FoodItemCardSqueleton />}
+        {loading &&
+          Array(10)
+            .fill(0)
+            .map((_, index) => <FoodItemCardSqueleton key={index} />)}
         {!error ? (
           foodList?.map((item, index) => (
             <RecipeFoodItemCard food={item} key={index} action={addFood} />
