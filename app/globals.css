@@ -51,8 +51,7 @@ html {
 }
 
 .light-gray-filter {
-  filter: invert(20%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(95%)
-    contrast(80%);
+  filter: brightness(0) saturate(100%) invert(44%) sepia(0%);
 }
 
 .aff921-filter {

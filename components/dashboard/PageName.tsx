@@ -20,7 +20,7 @@ const PageName = () => {
         // if the current page is the link
         pathName === link.link ? (
           // Display only the current page link
-          <h1 key={index} className="text-2xl font-bold">
+          <h1 key={index} className="text-xl md:text-2xl font-bold">
             {link.text}
           </h1>
         ) : null

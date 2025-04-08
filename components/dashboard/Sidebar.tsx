@@ -41,14 +41,14 @@ const Sidebar = () => {
 
   return (
     // The sideBAr
-    <div className="h-screen fixed bg-custom-dark min-w-20 lg:min-w-32 flex flex-col">
+    <div className="h-screen fixed bg-custom-dark min-w-auto md:min-w-20 lg:min-w-32 flex flex-col">
       {/** The sideBar logo */}
       <Image
         src="/logo-mobile.png"
         width={75}
         height={75}
         alt="mobile logo"
-        className="mx-auto my-2 lg:my-5 w-14 h-14 lg:w-20 lg:h-20"
+        className="mx-auto my-5 w-12 h-12 lg:w-20 lg:h-20"
       />
       {/** The navLinks */}
       <div className="flex flex-col mt-10 lg:mt-20">
@@ -80,8 +80,8 @@ const Sidebar = () => {
                 {/** The icon of each links for smaller screen */}
                 <Image
                   src={link.icon}
-                  width={35}
-                  height={35}
+                  width={25}
+                  height={25}
                   alt={`Link ${link.icon}`}
                   className="mx-auto light-gray-filter block lg:hidden"
                 />
@@ -114,8 +114,8 @@ const Sidebar = () => {
                 {/** The icon of each links for smaller screen */}
                 <Image
                   src={link.icon}
-                  width={35}
-                  height={35}
+                  width={25}
+                  height={25}
                   alt={`Link ${link.icon}`}
                   className="mx-auto light-gray-filter block lg:hidden"
                 />

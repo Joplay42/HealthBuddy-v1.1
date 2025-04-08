@@ -3,6 +3,7 @@
 import { FoodMenu } from "@/components";
 // Props import
 import { foodEntriesListProps } from "@/types";
+import { capitalize } from "@/utils";
 // NextJs image imports
 import Image from "next/image";
 // Hooks import
@@ -51,7 +52,7 @@ const FoodEntriesList = ({ label, data }: foodEntriesListProps) => {
             <tr key={index} className="border-y border-neutral-300 font-bold">
               {/** Display each item properties */}
               <td className="py-5">{item.Meal}</td>
-              <td className="py-5">{item.Name}</td>
+              <td className="py-5">{capitalize(item.Name)}</td>
               <td className="py-5">
                 {Math.round(item.Quantity) + " " + item.Unit}
               </td>
@@ -98,7 +99,9 @@ const FoodEntriesList = ({ label, data }: foodEntriesListProps) => {
               >
                 {/** Display the information */}
                 <td className="py-5">{item.Meal}</td>
-                <td className="py-5">{item.Name}</td>
+                <td className="py-5 truncate max-w-20 sm:max-w-auto">
+                  {capitalize(item.Name)}
+                </td>
                 {/** The menu opening button */}
                 <td>
                   <Image

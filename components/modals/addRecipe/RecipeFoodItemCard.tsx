@@ -58,7 +58,10 @@ const RecipeFoodItemCard = ({
     <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-y-6 lg:gap-y-0 items-center justify-between py-5 border-neutral-300 border-t">
       {/** Food name */}
       <div className="text-lg w-40">
-        <h3 className="font-semibold">{capitalize(foodItem.Name)}</h3>
+        <h3 className="font-semibold line-clamp-3">
+          {capitalize(foodItem.Name)}
+        </h3>
+        <h3>{capitalize(food.Brand)}</h3>
         <p>{(Math.round(foodItem.Quantity) || 0) + " " + foodItem.Unit}</p>
       </div>
       {/** Food calorie chart */}

@@ -39,7 +39,7 @@ const Dashboard = ({ children }: DashboardProps) => {
         <div>
           {/** Sidebar component */}
           <Sidebar />
-          <div className="ml-[80px] lg:ml-[128px]">
+          <div className="ml-[49px] md:ml-[80px] lg:ml-[128px]">
             {/** Header container */}
             <Header />
             {/** The content of the dashboard */}

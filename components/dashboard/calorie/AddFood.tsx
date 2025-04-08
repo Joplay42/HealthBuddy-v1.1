@@ -86,7 +86,7 @@ const AddFood = () => {
   };
 
   return (
-    <div className="w-full p-5">
+    <div className="w-full px-5 pb-5">
       <SearchBar
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
@@ -99,7 +99,7 @@ const AddFood = () => {
         }}
       />
       <button
-        className="my-4 text-lg w-fit bg-black text-white px-4 py-3 rounded-2xl text-center hover:opacity-75 hover:cursor-pointer"
+        className="my-2 md:my-4 text-md md:text-lg w-fit bg-black text-white px-3 md:px-4 py-2 md:py-3 rounded-2xl text-center hover:opacity-75 hover:cursor-pointer"
         onClick={() =>
           router.push("?modal=addfood", {
             scroll: false,
@@ -108,7 +108,7 @@ const AddFood = () => {
       >
         New food +
       </button>
-      <div className="mt-10">
+      <div className="mt-5 md:mt-10">
         <DisplayPendingItemList />
         {foodList && (
           <h4 className="font-bold text-lg text-neutral-500 my-4">

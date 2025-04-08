@@ -27,14 +27,14 @@ const Header = () => {
   return (
     // Header container
     <div className="flex justify-between items-center pr-12">
-      <div className="py-9 pl-12 border-b border-neutral-300">
+      <div className="py-9 px-5 md:px-12 border-b border-neutral-300 space-y-2">
         {/** Displays the current page name */}
         <PageName />
         {/** Displays a nice greeting message */}
-        <p className="text-md">
-          {/** TO DO - DISPLAY THE USERNAME */}
-          Welcome back <span className="font-bold">{user.displayName}👋</span>
-        </p>
+        <div className="sm:flex md:flex block sm:space-x-2 md:space-x-2 space-x-0">
+          <p className="text-md">Welcome back</p>
+          <p className="font-bold">{user.displayName}👋</p>
+        </div>
       </div>
     </div>
   );
