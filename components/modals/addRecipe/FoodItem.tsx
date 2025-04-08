@@ -1,5 +1,6 @@
 "use client";
 import { foodProps } from "@/types";
+import { capitalize } from "@/utils";
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 
@@ -22,7 +23,7 @@ const FoodItem = ({
       className={`flex justify-between items-center py-6 px-4 lg:px-10 ${style}`}
     >
       <div>
-        <h4 className="font-semibold text-xl">{food.Name.toLowerCase()}</h4>
+        <h4 className="font-semibold text-xl">{capitalize(food.Name)}</h4>
         <p>
           {food.Quantity} {food.Unit}, {food.Calories} calories
         </p>

@@ -2,7 +2,7 @@
 import NutrientsCharts from "@/components/charts/NutrientsCharts";
 import { useFirebaseAuth } from "@/context/UserContext";
 import { macronutrients, recipeProps } from "@/types";
-import { addRecipeToConsumedList, consumeFood } from "@/utils";
+import { addRecipeToConsumedList, capitalize, consumeFood } from "@/utils";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Image from "next/image";
@@ -111,7 +111,7 @@ const RecipeItemCard = ({ recipe }: { recipe: recipeProps }) => {
     <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-y-6 lg:gap-y-0 items-center justify-between py-5 border-neutral-300 border-t">
       {/** Food name */}
       <div className="text-lg w-40">
-        <h3 className="font-semibold">{recipe.Name.toLocaleLowerCase()}</h3>
+        <h3 className="font-semibold">{capitalize(recipe.Name)}</h3>
         <p>1 portion</p>
       </div>
       {/** Food calorie chart */}

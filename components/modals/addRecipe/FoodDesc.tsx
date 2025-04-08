@@ -4,6 +4,7 @@ import { foodProps } from "@/types";
 import { ChangeEvent, useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { capitalize } from "@/utils";
 
 const FoodDesc = ({
   food,
@@ -61,7 +62,7 @@ const FoodDesc = ({
       <div className="flex flex-col space-y-10 md:space-y-2 w-full md:w-auto justify-around mx-4 lg:mx-10 ">
         <div className="flex flex-col space-y-4">
           <h1 className="text-2xl font-semibold">
-            {food.Name.toLowerCase()} - {food.Brand.toLowerCase()}
+            {capitalize(food.Name ?? "")} - {capitalize(food.Brand ?? "")}
           </h1>
           <p className="text-xl font-semibold">
             Quantity ({food.Quantity + food.Unit})

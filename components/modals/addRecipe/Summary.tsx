@@ -3,7 +3,7 @@ import React, { ChangeEvent, useEffect, useState } from "react";
 import Image from "next/image";
 import { foodProps, macronutrients, recipeProps } from "@/types";
 import NutrientsCharts from "@/components/charts/NutrientsCharts";
-import { recipeTotalMacronutrients } from "@/utils";
+import { capitalize, recipeTotalMacronutrients } from "@/utils";
 import { useSearchParams } from "next/navigation";
 import { useFirebaseAuth } from "@/context/UserContext";
 
@@ -214,8 +214,8 @@ const Summary = ({
               <div className="space-y-2 mt-2">
                 {recipe.foods.map((foods, index) => (
                   <h1 key={index}>
-                    {foods.Name.toLocaleLowerCase()} -{" "}
-                    {foods.Brand.toLowerCase()} ({foods.Quantity} {foods.Unit})
+                    {capitalize(foods.Name)} - {capitalize(foods.Brand)} (
+                    {foods.Quantity} {foods.Unit})
                   </h1>
                 ))}
               </div>
