@@ -44,7 +44,7 @@ const Sidebar = () => {
     <div className="h-screen fixed bg-custom-dark min-w-auto md:min-w-20 lg:min-w-32 flex flex-col">
       {/** The sideBar logo */}
       <Image
-        src="/logo-mobile.png"
+        src="/Logo-mobile.png"
         width={75}
         height={75}
         alt="mobile logo"
