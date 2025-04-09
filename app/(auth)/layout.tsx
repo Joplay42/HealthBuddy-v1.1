@@ -12,7 +12,7 @@ const layout = ({
       <div className="pl-20 pt-10 bg-custom-dark text-white hidden lg:block relative">
         <Link href="/">
           <Image
-            src="/logo-mobile.png"
+            src="/Logo-mobile.png"
             height={90}
             width={90}
             alt="logo mobile"
