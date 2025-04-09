@@ -124,7 +124,7 @@ const AuthForm = ({ type }: authFormProps) => {
         className="mt-10 space-y-8"
       >
         {type == "signin" && (
-          <div className="flex space-x-14">
+          <div className="flex flex-col space-y-8 lg:space-y-0 lg:flex-row lg:space-x-14">
             <div className="flex flex-col space-y-4 w-full">
               <label className="text-neutral-500 text-sm">FIRST NAME</label>
               <input

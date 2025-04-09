@@ -13,9 +13,9 @@ import Link from "next/link";
 const Footer = () => {
   return (
     // Container of the footer
-    <div className="max-w-[1440px] mx-auto py-10">
+    <div className="max-w-[1440px] mx-auto px-4 py-10">
       {/** Flex container */}
-      <div className="flex justify-between items-center">
+      <div className="flex flex-wrap justify-between items-center">
         {/** Logo */}
         <Link href="#home">
           <Image
