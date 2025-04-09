@@ -26,7 +26,7 @@ const Dashboard = ({ children }: DashboardProps) => {
       {/** The custom context to pass the userInformation */}
       <UserInformationProvider>
         <Suspense fallback={<DashboardSqueleton />}>
-          <Content children={children} />
+          <Content>{children}</Content>
         </Suspense>
       </UserInformationProvider>
     </FireBaseAuthProvider>
