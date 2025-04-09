@@ -1,5 +1,6 @@
 "use client";
 import {
+  ConsumedLoading,
   DisplayPendingItemList,
   FoodItemCard,
   FoodItemCardSqueleton,
@@ -8,9 +9,13 @@ import {
 } from "@/components";
 import { foodProps } from "@/types";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 
-const AddFood = () => {
+const AddFood = ({
+  setConsumedLoading,
+}: {
+  setConsumedLoading: Dispatch<SetStateAction<boolean>>;
+}) => {
   // Naviagtion router
   const router = useRouter();
 
@@ -72,7 +77,7 @@ const AddFood = () => {
     try {
       // Fetching the API
       const res = await fetch(
-        `/api/foods?search=${term}&page=${page}&limit=10`
+        `/api/foods?search=${term}&page=${page}&limit=25`
       );
 
       if (!res.ok) {
@@ -94,7 +99,10 @@ const AddFood = () => {
   };
 
   return (
-    <div className="w-full px-5 pb-5" ref={modalContentRef}>
+    <div
+      className="relative w-full px-5 py-5 animate-fade-in"
+      ref={modalContentRef}
+    >
       <SearchBar
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
@@ -129,7 +137,11 @@ const AddFood = () => {
             .map((_, index) => <FoodItemCardSqueleton key={index} />)}
         {!error ? (
           foodList?.map((item, index) => (
-            <FoodItemCard food={item} key={index} />
+            <FoodItemCard
+              setConsumedLoading={setConsumedLoading}
+              food={item}
+              key={index}
+            />
           ))
         ) : (
           <p className="text-red-500">{error}</p>

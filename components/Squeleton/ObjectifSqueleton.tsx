@@ -1,7 +1,11 @@
 const ObjectifSqueleton = () => {
   return (
     // The objective cards container
-    <div className="bg-white p-5 rounded-3xl border border-neutral-400 flex flex-col justify-between">
+    <div
+      className="bg-white p-5 rounded-3xl border border-neutral-400 flex flex-col justify-between"
+      data-aos="fade-up"
+      data-aos-duration="300"
+    >
       <div>
         {/** The title of the card */}
         <div className="h-6 bg-gray-200 animate-pulse rounded w-20 mb-10"></div>

@@ -1,9 +1,13 @@
 "use client";
 import { DisplayRecipesList, FoodItemCardSqueleton } from "@/components";
-import { useUserRecipesContext } from "@/context/UserRecipesContext";
 import { useRouter } from "next/navigation";
+import { Dispatch, SetStateAction } from "react";
 
-const RecipeSearch = () => {
+const RecipeSearch = ({
+  setConsumedLoading,
+}: {
+  setConsumedLoading: Dispatch<SetStateAction<boolean>>;
+}) => {
   // Router hooks
   const router = useRouter();
 
@@ -19,7 +23,7 @@ const RecipeSearch = () => {
       >
         New recipe +
       </button>
-      <DisplayRecipesList />
+      <DisplayRecipesList setConsumedLoading={setConsumedLoading} />
     </div>
   );
 };

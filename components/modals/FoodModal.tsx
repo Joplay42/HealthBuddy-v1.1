@@ -4,9 +4,11 @@ import {
   FoodModalNavigation,
   FoodSearch,
   RecipeSearch,
+  ConsumedLoading,
 } from "@/components";
 import { UserRecipesProvider } from "@/context/UserRecipesContext";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
 
 const FoodModal = () => {
   // Hooks for the navigation
@@ -15,6 +17,9 @@ const FoodModal = () => {
   const router = useRouter();
   // Get the params
   const index = searchParams.get("index") || "search";
+
+  // Loading state for the consuming food
+  const [consumeLoading, setConsumedLoading] = useState(false);
 
   // Function to update the params state
   const updateParams = (newIndex: string) => {
@@ -28,15 +33,20 @@ const FoodModal = () => {
   };
 
   return (
-    <Modal title="Add food +">
-      <FoodModalNavigation page={index} setPage={updateParams} />
-      {index === "search" && <FoodSearch />}
-      {index === "recipe" && (
-        <UserRecipesProvider>
-          <RecipeSearch />
-        </UserRecipesProvider>
-      )}
-    </Modal>
+    <>
+      {consumeLoading && <ConsumedLoading />}
+      <Modal title="Add food +">
+        <FoodModalNavigation page={index} setPage={updateParams} />
+        {index === "search" && (
+          <FoodSearch setConsumedLoading={setConsumedLoading} />
+        )}
+        {index === "recipe" && (
+          <UserRecipesProvider>
+            <RecipeSearch setConsumedLoading={setConsumedLoading} />
+          </UserRecipesProvider>
+        )}
+      </Modal>
+    </>
   );
 };
 

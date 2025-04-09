@@ -1,9 +1,13 @@
 "use client";
 import { FoodItemCardSqueleton, RecipeItemCard } from "@/components";
 import { useUserRecipesContext } from "@/context/UserRecipesContext";
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 
-const DisplayRecipesList = () => {
+const DisplayRecipesList = ({
+  setConsumedLoading,
+}: {
+  setConsumedLoading: Dispatch<SetStateAction<boolean>>;
+}) => {
   // Fetch the currents user recipe
   const { recipes, loading } = useUserRecipesContext();
 
@@ -18,7 +22,11 @@ const DisplayRecipesList = () => {
   return (
     <>
       {recipes.map((item, index) => (
-        <RecipeItemCard recipe={item} key={index} />
+        <RecipeItemCard
+          recipe={item}
+          key={index}
+          setConsumedLoading={setConsumedLoading}
+        />
       ))}
     </>
   );

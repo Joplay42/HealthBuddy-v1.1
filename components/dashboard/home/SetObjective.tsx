@@ -4,6 +4,7 @@ import { calculateNutriantDaily } from "@/utils";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { Slide, toast } from "react-toastify";
 
 /**
  * This component is used for the user to set a new objective. This component
@@ -130,6 +131,21 @@ const SetObjective = () => {
         currentParams.delete("modal");
         // Push the router to the route without params
         router.replace(window.location.pathname);
+
+        setTimeout(() => {
+          // Notify the user
+          toast.success("A new objective has been set!", {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            transition: Slide,
+          });
+        }, 100);
       }
 
       // Disable the loading animation

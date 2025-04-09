@@ -140,6 +140,7 @@ export type Algoliahit = {
 
 export type foodItemCardProps = {
   food: foodProps;
+  setConsumedLoading: Dispatch<SetStateAction<boolean>>;
 };
 
 export type foodEntriesListProps = {

@@ -49,7 +49,10 @@ const FoodEntriesList = ({ label, data }: foodEntriesListProps) => {
           {/** Mapping of the foods */}
           {data.map((item, index) => (
             // A single row
-            <tr key={index} className="border-y border-neutral-300 font-bold">
+            <tr
+              key={index}
+              className="border-y border-neutral-300 font-bold animate-fade-in"
+            >
               {/** Display each item properties */}
               <td className="py-5">{item.Meal}</td>
               <td className="py-5">{capitalize(item.Name)}</td>
@@ -95,7 +98,7 @@ const FoodEntriesList = ({ label, data }: foodEntriesListProps) => {
               // The food display
               <tr
                 key={index}
-                className="border-y border-neutral-300 font-bold relative"
+                className="border-y border-neutral-300 font-bold relative animate-fade-in"
               >
                 {/** Display the information */}
                 <td className="py-5">{item.Meal}</td>

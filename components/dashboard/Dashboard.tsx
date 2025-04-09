@@ -13,6 +13,9 @@ import { DashboardProps } from "@/types";
 import { FireBaseAuthProvider } from "@/context/UserContext";
 import { UserInformationProvider } from "@/context/UserInformationContext";
 import { useSearchParams } from "next/navigation";
+import { Slide, ToastContainer } from "react-toastify";
+import { useEffect } from "react";
+import AOS from "aos";
 
 /**
  * This component is the main baseFrame of the dashboard, it display the
@@ -31,6 +34,11 @@ const Dashboard = ({ children }: DashboardProps) => {
   const isEditRecipeModalOpen = searchParams.get("modal") == "editrecipe";
   const isObjectiveModalOpen = searchParams.get("modal") === "objective";
 
+  useEffect(() => {
+    AOS.init();
+    AOS.refresh();
+  }, []);
+
   return (
     // The custom context to pass the user
     <FireBaseAuthProvider>
@@ -45,6 +53,7 @@ const Dashboard = ({ children }: DashboardProps) => {
             {/** The content of the dashboard */}
             <div className="bg-neutral-200 min-h-screen px-5 md:px-12">
               {children}
+              <ToastContainer />
             </div>
           </div>
           {/** Handle the foodMoal opening with url params */}

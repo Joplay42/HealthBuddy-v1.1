@@ -13,7 +13,12 @@ const Calorie = () => {
   // Display a text to set an objective if the user doesnt have one
   if (userGoal.calorie === 0 && !loading) {
     return (
-      <div className={"py-5 md:py-10 space-y-5 md:space-y-0 md:gap-10"}>
+      <div
+        className="py-5 md:py-10 space-y-5 md:space-y-0 md:gap-10"
+        data-aos="fade-up"
+        data-aos-delay="200"
+        data-aos-duration="300"
+      >
         <div className="bg-white p-5 rounded-3xl border border-neutral-400 w-full py-40">
           <h1 className="text-3xl font-bold text-center">
             Welcome to <span className="text-custom-green">HealthBuddy</span>{" "}

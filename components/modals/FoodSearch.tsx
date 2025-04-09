@@ -1,11 +1,15 @@
 import { UserPendingItemProvider } from "@/context/UserPendingItemContext";
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import AddFood from "../dashboard/calorie/AddFood";
 
-const FoodSearch = () => {
+const FoodSearch = ({
+  setConsumedLoading,
+}: {
+  setConsumedLoading: Dispatch<SetStateAction<boolean>>;
+}) => {
   return (
     <UserPendingItemProvider>
-      <AddFood />
+      <AddFood setConsumedLoading={setConsumedLoading} />
     </UserPendingItemProvider>
   );
 };

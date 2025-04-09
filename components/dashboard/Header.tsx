@@ -27,7 +27,7 @@ const Header = () => {
   return (
     // Header container
     <div className="flex justify-between items-center pr-12">
-      <div className="py-9 px-5 md:px-12 border-b border-neutral-300 space-y-2">
+      <div className="py-4 md:py-9 px-5 md:px-12 border-b border-neutral-300 space-y-2">
         {/** Displays the current page name */}
         <PageName />
         {/** Displays a nice greeting message */}

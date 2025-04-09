@@ -82,6 +82,7 @@ import DisplayRecipesList from "./modals/addRecipe/DisplayRecipesList";
 import RecipeItemCard from "./modals/addRecipe/RecipeItemCard";
 import EditRecipeModal from "./modals/EditRecipeModal";
 import Pagination from "./dashboard/calorie/Pagination";
+import ConsumedLoading from "./dashboard/calorie/ConsumedLoading";
 
 export {
   HeaderPage,
@@ -161,4 +162,5 @@ export {
   RecipeItemCard,
   EditRecipeModal,
   Pagination,
+  ConsumedLoading,
 };

@@ -5,8 +5,9 @@ import { foodItemCardProps, foodProps } from "@/types";
 import { addFoodToConsumedList, capitalize, consumeFood } from "@/utils";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { Slide, toast } from "react-toastify";
 
-const FoodItemCard = ({ food }: foodItemCardProps) => {
+const FoodItemCard = ({ food, setConsumedLoading }: foodItemCardProps) => {
   // Router hooks to handle navigation
   const router = useRouter();
   // Fetch the user
@@ -42,6 +43,7 @@ const FoodItemCard = ({ food }: foodItemCardProps) => {
       // Remove the errors
       setError(false);
       try {
+        setConsumedLoading(true);
         if (user) {
           // Close the modal when the operation is done
           // Get the current params
@@ -52,9 +54,26 @@ const FoodItemCard = ({ food }: foodItemCardProps) => {
           router.replace(window.location.pathname);
           await consumeFood(food, user.uid, multiplier);
           await addFoodToConsumedList(meal, food, multiplier, user.uid);
+
+          setTimeout(() => {
+            // Notify the user
+            toast.success("Food has been consumed!", {
+              position: "bottom-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+              transition: Slide,
+            });
+          }, 100);
         }
       } catch (error: any) {
         console.error(error.message);
+      } finally {
+        setConsumedLoading(false);
       }
     } else {
       // Set an error handling for empty meal
@@ -153,6 +172,7 @@ const FoodItemCard = ({ food }: foodItemCardProps) => {
       >
         +
       </button>
+      <button onClick={() => setConsumedLoading(true)}>Click me</button>
     </div>
   );
 };

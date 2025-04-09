@@ -4,10 +4,17 @@ import { useFirebaseAuth } from "@/context/UserContext";
 import { macronutrients, recipeProps } from "@/types";
 import { addRecipeToConsumedList, capitalize, consumeFood } from "@/utils";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import Image from "next/image";
+import { Slide, toast } from "react-toastify";
 
-const RecipeItemCard = ({ recipe }: { recipe: recipeProps }) => {
+const RecipeItemCard = ({
+  recipe,
+  setConsumedLoading,
+}: {
+  recipe: recipeProps;
+  setConsumedLoading: Dispatch<SetStateAction<boolean>>;
+}) => {
   // Router hooks to handle navigation
   const router = useRouter();
   // Fetch the user
@@ -55,6 +62,7 @@ const RecipeItemCard = ({ recipe }: { recipe: recipeProps }) => {
       // Remove the errors
       setError(false);
       try {
+        setConsumedLoading(true);
         if (user) {
           await consumeFood(macros, user.uid, multiplier);
           await addRecipeToConsumedList(
@@ -72,9 +80,26 @@ const RecipeItemCard = ({ recipe }: { recipe: recipeProps }) => {
           currentParams.delete("modal");
           // Push the router to the route without params
           router.replace(window.location.pathname);
+
+          setTimeout(() => {
+            // Notify the user
+            toast.success("Food has been consumed!", {
+              position: "bottom-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+              transition: Slide,
+            });
+          }, 100);
         }
       } catch (error: any) {
         console.error(error.message);
+      } finally {
+        setConsumedLoading(false);
       }
     } else {
       // Set an error handling for empty meal
@@ -108,7 +133,7 @@ const RecipeItemCard = ({ recipe }: { recipe: recipeProps }) => {
 
   return (
     // Grid container
-    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-y-6 lg:gap-y-0 items-center justify-between py-5 border-neutral-300 border-t">
+    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-y-6 lg:gap-y-0 items-center justify-between py-5 border-neutral-300 border-t animate-fade-in">
       {/** Food name */}
       <div className="text-lg w-40">
         <h3 className="font-semibold line-clamp-3">
