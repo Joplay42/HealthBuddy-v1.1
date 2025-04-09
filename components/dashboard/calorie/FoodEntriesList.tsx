@@ -98,31 +98,13 @@ const FoodEntriesList = ({ label, data }: foodEntriesListProps) => {
               // The food display
               <tr
                 key={index}
-                className="border-y border-neutral-300 font-bold relative animate-fade-in"
+                className="border-y border-neutral-300 font-bold animate-fade-in"
               >
                 {/** Display the information */}
-                <td className="py-5">{item.Meal}</td>
-                <td className="py-5 truncate max-w-20 sm:max-w-auto">
+                <td className="">{item.Meal}</td>
+                <td className=" my-2 line-clamp-2 max-w-20 sm:max-w-auto">
                   {capitalize(item.Name)}
                 </td>
-                {/** The menu opening button */}
-                <td>
-                  <Image
-                    src="/menu-open.svg"
-                    width={20}
-                    height={20}
-                    alt="Open menu icon"
-                    onClick={() => handleClick(index)}
-                  />
-                </td>
-                {/** If the button is cliked */}
-                {openRow === index && (
-                  // pop up container
-                  <td className="absolute left-0 -bottom-20 z-10 w-full">
-                    {/** The Food Menu container to display the rest of the information */}
-                    <FoodMenu label={label} data={data} food={food} />
-                  </td>
-                )}
               </tr>
             );
           })}

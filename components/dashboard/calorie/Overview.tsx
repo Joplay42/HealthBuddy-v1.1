@@ -29,8 +29,8 @@ const Overview = ({ goal, data, loading }: overViewProps) => {
     <div className="bg-white p-5 rounded-3xl border border-neutral-400">
       {/** The title */}
       <h1 className="font-bold text-xl mb-10">Overview</h1>
-      <div className="flex flex-wrap items-center justify-between gap-10">
-        <div className="flex flex-wrap items-center gap-x-8">
+      <div className="flex flex-wrap items-center justify-center gap-10 lg:justify-around">
+        <div className="flex flex-wrap items-center justify-center gap-x-8">
           {/** Calories display */}
           <div className="w-60 h-auto relative">
             {/** Chart to display the calories */}
@@ -46,11 +46,11 @@ const Overview = ({ goal, data, loading }: overViewProps) => {
             </div>
           </div>
           {/** Display of the objective and the consumed */}
-          <div className="flex flex-wrap gap-6 py-6 lg:flex-col lg:space-y-4">
+          <div className="flex flex-wrap justify-center gap-6 py-6 lg:flex-col lg:space-y-4">
             <div className="flex space-x-1">
               {/** The objective data */}
-              <Image src="/flag.svg" width={25} height={25} alt="flag icon" />
-              <p className="font-light text-lg">
+              <Image src="/flag.svg" width={20} height={20} alt="flag icon" />
+              <p className="font-light">
                 Objective :{" "}
                 <span className="font-extrabold text-neutral-600 text-xl">
                   {goal.calorie}
@@ -59,8 +59,8 @@ const Overview = ({ goal, data, loading }: overViewProps) => {
             </div>
             <div className="flex space-x-1">
               {/** The consumed data */}
-              <Image src="/fork.svg" width={25} height={25} alt="flag icon" />
-              <p className="font-light text-lg">
+              <Image src="/fork.svg" width={20} height={20} alt="flag icon" />
+              <p className="font-light">
                 Consumed :{" "}
                 <span className="font-extrabold text-neutral-600 text-xl">
                   {data.calorie}
@@ -70,11 +70,11 @@ const Overview = ({ goal, data, loading }: overViewProps) => {
           </div>
         </div>
         {/** Display of the nutrient */}
-        <div className="flex flex-wrap items-center gap-10">
+        <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-10 md:gap-10">
           {/** Protein */}
           <div className="w-28 h-auto relative">
-            <h1 className="font-bold text-xl absolute -top-8 right-1/2 translate-x-1/2">
-              Protein
+            <h1 className="font-bold text-lg absolute -top-8 right-1/2 translate-x-1/2">
+              Proteins
             </h1>
             {/** Chart component to display the informations */}
             <PieChart
@@ -96,7 +96,7 @@ const Overview = ({ goal, data, loading }: overViewProps) => {
           </div>
           {/** Carbs */}
           <div className="w-28 h-auto relative">
-            <h1 className="font-bold text-xl absolute -top-8 right-1/2 translate-x-1/2">
+            <h1 className="font-bold text-lg absolute -top-8 right-1/2 translate-x-1/2">
               Carbs
             </h1>
             {/** Chart component to display the informations */}
@@ -119,7 +119,7 @@ const Overview = ({ goal, data, loading }: overViewProps) => {
           </div>
           {/** Fat */}
           <div className="w-28 h-auto relative">
-            <h1 className="font-bold text-xl absolute -top-8 right-1/2 translate-x-1/2">
+            <h1 className="font-bold text-lg absolute -top-8 right-1/2 translate-x-1/2">
               Fat
             </h1>
             {/** Chart component to display the informations */}

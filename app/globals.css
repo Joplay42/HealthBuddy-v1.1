@@ -66,7 +66,7 @@ select {
 
 /* Exclude specific input from global styles */
 input.no-focus-styles {
-  @apply border-0 flex-1 w-full focus:outline-none focus:ring-0 focus:ring-offset-0;
+  @apply border-0 flex-1 w-full focus:outline-none focus:ring-0 focus:ring-offset-0 text-base md:text-lg py-[3px] md:py-2;
 }
 
 @keyframes fade-in {

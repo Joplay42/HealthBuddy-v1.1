@@ -55,9 +55,9 @@ const RecipeFoodItemCard = ({
 
   return (
     // Grid container
-    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-y-6 lg:gap-y-0 items-center justify-between py-5 border-neutral-300 border-t  animate-fade-in">
+    <div className="flex flex-wrap items-center justify-center sm:justify-between gap-6 md:gap-4 py-5 border-neutral-300 border-t animate-fade-in">
       {/** Food name */}
-      <div className="text-lg w-40">
+      <div className="text-md md:text-lg w-full md:w-40">
         <h3 className="font-semibold line-clamp-3">
           {capitalize(foodItem.Name)}
         </h3>
@@ -65,7 +65,7 @@ const RecipeFoodItemCard = ({
         <p>{(Math.round(foodItem.Quantity) || 0) + " " + foodItem.Unit}</p>
       </div>
       {/** Food calorie chart */}
-      <div className="flex items-center space-x-4 justify-self-auto">
+      <div className="flex items-center space-x-4">
         <NutrientsCharts
           Calories={Math.round(foodItem.Calories) || 0}
           Protein={Math.round(foodItem.Protein) || 0}
@@ -77,7 +77,7 @@ const RecipeFoodItemCard = ({
         <p>Calories</p>
       </div>
       {/** Food nutrient informations */}
-      <div className="flex items-center justify-between md:gap-x-10 col-span-1 md:col-span-2 md:justify-self-center">
+      <div className="flex items-center space-x-10 justify-self-end sm:space-x-4">
         <div className="text-center">
           <h3 className="font-bold text-[#AFF921]">Protein</h3>
           <p>
@@ -107,12 +107,12 @@ const RecipeFoodItemCard = ({
         </div>
       </div>
       {/** Food qty input */}
-      <div className="flex space-x-4 lg:items-center justify-self-center md:justify-self-start lg:justify-self-center">
+      <div className="flex space-x-4 lg:items-center">
         <div className="flex flex-col lg:items-center justify-self-end sm:justify-self-auto lg:justify-self-end">
           <h3 className="font-bold">Qty</h3>
           <input
             type="number"
-            className="w-16 rounded-lg text-center"
+            className="w-10 h-8 md:h-auto md:w-16 rounded-lg text-center"
             value={multiplier}
             onChange={handleAmountChange}
           />

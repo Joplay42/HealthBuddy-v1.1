@@ -106,7 +106,7 @@ const SelectFood = ({
       ) : (
         <>
           <button
-            className="mx-4 lg:mx-10 my-4 text-lg w-fit bg-black text-white px-4 py-3 rounded-2xl text-center hover:opacity-75 hover:cursor-pointer"
+            className="mx-4 lg:mx-10 my-2 md:my-4 text-md md:text-lg w-fit bg-black text-white px-3 md:px-4 py-2 md:py-3 rounded-2xl text-center hover:opacity-75 hover:cursor-pointer"
             onClick={() => {
               // Get the current params
               const currentParams = new URLSearchParams(window.location.search);
@@ -129,18 +129,18 @@ const SelectFood = ({
               />
             ))
           ) : (
-            <div className="text-center font-semibold text-xl py-10">
+            <div className="text-center font-semibold text-md md:text-xl py-10">
               <p>Add food to your recipe!</p>
             </div>
           )}
-          <p className="text-center mt-4">
+          <p className="text-center mt-4 mx-4">
             <span className="font-semibold">{recipe.Name} : </span>
             {Math.round(recipe.macronutrients.Calories / recipe.NbServing)}{" "}
             calories par portion - {recipe.NbServing} portion
             {recipe.NbServing > 1 ? "s" : ""}
           </p>
           <button
-            className="mx-4 lg:mx-10 my-8 flex items-center gap-2 justify-center py-4 px-3 rounded-xl hover:opacity-75 hover:transition ease-in-out duration-300 bg-black text-white w-[95%] disabled:opacity-60"
+            className="mx-auto md:mx-4 lg:mx-10 my-8 flex items-center gap-2 justify-center py-4 px-3 rounded-xl hover:opacity-75 hover:transition ease-in-out duration-300 bg-black text-white w-[95%] disabled:opacity-60"
             type="submit"
             disabled={loading || disabled}
             onClick={() => setIndex("3")}

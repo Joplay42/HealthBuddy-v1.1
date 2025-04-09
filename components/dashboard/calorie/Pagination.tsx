@@ -8,7 +8,7 @@ const Pagination = ({
   totalPage,
 }: paginationProps) => {
   return (
-    <div className="space-x-4 flex  text-lg">
+    <div className="space-x-4 flex text-md md:text-lg my-1 md:my-4">
       <button
         onClick={() => handlePageChange(currentPage - 1)}
         disabled={currentPage === 0}

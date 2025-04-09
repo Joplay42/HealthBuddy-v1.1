@@ -17,7 +17,7 @@ const DisplayRecipePendingItemList = ({
 
   return (
     <div>
-      <h4 className="font-bold text-lg text-neutral-500 my-4">
+      <h4 className="font-bold text-md md:text-lg text-neutral-500 my-1 md:my-4">
         pending approval ({pendingItem.length})
         <div className="group relative inline-block items-center">
           <button className="text-neutral-500">

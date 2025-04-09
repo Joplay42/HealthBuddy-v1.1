@@ -15,7 +15,7 @@ const FoodMenu = ({ label, data, food }: foodMenuProps) => {
 
   return (
     // A new table
-    <table className="w-full text-center bg-white shadow-lg border border-neutral-200">
+    <table className="w-full">
       {/** The head to show the categories */}
       <thead>
         {/** A single row */}
@@ -39,7 +39,10 @@ const FoodMenu = ({ label, data, food }: foodMenuProps) => {
         {/** A single row */}
         <tr className="font-bold">
           {/** Display of the information */}
-          <td className="py-2">{foodItem.Quantity}</td>
+          <td className="py-2">
+            {foodItem.Quantity}
+            {foodItem.Unit}
+          </td>
           <td className="py-2">{foodItem.Calories}</td>
           <td className="py-2">{foodItem.Protein}</td>
           <td className="py-2">{foodItem.Carbs}</td>

@@ -56,15 +56,15 @@ const FoodDesc = ({
           size="h-60 w-auto"
           fontSize="text-3xl"
         />
-        <p className="text-2xl font-semibold">Calories</p>
+        <p className="text-lg md:text-xl font-semibold">Calories</p>
       </div>
       {/** Quantity input and label */}
       <div className="flex flex-col space-y-10 md:space-y-2 w-full md:w-auto justify-around mx-4 lg:mx-10 ">
         <div className="flex flex-col space-y-4">
-          <h1 className="text-2xl font-semibold">
+          <h1 className="text-lg md:text-xl font-semibold">
             {capitalize(food.Name ?? "")} - {capitalize(food.Brand ?? "")}
           </h1>
-          <p className="text-xl font-semibold">
+          <p className="text-md md:text-xl font-semibold">
             Quantity ({food.Quantity + food.Unit})
           </p>
           <input
@@ -75,8 +75,8 @@ const FoodDesc = ({
             placeholder="ex. 4"
           />
         </div>
-        <div className="flex space-x-16 md:space-x-8 ">
-          <div className="text-2xl">
+        <div className="flex space-x-10 md:space-x-8 ">
+          <div className="text-lg md:text-xl">
             <p>
               <span className="font-semibold">
                 {Math.round(food.Protein) || 0}
@@ -85,7 +85,7 @@ const FoodDesc = ({
             </p>
             <h3 className="font-bold text-[#AFF921]">Protein</h3>
           </div>
-          <div className="text-2xl">
+          <div className="text-lg md:text-xl">
             <p>
               <span className="font-semibold">
                 {Math.round(food.Carbs) || 0}
@@ -94,7 +94,7 @@ const FoodDesc = ({
             </p>
             <h3 className="font-bold text-[#73af00]">Carbs</h3>
           </div>
-          <div className="text-2xl">
+          <div className="text-lg md:text-xl">
             <p>
               <span className="font-semibold">{Math.round(food.Fat) || 0}</span>
               g
@@ -113,7 +113,7 @@ const FoodDesc = ({
             update(food);
           }
         }}
-        className="mx-4 lg:mx-10 my-8 flex items-center gap-2 justify-center py-4 px-3 rounded-xl hover:opacity-75 hover:transition ease-in-out duration-300 bg-black text-white w-[95%] disabled:opacity-60"
+        className="mx-4 lg:mx- md:my-8 flex items-center gap-2 justify-center py-4 px-3 rounded-xl hover:opacity-75 hover:transition ease-in-out duration-300 bg-black text-white w-[95%] disabled:opacity-60"
         type="submit"
         disabled={loading}
       >

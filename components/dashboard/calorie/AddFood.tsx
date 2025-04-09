@@ -100,7 +100,7 @@ const AddFood = ({
 
   return (
     <div
-      className="relative w-full px-5 py-5 animate-fade-in"
+      className="relative w-full px-2 md:p-5 animate-fade-in"
       ref={modalContentRef}
     >
       <SearchBar
@@ -124,10 +124,10 @@ const AddFood = ({
       >
         New food +
       </button>
-      <div className="mt-5 md:mt-10">
+      <div className="my-4 md:mt-5 lg:mt-10">
         <DisplayPendingItemList setConsumedLoading={setConsumedLoading} />
         {foodList && (
-          <h4 className="font-bold text-lg text-neutral-500 my-4">
+          <h4 className="font-bold text-md md:text-lg text-neutral-500 my-1 md:my-4">
             Results ({foodList.length})
           </h4>
         )}

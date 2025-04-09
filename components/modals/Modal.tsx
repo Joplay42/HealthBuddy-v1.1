@@ -123,7 +123,7 @@ const Modal = ({
         >
           {" "}
           {/** This is the header of the modal window which has a close button that changes the states of the modal window */}
-          <div className="grid grid-cols-3 items-center py-4 px-2 md:px-5 md:pt-8 md:pb-5 rounded-t">
+          <div className="grid grid-cols-3 items-center py-2 md:py-4 px-2 md:px-5 md:pt-8 md:pb-5 rounded-t">
             {backButton && (
               <button
                 onClick={handleBack}
@@ -146,7 +146,7 @@ const Modal = ({
               </button>
             )}
             {title && (
-              <div className="col-start-2 justify-self-center font-semibold text-2xl min-w-80 text-center">
+              <div className="col-start-2 justify-self-center font-semibold text-md md:text-xl lg:text-2xl min-w-80 text-center">
                 {title}
               </div>
             )}

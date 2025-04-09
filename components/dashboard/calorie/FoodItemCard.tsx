@@ -83,15 +83,15 @@ const FoodItemCard = ({ food, setConsumedLoading }: foodItemCardProps) => {
 
   return (
     // Grid container
-    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-y-6 lg:gap-y-0 items-center justify-between py-5 border-neutral-300 border-t animate-fade-in">
+    <div className="flex flex-wrap items-center justify-center sm:justify-between gap-6 md:gap-4 py-5 border-neutral-300 border-t animate-fade-in">
       {/** Food name */}
-      <div className="text-lg w-40">
+      <div className="text-md md:text-lg w-full md:w-40">
         <h3 className="font-semibold line-clamp-3">{capitalize(food.Name)}</h3>
         <h3>{capitalize(food.Brand)}</h3>
         <p>{(Math.round(food.Quantity * multiplier) || 0) + " " + food.Unit}</p>
       </div>
       {/** Food calorie chart */}
-      <div className="flex items-center space-x-4 justify-self-end sm:justify-self-auto">
+      <div className="flex items-center space-x-4">
         <NutrientsCharts
           Calories={Math.round(food.Calories * multiplier) || 0}
           Protein={Math.round(food.Protein * multiplier) || 0}
@@ -103,7 +103,7 @@ const FoodItemCard = ({ food, setConsumedLoading }: foodItemCardProps) => {
         <p>Calories</p>
       </div>
       {/** Food nutrient informations */}
-      <div className="flex items-center gap-x-10 md:col-span-2 sm:justify-self-center">
+      <div className="flex items-center space-x-10 justify-self-end sm:space-x-4">
         <div className="text-center">
           <h3 className="font-bold text-[#AFF921]">Protein</h3>
           <p>
@@ -133,12 +133,12 @@ const FoodItemCard = ({ food, setConsumedLoading }: foodItemCardProps) => {
         </div>
       </div>
       {/** Food qty input */}
-      <div className="flex space-x-4 lg:items-center sm:justify-self-auto lg:justify-self-end col-span-2">
+      <div className="flex space-x-4 lg:items-center">
         <div className="flex flex-col lg:items-center justify-self-end sm:justify-self-auto lg:justify-self-end">
           <h3 className="font-bold">Qty</h3>
           <input
             type="number"
-            className="w-16 rounded-lg text-center"
+            className="w-10 h-8 md:h-auto md:w-16 rounded-lg text-center"
             value={multiplier || 0}
             onChange={(e) => handleQuantityChange(e.target.valueAsNumber)}
           />
@@ -148,7 +148,7 @@ const FoodItemCard = ({ food, setConsumedLoading }: foodItemCardProps) => {
           <h3 className="font-bold">Meal</h3>
           <select
             value={meal}
-            className={`w-fit rounded-lg ${
+            className={`w-fit rounded-lg h-8 md:h-auto ${
               error && ` border-4 border-red-400`
             }`}
             onChange={(e) => {
@@ -172,7 +172,6 @@ const FoodItemCard = ({ food, setConsumedLoading }: foodItemCardProps) => {
       >
         +
       </button>
-      <button onClick={() => setConsumedLoading(true)}>Click me</button>
     </div>
   );
 };

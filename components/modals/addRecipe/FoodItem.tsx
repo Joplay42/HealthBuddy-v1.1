@@ -20,10 +20,12 @@ const FoodItem = ({
 
   return (
     <div
-      className={`flex justify-between items-center py-6 px-4 lg:px-10 ${style}`}
+      className={`flex justify-between items-center py-4 md:py-6 px-4 lg:px-10 ${style}`}
     >
       <div>
-        <h4 className="font-semibold text-xl">{capitalize(food.Name)}</h4>
+        <h4 className="font-semibold text-md md:text-xl">
+          {capitalize(food.Name)}
+        </h4>
         <p>
           {food.Quantity} {food.Unit}, {food.Calories} calories
         </p>

@@ -106,15 +106,18 @@ const SettingsCard = ({ card }: cardProps) => {
   };
 
   return (
-    <div id={card.id} className="p-10 bg-white rounded-xl w-full space-y-2">
+    <div
+      id={card.id}
+      className="p-5 md:p-10 bg-white rounded-xl w-full space-y-2"
+    >
       {/** Form container */}
       <form onSubmit={(e) => handleSubmit({ event: e })}>
         {/** Title */}
-        <h1 className="text-2xl font-semibold">{card.title}</h1>
+        <h1 className="text-lg md:text-xl font-semibold">{card.title}</h1>
         {/** Description */}
-        <p className="pb-4">{card.description}</p>
+        <p className="text-neutral-500 pb-4">{card.description}</p>
         <hr className="border-neutral-400" />
-        <div className="lg:flex gap-x-5 pt-4 pb-10">
+        <div className="lg:flex gap-x-5 pt-4 pb-6 md:pb-10">
           {/** If the card has an input to enter */}
           {card.input.length == 1 ? (
             <div className="flex flex-col w-full gap-y-2">
@@ -122,7 +125,7 @@ const SettingsCard = ({ card }: cardProps) => {
               <label className="font-bold">{card.input[0]}</label>
               {/** Display the input */}
               <input
-                className="border-2 border-black rounded-lg px-3 py-2"
+                className="border-black rounded-xl w-full"
                 type="text"
                 onChange={(e) => setEmail(e.target.value)}
                 value={email}
@@ -138,7 +141,7 @@ const SettingsCard = ({ card }: cardProps) => {
                   <label className="font-bold">{card.input[0]}</label>
                   {/** The firstName input */}
                   <input
-                    className="border-2 border-black rounded-lg  px-3 py-2"
+                    className="border-black rounded-xl w-full"
                     type="text"
                     onChange={(e) => setFirstName(e.target.value)}
                     value={firstName}
@@ -150,7 +153,7 @@ const SettingsCard = ({ card }: cardProps) => {
                   <label className="font-bold">{card.input[1]}</label>
                   {/** The last Name input */}
                   <input
-                    className="border-2 border-black rounded-lg  px-3 py-2"
+                    className="border-black rounded-xl w-full"
                     type="text"
                     onChange={(e) => setLastName(e.target.value)}
                     value={lastName}
