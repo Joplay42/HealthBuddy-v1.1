@@ -33,7 +33,7 @@ const MobileMenu = ({ setMenuOpen }: mobileMenuProps) => {
       </div>
       {/** The get started button on mobile to register and log in */}
       <div className="flex justify-center mt-10">
-        <Custombutton text="Get started" link="" style="bg-black text-white" />
+        <Custombutton text="Log in" link="/login" style="bg-black text-white" />
       </div>
     </div>
   );
