@@ -125,7 +125,7 @@ const AddFood = ({
         New food +
       </button>
       <div className="mt-5 md:mt-10">
-        <DisplayPendingItemList />
+        <DisplayPendingItemList setConsumedLoading={setConsumedLoading} />
         {foodList && (
           <h4 className="font-bold text-lg text-neutral-500 my-4">
             Results ({foodList.length})

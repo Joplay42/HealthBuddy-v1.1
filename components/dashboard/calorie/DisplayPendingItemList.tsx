@@ -1,9 +1,12 @@
 import { FoodItemCard, PendingItemListSqueleton } from "@/components";
 import { useUserPendingItemContext } from "@/context/UserPendingItemContext";
-import { foodProps } from "@/types";
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 
-const DisplayPendingItemList = () => {
+const DisplayPendingItemList = ({
+  setConsumedLoading,
+}: {
+  setConsumedLoading: Dispatch<SetStateAction<boolean>>;
+}) => {
   // fetch the pending item using my api and context pprovider TO DO
   const { pendingItem, loading } = useUserPendingItemContext();
 
@@ -39,7 +42,11 @@ const DisplayPendingItemList = () => {
         </div>
       </h4>
       {pendingItem.map((item, index) => (
-        <FoodItemCard food={item} key={index} />
+        <FoodItemCard
+          food={item}
+          key={index}
+          setConsumedLoading={setConsumedLoading}
+        />
       ))}
     </div>
   );
