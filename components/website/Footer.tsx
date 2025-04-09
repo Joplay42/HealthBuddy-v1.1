@@ -33,7 +33,7 @@ const Footer = () => {
             <a
               key={link.name}
               className="link hover:font-bold"
-              href={`#${link.url}`}
+              href={`/#${link.url}`}
             >
               {link.name}
             </a>
@@ -44,8 +44,8 @@ const Footer = () => {
       <div className=" space-y-4 lg:space-y-0 lg:flex justify-between items-center pt-10 text-neutral-400">
         <p>© 2024 HealthBuddy All rights reserved</p>
         <div className="flex gap-x-10">
-          <Link href="">Privacy policy</Link>
-          <Link href="">Terms and condition</Link>
+          <Link href="/Policy">Privacy policy</Link>
+          <Link href="/Conditions">Terms and condition</Link>
         </div>
       </div>
     </div>

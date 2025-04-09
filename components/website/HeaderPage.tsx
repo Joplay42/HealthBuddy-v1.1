@@ -62,7 +62,7 @@ const HeaderPage = () => {
             <a
               key={link.name}
               className="link hover:font-bold"
-              href={`#${link.url}`}
+              href={`/#${link.url}`}
             >
               {link.name}
             </a>
