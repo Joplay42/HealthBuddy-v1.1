@@ -5,8 +5,8 @@ const page = () => {
   return (
     <>
       <HeaderPage />
-      <div className="bg-custom-dark  pt-30 lg:pt-40 min-h-screen text-white">
-        <div className="container mx-auto p-4 text-center w-[40rem] space-y-10">
+      <div className="bg-custom-dark  pt-40 min-h-screen text-white">
+        <div className="container mx-auto p-4 text-center max-w-[40rem] space-y-10">
           <h1 className="text-3xl font-bold">Privacy Policy</h1>
           <p className="mt-2 text-gray-300">
             HealthBuddy is committed to protecting your privacy. This Privacy
