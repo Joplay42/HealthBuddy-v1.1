@@ -83,6 +83,8 @@ import RecipeItemCard from "./modals/addRecipe/RecipeItemCard";
 import EditRecipeModal from "./modals/EditRecipeModal";
 import Pagination from "./dashboard/calorie/Pagination";
 import ConsumedLoading from "./dashboard/calorie/ConsumedLoading";
+import DashboardSqueleton from "./Squeleton/DashboardSqueleton";
+import SideBarSqueleton from "./Squeleton/SideBarSqueleton";
 
 export {
   HeaderPage,
@@ -163,4 +165,6 @@ export {
   EditRecipeModal,
   Pagination,
   ConsumedLoading,
+  DashboardSqueleton,
+  SideBarSqueleton,
 };

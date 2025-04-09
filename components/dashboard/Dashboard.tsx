@@ -8,14 +8,30 @@ import {
   AddFoodModal,
   AddRecipeModal,
   EditRecipeModal,
+  DashboardSqueleton,
 } from "@/components";
 import { DashboardProps } from "@/types";
 import { FireBaseAuthProvider } from "@/context/UserContext";
 import { UserInformationProvider } from "@/context/UserInformationContext";
 import { useSearchParams } from "next/navigation";
 import { Slide, ToastContainer } from "react-toastify";
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import AOS from "aos";
+
+// handle the fallBack method for this components
+const Dashboard = ({ children }: DashboardProps) => {
+  return (
+    // The custom context to pass the user
+    <FireBaseAuthProvider>
+      {/** The custom context to pass the userInformation */}
+      <UserInformationProvider>
+        <Suspense fallback={<DashboardSqueleton />}>
+          <Content children={children} />
+        </Suspense>
+      </UserInformationProvider>
+    </FireBaseAuthProvider>
+  );
+};
 
 /**
  * This component is the main baseFrame of the dashboard, it display the
@@ -24,7 +40,7 @@ import AOS from "aos";
  * @param children the content of the dashboard
  * @returns
  */
-const Dashboard = ({ children }: DashboardProps) => {
+const Content = ({ children }: DashboardProps) => {
   // SearchParams hooks from next/navigation
   const searchParams = useSearchParams();
   // Get the params
