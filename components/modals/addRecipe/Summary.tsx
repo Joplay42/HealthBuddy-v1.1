@@ -214,10 +214,10 @@ const Summary = ({
             </div>
             <div className="space-y-2 mt-2">
               {recipe.foods.map((foods, index) => (
-                <h1 key={index}>
+                <p key={index}>
                   {capitalize(foods.Name)} - {capitalize(foods.Brand)} (
                   {foods.Quantity} {foods.Unit})
-                </h1>
+                </p>
               ))}
             </div>
           </div>

@@ -132,7 +132,6 @@ const SearchFood = ({ addFood }: { addFood: (food: foodProps) => void }) => {
         New food +
       </button>
       <div className="my-4 md:mt-5 lg:mt-10">
-        <DisplayRecipePendingItemList action={addFood} />
         {foodList && (
           <h4 className="font-bold text-md md:text-lg text-neutral-500 my-1 md:my-4">
             Results ({foodList.length})

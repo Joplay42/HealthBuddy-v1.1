@@ -37,6 +37,7 @@ export const GET = async (request: Request) => {
       const nutrients = food.nutrients;
 
       return {
+        Id: food.foodId,
         Name: food.label,
         Brand: food.brand || "Generic food",
         Quantity: food.servingSizes?.[0].quantity || "100",

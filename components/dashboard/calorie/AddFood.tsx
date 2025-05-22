@@ -76,9 +76,7 @@ const AddFood = ({
 
     try {
       // Fetching the API
-      const res = await fetch(
-        `/api/foods?search=${term}&page=${page}&limit=25`
-      );
+      const res = await fetch(`/api/foods?search=${term}`);
 
       if (!res.ok) {
         const errorData = await res.json();
@@ -89,8 +87,6 @@ const AddFood = ({
       const data = await res.json();
 
       setFoodList(data.foodList);
-      setCurrentPage(data.page);
-      setTotalPages(data.totalPage);
     } catch (error: any) {
       setError(error.message);
     } finally {
@@ -125,7 +121,6 @@ const AddFood = ({
         New food +
       </button>
       <div className="my-4 md:mt-5 lg:mt-10">
-        <DisplayPendingItemList setConsumedLoading={setConsumedLoading} />
         {foodList && (
           <h4 className="font-bold text-md md:text-lg text-neutral-500 my-1 md:my-4">
             Results ({foodList.length})
