@@ -1,6 +1,7 @@
 import { client } from "@/config/algolia";
 import { db } from "@/config/firebase";
 import { Algoliahit, foodProps } from "@/types";
+import { capitalize } from "@/utils";
 import { deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
 import { NextResponse } from "next/server";
 
@@ -30,9 +31,26 @@ export const GET = async (request: Request) => {
     // Get the data
     const data = await res.json();
 
+    // Parse the data
+    const foodList: foodProps[] = data.hints.map((item: any) => {
+      const food = item.food;
+      const nutrients = food.nutrients;
+
+      return {
+        Name: food.label,
+        Brand: food.brand || "Generic food",
+        Quantity: food.servingSizes?.[0].quantity || "100",
+        Unit: food.servingSizes?.[0].label || "g",
+        Calories: Math.round(nutrients.ENERC_KCAL || 0),
+        Protein: parseFloat((nutrients.PROCNT || 0).toFixed(2)),
+        Carbs: parseFloat((nutrients.CHOCDF || 0).toFixed(2)),
+        Fat: parseFloat((nutrients.FAT || 0).toFixed(2)),
+      };
+    });
+
     return new NextResponse(
       JSON.stringify({
-        data: data,
+        foodList,
       }),
       { status: 200 }
     );
