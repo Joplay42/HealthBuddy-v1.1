@@ -14,7 +14,7 @@ const AddRecipeModal = () => {
   const index = searchParams.get("index") || "1";
 
   // Get the current user
-  const { user, isAdmin } = useFirebaseAuth();
+  const { user } = useFirebaseAuth();
 
   // Function to update the params state
   const updateParams = (newIndex: string) => {

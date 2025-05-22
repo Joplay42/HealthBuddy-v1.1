@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { ChangeEvent, useEffect, useState } from "react";
 
 const NewFood = () => {
-  const { user, isAdmin } = useFirebaseAuth();
+  const { user } = useFirebaseAuth();
   // States for the new foodItem
   const [foodItem, setFoodItem] = useState<Partial<foodProps>>({
     UserId: user?.uid,

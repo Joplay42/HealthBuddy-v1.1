@@ -274,14 +274,6 @@ export type newObjectiveProps = {
   userId: string;
 };
 
-export type adminPendingItemContextProps = {
-  pendingItem: foodProps[];
-  loading: boolean;
-  updatePendingItem: (updatedItem: foodProps) => void;
-  changePendingItem: (updatedItem: foodProps) => void;
-  deletePendingItem: (id: string) => void;
-};
-
 export type userPendingItemContextProps = {
   pendingItem: foodProps[];
   loading: boolean;

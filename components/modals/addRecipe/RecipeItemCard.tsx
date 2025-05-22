@@ -18,7 +18,7 @@ const RecipeItemCard = ({
   // Router hooks to handle navigation
   const router = useRouter();
   // Fetch the user
-  const { user, isAdmin } = useFirebaseAuth();
+  const { user } = useFirebaseAuth();
   // The recipe macros
   const [macros, setMacros] = useState<macronutrients>(recipe.macronutrients);
 

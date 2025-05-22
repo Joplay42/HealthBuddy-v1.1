@@ -16,7 +16,7 @@ const EditRecipeModal = () => {
   const recipeId = searchParams.get("recipeId");
 
   // Get the current user
-  const { user, isAdmin } = useFirebaseAuth();
+  const { user } = useFirebaseAuth();
 
   // Function to update the params state
   const updateParams = (newIndex: string) => {

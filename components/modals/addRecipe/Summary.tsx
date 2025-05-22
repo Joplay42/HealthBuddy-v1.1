@@ -28,7 +28,7 @@ const Summary = ({
   const isUpdating = searchParams.get("recipeId");
 
   // Get teh current userId
-  const { user, isAdmin } = useFirebaseAuth();
+  const { user } = useFirebaseAuth();
 
   // Function to handle the form error
   const handleChange = (

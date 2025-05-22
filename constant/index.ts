@@ -91,11 +91,6 @@ export const navLinksDashboard: navLinksDashboardProps = [
     link: "/dashboard/workout",
   },**/ // Uncomment this or the next release
   {
-    text: "Administration",
-    icon: "/admin.svg",
-    link: "/dashboard/admin",
-  },
-  {
     text: "Settings",
     icon: "/setting.svg",
     link: "/dashboard/setting",

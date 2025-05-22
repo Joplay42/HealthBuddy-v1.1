@@ -11,7 +11,7 @@ const FoodItemCard = ({ food, setConsumedLoading }: foodItemCardProps) => {
   // Router hooks to handle navigation
   const router = useRouter();
   // Fetch the user
-  const { user, isAdmin } = useFirebaseAuth();
+  const { user } = useFirebaseAuth();
 
   // States for the multiplier
   const [multiplier, setMultiplier] = useState(1);

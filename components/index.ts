@@ -56,15 +56,9 @@ import SetObjective from "./dashboard/home/SetObjective";
 import ObjectiveModals from "./modals/ObjectiveModals";
 import FoodModal from "./modals/FoodModal";
 import AddFood from "./dashboard/calorie/AddFood";
-import Admin from "./dashboard/admin/Admin";
-import Pending from "./dashboard/admin/Pending";
-import Live from "./dashboard/admin/Live";
-import PendingItemList from "./dashboard/admin/PendingItemList";
-import Item from "./dashboard/admin/Item";
 import PendingItemListSqueleton from "./Squeleton/PendingItemListSqueleton";
 import AddFoodModal from "./modals/AddFoodModal";
 import NewFood from "./dashboard/calorie/NewFood";
-import DisplayPendingItemList from "./dashboard/calorie/DisplayPendingItemList";
 import FoodModalNavigation from "./modals/FoodModalNavigation";
 import FoodSearch from "./modals/FoodSearch";
 import RecipeSearch from "./modals/RecipeSearch";
@@ -76,7 +70,6 @@ import FoodDesc from "./modals/addRecipe/FoodDesc";
 import Final from "./modals/addRecipe/Final";
 import SearchFood from "./modals/addRecipe/SearchFood";
 import RecipeFoodItemCard from "./modals/addRecipe/RecipeFoodItemCard";
-import DisplayRecipePendingItemList from "./modals/addRecipe/DisplayRecipePendingItemList";
 import Summary from "./modals/addRecipe/Summary";
 import DisplayRecipesList from "./modals/addRecipe/DisplayRecipesList";
 import RecipeItemCard from "./modals/addRecipe/RecipeItemCard";
@@ -138,15 +131,9 @@ export {
   ObjectiveModals,
   FoodModal,
   AddFood,
-  Admin,
-  Pending,
-  Live,
-  PendingItemList,
-  Item,
   PendingItemListSqueleton,
   AddFoodModal,
   NewFood,
-  DisplayPendingItemList,
   FoodModalNavigation,
   FoodSearch,
   RecipeSearch,
@@ -158,7 +145,6 @@ export {
   Final,
   SearchFood,
   RecipeFoodItemCard,
-  DisplayRecipePendingItemList,
   Summary,
   DisplayRecipesList,
   RecipeItemCard,
