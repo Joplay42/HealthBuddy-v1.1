@@ -10,10 +10,6 @@ export const GET = async (request: Request) => {
     const { searchParams } = new URL(request.url);
     // If the search term is more than one word
     const searchTerms = searchParams.get("search")?.toLowerCase();
-    // Get the page size
-    const page = searchParams.get("page") || 0;
-    // Get the hits per page
-    const hitsPerPage = searchParams.get("limit") || 10;
 
     // If no search term is provided produce an error
     if (!searchTerms) {
@@ -23,49 +19,20 @@ export const GET = async (request: Request) => {
       );
     }
 
-    // If no limit value is provided produce an error
-    if (!page) {
-      return new NextResponse(
-        JSON.stringify({ message: "A page parameter is required" }),
-        { status: 400 }
-      );
-    }
+    // Fetch the api
+    const res = await fetch(
+      `https://api.edamam.com/api/food-database/v2/parser?app_id=${process.env.NEXT_PUBLIC_APPID}&app_key=${process.env.NEXT_PUBLIC_API_KEY}&ingr=${searchTerms}`,
+      {
+        method: "GET",
+      }
+    );
 
-    // Use Algolia to search through the database
-    const res = (await client.search({
-      requests: [
-        {
-          indexName: "FoodApi",
-          query: searchTerms,
-          params: `page=${page}&hitsPerPage=${hitsPerPage}`,
-        },
-      ],
-    })) as unknown as {
-      results: { hits: Algoliahit[]; page: number; nbPages: number }[];
-    };
+    // Get the data
+    const data = await res.json();
 
-    const foodList = res.results[0].hits
-      .filter((item) => item.Pending === undefined)
-      .map((item) => {
-        return {
-          ...item,
-          Id: item.objectID,
-        };
-      });
-
-    // Manage if no result is found
-    if (foodList.length === 0) {
-      return new NextResponse(JSON.stringify({ message: "No result found" }), {
-        status: 404,
-      });
-    }
-
-    // Return a Json response to the client
     return new NextResponse(
       JSON.stringify({
-        foodList,
-        page: res.results[0].page,
-        totalPage: res.results[0].nbPages,
+        data: data,
       }),
       { status: 200 }
     );
