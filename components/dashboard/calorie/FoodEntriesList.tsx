@@ -56,9 +56,7 @@ const FoodEntriesList = ({ label, data }: foodEntriesListProps) => {
               {/** Display each item properties */}
               <td className="py-5">{item.Meal}</td>
               <td className="py-5">{capitalize(item.Name)}</td>
-              <td className="py-5">
-                {Math.round(item.Quantity) + " " + item.Unit}
-              </td>
+              <td className="py-5">{Math.round(item.Quantity) + "g"}</td>
               <td className="py-5">{Math.round(item.Calories)}</td>
               <td className="py-5">{Math.round(item.Protein) + "g"}</td>
               <td className="py-5">{Math.round(item.Carbs) + "g"}</td>

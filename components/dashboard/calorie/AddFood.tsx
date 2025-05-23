@@ -1,13 +1,12 @@
 "use client";
 import {
   ConsumedLoading,
-  DisplayPendingItemList,
   FoodItemCard,
   FoodItemCardSqueleton,
   Pagination,
   SearchBar,
 } from "@/components";
-import { foodProps } from "@/types";
+import { foodItemFetchedProps, foodProps } from "@/types";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 
@@ -26,7 +25,7 @@ const AddFood = ({
 
   // Hooks for the search term
   const [searchTerm, setSearchTerm] = useState("");
-  const [foodList, setFoodList] = useState<foodProps[]>([]);
+  const [foodList, setFoodList] = useState<foodItemFetchedProps[]>([]);
 
   // No result found error
   const [error, setError] = useState("");

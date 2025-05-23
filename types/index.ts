@@ -139,7 +139,7 @@ export type Algoliahit = {
 };
 
 export type foodItemCardProps = {
-  food: foodProps;
+  food: foodItemFetchedProps;
   setConsumedLoading: Dispatch<SetStateAction<boolean>>;
 };
 
@@ -311,4 +311,17 @@ export type paginationProps = {
   handlePageChange: (newPage: number) => void;
   currentPage: number;
   totalPage: number;
+};
+
+export type foodItemFetchedProps = {
+  Name: string;
+  Brand: string;
+  portions: {
+    Quantity: number;
+    Unit: string;
+    Calories: number;
+    Protein: number;
+    Carbs: number;
+    Fat: number;
+  }[];
 };

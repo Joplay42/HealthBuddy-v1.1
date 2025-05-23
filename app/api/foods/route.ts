@@ -1,6 +1,6 @@
 import { client } from "@/config/algolia";
 import { db } from "@/config/firebase";
-import { Algoliahit, foodProps } from "@/types";
+import { Algoliahit, foodItemFetchedProps, foodProps } from "@/types";
 import { capitalize } from "@/utils";
 import { deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
 import { NextResponse } from "next/server";
@@ -32,20 +32,38 @@ export const GET = async (request: Request) => {
     const data = await res.json();
 
     // Parse the data
-    const foodList: foodProps[] = data.hints.map((item: any) => {
+    const foodList: foodItemFetchedProps[] = data.hints.map((item: any) => {
+      // Store food and nutrients
       const food = item.food;
       const nutrients = food.nutrients;
 
+      // Calculate nutrients per grams
+      const caloriesPerGram = (nutrients.ENERC_KCAL || 0) / 100;
+      const proteinPerGram = (nutrients.PROCNT || 0) / 100;
+      const carbsPerGram = (nutrients.CHOCDF || 0) / 100;
+      const fatPerGram = (nutrients.FAT || 0) / 100;
+
+      // Mapping the portion sizes
+      const portions = item.measures.map((measure: any) => {
+        // Store the weight of each measure
+        const weight = measure.weight;
+
+        // Return the portions
+        return {
+          Quantity: parseFloat(weight.toFixed(2)),
+          Unit: measure.label,
+          Calories: Math.round(caloriesPerGram * weight),
+          Protein: parseFloat((proteinPerGram * weight).toFixed(2)),
+          Carbs: parseFloat((carbsPerGram * weight).toFixed(2)),
+          Fat: parseFloat((fatPerGram * weight).toFixed(2)),
+        };
+      });
+
+      // Return the entire food object
       return {
-        Id: food.foodId,
         Name: food.label,
-        Brand: food.brand || "Generic food",
-        Quantity: food.servingSizes?.[0].quantity || "100",
-        Unit: food.servingSizes?.[0].label || "g",
-        Calories: Math.round(nutrients.ENERC_KCAL || 0),
-        Protein: parseFloat((nutrients.PROCNT || 0).toFixed(2)),
-        Carbs: parseFloat((nutrients.CHOCDF || 0).toFixed(2)),
-        Fat: parseFloat((nutrients.FAT || 0).toFixed(2)),
+        Brand: food.Brand || "Generic food",
+        portions,
       };
     });
 

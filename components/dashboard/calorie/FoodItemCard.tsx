@@ -1,7 +1,12 @@
 "use client";
 import NutrientsCharts from "@/components/charts/NutrientsCharts";
 import { useFirebaseAuth } from "@/context/UserContext";
-import { foodItemCardProps, foodProps } from "@/types";
+import {
+  foodItemCardProps,
+  foodItemFetchedProps,
+  foodProps,
+  macronutrients,
+} from "@/types";
 import { addFoodToConsumedList, capitalize, consumeFood } from "@/utils";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -19,6 +24,8 @@ const FoodItemCard = ({ food, setConsumedLoading }: foodItemCardProps) => {
   const [disableButton, setDisableButton] = useState(false);
   // States for the meal
   const [meal, setMeal] = useState<string>("");
+  // State for the portions
+  const [portion, setPortion] = useState<number>(0);
   // States for error handling
   const [error, setError] = useState<boolean>(false);
 
@@ -38,7 +45,10 @@ const FoodItemCard = ({ food, setConsumedLoading }: foodItemCardProps) => {
   };
 
   // THe function to add the food to the firestore
-  const handleSubmit = async (food: foodProps, multiplier: number) => {
+  const handleSubmit = async (
+    food: foodItemFetchedProps,
+    multiplier: number
+  ) => {
     if (meal) {
       // Remove the errors
       setError(false);
@@ -52,8 +62,29 @@ const FoodItemCard = ({ food, setConsumedLoading }: foodItemCardProps) => {
           currentParams.delete("modal");
           // Push the router to the route without params
           router.replace(window.location.pathname);
-          await consumeFood(food, user.uid, multiplier);
-          await addFoodToConsumedList(meal, food, multiplier, user.uid);
+
+          // Convert macronutrients
+          const parsedMacros: macronutrients = {
+            Calories: food.portions[portion].Calories,
+            Carbs: food.portions[portion].Carbs,
+            Protein: food.portions[portion].Protein,
+            Fat: food.portions[portion].Fat,
+          };
+
+          // Convert into foodProps
+          const parsedFood: foodProps = {
+            Name: food.Name,
+            Brand: food.Brand,
+            Quantity: food.portions[portion].Quantity,
+            Unit: food.portions[portion].Unit,
+            Calories: food.portions[portion].Calories,
+            Protein: food.portions[portion].Protein,
+            Carbs: food.portions[portion].Carbs,
+            Fat: food.portions[portion].Fat,
+          };
+
+          await consumeFood(parsedMacros, user.uid, multiplier);
+          await addFoodToConsumedList(meal, parsedFood, multiplier, user.uid);
 
           setTimeout(() => {
             // Notify the user
@@ -88,15 +119,32 @@ const FoodItemCard = ({ food, setConsumedLoading }: foodItemCardProps) => {
       <div className="text-md md:text-lg w-full md:w-40">
         <h3 className="font-semibold line-clamp-3">{capitalize(food.Name)}</h3>
         <h3>{capitalize(food.Brand)}</h3>
-        <p>{(Math.round(food.Quantity * multiplier) || 0) + " " + food.Unit}</p>
+        <select
+          className={`w-fit rounded-lg h-8 md:h-auto `}
+          onChange={(e) => {
+            const selectedIndex = parseInt(e.target.value);
+            setPortion(selectedIndex);
+          }}
+        >
+          {food.portions.map((portion, index) => (
+            <option key={index} value={index}>
+              {portion.Unit +
+                " (" +
+                (Math.round(portion.Quantity * multiplier) || 0) +
+                "g)"}
+            </option>
+          ))}
+        </select>
       </div>
       {/** Food calorie chart */}
       <div className="flex items-center space-x-4">
         <NutrientsCharts
-          Calories={Math.round(food.Calories * multiplier) || 0}
-          Protein={Math.round(food.Protein * multiplier) || 0}
-          Carbs={Math.round(food.Carbs * multiplier) || 0}
-          Fat={Math.round(food.Fat * multiplier) || 0}
+          Calories={
+            Math.round(food.portions[portion].Calories * multiplier) || 0
+          }
+          Protein={Math.round(food.portions[portion].Protein * multiplier) || 0}
+          Carbs={Math.round(food.portions[portion].Carbs * multiplier) || 0}
+          Fat={Math.round(food.portions[portion].Fat * multiplier) || 0}
           size="h-20 w-auto"
           fontSize="text-lg"
         />
@@ -108,7 +156,7 @@ const FoodItemCard = ({ food, setConsumedLoading }: foodItemCardProps) => {
           <h3 className="font-bold text-[#AFF921]">Protein</h3>
           <p>
             <span className="font-semibold">
-              {Math.round(food.Protein * multiplier) || 0}
+              {Math.round(food.portions[portion].Protein * multiplier) || 0}
             </span>
             g
           </p>
@@ -117,7 +165,7 @@ const FoodItemCard = ({ food, setConsumedLoading }: foodItemCardProps) => {
           <h3 className="font-bold text-[#73af00]">Carbs</h3>
           <p>
             <span className="font-semibold">
-              {Math.round(food.Carbs * multiplier) || 0}
+              {Math.round(food.portions[portion].Carbs * multiplier) || 0}
             </span>
             g
           </p>
@@ -126,7 +174,7 @@ const FoodItemCard = ({ food, setConsumedLoading }: foodItemCardProps) => {
           <h3 className="font-bold text-[#d7ff8a]">Fat</h3>
           <p>
             <span className="font-semibold">
-              {Math.round(food.Fat * multiplier) || 0}
+              {Math.round(food.portions[portion].Fat * multiplier) || 0}
             </span>
             g
           </p>
