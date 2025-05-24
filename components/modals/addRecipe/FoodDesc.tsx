@@ -65,7 +65,7 @@ const FoodDesc = ({
             {capitalize(food.Name ?? "")} - {capitalize(food.Brand ?? "")}
           </h1>
           <p className="text-md md:text-xl font-semibold">
-            Quantity ({food.Quantity + food.Unit})
+            {food.Unit + " (" + food.Quantity + "g)"}
           </p>
           <input
             value={multiplier}

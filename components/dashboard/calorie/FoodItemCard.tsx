@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Slide, toast } from "react-toastify";
 
-const FoodItemCard = ({ food, setConsumedLoading }: foodItemCardProps) => {
+const FoodItemCard = ({ food }: foodItemCardProps) => {
   // Router hooks to handle navigation
   const router = useRouter();
   // Fetch the user
@@ -53,7 +53,6 @@ const FoodItemCard = ({ food, setConsumedLoading }: foodItemCardProps) => {
       // Remove the errors
       setError(false);
       try {
-        setConsumedLoading(true);
         if (user) {
           // Close the modal when the operation is done
           // Get the current params
@@ -103,8 +102,6 @@ const FoodItemCard = ({ food, setConsumedLoading }: foodItemCardProps) => {
         }
       } catch (error: any) {
         console.error(error.message);
-      } finally {
-        setConsumedLoading(false);
       }
     } else {
       // Set an error handling for empty meal

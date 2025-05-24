@@ -140,7 +140,6 @@ export type Algoliahit = {
 
 export type foodItemCardProps = {
   food: foodItemFetchedProps;
-  setConsumedLoading: Dispatch<SetStateAction<boolean>>;
 };
 
 export type foodEntriesListProps = {
@@ -315,8 +314,10 @@ export type paginationProps = {
 };
 
 export type foodItemFetchedProps = {
+  Id?: string;
   Name: string;
   Brand: string;
+  multiplier?: number;
   portions: {
     Quantity: number;
     Unit: string;

@@ -1,6 +1,6 @@
 "use client";
 import NutrientsCharts from "@/components/charts/NutrientsCharts";
-import { foodProps } from "@/types";
+import { foodItemFetchedProps, foodProps } from "@/types";
 import { capitalize } from "@/utils";
 import { useRouter } from "next/navigation";
 import React, { ChangeEvent, useEffect, useState } from "react";
@@ -9,15 +9,17 @@ const RecipeFoodItemCard = ({
   food,
   action,
 }: {
-  food: foodProps;
+  food: foodItemFetchedProps;
   action: (updatedData: foodProps) => void;
 }) => {
   // Food states
-  const [foodItem, setFoodItem] = useState<foodProps>(food);
+  const [foodItem, setFoodItem] = useState<foodItemFetchedProps>(food);
   // Multiplier state
   const [multiplier, setMultiplier] = useState(food.multiplier ?? 1);
   // Router hooks to handle the navigation
   const router = useRouter();
+  // State for the portions
+  const [portion, setPortion] = useState<number>(0);
 
   // UseEffect to set the states of the food
   useEffect(() => {
@@ -29,21 +31,25 @@ const RecipeFoodItemCard = ({
     const newMultiplier = e.target.valueAsNumber;
     if (newMultiplier > 0) {
       setMultiplier(newMultiplier);
-      setFoodItem((prevFood) => ({
-        ...prevFood,
-        multiplier: newMultiplier,
-        Quantity: (prevFood.Quantity / multiplier) * newMultiplier,
-        Calories: (prevFood.Calories / multiplier) * newMultiplier,
-        Protein: (prevFood.Protein / multiplier) * newMultiplier,
-        Carbs: (prevFood.Carbs / multiplier) * newMultiplier,
-        Fat: (prevFood.Fat / multiplier) * newMultiplier,
-      }));
     }
   };
 
   // Handle the addition to the list food
   const handleSubmit = () => {
-    action(foodItem);
+    // Convert food item
+    const parsedFood: foodProps = {
+      Id: foodItem.Id,
+      Brand: foodItem.Brand,
+      Name: foodItem.Name,
+      multiplier: multiplier,
+      Quantity: foodItem.portions[portion].Quantity * multiplier,
+      Unit: foodItem.portions[portion].Unit,
+      Calories: foodItem.portions[portion].Calories * multiplier,
+      Protein: foodItem.portions[portion].Protein * multiplier,
+      Carbs: foodItem.portions[portion].Carbs * multiplier,
+      Fat: foodItem.portions[portion].Fat * multiplier,
+    };
+    action(parsedFood);
     // Get the current params
     const currentParams = new URLSearchParams(window.location.search);
     // Delete the current param
@@ -62,15 +68,34 @@ const RecipeFoodItemCard = ({
           {capitalize(foodItem.Name)}
         </h3>
         <h3>{capitalize(food.Brand)}</h3>
-        <p>{(Math.round(foodItem.Quantity) || 0) + " " + foodItem.Unit}</p>
+        <select
+          className={`w-fit rounded-lg h-8 md:h-auto `}
+          onChange={(e) => {
+            const selectedIndex = parseInt(e.target.value);
+            setPortion(selectedIndex);
+          }}
+        >
+          {food.portions.map((portion, index) => (
+            <option key={index} value={index}>
+              {portion.Unit +
+                " (" +
+                (Math.round(portion.Quantity * multiplier) || 0) +
+                "g)"}
+            </option>
+          ))}
+        </select>
       </div>
       {/** Food calorie chart */}
       <div className="flex items-center space-x-4">
         <NutrientsCharts
-          Calories={Math.round(foodItem.Calories) || 0}
-          Protein={Math.round(foodItem.Protein) || 0}
-          Carbs={Math.round(foodItem.Carbs) || 0}
-          Fat={Math.round(foodItem.Fat) || 0}
+          Calories={
+            Math.round(foodItem.portions[portion].Calories * multiplier) || 0
+          }
+          Protein={
+            Math.round(foodItem.portions[portion].Protein * multiplier) || 0
+          }
+          Carbs={Math.round(foodItem.portions[portion].Carbs * multiplier) || 0}
+          Fat={Math.round(foodItem.portions[portion].Fat * multiplier) || 0}
           size="h-20 w-auto"
           fontSize="text-lg"
         />
@@ -82,7 +107,7 @@ const RecipeFoodItemCard = ({
           <h3 className="font-bold text-[#AFF921]">Protein</h3>
           <p>
             <span className="font-semibold">
-              {Math.round(foodItem.Protein) || 0}
+              {Math.round(foodItem.portions[portion].Protein * multiplier) || 0}
             </span>
             g
           </p>
@@ -91,7 +116,7 @@ const RecipeFoodItemCard = ({
           <h3 className="font-bold text-[#73af00]">Carbs</h3>
           <p>
             <span className="font-semibold">
-              {Math.round(foodItem.Carbs) || 0}
+              {Math.round(foodItem.portions[portion].Carbs * multiplier) || 0}
             </span>
             g
           </p>
@@ -100,7 +125,7 @@ const RecipeFoodItemCard = ({
           <h3 className="font-bold text-[#d7ff8a]">Fat</h3>
           <p>
             <span className="font-semibold">
-              {Math.round(foodItem.Fat) || 0}
+              {Math.round(foodItem.portions[portion].Fat * multiplier) || 0}
             </span>
             g
           </p>

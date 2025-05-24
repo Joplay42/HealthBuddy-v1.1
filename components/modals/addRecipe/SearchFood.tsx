@@ -1,14 +1,12 @@
 "use client";
 import {
   FoodItemCard,
-  DisplayPendingItemList,
   SearchBar,
   FoodItemCardSqueleton,
   RecipeFoodItemCard,
-  DisplayRecipePendingItemList,
   Pagination,
 } from "@/components";
-import { foodProps } from "@/types";
+import { foodItemFetchedProps, foodProps } from "@/types";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 
@@ -30,26 +28,42 @@ const SearchFood = ({ addFood }: { addFood: (food: foodProps) => void }) => {
 
   // Pagination states
   const [currentPage, setCurrentPage] = useState(0);
+  const [nextUrl, setNextUrl] = useState<string | null>(null);
+  const [urlStack, setUrlStack] = useState<string[]>([]);
+
   // Calculate the total pages
   const [totalPages, setTotalPages] = useState(0);
   // Ref hooks to handle the scroll back
   const modalContentRef = useRef<HTMLDivElement>(null);
+  // Search results stored
+  const [foodList, setFoodList] = useState<foodItemFetchedProps[]>([]);
 
-  // Function to handle previous and next
-  const handlePageChange = (newPage: number) => {
-    if (searchQuery) {
+  // function to handle the nextPage
+  const handleNext = () => {
+    if (nextUrl) {
       if (modalContentRef.current) {
         modalContentRef.current.scrollIntoView({
           behavior: "smooth",
           block: "start",
         });
       }
-      getFood(searchQuery, newPage);
+      getFood(searchQuery!, currentPage + 1, nextUrl, true);
     }
   };
 
-  // Search results stored
-  const [foodList, setFoodList] = useState<foodProps[]>([]);
+  // Function to handle the previous page
+  const handlePrev = () => {
+    if (urlStack.length >= 2) {
+      if (modalContentRef.current) {
+        modalContentRef.current.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+      const prevUrl = urlStack[urlStack.length - 2]; // The page before the current
+      getFood(searchQuery!, currentPage - 1, prevUrl, false, true);
+    }
+  };
 
   // UseEffect hooks to check if the url has params to fetch teh data
   useEffect(() => {
@@ -66,16 +80,23 @@ const SearchFood = ({ addFood }: { addFood: (food: foodProps) => void }) => {
   }, [searchQuery]);
 
   // The new API food fetching with the custom API we created
-  const getFood = async (term: string, page: number) => {
+  const getFood = async (
+    term: string,
+    page: number,
+    url?: string,
+    isNext = false,
+    isPrev = false
+  ) => {
     setFoodList([]);
     setLoading(true);
     setError("");
 
     try {
       // Fetching the API
-      const res = await fetch(
-        `/api/foods?search=${term}&page=${page}&limit=10`
-      );
+      let fetchUrl = `/api/foods?search=${term}`;
+      if (url) fetchUrl += `&url=${encodeURIComponent(url)}`;
+
+      const res = await fetch(fetchUrl);
 
       if (!res.ok) {
         const errorData = await res.json();
@@ -86,8 +107,20 @@ const SearchFood = ({ addFood }: { addFood: (food: foodProps) => void }) => {
       const data = await res.json();
 
       setFoodList(data.foodList);
-      setCurrentPage(data.page);
-      setTotalPages(data.totalPage);
+      setNextUrl(data.nextUrl || null);
+      setCurrentPage(page);
+
+      setUrlStack((prev) => {
+        if (isNext) {
+          return [...prev, url!];
+        } else if (isPrev) {
+          return prev.slice(0, -1);
+        } else {
+          return [url || ""];
+        }
+      });
+
+      setTotalPages(Math.ceil(data.count / 20));
     } catch (error: any) {
       setError(error.message);
     } finally {
@@ -150,7 +183,8 @@ const SearchFood = ({ addFood }: { addFood: (food: foodProps) => void }) => {
         )}
       </div>
       <Pagination
-        handlePageChange={handlePageChange}
+        handlePrev={handlePrev}
+        handleNext={handleNext}
         totalPage={totalPages}
         currentPage={currentPage}
       />

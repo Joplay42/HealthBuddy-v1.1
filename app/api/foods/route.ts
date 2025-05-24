@@ -62,6 +62,7 @@ export const GET = async (request: Request) => {
 
       // Return the entire food object
       return {
+        Id: food.foodId,
         Name: food.label,
         Brand: food.Brand || "Generic food",
         portions,

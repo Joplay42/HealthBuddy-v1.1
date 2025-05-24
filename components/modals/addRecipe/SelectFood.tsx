@@ -100,9 +100,7 @@ const SelectFood = ({
       {isDescription && food ? (
         <FoodDesc food={food} setFood={setFood} update={updateFoodItem} />
       ) : isSearching ? (
-        <UserPendingItemProvider>
-          <SearchFood addFood={addFoodList} />
-        </UserPendingItemProvider>
+        <SearchFood addFood={addFoodList} />
       ) : (
         <>
           <button

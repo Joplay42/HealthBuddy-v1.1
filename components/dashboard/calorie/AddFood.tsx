@@ -1,6 +1,5 @@
 "use client";
 import {
-  ConsumedLoading,
   FoodItemCard,
   FoodItemCardSqueleton,
   Pagination,
@@ -170,11 +169,7 @@ const AddFood = ({
             .map((_, index) => <FoodItemCardSqueleton key={index} />)}
         {!error ? (
           foodList?.map((item, index) => (
-            <FoodItemCard
-              setConsumedLoading={setConsumedLoading}
-              food={item}
-              key={index}
-            />
+            <FoodItemCard food={item} key={index} />
           ))
         ) : (
           <p className="text-red-500">{error}</p>
