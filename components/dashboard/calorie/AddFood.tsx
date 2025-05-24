@@ -35,21 +35,38 @@ const AddFood = ({
 
   // Pagination states
   const [currentPage, setCurrentPage] = useState(0);
+  const [nextUrl, setNextUrl] = useState<string | null>(null);
+  const [urlStack, setUrlStack] = useState<string[]>([]);
+
   // Calculate the total pages
   const [totalPages, setTotalPages] = useState(0);
   // Ref hooks to handle the scroll back
   const modalContentRef = useRef<HTMLDivElement>(null);
 
-  // Function to handle previous and next
-  const handlePageChange = async (newPage: number) => {
-    if (searchQuery) {
+  // function to handle the nextPage
+  const handleNext = () => {
+    if (nextUrl) {
       if (modalContentRef.current) {
         modalContentRef.current.scrollIntoView({
           behavior: "smooth",
           block: "start",
         });
       }
-      await getFood(searchQuery, newPage);
+      getFood(searchQuery!, currentPage + 1, nextUrl, true);
+    }
+  };
+
+  // Function to handle the previous page
+  const handlePrev = () => {
+    if (urlStack.length >= 2) {
+      if (modalContentRef.current) {
+        modalContentRef.current.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+      const prevUrl = urlStack[urlStack.length - 2]; // The page before the current
+      getFood(searchQuery!, currentPage - 1, prevUrl, false, true);
     }
   };
 
@@ -68,14 +85,22 @@ const AddFood = ({
   }, [searchQuery]);
 
   // The new API food fetching with the custom API we created
-  const getFood = async (term: string, page: number) => {
+  const getFood = async (
+    term: string,
+    page: number,
+    url?: string,
+    isNext = false,
+    isPrev = false
+  ) => {
     setFoodList([]);
     setLoading(true);
     setError("");
 
     try {
-      // Fetching the API
-      const res = await fetch(`/api/foods?search=${term}`);
+      let fetchUrl = `/api/foods?search=${term}`;
+      if (url) fetchUrl += `&url=${encodeURIComponent(url)}`;
+
+      const res = await fetch(fetchUrl);
 
       if (!res.ok) {
         const errorData = await res.json();
@@ -86,6 +111,20 @@ const AddFood = ({
       const data = await res.json();
 
       setFoodList(data.foodList);
+      setNextUrl(data.nextUrl || null);
+      setCurrentPage(page);
+
+      setUrlStack((prev) => {
+        if (isNext) {
+          return [...prev, url!];
+        } else if (isPrev) {
+          return prev.slice(0, -1);
+        } else {
+          return [url || ""];
+        }
+      });
+
+      setTotalPages(Math.ceil(data.count / 20));
     } catch (error: any) {
       setError(error.message);
     } finally {
@@ -142,7 +181,8 @@ const AddFood = ({
         )}
       </div>
       <Pagination
-        handlePageChange={handlePageChange}
+        handlePrev={handlePrev}
+        handleNext={handleNext}
         totalPage={totalPages}
         currentPage={currentPage}
       />

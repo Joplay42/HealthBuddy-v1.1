@@ -1,32 +1,33 @@
-import { client } from "@/config/algolia";
-import { db } from "@/config/firebase";
-import { Algoliahit, foodItemFetchedProps, foodProps } from "@/types";
-import { capitalize } from "@/utils";
-import { deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
+import { foodItemFetchedProps } from "@/types";
 import { NextResponse } from "next/server";
 
 export const GET = async (request: Request) => {
   try {
     // The new searchParams
     const { searchParams } = new URL(request.url);
-    // If the search term is more than one word
-    const searchTerms = searchParams.get("search")?.toLowerCase();
+
+    // Get the searchterm
+    const search = searchParams.get("search")?.toLowerCase();
+    // Get the page numbers
+    const page = Number(searchParams.get("page")) || 1;
+    // Get the nextUrl
+    const url = searchParams.get("url");
 
     // If no search term is provided produce an error
-    if (!searchTerms) {
+    if (!search) {
       return new NextResponse(
         JSON.stringify({ message: "Search term is required" }),
         { status: 400 }
       );
     }
+    // The url
+    let fetchUrl = url;
+    if (!fetchUrl) {
+      fetchUrl = `https://api.edamam.com/api/food-database/v2/parser?app_id=${process.env.NEXT_PUBLIC_APPID}&app_key=${process.env.NEXT_PUBLIC_API_KEY}&ingr=${search}`;
+    }
 
     // Fetch the api
-    const res = await fetch(
-      `https://api.edamam.com/api/food-database/v2/parser?app_id=${process.env.NEXT_PUBLIC_APPID}&app_key=${process.env.NEXT_PUBLIC_API_KEY}&ingr=${searchTerms}`,
-      {
-        method: "GET",
-      }
-    );
+    const res = await fetch(fetchUrl);
 
     // Get the data
     const data = await res.json();
@@ -70,6 +71,8 @@ export const GET = async (request: Request) => {
     return new NextResponse(
       JSON.stringify({
         foodList,
+        count: data.count,
+        nextUrl: data._links?.next?.href ?? null,
       }),
       { status: 200 }
     );

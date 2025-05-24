@@ -3,16 +3,14 @@ import Image from "next/image";
 import { paginationProps } from "@/types";
 
 const Pagination = ({
-  handlePageChange,
+  handlePrev,
+  handleNext,
   currentPage,
   totalPage,
 }: paginationProps) => {
   return (
     <div className="space-x-4 flex text-md md:text-lg my-1 md:my-4">
-      <button
-        onClick={() => handlePageChange(currentPage - 1)}
-        disabled={currentPage === 0}
-      >
+      <button onClick={handlePrev} disabled={currentPage === 0}>
         <Image
           src="/previous-arrow.svg"
           width={17}
@@ -25,10 +23,7 @@ const Pagination = ({
         Page {currentPage + 1} out of {totalPage}
       </span>
 
-      <button
-        onClick={() => handlePageChange(currentPage + 1)}
-        disabled={currentPage + 1 >= totalPage}
-      >
+      <button onClick={handleNext} disabled={currentPage + 1 >= totalPage}>
         <Image
           src="/next-arrow.svg"
           width={17}
