@@ -96,6 +96,7 @@ const RecipeFoodItemCard = ({
           }
           Carbs={Math.round(foodItem.portions[portion].Carbs * multiplier) || 0}
           Fat={Math.round(foodItem.portions[portion].Fat * multiplier) || 0}
+          Empty={true}
           size="h-20 w-auto"
           fontSize="text-lg"
         />

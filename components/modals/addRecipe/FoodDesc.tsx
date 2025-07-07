@@ -53,6 +53,7 @@ const FoodDesc = ({
           Protein={food.Protein || 0}
           Carbs={food.Carbs || 0}
           Fat={food.Fat || 0}
+          Empty={true}
           size="h-60 w-auto"
           fontSize="text-3xl"
         />

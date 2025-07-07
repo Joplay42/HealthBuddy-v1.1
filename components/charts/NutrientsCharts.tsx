@@ -15,6 +15,7 @@ const NutrientsCharts = ({
   Protein,
   Carbs,
   Fat,
+  Empty,
   size,
   fontSize,
 }: NutrientsChartsProps) => {
@@ -23,8 +24,8 @@ const NutrientsCharts = ({
     datasets: [
       {
         label: "Calories",
-        data: [Protein, Carbs, Fat],
-        backgroundColor: ["#AFF921", "#73af00", "#d7ff8a"],
+        data: [Protein, Carbs, Fat, Empty],
+        backgroundColor: ["#AFF921", "#73af00", "#d7ff8a", "#656565"],
         borderWidth: 1,
         cutout: "70%",
       },

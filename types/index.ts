@@ -255,6 +255,7 @@ export type NutrientsChartsProps = {
   Protein: number;
   Carbs: number;
   Fat: number;
+  Empty?: boolean;
   size: string;
   fontSize: string;
 };
