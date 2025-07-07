@@ -49,7 +49,7 @@ const NutrientsCharts = ({
       <Pie data={value} options={options} />
       {/** The calories amount */}
       <h1
-        className={`absolute bottom-1/2 right-1/2 translate-x-1/2 translate-y-1/2 font-semibold ${fontSize}`}
+        className={`m-0 absolute bottom-1/2 right-1/2 translate-x-1/2 translate-y-1/2 font-semibold ${fontSize}`}
       >
         {Calories}
       </h1>
