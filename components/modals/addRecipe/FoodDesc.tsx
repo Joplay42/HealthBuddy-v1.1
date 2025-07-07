@@ -21,28 +21,57 @@ const FoodDesc = ({
   const [loading, setLoading] = useState(false);
   // Multiplier state
   const [multiplier, setMultiplier] = useState(food.multiplier || 1);
+  // states for the disablility of the button
+  const [disableButton, setDisableButton] = useState(false);
 
   // UseEffect hooks to reset the multiplier when the food item changes
   useEffect(() => {
     setMultiplier(food.multiplier ?? 1);
   }, [food]);
 
-  // Handle multiplication
-  const handleAmountChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const newMultiplier = e.target.valueAsNumber;
-    if (newMultiplier > 0) {
-      setMultiplier(newMultiplier);
-      setFood((prevFood) => ({
-        ...prevFood,
-        multiplier: newMultiplier,
-        Quantity: (prevFood.Quantity / multiplier) * newMultiplier,
-        Calories: (prevFood.Calories / multiplier) * newMultiplier,
-        Protein: (prevFood.Protein / multiplier) * newMultiplier,
-        Carbs: (prevFood.Carbs / multiplier) * newMultiplier,
-        Fat: (prevFood.Fat / multiplier) * newMultiplier,
-      }));
+  // The quantity change function
+  const handleQuantityChange = (newMultiplier: number) => {
+    // Set the amount to the right number
+    setMultiplier(newMultiplier);
+    // Disable the button if 0 or negative number
+    if (newMultiplier <= 0) {
+      setMultiplier(0);
+      setDisableButton(true);
+    } else if (Number.isNaN(newMultiplier)) {
+      setDisableButton(true);
+    } else {
+      setFood((prevFood) => {
+        const prevMultiplier = prevFood.multiplier || 1; // fallback to 1 to avoid division by 0
+        return {
+          ...prevFood,
+          multiplier: newMultiplier,
+          Quantity: (prevFood.Quantity / prevMultiplier) * newMultiplier,
+          Calories: (prevFood.Calories / prevMultiplier) * newMultiplier,
+          Protein: (prevFood.Protein / prevMultiplier) * newMultiplier,
+          Carbs: (prevFood.Carbs / prevMultiplier) * newMultiplier,
+          Fat: (prevFood.Fat / prevMultiplier) * newMultiplier,
+        };
+      });
+      setDisableButton(false);
     }
   };
+
+  // // Handle multiplication
+  // const handleAmountChange = (e: ChangeEvent<HTMLInputElement>) => {
+  //   const newMultiplier = e.target.valueAsNumber;
+  //   if (newMultiplier > 0) {
+  //     setMultiplier(newMultiplier);
+  //     setFood((prevFood) => ({
+  //       ...prevFood,
+  //       multiplier: newMultiplier,
+  //       Quantity: (prevFood.Quantity / multiplier) * newMultiplier,
+  //       Calories: (prevFood.Calories / multiplier) * newMultiplier,
+  //       Protein: (prevFood.Protein / multiplier) * newMultiplier,
+  //       Carbs: (prevFood.Carbs / multiplier) * newMultiplier,
+  //       Fat: (prevFood.Fat / multiplier) * newMultiplier,
+  //     }));
+  //   }
+  // };
 
   return (
     <div className="flex flex-wrap md:justify-center gap-y-8 gap-x-10 lg:gap-x-20 mx-4 lg:mx-10 my-10 md:my-5">
@@ -70,7 +99,7 @@ const FoodDesc = ({
           </p>
           <input
             value={multiplier}
-            onChange={handleAmountChange}
+            onChange={(e) => handleQuantityChange(e.target.valueAsNumber)}
             type="number"
             className="border-black rounded-xl w-full md:w-40"
             placeholder="ex. 4"
@@ -116,7 +145,7 @@ const FoodDesc = ({
         }}
         className="mx-4 lg:mx- md:my-8 flex items-center gap-2 justify-center py-4 px-3 rounded-xl hover:opacity-75 hover:transition ease-in-out duration-300 bg-black text-white w-[95%] disabled:opacity-60"
         type="submit"
-        disabled={loading}
+        disabled={loading || disableButton}
       >
         Save
         {loading && (

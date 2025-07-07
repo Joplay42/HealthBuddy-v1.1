@@ -16,6 +16,8 @@ const RecipeFoodItemCard = ({
   const [foodItem, setFoodItem] = useState<foodItemFetchedProps>(food);
   // Multiplier state
   const [multiplier, setMultiplier] = useState(food.multiplier ?? 1);
+  // states for the disablility of the button
+  const [disableButton, setDisableButton] = useState(false);
   // Router hooks to handle the navigation
   const router = useRouter();
   // State for the portions
@@ -26,11 +28,18 @@ const RecipeFoodItemCard = ({
     setFoodItem(food);
   }, [food]);
 
-  // Handle multiplication
-  const handleAmountChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const newMultiplier = e.target.valueAsNumber;
-    if (newMultiplier > 0) {
-      setMultiplier(newMultiplier);
+  // The quantity change function
+  const handleQuantityChange = (nb: number) => {
+    // Set the amount to the right number
+    setMultiplier(nb);
+    // Disable the button if 0 or negative number
+    if (nb <= 0) {
+      setMultiplier(0);
+      setDisableButton(true);
+    } else if (Number.isNaN(nb)) {
+      setDisableButton(true);
+    } else {
+      setDisableButton(false);
     }
   };
 
@@ -140,7 +149,7 @@ const RecipeFoodItemCard = ({
             type="number"
             className="w-12 h-auto md:w-16 rounded-lg text-center"
             value={multiplier}
-            onChange={handleAmountChange}
+            onChange={(e) => handleQuantityChange(e.target.valueAsNumber)}
           />
         </div>
       </div>
@@ -148,6 +157,7 @@ const RecipeFoodItemCard = ({
       <button
         className="disabled:opacity-50 bg-black text-white rounded-xl text-2xl h-10 lg:h-16 w-full lg:w-12 col-span-2 md:col-span-3 lg:col-span-1 lg:justify-self-end"
         onClick={handleSubmit}
+        disabled={disableButton}
       >
         +
       </button>

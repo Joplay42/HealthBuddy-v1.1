@@ -31,16 +31,16 @@ const FoodItemCard = ({ food }: foodItemCardProps) => {
 
   // The quantity change function
   const handleQuantityChange = (nb: number) => {
-    if (!(nb < 0)) {
-      // Check if the amount is 0
-      if (nb === 0) {
-        // Disable the button to prevent null value
-        setDisableButton(true);
-      } else {
-        setDisableButton(false);
-      }
-      // Set the amount to the right number
-      setMultiplier(nb);
+    // Set the amount to the right number
+    setMultiplier(nb);
+    // Disable the button if 0 or negative number
+    if (nb <= 0) {
+      setMultiplier(0);
+      setDisableButton(true);
+    } else if (Number.isNaN(nb)) {
+      setDisableButton(true);
+    } else {
+      setDisableButton(false);
     }
   };
 
@@ -185,7 +185,7 @@ const FoodItemCard = ({ food }: foodItemCardProps) => {
           <input
             type="number"
             className="w-12 h-auto md:w-16 rounded-lg text-center"
-            value={multiplier || 0}
+            value={multiplier}
             onChange={(e) => handleQuantityChange(e.target.valueAsNumber)}
           />
         </div>
