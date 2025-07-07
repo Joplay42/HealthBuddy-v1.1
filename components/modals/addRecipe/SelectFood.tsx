@@ -4,7 +4,6 @@ import { foodProps, recipeProps } from "@/types";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { UserPendingItemProvider } from "@/context/UserPendingItemContext";
 import { recipeTotalMacronutrients } from "@/utils";
 
 const SelectFood = ({

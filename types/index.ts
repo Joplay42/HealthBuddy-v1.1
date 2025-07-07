@@ -113,21 +113,7 @@ export type foodProps = {
   UserId?: string;
   Id?: string;
   multiplier?: number;
-  Pending?: boolean;
   Meal?: string;
-  Name: string;
-  Brand: string;
-  Quantity: number;
-  Unit: string;
-  Calories: number;
-  Protein: number;
-  Carbs: number;
-  Fat: number;
-};
-
-export type Algoliahit = {
-  objectID: string;
-  Pending?: boolean;
   Name: string;
   Brand: string;
   Quantity: number;
@@ -272,18 +258,6 @@ export type newObjectiveProps = {
   carb: number;
   fat: number;
   userId: string;
-};
-
-export type userPendingItemContextProps = {
-  pendingItem: foodProps[];
-  loading: boolean;
-};
-
-export type pendingItemProps = {
-  item: foodProps;
-  onApprove: () => void;
-  onChange: (updatedItem: foodProps) => void;
-  onDelete: () => void;
 };
 
 export type recipeProps = {

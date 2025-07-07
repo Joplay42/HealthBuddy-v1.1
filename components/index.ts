@@ -56,7 +56,6 @@ import SetObjective from "./dashboard/home/SetObjective";
 import ObjectiveModals from "./modals/ObjectiveModals";
 import FoodModal from "./modals/FoodModal";
 import AddFood from "./dashboard/calorie/AddFood";
-import PendingItemListSqueleton from "./Squeleton/PendingItemListSqueleton";
 import AddFoodModal from "./modals/AddFoodModal";
 import NewFood from "./dashboard/calorie/NewFood";
 import FoodModalNavigation from "./modals/FoodModalNavigation";
@@ -131,7 +130,6 @@ export {
   ObjectiveModals,
   FoodModal,
   AddFood,
-  PendingItemListSqueleton,
   AddFoodModal,
   NewFood,
   FoodModalNavigation,
