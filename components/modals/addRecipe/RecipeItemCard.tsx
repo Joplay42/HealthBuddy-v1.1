@@ -149,7 +149,7 @@ const RecipeItemCard = ({
           Carbs={Math.round(macros.Carbs * multiplier) || 0}
           Fat={Math.round(macros.Fat * multiplier) || 0}
           Empty={disableButton}
-          size="h-20 w-auto"
+          size="max-h-20 w-auto"
           fontSize="text-lg"
         />
         <p>Calories</p>

@@ -56,23 +56,6 @@ const FoodDesc = ({
     }
   };
 
-  // // Handle multiplication
-  // const handleAmountChange = (e: ChangeEvent<HTMLInputElement>) => {
-  //   const newMultiplier = e.target.valueAsNumber;
-  //   if (newMultiplier > 0) {
-  //     setMultiplier(newMultiplier);
-  //     setFood((prevFood) => ({
-  //       ...prevFood,
-  //       multiplier: newMultiplier,
-  //       Quantity: (prevFood.Quantity / multiplier) * newMultiplier,
-  //       Calories: (prevFood.Calories / multiplier) * newMultiplier,
-  //       Protein: (prevFood.Protein / multiplier) * newMultiplier,
-  //       Carbs: (prevFood.Carbs / multiplier) * newMultiplier,
-  //       Fat: (prevFood.Fat / multiplier) * newMultiplier,
-  //     }));
-  //   }
-  // };
-
   return (
     <div className="flex flex-wrap md:justify-center gap-y-8 gap-x-10 lg:gap-x-20 mx-4 lg:mx-10 my-10 md:my-5">
       {/** Food calorie chart */}
@@ -83,7 +66,7 @@ const FoodDesc = ({
           Carbs={food.Carbs || 0}
           Fat={food.Fat || 0}
           Empty={true}
-          size="h-60 w-auto"
+          size="max-h-60 w-auto"
           fontSize="text-3xl"
         />
         <p className="text-lg md:text-xl font-semibold">Calories</p>

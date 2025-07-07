@@ -45,7 +45,7 @@ const NutrientsCharts = ({
   };
 
   return (
-    <div className={`relative ${size}`}>
+    <div className={`${size} relative`}>
       {/** The charts */}
       <Pie data={value} options={options} />
       {/** The calories amount */}

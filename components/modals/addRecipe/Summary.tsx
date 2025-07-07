@@ -164,7 +164,7 @@ const Summary = ({
                         recipe.macronutrients.Fat / recipe.NbServing
                       )}
                       Empty={buttonDisabled}
-                      size="h-28 w-28"
+                      size="max-h-28 w-28"
                       fontSize="text-2xl"
                     />
                     <p>Calories</p>
