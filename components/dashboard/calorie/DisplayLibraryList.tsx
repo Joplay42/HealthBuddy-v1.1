@@ -18,7 +18,7 @@ const DisplayLibraryList = ({
   if (foods.length === 0)
     return (
       <h1 className="my-10 font-semibold text-xl text-center">
-        No recipes has been found
+        No foods has been found
       </h1>
     );
   return (
