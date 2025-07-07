@@ -63,7 +63,7 @@ const Quotes = () => {
         {/** The author */}- {quotes[currentIndex].author}
       </p>
       {/** The dots to display which index */}
-      <div className="flex space-x-2 absolute bottom-12 right-10">
+      <div className="flex space-x-2 absolute bottom-5 left-5 md:left-auto md:bottom-12 md:right-10">
         {quotes.map((dots) => (
           <div
             key={dots.text}
