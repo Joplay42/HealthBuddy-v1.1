@@ -142,7 +142,7 @@ const FoodItemCard = ({ food }: foodItemCardProps) => {
           Protein={Math.round(food.portions[portion].Protein * multiplier) || 0}
           Carbs={Math.round(food.portions[portion].Carbs * multiplier) || 0}
           Fat={Math.round(food.portions[portion].Fat * multiplier) || 0}
-          Empty={true}
+          Empty={disableButton}
           size="h-20 w-auto"
           fontSize="text-lg"
         />

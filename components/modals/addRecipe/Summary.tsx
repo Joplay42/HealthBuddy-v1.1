@@ -163,7 +163,7 @@ const Summary = ({
                       Fat={Math.round(
                         recipe.macronutrients.Fat / recipe.NbServing
                       )}
-                      Empty={true}
+                      Empty={buttonDisabled}
                       size="h-28 w-28"
                       fontSize="text-2xl"
                     />

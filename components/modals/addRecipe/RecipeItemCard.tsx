@@ -148,7 +148,7 @@ const RecipeItemCard = ({
           Protein={Math.round(macros.Protein * multiplier) || 0}
           Carbs={Math.round(macros.Carbs * multiplier) || 0}
           Fat={Math.round(macros.Fat * multiplier) || 0}
-          Empty={true}
+          Empty={disableButton}
           size="h-20 w-auto"
           fontSize="text-lg"
         />
