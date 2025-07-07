@@ -38,17 +38,17 @@ const NewFood = () => {
 
     // Error handling
     try {
-      // Call the api post method
-      // const res = await fetch("/api/foods/pending", {
-      //   method: "POST",
-      //   body: JSON.stringify(foodItem),
-      // });
+      //Call the api post method
+      const res = await fetch(`/api/foods?userid=${user?.uid}`, {
+        method: "POST",
+        body: JSON.stringify(foodItem),
+      });
 
-      // Store the data
-      // const data = await res.json();
-      // if (!res.ok) {
-      //   throw new Error(data.error);
-      // }
+      //Store the data
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error);
+      }
 
       // Closing the modal when the operation is done
       router.back();

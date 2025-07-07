@@ -2,17 +2,30 @@
 import NutrientsCharts from "@/components/charts/NutrientsCharts";
 import { useFirebaseAuth } from "@/context/UserContext";
 import {
-  foodItemCardProps,
   foodItemFetchedProps,
+  foodItemProps,
   foodProps,
   macronutrients,
+  recipeProps,
 } from "@/types";
-import { addFoodToConsumedList, capitalize, consumeFood } from "@/utils";
+import {
+  addFoodToConsumedList,
+  addRecipeToConsumedList,
+  capitalize,
+  consumeFood,
+} from "@/utils";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import Image from "next/image";
 import { Slide, toast } from "react-toastify";
 
-const FoodItemCard = ({ food, setConsumedLoading }: foodItemCardProps) => {
+const LibraryItemCard = ({
+  food,
+  setConsumedLoading,
+}: {
+  food: foodProps;
+  setConsumedLoading: Dispatch<SetStateAction<boolean>>;
+}) => {
   // Router hooks to handle navigation
   const router = useRouter();
   // Fetch the user
@@ -24,8 +37,6 @@ const FoodItemCard = ({ food, setConsumedLoading }: foodItemCardProps) => {
   const [disableButton, setDisableButton] = useState(false);
   // States for the meal
   const [meal, setMeal] = useState<string>("");
-  // State for the portions
-  const [portion, setPortion] = useState<number>(0);
   // States for error handling
   const [error, setError] = useState<boolean>(false);
 
@@ -45,10 +56,7 @@ const FoodItemCard = ({ food, setConsumedLoading }: foodItemCardProps) => {
   };
 
   // THe function to add the food to the firestore
-  const handleSubmit = async (
-    food: foodItemFetchedProps,
-    multiplier: number
-  ) => {
+  const handleSubmit = async (food: foodProps, multiplier: number) => {
     if (meal) {
       // Remove the errors
       setError(false);
@@ -65,22 +73,22 @@ const FoodItemCard = ({ food, setConsumedLoading }: foodItemCardProps) => {
 
           // Convert macronutrients
           const parsedMacros: macronutrients = {
-            Calories: food.portions[portion].Calories,
-            Carbs: food.portions[portion].Carbs,
-            Protein: food.portions[portion].Protein,
-            Fat: food.portions[portion].Fat,
+            Calories: food.Calories,
+            Carbs: food.Carbs,
+            Protein: food.Protein,
+            Fat: food.Fat,
           };
 
           // Convert into foodProps
           const parsedFood: foodProps = {
             Name: food.Name,
             Brand: food.Brand,
-            Quantity: food.portions[portion].Quantity,
-            Unit: food.portions[portion].Unit,
-            Calories: food.portions[portion].Calories,
-            Protein: food.portions[portion].Protein,
-            Carbs: food.portions[portion].Carbs,
-            Fat: food.portions[portion].Fat,
+            Quantity: food.Quantity,
+            Unit: food.Unit,
+            Calories: food.Calories,
+            Protein: food.Protein,
+            Carbs: food.Carbs,
+            Fat: food.Fat,
           };
 
           await consumeFood(parsedMacros, user.uid, multiplier);
@@ -112,6 +120,27 @@ const FoodItemCard = ({ food, setConsumedLoading }: foodItemCardProps) => {
     }
   };
 
+  // Function to handle the item deletion
+  const handleDeletion = async () => {
+    setDisableButton(true);
+    // Error handling
+    try {
+      // Call the api DELETE method
+      const res = await fetch(`/api/foods?userid=${user?.uid}&del=${food.Id}`, {
+        method: "DELETE",
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error);
+      }
+    } catch (error: any) {
+      console.error("Error deleting the item: ", error);
+    } finally {
+      setDisableButton(false);
+    }
+  };
+
   return (
     // Grid container
     <div className="flex flex-wrap items-center justify-center sm:justify-between gap-6 md:gap-4 py-5 border-neutral-300 border-t animate-fade-in">
@@ -119,32 +148,15 @@ const FoodItemCard = ({ food, setConsumedLoading }: foodItemCardProps) => {
       <div className="text-md md:text-lg w-full md:w-40">
         <h3 className="font-semibold line-clamp-3">{capitalize(food.Name)}</h3>
         <h3>{capitalize(food.Brand)}</h3>
-        <select
-          className={`w-fit rounded-lg md:h-auto `}
-          onChange={(e) => {
-            const selectedIndex = parseInt(e.target.value);
-            setPortion(selectedIndex);
-          }}
-        >
-          {food.portions.map((portion, index) => (
-            <option key={index} value={index}>
-              {portion.Unit +
-                " (" +
-                (Math.round(portion.Quantity * multiplier) || 0) +
-                "g)"}
-            </option>
-          ))}
-        </select>
+        <p>{food.Quantity + food.Unit}</p>
       </div>
       {/** Food calorie chart */}
       <div className="flex items-center space-x-4">
         <NutrientsCharts
-          Calories={
-            Math.round(food.portions[portion].Calories * multiplier) || 0
-          }
-          Protein={Math.round(food.portions[portion].Protein * multiplier) || 0}
-          Carbs={Math.round(food.portions[portion].Carbs * multiplier) || 0}
-          Fat={Math.round(food.portions[portion].Fat * multiplier) || 0}
+          Calories={Math.round(food.Calories * multiplier) || 0}
+          Protein={Math.round(food.Protein * multiplier) || 0}
+          Carbs={Math.round(food.Carbs * multiplier) || 0}
+          Fat={Math.round(food.Fat * multiplier) || 0}
           Empty={disableButton}
           size="max-h-20 w-auto"
           fontSize="text-lg"
@@ -157,7 +169,7 @@ const FoodItemCard = ({ food, setConsumedLoading }: foodItemCardProps) => {
           <h3 className="font-bold text-[#AFF921]">Protein</h3>
           <p>
             <span className="font-semibold">
-              {Math.round(food.portions[portion].Protein * multiplier) || 0}
+              {Math.round(food.Protein * multiplier) || 0}
             </span>
             g
           </p>
@@ -166,7 +178,7 @@ const FoodItemCard = ({ food, setConsumedLoading }: foodItemCardProps) => {
           <h3 className="font-bold text-[#73af00]">Carbs</h3>
           <p>
             <span className="font-semibold">
-              {Math.round(food.portions[portion].Carbs * multiplier) || 0}
+              {Math.round(food.Carbs * multiplier) || 0}
             </span>
             g
           </p>
@@ -175,7 +187,7 @@ const FoodItemCard = ({ food, setConsumedLoading }: foodItemCardProps) => {
           <h3 className="font-bold text-[#d7ff8a]">Fat</h3>
           <p>
             <span className="font-semibold">
-              {Math.round(food.portions[portion].Fat * multiplier) || 0}
+              {Math.round(food.Fat * multiplier) || 0}
             </span>
             g
           </p>
@@ -214,15 +226,20 @@ const FoodItemCard = ({ food, setConsumedLoading }: foodItemCardProps) => {
         </div>
       </div>
       {/** Add button */}
-      <button
-        className="disabled:opacity-50 bg-black text-white rounded-xl text-2xl h-10 lg:h-16 w-full lg:w-12 col-span-2 sm:col-span-3 md:col-span-4 lg:col-span-1 lg:justify-self-end"
-        onClick={() => handleSubmit(food, multiplier)}
-        disabled={disableButton}
-      >
-        +
-      </button>
+      <div className="flex items-center space-x-4 h-10 lg:h-16 w-full lg:w-32 col-span-2 sm:col-span-3 md:col-span-4 lg:col-span-1 lg:justify-self-end">
+        <button onClick={handleDeletion}>
+          <Image src={"/trash.svg"} height={30} width={30} alt="Delete icon" />
+        </button>
+        <button
+          className="disabled:opacity-50 bg-black text-white rounded-xl text-2xl h-10 lg:h-16 w-full lg:w-12 col-span-2 sm:col-span-3 md:col-span-4 lg:col-span-1 lg:justify-self-end"
+          onClick={() => handleSubmit(food, multiplier)}
+          disabled={disableButton}
+        >
+          +
+        </button>
+      </div>
     </div>
   );
 };
 
-export default FoodItemCard;
+export default LibraryItemCard;

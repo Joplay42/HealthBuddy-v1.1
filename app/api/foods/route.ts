@@ -1,4 +1,6 @@
-import { foodItemFetchedProps } from "@/types";
+import { db } from "@/config/firebase";
+import { foodItemFetchedProps, foodItemProps, foodProps } from "@/types";
+import { addDoc, collection, deleteDoc, doc, setDoc } from "firebase/firestore";
 import { NextResponse } from "next/server";
 
 export const GET = async (request: Request) => {
@@ -84,6 +86,136 @@ export const GET = async (request: Request) => {
     return new NextResponse(
       JSON.stringify({
         message: "Error in fetching the food items",
+        error: error.message,
+      }),
+      { status: 500 }
+    );
+  }
+};
+
+export const POST = async (request: Request) => {
+  // Error handling
+  try {
+    // The new searchParams
+    const { searchParams } = new URL(request.url);
+    // Get the user id
+    const UserId = searchParams.get("userid");
+
+    if (!UserId) {
+      return new NextResponse(
+        JSON.stringify({ message: "Missing parameter" }),
+        {
+          status: 400,
+        }
+      );
+    }
+
+    // Get the body request
+    const body: foodProps = await request.json();
+    const {
+      Name,
+      Brand,
+      Quantity,
+      Unit,
+      Calories,
+      Carbs,
+      Protein,
+      Fat,
+    }: foodProps = body;
+
+    // Error handling
+    if (!body || Object.keys(body).length === 0) {
+      return new NextResponse(JSON.stringify({ message: "Invalid data" }), {
+        status: 400,
+      });
+    }
+
+    // Check if some attributes are missing
+    if (
+      !Name ||
+      !Brand ||
+      !Quantity ||
+      !Unit ||
+      !Calories ||
+      !Carbs ||
+      !Protein ||
+      !Fat
+    ) {
+      return new NextResponse(
+        JSON.stringify({
+          message: "Missing object attribute",
+        }),
+        { status: 400 }
+      );
+    }
+
+    // Create a new object to databases
+    const userFoodsRef = doc(db, "UserFoods", UserId);
+    const foodsListRef = collection(userFoodsRef, "foodList");
+
+    // Create the new recipe object
+    const foodData: foodProps = {
+      Brand,
+      Name,
+      Quantity,
+      Unit,
+      Calories,
+      Carbs,
+      Protein,
+      Fat,
+    };
+
+    // Set the doc with the recipe
+    const newDoc = await addDoc(foodsListRef, foodData);
+    // Set the docId
+    await setDoc(newDoc, { Id: newDoc.id }, { merge: true });
+
+    return NextResponse.json(
+      { message: "Item has beens added to the database" },
+      { status: 200 }
+    );
+  } catch (error: any) {
+    // Error message
+    return new NextResponse(
+      JSON.stringify({
+        message: "Ërror posting the food",
+        error: error.message,
+      }),
+      { status: 500 }
+    );
+  }
+};
+
+export const DELETE = async (request: Request) => {
+  try {
+    // The new searchParams
+    const { searchParams } = new URL(request.url);
+    // Get the user id
+    const userId = searchParams.get("userid");
+    // Get the recipe id
+    const deleteId = searchParams.get("del");
+
+    if (!deleteId || !userId) {
+      return new NextResponse(
+        JSON.stringify({ message: "A userId and objectId is required" }),
+        { status: 400 }
+      );
+    }
+
+    // Delete the user recipes
+    const docRef = doc(db, "UserFoods", userId, "foodList", deleteId);
+    await deleteDoc(docRef);
+
+    // Return a response
+    return NextResponse.json(
+      { message: "Food deleted successfully" },
+      { status: 200 }
+    );
+  } catch (error: any) {
+    // Error message
+    return new NextResponse(
+      JSON.stringify({
+        message: "Ërror deleting the food",
         error: error.message,
       }),
       { status: 500 }

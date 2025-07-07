@@ -126,6 +126,7 @@ export type foodProps = {
 
 export type foodItemCardProps = {
   food: foodItemFetchedProps;
+  setConsumedLoading: Dispatch<SetStateAction<boolean>>;
 };
 
 export type foodEntriesListProps = {
@@ -278,6 +279,11 @@ export type macronutrients = {
 
 export type userRecipesContextProps = {
   recipes: recipeProps[];
+  loading: boolean;
+};
+
+export type userFoodContextProps = {
+  foods: foodProps[];
   loading: boolean;
 };
 

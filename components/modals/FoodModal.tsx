@@ -5,7 +5,9 @@ import {
   FoodSearch,
   RecipeSearch,
   ConsumedLoading,
+  LibrarySearch,
 } from "@/components";
+import { UserFoodProvider } from "@/context/UserFoodContext";
 import { UserRecipesProvider } from "@/context/UserRecipesContext";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
@@ -39,6 +41,11 @@ const FoodModal = () => {
         <FoodModalNavigation page={index} setPage={updateParams} />
         {index === "search" && (
           <FoodSearch setConsumedLoading={setConsumedLoading} />
+        )}
+        {index === "library" && (
+          <UserFoodProvider>
+            <LibrarySearch setConsumedLoading={setConsumedLoading} />
+          </UserFoodProvider>
         )}
         {index === "recipe" && (
           <UserRecipesProvider>

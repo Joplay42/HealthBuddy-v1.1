@@ -77,6 +77,9 @@ import Pagination from "./dashboard/calorie/Pagination";
 import ConsumedLoading from "./dashboard/calorie/ConsumedLoading";
 import DashboardSqueleton from "./Squeleton/DashboardSqueleton";
 import SideBarSqueleton from "./Squeleton/SideBarSqueleton";
+import LibrarySearch from "./modals/LibrarySearch";
+import DisplayLibraryList from "./dashboard/calorie/DisplayLibraryList";
+import LibraryItemCard from "./dashboard/calorie/LibraryItemCard";
 
 export {
   HeaderPage,
@@ -151,4 +154,7 @@ export {
   ConsumedLoading,
   DashboardSqueleton,
   SideBarSqueleton,
+  LibrarySearch,
+  DisplayLibraryList,
+  LibraryItemCard,
 };
