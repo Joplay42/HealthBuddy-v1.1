@@ -138,7 +138,7 @@ const RecipeFoodItemCard = ({
           <h3 className="font-bold">Qty</h3>
           <input
             type="number"
-            className="w-10 h-8 md:h-auto md:w-16 rounded-lg text-center"
+            className="w-12 h-auto md:w-16 rounded-lg text-center"
             value={multiplier}
             onChange={handleAmountChange}
           />

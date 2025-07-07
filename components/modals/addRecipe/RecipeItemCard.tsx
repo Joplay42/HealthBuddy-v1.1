@@ -190,7 +190,7 @@ const RecipeItemCard = ({
           <h3 className="font-bold">Qty</h3>
           <input
             type="number"
-            className="w-16 rounded-lg text-center"
+            className="w-12 h-auto md:w-16 rounded-lg text-center"
             value={multiplier || 0}
             onChange={(e) => handleQuantityChange(e.target.valueAsNumber)}
           />
@@ -200,7 +200,7 @@ const RecipeItemCard = ({
           <h3 className="font-bold">Meal</h3>
           <select
             value={meal}
-            className={`w-fit rounded-lg h-8 md:h-auto ${
+            className={`w-fit rounded-lg h-auto ${
               error && ` border-4 border-red-400`
             }`}
             onChange={(e) => {

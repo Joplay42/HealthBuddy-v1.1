@@ -117,7 +117,7 @@ const FoodItemCard = ({ food }: foodItemCardProps) => {
         <h3 className="font-semibold line-clamp-3">{capitalize(food.Name)}</h3>
         <h3>{capitalize(food.Brand)}</h3>
         <select
-          className={`w-fit rounded-lg h-8 md:h-auto `}
+          className={`w-fit rounded-lg md:h-auto `}
           onChange={(e) => {
             const selectedIndex = parseInt(e.target.value);
             setPortion(selectedIndex);
@@ -184,7 +184,7 @@ const FoodItemCard = ({ food }: foodItemCardProps) => {
           <h3 className="font-bold">Qty</h3>
           <input
             type="number"
-            className="w-10 h-8 md:h-auto md:w-16 rounded-lg text-center"
+            className="w-12 h-auto md:w-16 rounded-lg text-center"
             value={multiplier || 0}
             onChange={(e) => handleQuantityChange(e.target.valueAsNumber)}
           />
@@ -194,7 +194,7 @@ const FoodItemCard = ({ food }: foodItemCardProps) => {
           <h3 className="font-bold">Meal</h3>
           <select
             value={meal}
-            className={`w-fit rounded-lg h-8 md:h-auto ${
+            className={`w-fit rounded-lg h-auto ${
               error && ` border-4 border-red-400`
             }`}
             onChange={(e) => {
