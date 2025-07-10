@@ -41,7 +41,6 @@ import PageName from "./dashboard/PageName";
 import Modal from "./modals/Modal";
 import AddObjective from "./dashboard/calorie/AddObjective";
 import SearchBar from "./dashboard/calorie/SearchBar";
-import FoodItemCard from "./dashboard/calorie/FoodItemCard";
 import Calorie from "./dashboard/calorie/Calorie";
 import CalorieSqueleton from "./Squeleton/CalorieSqueleton";
 import DisplayCalories from "./dashboard/home/DisplayCalories";
@@ -71,7 +70,6 @@ import SearchFood from "./modals/addRecipe/SearchFood";
 import RecipeFoodItemCard from "./modals/addRecipe/RecipeFoodItemCard";
 import Summary from "./modals/addRecipe/Summary";
 import DisplayRecipesList from "./modals/addRecipe/DisplayRecipesList";
-import RecipeItemCard from "./modals/addRecipe/RecipeItemCard";
 import EditRecipeModal from "./modals/EditRecipeModal";
 import Pagination from "./dashboard/calorie/Pagination";
 import ConsumedLoading from "./dashboard/calorie/ConsumedLoading";
@@ -79,7 +77,6 @@ import DashboardSqueleton from "./Squeleton/DashboardSqueleton";
 import SideBarSqueleton from "./Squeleton/SideBarSqueleton";
 import LibrarySearch from "./modals/LibrarySearch";
 import DisplayLibraryList from "./dashboard/calorie/DisplayLibraryList";
-import LibraryItemCard from "./dashboard/calorie/LibraryItemCard";
 import FoodCard from "./dashboard/calorie/FoodCard";
 
 export {
@@ -119,7 +116,6 @@ export {
   Modal,
   AddObjective,
   SearchBar,
-  FoodItemCard,
   Calorie,
   CalorieSqueleton,
   DisplayCalories,
@@ -149,7 +145,6 @@ export {
   RecipeFoodItemCard,
   Summary,
   DisplayRecipesList,
-  RecipeItemCard,
   EditRecipeModal,
   Pagination,
   ConsumedLoading,
@@ -157,6 +152,5 @@ export {
   SideBarSqueleton,
   LibrarySearch,
   DisplayLibraryList,
-  LibraryItemCard,
   FoodCard,
 };
