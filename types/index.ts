@@ -308,3 +308,11 @@ export type foodItemFetchedProps = {
     Fat: number;
   }[];
 };
+
+export type foodCardProps = {
+  item: foodItemFetchedProps | recipeProps | foodProps;
+  setConsumedLoading: Dispatch<SetStateAction<boolean>>;
+  isSelectable?: boolean;
+};
+
+export type nutrients = "Calories" | "Protein" | "Carbs" | "Fat";

@@ -13,6 +13,8 @@ import {
   newObjectiveProps,
   macronutrients,
   recipeProps,
+  foodItemFetchedProps,
+  nutrients,
 } from "@/types";
 import { auth, db } from "@/config/firebase";
 import {
@@ -451,3 +453,34 @@ export const recipeTotalMacronutrients = (foods: foodProps[]) => {
 export const capitalize = (str: string) => {
   return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 };
+
+// Function to check if the food is the fetched type
+export function isFoodItemFetched(item: any): item is foodItemFetchedProps {
+  return item && Array.isArray(item.portions);
+}
+
+// Function to check if the food is a recipe type
+export function isFoodItemRecipe(item: any): item is recipeProps {
+  return item && Array.isArray(item.foods);
+}
+
+// Function to check if the food is an item
+export function isFoodItem(item: any): item is foodProps {
+  return item && typeof item.Quantity === "number";
+}
+
+// Function to get the nutrient with a key
+export function getNutrient(
+  item: foodItemFetchedProps | recipeProps | foodProps,
+  key: nutrients,
+  portionIndex: number
+) {
+  if (isFoodItemRecipe(item)) {
+    return item.macronutrients?.[key] ?? 0;
+  } else if (isFoodItemFetched(item)) {
+    return item.portions[portionIndex]?.[key] ?? 0;
+  } else if (isFoodItem(item)) {
+    return item?.[key] ?? 0;
+  }
+  return 0;
+}

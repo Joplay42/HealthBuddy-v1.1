@@ -61,11 +61,10 @@ const FoodDesc = ({
       {/** Food calorie chart */}
       <div className="flex flex-col items-center space-y-4 mx-auto md:mx-0">
         <NutrientsCharts
-          Calories={food.Calories || 0}
+          Calories={Math.round(food.Calories) || 0}
           Protein={food.Protein || 0}
           Carbs={food.Carbs || 0}
           Fat={food.Fat || 0}
-          Empty={true}
           size="max-h-60 w-auto"
           fontSize="text-3xl"
         />
@@ -78,7 +77,7 @@ const FoodDesc = ({
             {capitalize(food.Name ?? "")} - {capitalize(food.Brand ?? "")}
           </h1>
           <p className="text-md md:text-xl font-semibold">
-            {food.Unit + " (" + food.Quantity + "g)"}
+            {food.Unit + " (" + Math.round(food.Quantity) + "g)"}
           </p>
           <input
             value={multiplier}

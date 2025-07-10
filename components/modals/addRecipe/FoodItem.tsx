@@ -27,7 +27,8 @@ const FoodItem = ({
           {capitalize(food.Name)}
         </h4>
         <p>
-          {food.Unit + " (" + food.Quantity + "g)"}, {food.Calories} calories
+          {food.Unit + " (" + food.Quantity + "g)"}, {Math.round(food.Calories)}{" "}
+          calories
         </p>
       </div>
       <div className="flex space-x-2">

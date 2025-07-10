@@ -142,7 +142,7 @@ const RecipeItemCard = ({
         <p>1 portion</p>
       </div>
       {/** Food calorie chart */}
-      <div className="flex items-center space-x-4">
+      <div className="flex items-center space-x-4 max-w-fit">
         <NutrientsCharts
           Calories={Math.round(macros.Calories * multiplier) || 0}
           Protein={Math.round(macros.Protein * multiplier) || 0}
@@ -190,8 +190,9 @@ const RecipeItemCard = ({
           <h3 className="font-bold">Qty</h3>
           <input
             type="number"
-            className="w-12 h-auto md:w-16 rounded-lg text-center"
-            value={multiplier}
+            step=".1"
+            className="w-16 h-auto md:w-20 rounded-lg text-center"
+            value={multiplier || NaN}
             onChange={(e) => handleQuantityChange(e.target.valueAsNumber)}
           />
         </div>

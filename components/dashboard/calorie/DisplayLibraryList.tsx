@@ -1,4 +1,5 @@
 import {
+  FoodCard,
   FoodItemCard,
   FoodItemCardSqueleton,
   LibraryItemCard,
@@ -24,10 +25,11 @@ const DisplayLibraryList = ({
   return (
     <>
       {foods.map((item, index) => (
-        <LibraryItemCard
-          food={item}
+        <FoodCard
+          item={item}
           key={index}
           setConsumedLoading={setConsumedLoading}
+          isSelectable={false}
         />
       ))}
     </>

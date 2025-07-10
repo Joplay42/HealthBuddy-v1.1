@@ -1,5 +1,5 @@
 "use client";
-import { FoodItemCardSqueleton, RecipeItemCard } from "@/components";
+import { FoodCard, FoodItemCardSqueleton, RecipeItemCard } from "@/components";
 import { useUserRecipesContext } from "@/context/UserRecipesContext";
 import React, { Dispatch, SetStateAction } from "react";
 
@@ -22,10 +22,11 @@ const DisplayRecipesList = ({
   return (
     <>
       {recipes.map((item, index) => (
-        <RecipeItemCard
-          recipe={item}
+        <FoodCard
+          item={item}
           key={index}
           setConsumedLoading={setConsumedLoading}
+          isSelectable={false}
         />
       ))}
     </>

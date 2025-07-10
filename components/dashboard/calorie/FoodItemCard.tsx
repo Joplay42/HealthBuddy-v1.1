@@ -187,7 +187,8 @@ const FoodItemCard = ({ food, setConsumedLoading }: foodItemCardProps) => {
           <h3 className="font-bold">Qty</h3>
           <input
             type="number"
-            className="w-12 h-auto md:w-16 rounded-lg text-center"
+            step=".1"
+            className="w-16 h-auto md:w-20 rounded-lg text-center"
             value={multiplier}
             onChange={(e) => handleQuantityChange(e.target.valueAsNumber)}
           />

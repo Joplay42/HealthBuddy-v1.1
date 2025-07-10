@@ -80,6 +80,7 @@ import SideBarSqueleton from "./Squeleton/SideBarSqueleton";
 import LibrarySearch from "./modals/LibrarySearch";
 import DisplayLibraryList from "./dashboard/calorie/DisplayLibraryList";
 import LibraryItemCard from "./dashboard/calorie/LibraryItemCard";
+import FoodCard from "./dashboard/calorie/FoodCard";
 
 export {
   HeaderPage,
@@ -157,4 +158,5 @@ export {
   LibrarySearch,
   DisplayLibraryList,
   LibraryItemCard,
+  FoodCard,
 };
