@@ -1,5 +1,5 @@
 "use client";
-import { FoodCard, FoodItemCardSqueleton, RecipeItemCard } from "@/components";
+import { FoodCard, FoodItemCardSqueleton } from "@/components";
 import { useUserRecipesContext } from "@/context/UserRecipesContext";
 import React, { Dispatch, SetStateAction } from "react";
 
