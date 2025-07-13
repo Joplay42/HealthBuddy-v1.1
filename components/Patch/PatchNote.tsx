@@ -7,8 +7,8 @@ const PatchNote = () => {
         👋 Hello, dear users!
       </h1>
       <p className="text-gray-600 mb-6">
-        We're excited to share with you the latest updates and improvements in
-        this version.
+        We&apos;re excited to share with you the latest updates and improvements
+        in this version.
       </p>
 
       <div className="mb-6">

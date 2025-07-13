@@ -79,6 +79,7 @@ import LibrarySearch from "./modals/LibrarySearch";
 import DisplayLibraryList from "./dashboard/calorie/DisplayLibraryList";
 import FoodCard from "./dashboard/calorie/FoodCard";
 import PatchNote from "./Patch/PatchNote";
+import PatchNoteModal from "./Patch/PatchNoteModal";
 
 export {
   HeaderPage,
@@ -155,4 +156,5 @@ export {
   DisplayLibraryList,
   FoodCard,
   PatchNote,
+  PatchNoteModal,
 };
