@@ -9,12 +9,14 @@ import {
   SectionThree,
   SectionTwo,
 } from "@/components";
-import React from "react";
+import React, { Suspense } from "react";
 
 const page = () => {
   return (
     <div>
-      <PatchNoteModal />
+      <Suspense fallback={null}>
+        <PatchNoteModal />
+      </Suspense>
       <HeaderPage />
       <HeroSection />
       <SectionTwo />
