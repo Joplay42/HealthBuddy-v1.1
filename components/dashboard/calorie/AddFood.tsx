@@ -1,7 +1,6 @@
 "use client";
 import {
   FoodCard,
-  FoodItemCard,
   FoodItemCardSqueleton,
   Pagination,
   SearchBar,
