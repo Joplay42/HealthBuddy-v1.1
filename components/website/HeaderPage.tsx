@@ -84,7 +84,7 @@ const HeaderPage = () => {
           />
         </div>
         {/** The mobile section */}
-        <div className="block lg:hidden">
+        <div className="block lg:hidden ">
           {/** The mobile menu button */}
           <Image
             src="/menu-nav.svg"

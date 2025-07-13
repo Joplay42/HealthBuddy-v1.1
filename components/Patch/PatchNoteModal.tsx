@@ -14,14 +14,16 @@ const PatchNoteModal = () => {
   }, []);
 
   // Get the params
-  const isFoodModalOpen = searchParams.get("modal") === "update";
+  const isUpdateModalOpen = searchParams.get("modal") === "update";
 
   return (
     <div>
-      {isFoodModalOpen && (
-        <Modal title="Patch note v1.1">
-          <PatchNote />
-        </Modal>
+      {isUpdateModalOpen && (
+        <div className="relative z-50">
+          <Modal title="Patch note v1.1">
+            <PatchNote />
+          </Modal>
+        </div>
       )}
     </div>
   );

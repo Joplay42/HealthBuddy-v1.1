@@ -37,13 +37,15 @@ const layout = ({
         />
       </div>
       <div className="border-l border-l-neutral-300 p-10 flex flex-col">
-        <Image
-          src="/Logo-mobile.png"
-          width={75}
-          height={75}
-          alt="log mobile"
-          className="block lg:hidden"
-        />
+        <Link href="/">
+          <Image
+            src="/Logo-mobile.png"
+            width={75}
+            height={75}
+            alt="log mobile"
+            className="block lg:hidden"
+          />
+        </Link>
         <div className="m-auto">{children}</div>
       </div>
     </div>

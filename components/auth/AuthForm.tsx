@@ -109,11 +109,11 @@ const AuthForm = ({ type }: authFormProps) => {
   };
 
   return (
-    <div className="mt-20 lg:mt-0 max-w-[40rem]">
-      <h1 className="text-3xl font-bold pb-4">
+    <div className="mt-6 lg:mt-0 max-w-[40rem]">
+      <h1 className="text-xl lg:text-3xl font-bold lg:pb-4">
         {type == "login" ? "Log in" : "Create a new account"}
       </h1>
-      <p>
+      <p className="text-sm lg:text-base pb-4 lg:pb-0">
         {type == "login"
           ? "Welcome to your Healthbuddy Dashboard, please put your signin credentials below to begin using the app"
           : "Create your free HealthBuddy account now, please enter your new account credential to have access to the app."}
@@ -121,11 +121,11 @@ const AuthForm = ({ type }: authFormProps) => {
 
       <form
         onSubmit={(e) => handleSubmit({ type: type, event: e })}
-        className="mt-10 space-y-8"
+        className="mt-4 lg:mt-10 space-y-3 lg:space-y-8"
       >
         {type == "signin" && (
-          <div className="flex flex-col space-y-8 lg:space-y-0 lg:flex-row lg:space-x-14">
-            <div className="flex flex-col space-y-4 w-full">
+          <div className="flex flex-col space-y-4 lg:space-y-0 lg:flex-row lg:space-x-14">
+            <div className="flex flex-col space-y-2 lg:space-y-4 w-full">
               <label className="text-neutral-500 text-sm">FIRST NAME</label>
               <input
                 className="border-b border-neutral-500 p-2"
@@ -179,7 +179,7 @@ const AuthForm = ({ type }: authFormProps) => {
             </p>
           </Link>
         )}
-        <div className="flex items-center gap-x-2">
+        <div className="sm:flex items-center gap-x-2">
           <p className="font-bold">
             {type == "login"
               ? "Don't have an account?"
