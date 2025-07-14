@@ -80,7 +80,7 @@ export const navLinksDashboard: navLinksDashboardProps = [
     icon: "/home.svg",
     link: "/dashboard",
   },
-  /**{
+  {
     text: "Calorie tracker",
     icon: "/calorie.svg",
     link: "/dashboard/calorie-tracking",
@@ -89,7 +89,7 @@ export const navLinksDashboard: navLinksDashboardProps = [
     text: "Workout",
     icon: "/workout.svg",
     link: "/dashboard/workout",
-  },**/ // Uncomment this or the next release
+  },
   {
     text: "Settings",
     icon: "/setting.svg",

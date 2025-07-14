@@ -80,6 +80,8 @@ import DisplayLibraryList from "./dashboard/calorie/DisplayLibraryList";
 import FoodCard from "./dashboard/calorie/FoodCard";
 import PatchNote from "./Patch/PatchNote";
 import PatchNoteModal from "./Patch/PatchNoteModal";
+import Weight from "./dashboard/home/Weight";
+import DisplayWeight from "./dashboard/home/DisplayWeight";
 
 export {
   HeaderPage,
@@ -157,4 +159,6 @@ export {
   FoodCard,
   PatchNote,
   PatchNoteModal,
+  Weight,
+  DisplayWeight,
 };

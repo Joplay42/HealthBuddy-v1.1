@@ -1,8 +1,7 @@
-import { Calorie, Home } from "@/components";
+import { Home } from "@/components";
 
 const page = () => {
-  //return <Home />; Uncomment this for the next release
-  return <Calorie />;
+  return <Home />;
 };
 
 export default page;

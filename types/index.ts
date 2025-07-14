@@ -316,3 +316,23 @@ export type foodCardProps = {
 };
 
 export type nutrients = "Calories" | "Protein" | "Carbs" | "Fat";
+
+export type userWeightProps = {
+  userId?: string;
+  weights: {
+    number: number;
+    date: Date;
+  }[];
+};
+
+export type userProgramProps = {
+  userId?: string;
+  // Workout types
+  objectiveWeight: number;
+  months: number;
+};
+
+export type DisplayWeightProps = {
+  weight: userWeightProps;
+  objective: userProgramProps;
+};
