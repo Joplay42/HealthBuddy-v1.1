@@ -8,17 +8,10 @@ import { WeekDay, workoutDayProps } from "@/types";
 
 const WorkoutTracking = () => {
   // Todays date
-  const todaysDate = new Date().toDateString();
-  // Todays day
-  const todaysDay = todaysDate.substring(0, 3);
+  const todaysDate = new Date();
 
-  // Today day object
-  const today: WeekDay = {
-    day: todaysDay,
-    date: todaysDate,
-  };
   // Hook for selected days - by default today
-  const [selectedDays, setSelectedDays] = useState<WeekDay>(today);
+  const [selectedDays, setSelectedDays] = useState<Date>(todaysDate);
   // Hook for todays workout
   const [todaysWorkout, setTodaysWorkout] = useState<workoutDayProps>();
 
@@ -26,7 +19,7 @@ const WorkoutTracking = () => {
   useEffect(() => {
     // Find the workout for today
     const workout = workoutPlans[0].days.find(
-      (workout) => workout.day === selectedDays.day
+      (workout) => workout.day === selectedDays.toDateString().substring(0, 3)
     );
     setTodaysWorkout(workout);
   }, [selectedDays]);
@@ -35,13 +28,16 @@ const WorkoutTracking = () => {
     <div className="py-5 md:py-10 md:grid grid-cols-3 grid-rows-[minmax(150px,auto)_auto] space-y-5 md:space-y-0 md:gap-10">
       <div className="col-span-2">
         <Calendar
-          today={today}
+          today={todaysDate}
           workoutPlan={workoutPlans[0].days}
           selectedDays={selectedDays}
           setSelectedDays={setSelectedDays}
         />
       </div>
-      <WorkoutSchedule todaysWorkout={todaysWorkout} />
+      <WorkoutSchedule
+        todaysWorkout={todaysWorkout}
+        selectedDay={selectedDays}
+      />
       <div className="col-span-full">
         <BodyWeight />
       </div>

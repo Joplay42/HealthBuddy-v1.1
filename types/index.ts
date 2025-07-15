@@ -375,11 +375,23 @@ export type WeightsGridProps = {
 
 export type workoutScheduleProps = {
   todaysWorkout: workoutDayProps | undefined;
+  selectedDay: Date;
 };
 
 export type CalendarProps = {
-  today: WeekDay;
+  today: Date;
   workoutPlan: workoutDayProps[];
-  selectedDays: WeekDay;
-  setSelectedDays: Dispatch<SetStateAction<WeekDay>>;
+  selectedDays: Date;
+  setSelectedDays: Dispatch<SetStateAction<Date>>;
+};
+
+export type WeekPlanningProps = {
+  date: Date;
+  workout: workoutDayProps;
+};
+
+export type CalendarDayProps = {
+  weekDay: WeekPlanningProps;
+  selectedDay: Date;
+  setSelectedDay: Dispatch<SetStateAction<Date>>;
 };

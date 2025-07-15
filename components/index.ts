@@ -90,6 +90,7 @@ import WorkoutTracking from "./dashboard/workout/Workout-tracking";
 import WorkoutSchedule from "./dashboard/workout/WorkoutSchedule";
 import BodyWeight from "./dashboard/workout/BodyWeight";
 import WeightsGrid from "./dashboard/workout/WeightsGrid";
+import CalendarDay from "./dashboard/workout/CalendarDay";
 
 export {
   HeaderPage,
@@ -177,4 +178,5 @@ export {
   WorkoutSchedule,
   BodyWeight,
   WeightsGrid,
+  CalendarDay,
 };

@@ -1,11 +1,16 @@
 "use client";
 import { workoutScheduleProps } from "@/types";
 
-const WorkoutSchedule = ({ todaysWorkout }: workoutScheduleProps) => {
+const WorkoutSchedule = ({
+  todaysWorkout,
+  selectedDay,
+}: workoutScheduleProps) => {
   return (
     <div className="bg-white p-5 rounded-3xl border border-neutral-400">
       {/** The title */}
-      <h1 className="font-bold text-xl mb-5">Workout</h1>
+      <h1 className="font-bold text-lg md:text-xl mb-5">
+        Workout - {selectedDay.toDateString()}
+      </h1>
       <div className="space-y-3">
         <h3 className="font-semibold text-lg text-custom-green">
           {todaysWorkout?.name}
