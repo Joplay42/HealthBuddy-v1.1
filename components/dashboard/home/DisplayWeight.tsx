@@ -115,7 +115,7 @@ const DisplayWeight = ({ weight, objective }: DisplayWeightProps) => {
     );
 
   return (
-    <div className="relative h-[260px] w-full">
+    <div className={`relative h-full w-full`}>
       <Line options={options} data={data} />
     </div>
   );

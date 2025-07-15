@@ -265,6 +265,22 @@ export const userWeights: userWeightProps = {
       number: 156,
       date: new Date("2025-08-04"),
     },
+    {
+      number: 157.2,
+      date: new Date("2025-08-14"),
+    },
+    {
+      number: 156.5,
+      date: new Date("2025-08-24"),
+    },
+    {
+      number: 155.1,
+      date: new Date("2025-08-31"),
+    },
+    {
+      number: 153.8,
+      date: new Date("2025-09-08"),
+    },
   ],
 };
 export const userObjective: userProgramProps = {
@@ -280,36 +296,43 @@ export const workoutPlans: WorkoutPlanProps[] = [
     days: [
       {
         name: "Push day",
+        desc: "Push Day targets the chest, shoulders, and triceps using pushing movements. This session builds upper-body strength and improves muscle definition.",
         day: "Mon",
         // Implement exercise choice
       },
       {
         name: "Pull day",
+        desc: "Pull Day focuses on the back, biceps, and rear shoulders using pulling exercises. It enhances posture, grip strength, and overall upper-body balance.",
         day: "Tue",
         // Implement exercise choice
       },
       {
         name: "Leg day",
+        desc: "Leg Day targets the quads, hamstrings, glutes, and calves through compound and isolation movements. It builds lower-body strength, power, and stability for overall performance.",
         day: "Wed",
         // Implement exercise choice
       },
       {
         name: "Rest & Cardio",
+        desc: "A light day focused on recovery with optional low-intensity cardio like walking or cycling. Helps improve blood flow, support active recovery, and maintain overall conditioning.",
         day: "Thu",
         // Implement exercise choice
       },
       {
         name: "Push day",
+        desc: "Push Day targets the chest, shoulders, and triceps using pushing movements. This session builds upper-body strength and improves muscle definition.",
         day: "Fri",
         // Implement exercise choice
       },
       {
         name: "Pull day",
+        desc: "Pull Day focuses on the back, biceps, and rear shoulders using pulling exercises. It enhances posture, grip strength, and overall upper-body balance.",
         day: "Sat",
         // Implement exercise choice
       },
       {
         name: "Rest & Cardio",
+        desc: "A light day focused on recovery with optional low-intensity cardio like walking or cycling. Helps improve blood flow, support active recovery, and maintain overall conditioning.",
         day: "Sun",
         // Implement exercise choice
       },
@@ -323,36 +346,43 @@ export const workoutPlans: WorkoutPlanProps[] = [
     days: [
       {
         name: "Chest & Biceps",
+        desc: "This workout targets the chest with pressing movements and the biceps with curls and pulls. It builds upper-body pushing power while sculpting strong, defined arms.",
         day: "Mon",
         // Implement exercise choice
       },
       {
         name: "Quads & Glutes",
+        desc: "This session focuses on building strength and shape in the quads and glutes through squats, lunges, and hip thrusts. It enhances lower-body power, stability, and overall athletic performance.",
         day: "Tue",
         // Implement exercise choice
       },
       {
         name: "Rest & Cardio",
+        desc: "A light day focused on recovery with optional low-intensity cardio like walking or cycling. Helps improve blood flow, support active recovery, and maintain overall conditioning.",
         day: "Wed",
         // Implement exercise choice
       },
       {
         name: "Back & Triceps",
+        desc: "This workout combines pulling movements for the back with pressing exercises for the triceps. It builds a strong, balanced upper body with improved posture and arm definition.",
         day: "Thu",
         // Implement exercise choice
       },
       {
         name: "Glutes & Hamstrings",
+        desc: "This workout targets the posterior chain with exercises like deadlifts, hip thrusts, and leg curls. It strengthens and tones the glutes and hamstrings, improving power, stability, and lower-body aesthetics.",
         day: "Fri",
         // Implement exercise choice
       },
       {
         name: "Shoulders & Traps",
+        desc: "This session focuses on building rounded, strong shoulders and well-developed traps through presses, raises, and shrugs. It enhances upper-body strength, posture, and overall muscular balance.",
         day: "Sat",
         // Implement exercise choice
       },
       {
         name: "Rest & Cardio",
+        desc: "A light day focused on recovery with optional low-intensity cardio like walking or cycling. Helps improve blood flow, support active recovery, and maintain overall conditioning.",
         day: "Sun",
         // Implement exercise choice
       },
@@ -366,36 +396,43 @@ export const workoutPlans: WorkoutPlanProps[] = [
     days: [
       {
         name: "Workout 1",
+        desc: "A balanced session targeting all major muscle groups with compound lifts like squats, deadlifts, and presses. Designed to build overall strength, endurance, and muscular coordination.",
         day: "Mon",
         // Implement exercise choice
       },
       {
         name: "Rest & Cardio",
+        desc: "A light day focused on recovery with optional low-intensity cardio like walking or cycling. Helps improve blood flow, support active recovery, and maintain overall conditioning.",
         day: "Tue",
         // Implement exercise choice
       },
       {
         name: "Workout 2",
+        desc: "Focuses on high-rep, moderate-weight movements to improve muscle endurance and cardiovascular fitness. Combines bodyweight exercises and light resistance for full-body toning and fat burning.",
         day: "Wed",
         // Implement exercise choice
       },
       {
         name: "Rest & Cardio",
+        desc: "A light day focused on recovery with optional low-intensity cardio like walking or cycling. Helps improve blood flow, support active recovery, and maintain overall conditioning.",
         day: "Thu",
         // Implement exercise choice
       },
       {
         name: "Workout 3",
+        desc: "An intense workout mixing heavy lifts with explosive plyometrics to boost power and muscle growth. Ideal for increasing athletic performance and metabolic rate through full-body engagement.",
         day: "Fri",
         // Implement exercise choice
       },
       {
         name: "Rest & Cardio",
+        desc: "A light day focused on recovery with optional low-intensity cardio like walking or cycling. Helps improve blood flow, support active recovery, and maintain overall conditioning.",
         day: "Sat",
         // Implement exercise choice
       },
       {
         name: "Rest & Cardio",
+        desc: "A light day focused on recovery with optional low-intensity cardio like walking or cycling. Helps improve blood flow, support active recovery, and maintain overall conditioning.",
         day: "Sun",
         // Implement exercise choice
       },
@@ -409,36 +446,43 @@ export const workoutPlans: WorkoutPlanProps[] = [
     days: [
       {
         name: "Upper body",
+        desc: "Emphasizes endurance and muscle definition using moderate weights and higher reps across all upper-body muscles. Combines pushing and pulling movements for balanced muscular development.",
         day: "Mon",
         // Implement exercise choice
       },
       {
         name: "Lower body",
+        desc: "Targets the glutes, quads, hamstrings, and calves with heavy compound lifts like squats and deadlifts. Aims to build raw lower-body strength and power.",
         day: "Tue",
         // Implement exercise choice
       },
       {
         name: "Rest & Cardio",
+        desc: "A light day focused on recovery with optional low-intensity cardio like walking or cycling. Helps improve blood flow, support active recovery, and maintain overall conditioning.",
         day: "Wed",
         // Implement exercise choice
       },
       {
         name: "Upper body",
+        desc: "Focuses on building strength and size in the chest, back, shoulders, and arms through compound lifts and isolation exercises. Designed to enhance muscle balance and improve overall upper-body power.",
         day: "Thu",
         // Implement exercise choice
       },
       {
         name: "Lower body",
+        desc: "Uses higher reps and varied angles with lunges, step-ups, and hip thrusts to sculpt and tone the lower body. Focuses on improving muscular endurance and enhancing lower-body aesthetics.",
         day: "Fri",
         // Implement exercise choice
       },
       {
         name: "Rest & Cardio",
+        desc: "A light day focused on recovery with optional low-intensity cardio like walking or cycling. Helps improve blood flow, support active recovery, and maintain overall conditioning.",
         day: "Sat",
         // Implement exercise choice
       },
       {
         name: "Rest & Cardio",
+        desc: "A light day focused on recovery with optional low-intensity cardio like walking or cycling. Helps improve blood flow, support active recovery, and maintain overall conditioning.",
         day: "Sun",
         // Implement exercise choice
       },

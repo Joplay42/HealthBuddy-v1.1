@@ -1,7 +1,8 @@
+import { Calendar, WorkoutTracking } from "@/components";
 import React from "react";
 
 const page = () => {
-  return <div></div>;
+  return <WorkoutTracking />;
 };
 
 export default page;

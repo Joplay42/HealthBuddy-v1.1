@@ -85,6 +85,11 @@ import DisplayWeight from "./dashboard/home/DisplayWeight";
 import Workout from "./dashboard/home/Workout";
 import DisplayWorkouts from "./dashboard/home/DisplayWorkouts";
 import WorkoutDayCard from "./dashboard/home/WorkoutDayCard";
+import Calendar from "./dashboard/workout/Calendar";
+import WorkoutTracking from "./dashboard/workout/Workout-tracking";
+import WorkoutSchedule from "./dashboard/workout/WorkoutSchedule";
+import BodyWeight from "./dashboard/workout/BodyWeight";
+import WeightsGrid from "./dashboard/workout/WeightsGrid";
 
 export {
   HeaderPage,
@@ -167,4 +172,9 @@ export {
   Workout,
   DisplayWorkouts,
   WorkoutDayCard,
+  Calendar,
+  WorkoutTracking,
+  WorkoutSchedule,
+  BodyWeight,
+  WeightsGrid,
 };

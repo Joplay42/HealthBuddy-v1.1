@@ -345,9 +345,11 @@ export type WorkoutPlanProps = {
   intensity: PlanIntensities;
 };
 
-type workoutDayProps = {
+export type workoutDayProps = {
   name: string;
+  desc: string;
   day: string;
+  // Add exercise choice
 };
 
 type PlanIntensities = "Low" | "Moderate" | "High";
@@ -365,4 +367,19 @@ export type WorkoutDayCardProps = {
 export type WeekDay = {
   day: string;
   date: string;
+};
+
+export type WeightsGridProps = {
+  weight: userWeightProps;
+};
+
+export type workoutScheduleProps = {
+  todaysWorkout: workoutDayProps | undefined;
+};
+
+export type CalendarProps = {
+  today: WeekDay;
+  workoutPlan: workoutDayProps[];
+  selectedDays: WeekDay;
+  setSelectedDays: Dispatch<SetStateAction<WeekDay>>;
 };
