@@ -27,6 +27,11 @@ const DisplayWeight = ({ weight, objective }: DisplayWeightProps) => {
     responsive: true,
     plugins: {
       tooltip: {
+        font: {
+          family: '"Montserrat", sans-serif', // your app font here
+          size: 14,
+          weight: "normal",
+        },
         callbacks: {
           label: function (context: any) {
             const value = context.parsed.y;
@@ -45,10 +50,22 @@ const DisplayWeight = ({ weight, objective }: DisplayWeightProps) => {
       y: {
         min: objective.objectiveWeight - 6,
         ticks: {
-          stepSize: 1, // or 0.5 or 2, depending on how spaced out you want it
-          maxTicksLimit: 6, // limits number of visible ticks
+          font: {
+            family: '"Montserrat", sans-serif',
+            size: 12,
+          },
+          stepSize: 1,
+          maxTicksLimit: 6,
         },
-        beginAtZero: false, // or true if you want to always start at 0
+        beginAtZero: false,
+      },
+      x: {
+        ticks: {
+          font: {
+            family: '"Montserrat", sans-serif',
+            size: 12,
+          },
+        },
       },
     },
     maintainAspectRatio: false,

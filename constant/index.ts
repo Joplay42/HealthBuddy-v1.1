@@ -309,7 +309,7 @@ export const workoutPlans: WorkoutPlanProps[] = [
         // Implement exercise choice
       },
       {
-        name: "Leg day",
+        name: "Rest & Cardio",
         day: "Sun",
         // Implement exercise choice
       },

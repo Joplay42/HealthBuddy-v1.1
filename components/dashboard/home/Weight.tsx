@@ -20,7 +20,7 @@ const Weight = () => {
           </button>
         )}
       </div>
-      <div className="bg-white p-10 rounded-3xl border border-neutral-400">
+      <div className="bg-white p-10 rounded-3xl border border-neutral-400 h-auto">
         <DisplayWeight weight={userWeights} objective={userObjective} />
       </div>
     </div>

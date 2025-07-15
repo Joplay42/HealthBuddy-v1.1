@@ -82,6 +82,9 @@ import PatchNote from "./Patch/PatchNote";
 import PatchNoteModal from "./Patch/PatchNoteModal";
 import Weight from "./dashboard/home/Weight";
 import DisplayWeight from "./dashboard/home/DisplayWeight";
+import Workout from "./dashboard/home/Workout";
+import DisplayWorkouts from "./dashboard/home/DisplayWorkouts";
+import WorkoutDayCard from "./dashboard/home/WorkoutDayCard";
 
 export {
   HeaderPage,
@@ -161,4 +164,7 @@ export {
   PatchNoteModal,
   Weight,
   DisplayWeight,
+  Workout,
+  DisplayWorkouts,
+  WorkoutDayCard,
 };

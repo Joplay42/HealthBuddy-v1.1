@@ -341,13 +341,28 @@ export type WorkoutPlanProps = {
   title: string;
   categorie: PlanCategories[];
   desc: string;
-  days: {
-    name: string;
-    day: string;
-    // Implement exercise choice
-  }[];
+  days: workoutDayProps[];
   intensity: PlanIntensities;
+};
+
+type workoutDayProps = {
+  name: string;
+  day: string;
 };
 
 type PlanIntensities = "Low" | "Moderate" | "High";
 type PlanCategories = "Gain" | "Maintain" | "Lose";
+
+export type DisplayWorkoutsProps = {
+  plan: WorkoutPlanProps;
+};
+
+export type WorkoutDayCardProps = {
+  day: string;
+  workout: workoutDayProps;
+};
+
+export type WeekDay = {
+  day: string;
+  date: string;
+};
