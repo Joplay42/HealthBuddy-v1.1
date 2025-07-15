@@ -336,3 +336,18 @@ export type DisplayWeightProps = {
   weight: userWeightProps;
   objective: userProgramProps;
 };
+
+export type WorkoutPlanProps = {
+  title: string;
+  categorie: PlanCategories[];
+  desc: string;
+  days: {
+    name: string;
+    day: string;
+    // Implement exercise choice
+  }[];
+  intensity: PlanIntensities;
+};
+
+type PlanIntensities = "Low" | "Moderate" | "High";
+type PlanCategories = "Gain" | "Maintain" | "Lose";

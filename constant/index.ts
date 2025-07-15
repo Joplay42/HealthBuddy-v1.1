@@ -1,5 +1,6 @@
 import {
   NavLinksWebsiteProps,
+  WorkoutPlanProps,
   cardsWebsiteProps,
   foodProps,
   navLinksDashboardProps,
@@ -8,7 +9,9 @@ import {
   settingSideBarProps,
   userCalorieProps,
   userGoalProps,
+  userProgramProps,
   userProps,
+  userWeightProps,
 } from "@/types";
 
 // The website navLinks array with the name and the url
@@ -230,3 +233,216 @@ export const variantClasses = {
     "bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 my-2 rounded-xl",
   info: "bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 my-2 rounded-xl",
 };
+
+// Hard coded value for the new update
+export const userWeights: userWeightProps = {
+  weights: [
+    {
+      number: 162,
+      date: new Date("2025-07-01"),
+    },
+    {
+      number: 160.5,
+      date: new Date("2025-07-05"),
+    },
+    {
+      number: 161,
+      date: new Date("2025-07-10"),
+    },
+    {
+      number: 159.2,
+      date: new Date("2025-07-17"),
+    },
+    {
+      number: 158.9,
+      date: new Date("2025-07-23"),
+    },
+    {
+      number: 157.1,
+      date: new Date("2025-07-29"),
+    },
+    {
+      number: 156,
+      date: new Date("2025-08-04"),
+    },
+  ],
+};
+export const userObjective: userProgramProps = {
+  objectiveWeight: 150,
+  months: 3,
+};
+
+export const workoutPlans: WorkoutPlanProps[] = [
+  {
+    title: "Push/pull/leg",
+    categorie: ["Gain", "Maintain"],
+    desc: "One day you focus on upper body pushing exercises, the next you focus on upper body pulling exercises, then finally, you train legs.",
+    days: [
+      {
+        name: "Push day",
+        day: "Mon",
+        // Implement exercise choice
+      },
+      {
+        name: "Pull day",
+        day: "Tue",
+        // Implement exercise choice
+      },
+      {
+        name: "Leg day",
+        day: "Wed",
+        // Implement exercise choice
+      },
+      {
+        name: "Rest & Cardio",
+        day: "Thu",
+        // Implement exercise choice
+      },
+      {
+        name: "Push day",
+        day: "Fri",
+        // Implement exercise choice
+      },
+      {
+        name: "Pull day",
+        day: "Sat",
+        // Implement exercise choice
+      },
+      {
+        name: "Leg day",
+        day: "Sun",
+        // Implement exercise choice
+      },
+    ],
+    intensity: "High",
+  },
+  {
+    title: "Body part workout",
+    categorie: ["Maintain", "Lose"],
+    desc: "The body part workout split takes the foundations of the bro workout split, breaking up training into specific body parts, usually focusing on two body parts per day.",
+    days: [
+      {
+        name: "Chest & Biceps",
+        day: "Mon",
+        // Implement exercise choice
+      },
+      {
+        name: "Quads & Glutes",
+        day: "Tue",
+        // Implement exercise choice
+      },
+      {
+        name: "Rest & Cardio",
+        day: "Wed",
+        // Implement exercise choice
+      },
+      {
+        name: "Back & Triceps",
+        day: "Thu",
+        // Implement exercise choice
+      },
+      {
+        name: "Glutes & Hamstrings",
+        day: "Fri",
+        // Implement exercise choice
+      },
+      {
+        name: "Shoulders & Traps",
+        day: "Sat",
+        // Implement exercise choice
+      },
+      {
+        name: "Rest & Cardio",
+        day: "Sun",
+        // Implement exercise choice
+      },
+    ],
+    intensity: "High",
+  },
+  {
+    title: "Full body workout",
+    categorie: ["Gain", "Lose"],
+    desc: "The full body workout split will allow you to hit all the major muscle groups in less time, making it suited to those who are time-poor and looking for a 2 or 3-day workout split.",
+    days: [
+      {
+        name: "Workout 1",
+        day: "Mon",
+        // Implement exercise choice
+      },
+      {
+        name: "Rest & Cardio",
+        day: "Tue",
+        // Implement exercise choice
+      },
+      {
+        name: "Workout 2",
+        day: "Wed",
+        // Implement exercise choice
+      },
+      {
+        name: "Rest & Cardio",
+        day: "Thu",
+        // Implement exercise choice
+      },
+      {
+        name: "Workout 3",
+        day: "Fri",
+        // Implement exercise choice
+      },
+      {
+        name: "Rest & Cardio",
+        day: "Sat",
+        // Implement exercise choice
+      },
+      {
+        name: "Rest & Cardio",
+        day: "Sun",
+        // Implement exercise choice
+      },
+    ],
+    intensity: "High",
+  },
+  {
+    title: "Upper Lower workout",
+    categorie: ["Gain", "Maintain", "Lose"],
+    desc: "This approach alternates between upper body and lower body workouts, allowing for focused training sessions on each muscle group and adequate recovery time.",
+    days: [
+      {
+        name: "Upper body",
+        day: "Mon",
+        // Implement exercise choice
+      },
+      {
+        name: "Lower body",
+        day: "Tue",
+        // Implement exercise choice
+      },
+      {
+        name: "Rest & Cardio",
+        day: "Wed",
+        // Implement exercise choice
+      },
+      {
+        name: "Upper body",
+        day: "Thu",
+        // Implement exercise choice
+      },
+      {
+        name: "Lower body",
+        day: "Fri",
+        // Implement exercise choice
+      },
+      {
+        name: "Rest & Cardio",
+        day: "Sat",
+        // Implement exercise choice
+      },
+      {
+        name: "Rest & Cardio",
+        day: "Sun",
+        // Implement exercise choice
+      },
+    ],
+    intensity: "Low",
+  },
+];
