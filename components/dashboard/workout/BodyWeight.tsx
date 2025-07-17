@@ -24,7 +24,7 @@ const BodyWeight = ({ weight, objective, loading }: BodyWeightProps) => {
             loading={loading}
           />
         </div>
-        <WeightsGrid weight={weight} />
+        <WeightsGrid weight={weight} loading={loading} />
       </div>
     </div>
   );

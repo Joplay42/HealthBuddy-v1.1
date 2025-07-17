@@ -10,13 +10,12 @@ const Calendar = ({
   workoutPlan,
   selectedDays,
   setSelectedDays,
+  loading,
 }: CalendarProps) => {
   // States for the next 2 weeks
   const [weekArray, setWeekArray] = useState<WeekPlanningProps[]>([]);
   // States for the week index
   const [weekIndex, setWeekIndex] = useState<number>(0);
-  // States for the loading
-  const [loading, setLoading] = useState<boolean>(false);
 
   const start = weekIndex * 7;
   const end = start + 7;

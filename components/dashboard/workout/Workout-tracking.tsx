@@ -44,6 +44,7 @@ const WorkoutTracking = () => {
           workoutPlan={userWorkoutObjectiveInfo.workoutPlan.days}
           selectedDays={selectedDays}
           setSelectedDays={setSelectedDays}
+          loading={loading}
         />
       </div>
       {userWorkoutObjectiveInfo.workoutPlan.days.length !== 0 && (
@@ -51,6 +52,7 @@ const WorkoutTracking = () => {
           <WorkoutSchedule
             todaysWorkout={todaysWorkout}
             selectedDay={selectedDays}
+            loading={loading}
           />
         </div>
       )}

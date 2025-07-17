@@ -4,11 +4,9 @@ import { useEffect, useState } from "react";
 import WorkoutDayCard from "./WorkoutDayCard";
 import WorkoutDayCardSqueleton from "@/components/Squeleton/WorkoutDayCardSqueleton";
 
-const DisplayWorkouts = ({ plan }: DisplayWorkoutsProps) => {
+const DisplayWorkouts = ({ plan, loading }: DisplayWorkoutsProps) => {
   // States for the current week
   const [weekDates, setWeekDates] = useState<WeekDay[]>([]);
-  // Loading states
-  const [loading, setLoading] = useState<boolean>(true);
 
   // Get the current week
   useEffect(() => {
@@ -32,7 +30,6 @@ const DisplayWorkouts = ({ plan }: DisplayWorkoutsProps) => {
     };
 
     setWeekDates(generateWeek());
-    setLoading(false);
   }, []);
 
   if (loading) return <WorkoutDayCardSqueleton />;

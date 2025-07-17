@@ -353,6 +353,7 @@ type PlanCategories = "Gain" | "Maintain" | "Lose";
 
 export type DisplayWorkoutsProps = {
   plan: WorkoutPlanProps;
+  loading: boolean;
 };
 
 export type WorkoutDayCardProps = {
@@ -367,11 +368,13 @@ export type WeekDay = {
 
 export type WeightsGridProps = {
   weight: userWeightProps[];
+  loading: boolean;
 };
 
 export type workoutScheduleProps = {
   todaysWorkout: workoutDayProps | undefined;
   selectedDay: Date;
+  loading: boolean;
 };
 
 export type CalendarProps = {
@@ -379,6 +382,7 @@ export type CalendarProps = {
   workoutPlan: workoutDayProps[];
   selectedDays: Date;
   setSelectedDays: Dispatch<SetStateAction<Date>>;
+  loading: boolean;
 };
 
 export type WeekPlanningProps = {

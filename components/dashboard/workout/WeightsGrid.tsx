@@ -3,10 +3,7 @@ import WeightsGridSqueleton from "@/components/Squeleton/WeightsGridSqueleton";
 import { WeightsGridProps } from "@/types";
 import { useState } from "react";
 
-const WeightsGrid = ({ weight }: WeightsGridProps) => {
-  // States for the loading
-  const [loading, setLoading] = useState<boolean>(false);
-
+const WeightsGrid = ({ weight, loading }: WeightsGridProps) => {
   if (loading) return <WeightsGridSqueleton />;
 
   return (

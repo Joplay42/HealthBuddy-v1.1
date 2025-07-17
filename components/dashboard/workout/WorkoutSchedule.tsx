@@ -6,10 +6,8 @@ import { useState } from "react";
 const WorkoutSchedule = ({
   todaysWorkout,
   selectedDay,
+  loading,
 }: workoutScheduleProps) => {
-  // States for loading
-  const [loading, setLoading] = useState<boolean>(false);
-
   if (loading) return <WorkoutScheduleSqueleton />;
 
   return (

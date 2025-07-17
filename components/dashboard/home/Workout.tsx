@@ -27,7 +27,10 @@ const Workout = () => {
         )}
       </div>
       <div className="w-full bg-white p-5 rounded-3xl border border-neutral-400">
-        <DisplayWorkouts plan={userWorkoutObjectiveInfo.workoutPlan} />
+        <DisplayWorkouts
+          plan={userWorkoutObjectiveInfo.workoutPlan}
+          loading={loading}
+        />
       </div>
     </div>
   );
