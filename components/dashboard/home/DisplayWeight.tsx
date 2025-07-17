@@ -102,16 +102,14 @@ const DisplayWeight = ({ weight, objective, loading }: DisplayWeightProps) => {
   if (weight.length === 0 || !objective.objectiveWeight)
     return (
       <div className="py-16">
-        <h1 className="text-xl font-bold text-center">
-          It is quiet in here...
+        <h1 className="text-2xl font-bold text-center">
+          Start tracking your <span className="text-custom-green">Weight</span>{" "}
+          gain or loss Today!
+          <span className="text-3xl"> 🎉</span>
         </h1>
         <div className="flex justify-center mt-5">
-          <button
-            className="w-fit bg-black text-white px-5 py-2 rounded-2xl text-center hover:opacity-75"
-            // Open the modal
-            onClick={() => {}}
-          >
-            Add weight +
+          <button className="w-fit bg-black text-white px-5 py-2 rounded-2xl text-center hover:opacity-75">
+            Track my weights
           </button>
         </div>
       </div>

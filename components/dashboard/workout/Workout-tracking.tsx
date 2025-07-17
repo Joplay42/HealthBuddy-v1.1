@@ -30,7 +30,11 @@ const WorkoutTracking = () => {
   return (
     <div className="py-5 md:py-10 md:grid grid-cols-3 grid-rows-[minmax(150px,auto)_auto] space-y-5 md:space-y-0 md:gap-10">
       <div
-        className="col-span-2"
+        className={
+          userWorkoutObjectiveInfo.workoutPlan.days.length !== 0
+            ? `col-span-2`
+            : `col-span-3`
+        }
         data-aos="fade-up"
         data-aos-delay="200"
         data-aos-duration="300"
@@ -42,12 +46,14 @@ const WorkoutTracking = () => {
           setSelectedDays={setSelectedDays}
         />
       </div>
-      <div data-aos="fade-up" data-aos-delay="200" data-aos-duration="300">
-        <WorkoutSchedule
-          todaysWorkout={todaysWorkout}
-          selectedDay={selectedDays}
-        />
-      </div>
+      {userWorkoutObjectiveInfo.workoutPlan.days.length !== 0 && (
+        <div data-aos="fade-up" data-aos-delay="200" data-aos-duration="300">
+          <WorkoutSchedule
+            todaysWorkout={todaysWorkout}
+            selectedDay={selectedDays}
+          />
+        </div>
+      )}
 
       <div
         className="col-span-full"

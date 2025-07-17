@@ -1,9 +1,11 @@
 "use client";
-import React, { useState } from "react";
 import DisplayWorkouts from "./DisplayWorkouts";
-import { workoutPlans } from "@/constant";
+import { useUserInformationContext } from "@/context/UserInformationContext";
 
 const Workout = () => {
+  // Fetch the user workout plan
+  const { userWorkoutObjectiveInfo, loading } = useUserInformationContext();
+
   return (
     <div
       className="w-full h-full row-span-2"
@@ -15,15 +17,17 @@ const Workout = () => {
         {/** Title of the container */}
         <h1 className="font-bold text-xl">Workouts</h1>
 
-        <button
-          className="w-fit bg-black text-white px-3 py-2 rounded-2xl text-center hover:opacity-75 hover:cursor-pointer"
-          onClick={() => {}}
-        >
-          Schedule +
-        </button>
+        {userWorkoutObjectiveInfo.workoutPlan.days.length !== 0 && (
+          <button
+            className="w-fit bg-black text-white px-3 py-2 rounded-2xl text-center hover:opacity-75 hover:cursor-pointer"
+            onClick={() => {}}
+          >
+            Schedule +
+          </button>
+        )}
       </div>
       <div className="w-full bg-white p-5 rounded-3xl border border-neutral-400">
-        <DisplayWorkouts plan={workoutPlans[0]} />
+        <DisplayWorkouts plan={userWorkoutObjectiveInfo.workoutPlan} />
       </div>
     </div>
   );
