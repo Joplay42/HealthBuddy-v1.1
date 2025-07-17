@@ -251,6 +251,7 @@ export type userInformationContextProps = {
   userGoal: userGoalProps;
   userCalorieInfo: userCalorieProps;
   userWeightInfo: userWeightProps[];
+  userWorkoutObjectiveInfo: userProgramProps;
   loading: boolean;
 };
 
@@ -321,8 +322,7 @@ export type nutrients = "Calories" | "Protein" | "Carbs" | "Fat";
 export type userWeightProps = { number: number; date: Date };
 
 export type userProgramProps = {
-  userId?: string;
-  // Workout types
+  workoutPlan: WorkoutPlanProps;
   objectiveWeight: number;
   months: number;
 };
@@ -399,5 +399,6 @@ export type UserWeightContextProps = {
 
 export type BodyWeightProps = {
   weight: userWeightProps[];
+  objective: userProgramProps;
   loading: boolean;
 };

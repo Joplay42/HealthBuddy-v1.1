@@ -4,7 +4,9 @@ import {
   userCalorieProps,
   userGoalProps,
   userInformationContextProps,
+  userProgramProps,
   userWeightProps,
+  WorkoutPlanProps,
 } from "@/types";
 import {
   createContext,
@@ -16,7 +18,7 @@ import {
 import { doc, onSnapshot } from "firebase/firestore";
 import { auth, db } from "@/config/firebase";
 import { onAuthStateChanged, User } from "firebase/auth";
-import { userWeights } from "@/constant";
+import { userWeights, userWorkoutObjective } from "@/constant";
 
 export const UserInformationContext =
   createContext<userInformationContextProps>({
@@ -29,6 +31,17 @@ export const UserInformationContext =
     }, // Default values for userGoal
     userCalorieInfo: { calorie: 0, protein: 0, fat: 0, carbs: 0 }, // Default values for userCalorieInfo
     userWeightInfo: [],
+    userWorkoutObjectiveInfo: {
+      workoutPlan: {
+        title: "",
+        categorie: ["Gain"],
+        desc: "",
+        days: [],
+        intensity: "High",
+      },
+      objectiveWeight: 0,
+      months: 3,
+    }, // default value for the userWorkoutObjectives
     loading: true,
   });
 
@@ -56,6 +69,8 @@ export const UserInformationProvider = ({
   });
   const [userWeightInfo, setUserWeightInfo] =
     useState<userWeightProps[]>(userWeights);
+  const [userWorkoutObjectiveInfo, setUserWorkoutObjectiveInfo] =
+    useState<userProgramProps>(userWorkoutObjective);
 
   // loading state
   const [loading, setLoading] = useState(true);
@@ -122,9 +137,23 @@ export const UserInformationProvider = ({
       }
     };
 
+    const fetchInitialWorkoutObjective = async () => {
+      if (user && !userWeightInfo) {
+        try {
+          // Fetch the user weights
+        } catch (error: any) {
+          console.error(
+            "Error fetching the initial userWorkoutObjective : ",
+            error.message
+          );
+        }
+      }
+    };
+
     fetchInitialGoal();
     fetchInitialCalorie();
     fetchInitialWeight();
+    fetchInitialWorkoutObjective();
   }, [user, userGoal, userCalorieInfo]);
 
   // Fetch the user doc
@@ -172,7 +201,13 @@ export const UserInformationProvider = ({
 
   return (
     <UserInformationContext.Provider
-      value={{ userGoal, userCalorieInfo, userWeightInfo, loading }}
+      value={{
+        userGoal,
+        userCalorieInfo,
+        userWeightInfo,
+        userWorkoutObjectiveInfo,
+        loading,
+      }}
     >
       {children}
     </UserInformationContext.Provider>

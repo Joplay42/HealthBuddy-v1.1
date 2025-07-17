@@ -1,11 +1,11 @@
 import React from "react";
 import DisplayWeight from "./DisplayWeight";
-import { userObjective } from "@/constant";
 import { useUserInformationContext } from "@/context/UserInformationContext";
 
 const Weight = () => {
   // Fetch the userWeight
-  const { userWeightInfo, loading } = useUserInformationContext();
+  const { userWeightInfo, userWorkoutObjectiveInfo, loading } =
+    useUserInformationContext();
 
   return (
     // The weight container
@@ -31,7 +31,7 @@ const Weight = () => {
       <div className="bg-white p-10 rounded-3xl border border-neutral-400 h-[340px]">
         <DisplayWeight
           weight={userWeightInfo}
-          objective={userObjective}
+          objective={userWorkoutObjectiveInfo}
           loading={loading}
         />
       </div>

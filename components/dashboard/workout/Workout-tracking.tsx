@@ -2,14 +2,14 @@
 import Calendar from "./Calendar";
 import WorkoutSchedule from "./WorkoutSchedule";
 import BodyWeight from "./BodyWeight";
-import { workoutPlans } from "@/constant";
 import { useEffect, useState } from "react";
 import { workoutDayProps } from "@/types";
 import { useUserInformationContext } from "@/context/UserInformationContext";
 
 const WorkoutTracking = () => {
   // Fetch user weights info
-  const { userWeightInfo, loading } = useUserInformationContext();
+  const { userWeightInfo, userWorkoutObjectiveInfo, loading } =
+    useUserInformationContext();
   // Todays date
   const todaysDate = new Date();
 
@@ -21,7 +21,7 @@ const WorkoutTracking = () => {
   // Hooks to find todays workout
   useEffect(() => {
     // Find the workout for today
-    const workout = workoutPlans[0].days.find(
+    const workout = userWorkoutObjectiveInfo.workoutPlan.days.find(
       (workout) => workout.day === selectedDays.toDateString().substring(0, 3)
     );
     setTodaysWorkout(workout);
@@ -37,7 +37,7 @@ const WorkoutTracking = () => {
       >
         <Calendar
           today={todaysDate}
-          workoutPlan={workoutPlans[0].days}
+          workoutPlan={userWorkoutObjectiveInfo.workoutPlan.days}
           selectedDays={selectedDays}
           setSelectedDays={setSelectedDays}
         />
@@ -55,7 +55,11 @@ const WorkoutTracking = () => {
         data-aos-delay="200"
         data-aos-duration="300"
       >
-        <BodyWeight weight={userWeightInfo} loading={loading} />
+        <BodyWeight
+          weight={userWeightInfo}
+          objective={userWorkoutObjectiveInfo}
+          loading={loading}
+        />
       </div>
     </div>
   );

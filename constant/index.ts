@@ -282,7 +282,57 @@ export const userWeights: userWeightProps[] = [
   },
 ];
 
-export const userObjective: userProgramProps = {
+export const userWorkoutObjective: userProgramProps = {
+  workoutPlan: {
+    title: "Push/pull/leg",
+    categorie: ["Gain", "Maintain"],
+    desc: "One day you focus on upper body pushing exercises, the next you focus on upper body pulling exercises, then finally, you train legs.",
+    days: [
+      {
+        name: "Push day",
+        desc: "Push Day targets the chest, shoulders, and triceps using pushing movements. This session builds upper-body strength and improves muscle definition.",
+        day: "Mon",
+        // Implement exercise choice
+      },
+      {
+        name: "Pull day",
+        desc: "Pull Day focuses on the back, biceps, and rear shoulders using pulling exercises. It enhances posture, grip strength, and overall upper-body balance.",
+        day: "Tue",
+        // Implement exercise choice
+      },
+      {
+        name: "Leg day",
+        desc: "Leg Day targets the quads, hamstrings, glutes, and calves through compound and isolation movements. It builds lower-body strength, power, and stability for overall performance.",
+        day: "Wed",
+        // Implement exercise choice
+      },
+      {
+        name: "Rest & Cardio",
+        desc: "A light day focused on recovery with optional low-intensity cardio like walking or cycling. Helps improve blood flow, support active recovery, and maintain overall conditioning.",
+        day: "Thu",
+        // Implement exercise choice
+      },
+      {
+        name: "Push day",
+        desc: "Push Day targets the chest, shoulders, and triceps using pushing movements. This session builds upper-body strength and improves muscle definition.",
+        day: "Fri",
+        // Implement exercise choice
+      },
+      {
+        name: "Pull day",
+        desc: "Pull Day focuses on the back, biceps, and rear shoulders using pulling exercises. It enhances posture, grip strength, and overall upper-body balance.",
+        day: "Sat",
+        // Implement exercise choice
+      },
+      {
+        name: "Rest & Cardio",
+        desc: "A light day focused on recovery with optional low-intensity cardio like walking or cycling. Helps improve blood flow, support active recovery, and maintain overall conditioning.",
+        day: "Sun",
+        // Implement exercise choice
+      },
+    ],
+    intensity: "High",
+  },
   objectiveWeight: 150,
   months: 3,
 };
