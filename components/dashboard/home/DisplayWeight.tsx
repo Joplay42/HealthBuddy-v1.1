@@ -103,7 +103,7 @@ const DisplayWeight = ({ weight, objective, loading }: DisplayWeightProps) => {
     return (
       <div className="py-16">
         <h1 className="text-xl font-bold text-center">
-          No data has been found
+          It is quiet in here...
         </h1>
         <div className="flex justify-center mt-5">
           <button

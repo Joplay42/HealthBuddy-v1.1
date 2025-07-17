@@ -20,6 +20,18 @@ const WeightsGrid = ({ weight }: WeightsGridProps) => {
           </tr>
         </thead>
         <tbody>
+          {weight.length === 0 &&
+            Array(9)
+              .fill(0)
+              .map((_, index) => (
+                <tr
+                  key={index}
+                  className="border-y border-neutral-300 font-medium text-[#797979] animate-fade-in"
+                >
+                  <td className="py-2">---</td>
+                  <td className="py-2">--/--/--</td>
+                </tr>
+              ))}
           {weight.map((entry, index) => (
             <tr
               key={index}
