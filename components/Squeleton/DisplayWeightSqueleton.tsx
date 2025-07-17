@@ -15,7 +15,7 @@ const DisplayWeightSqueleton = () => {
             style={{ top: `${(rowIndex + 1) * 20}%` }}
           >
             {/* Y-axis tick placeholder */}
-            <div className="w-8 h-3 bg-gray-300 rounded-md mr-2" />
+            <div className="w-8 h-6 bg-gray-300 rounded-md mr-2" />
             {/* Grid line */}
             <div className="flex-1 h-px bg-gray-200" />
           </div>
@@ -31,7 +31,7 @@ const DisplayWeightSqueleton = () => {
             {/* Grid line */}
             <div className="w-px flex-1 bg-gray-200" />
             {/* X-axis tick placeholder */}
-            <div className="w-8 h-3 bg-gray-300 rounded-md mt-2" />
+            <div className="w-8 h-6 bg-gray-300 rounded-md mt-2" />
           </div>
         ))}
       </div>

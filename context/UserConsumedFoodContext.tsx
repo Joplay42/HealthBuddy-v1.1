@@ -86,11 +86,11 @@ export const UserConsumedFoodProvider = ({
               );
 
               setuserConsumedFood(foodItems); // Set the state with the fetched data
+              setLoading(false);
             } else {
               console.warn("No food items found.");
               setuserConsumedFood([]);
             }
-            setLoading(false);
           },
           (error) => {
             console.error("Error fetching food list:", error.message);
