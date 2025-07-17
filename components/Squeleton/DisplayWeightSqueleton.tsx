@@ -5,7 +5,7 @@ const DisplayWeightSqueleton = () => {
   const xTicks = [...Array(6)];
 
   return (
-    <div className="h-64 w-full p-4 animate-pulse h-full">
+    <div className="h-64 w-full p-4 animate-pulse">
       <div className="relative h-full w-full">
         {/* Y-axis grid lines + tick labels */}
         {yTicks.map((_, rowIndex) => (

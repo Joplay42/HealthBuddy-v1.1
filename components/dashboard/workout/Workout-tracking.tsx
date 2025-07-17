@@ -4,9 +4,12 @@ import WorkoutSchedule from "./WorkoutSchedule";
 import BodyWeight from "./BodyWeight";
 import { workoutPlans } from "@/constant";
 import { useEffect, useState } from "react";
-import { WeekDay, workoutDayProps } from "@/types";
+import { workoutDayProps } from "@/types";
+import { useUserInformationContext } from "@/context/UserInformationContext";
 
 const WorkoutTracking = () => {
+  // Fetch user weights info
+  const { userWeightInfo, loading } = useUserInformationContext();
   // Todays date
   const todaysDate = new Date();
 
@@ -52,7 +55,7 @@ const WorkoutTracking = () => {
         data-aos-delay="200"
         data-aos-duration="300"
       >
-        <BodyWeight />
+        <BodyWeight weight={userWeightInfo} loading={loading} />
       </div>
     </div>
   );

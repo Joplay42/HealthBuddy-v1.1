@@ -235,54 +235,53 @@ export const variantClasses = {
 };
 
 // Hard coded value for the new update
-export const userWeights: userWeightProps = {
-  weights: [
-    {
-      number: 162,
-      date: new Date("2025-07-01"),
-    },
-    {
-      number: 160.5,
-      date: new Date("2025-07-05"),
-    },
-    {
-      number: 161,
-      date: new Date("2025-07-10"),
-    },
-    {
-      number: 159.2,
-      date: new Date("2025-07-17"),
-    },
-    {
-      number: 158.9,
-      date: new Date("2025-07-23"),
-    },
-    {
-      number: 157.1,
-      date: new Date("2025-07-29"),
-    },
-    {
-      number: 156,
-      date: new Date("2025-08-04"),
-    },
-    {
-      number: 157.2,
-      date: new Date("2025-08-14"),
-    },
-    {
-      number: 156.5,
-      date: new Date("2025-08-24"),
-    },
-    {
-      number: 155.1,
-      date: new Date("2025-08-31"),
-    },
-    {
-      number: 153.8,
-      date: new Date("2025-09-08"),
-    },
-  ],
-};
+export const userWeights: userWeightProps[] = [
+  {
+    number: 162,
+    date: new Date("2025-07-01"),
+  },
+  {
+    number: 160.5,
+    date: new Date("2025-07-05"),
+  },
+  {
+    number: 161,
+    date: new Date("2025-07-10"),
+  },
+  {
+    number: 159.2,
+    date: new Date("2025-07-17"),
+  },
+  {
+    number: 158.9,
+    date: new Date("2025-07-23"),
+  },
+  {
+    number: 157.1,
+    date: new Date("2025-07-29"),
+  },
+  {
+    number: 156,
+    date: new Date("2025-08-04"),
+  },
+  {
+    number: 157.2,
+    date: new Date("2025-08-14"),
+  },
+  {
+    number: 156.5,
+    date: new Date("2025-08-24"),
+  },
+  {
+    number: 155.1,
+    date: new Date("2025-08-31"),
+  },
+  {
+    number: 153.8,
+    date: new Date("2025-09-08"),
+  },
+];
+
 export const userObjective: userProgramProps = {
   objectiveWeight: 150,
   months: 3,

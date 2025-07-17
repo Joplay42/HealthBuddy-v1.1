@@ -4,6 +4,7 @@ import {
   userCalorieProps,
   userGoalProps,
   userInformationContextProps,
+  userWeightProps,
 } from "@/types";
 import {
   createContext,
@@ -15,6 +16,7 @@ import {
 import { doc, onSnapshot } from "firebase/firestore";
 import { auth, db } from "@/config/firebase";
 import { onAuthStateChanged, User } from "firebase/auth";
+import { userWeights } from "@/constant";
 
 export const UserInformationContext =
   createContext<userInformationContextProps>({
@@ -26,6 +28,7 @@ export const UserInformationContext =
       weight: 0,
     }, // Default values for userGoal
     userCalorieInfo: { calorie: 0, protein: 0, fat: 0, carbs: 0 }, // Default values for userCalorieInfo
+    userWeightInfo: [],
     loading: true,
   });
 
@@ -51,6 +54,8 @@ export const UserInformationProvider = ({
     fat: 0,
     carbs: 0,
   });
+  const [userWeightInfo, setUserWeightInfo] =
+    useState<userWeightProps[]>(userWeights);
 
   // loading state
   const [loading, setLoading] = useState(true);
@@ -104,8 +109,22 @@ export const UserInformationProvider = ({
       }
     };
 
+    const fetchInitialWeight = async () => {
+      if (user && !userWeightInfo) {
+        try {
+          // Fetch the user weights
+        } catch (error: any) {
+          console.error(
+            "Error fetching the initial userWeight : ",
+            error.message
+          );
+        }
+      }
+    };
+
     fetchInitialGoal();
     fetchInitialCalorie();
+    fetchInitialWeight();
   }, [user, userGoal, userCalorieInfo]);
 
   // Fetch the user doc
@@ -153,7 +172,7 @@ export const UserInformationProvider = ({
 
   return (
     <UserInformationContext.Provider
-      value={{ userGoal, userCalorieInfo, loading }}
+      value={{ userGoal, userCalorieInfo, userWeightInfo, loading }}
     >
       {children}
     </UserInformationContext.Provider>

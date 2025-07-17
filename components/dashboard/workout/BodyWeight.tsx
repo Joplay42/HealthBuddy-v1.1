@@ -1,8 +1,9 @@
 "use client";
 import { DisplayWeight, WeightsGrid } from "@/components";
-import { userObjective, userWeights } from "@/constant";
+import { userObjective } from "@/constant";
+import { BodyWeightProps } from "@/types";
 
-const BodyWeight = () => {
+const BodyWeight = ({ weight, loading }: BodyWeightProps) => {
   return (
     <div className="bg-white p-5 rounded-3xl border border-neutral-400">
       <div className="flex items-center justify-between mb-10">
@@ -18,9 +19,13 @@ const BodyWeight = () => {
       </div>
       <div className="lg:grid grid-cols-4 grid-rows-[minmax(150px,auto)_auto] space-y-5 md:space-y-0 md:gap-10 items-start">
         <div className="col-span-3 h-[400px]">
-          <DisplayWeight weight={userWeights} objective={userObjective} />
+          <DisplayWeight
+            weight={weight}
+            objective={userObjective}
+            loading={loading}
+          />
         </div>
-        <WeightsGrid weight={userWeights} />
+        <WeightsGrid weight={weight} />
       </div>
     </div>
   );

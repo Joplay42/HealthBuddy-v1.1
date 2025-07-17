@@ -250,6 +250,7 @@ export type NutrientsChartsProps = {
 export type userInformationContextProps = {
   userGoal: userGoalProps;
   userCalorieInfo: userCalorieProps;
+  userWeightInfo: userWeightProps[];
   loading: boolean;
 };
 
@@ -317,13 +318,7 @@ export type foodCardProps = {
 
 export type nutrients = "Calories" | "Protein" | "Carbs" | "Fat";
 
-export type userWeightProps = {
-  userId?: string;
-  weights: {
-    number: number;
-    date: Date;
-  }[];
-};
+export type userWeightProps = { number: number; date: Date };
 
 export type userProgramProps = {
   userId?: string;
@@ -333,8 +328,9 @@ export type userProgramProps = {
 };
 
 export type DisplayWeightProps = {
-  weight: userWeightProps;
+  weight: userWeightProps[];
   objective: userProgramProps;
+  loading: boolean;
 };
 
 export type WorkoutPlanProps = {
@@ -370,7 +366,7 @@ export type WeekDay = {
 };
 
 export type WeightsGridProps = {
-  weight: userWeightProps;
+  weight: userWeightProps[];
 };
 
 export type workoutScheduleProps = {
@@ -394,4 +390,14 @@ export type CalendarDayProps = {
   weekDay: WeekPlanningProps;
   selectedDay: Date;
   setSelectedDay: Dispatch<SetStateAction<Date>>;
+};
+
+export type UserWeightContextProps = {
+  weights: userWeightProps[];
+  loading: boolean;
+};
+
+export type BodyWeightProps = {
+  weight: userWeightProps[];
+  loading: boolean;
 };

@@ -20,7 +20,7 @@ const WeightsGrid = ({ weight }: WeightsGridProps) => {
           </tr>
         </thead>
         <tbody>
-          {weight.weights.map((entry, index) => (
+          {weight.map((entry, index) => (
             <tr
               key={index}
               className="border-y border-neutral-300 font-medium text-[#797979] animate-fade-in"

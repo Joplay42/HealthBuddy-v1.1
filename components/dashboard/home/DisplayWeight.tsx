@@ -15,10 +15,7 @@ import {
 import { useState } from "react";
 import { Line } from "react-chartjs-2";
 
-const DisplayWeight = ({ weight, objective }: DisplayWeightProps) => {
-  // Loading states
-  const [loading, setLoading] = useState<boolean>(false);
-
+const DisplayWeight = ({ weight, objective, loading }: DisplayWeightProps) => {
   ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -77,7 +74,7 @@ const DisplayWeight = ({ weight, objective }: DisplayWeightProps) => {
     maintainAspectRatio: false,
   };
 
-  const labels = weight.weights.map((entry) =>
+  const labels = weight.map((entry) =>
     entry.date.toLocaleDateString("en-US", { month: "short", day: "numeric" })
   );
 
@@ -86,7 +83,7 @@ const DisplayWeight = ({ weight, objective }: DisplayWeightProps) => {
     datasets: [
       {
         fill: true,
-        data: weight.weights.map((entry) => entry.number),
+        data: weight.map((entry) => entry.number),
         borderColor: "#AFF921",
         backgroundColor: "#ffffff00",
         tension: 0.3,
@@ -102,7 +99,7 @@ const DisplayWeight = ({ weight, objective }: DisplayWeightProps) => {
     ],
   };
 
-  if (weight.weights.length === 0 || !objective.objectiveWeight)
+  if (weight.length === 0 || !objective.objectiveWeight)
     return (
       <div className="py-16">
         <h1 className="text-xl font-bold text-center">
