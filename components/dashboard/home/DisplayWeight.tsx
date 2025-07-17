@@ -1,3 +1,5 @@
+"use client";
+import DisplayWeightSqueleton from "@/components/Squeleton/DisplayWeightSqueleton";
 import { DisplayWeightProps } from "@/types";
 import {
   Chart as ChartJS,
@@ -10,9 +12,13 @@ import {
   Filler,
   Legend,
 } from "chart.js";
+import { useState } from "react";
 import { Line } from "react-chartjs-2";
 
 const DisplayWeight = ({ weight, objective }: DisplayWeightProps) => {
+  // Loading states
+  const [loading, setLoading] = useState<boolean>(false);
+
   ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -113,6 +119,8 @@ const DisplayWeight = ({ weight, objective }: DisplayWeightProps) => {
         </div>
       </div>
     );
+
+  if (loading) return <DisplayWeightSqueleton />;
 
   return (
     <div className={`relative h-full w-full`}>

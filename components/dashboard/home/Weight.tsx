@@ -6,7 +6,12 @@ import { userObjective, userWeights } from "@/constant";
 const Weight = () => {
   return (
     // The weight container
-    <div className="col-span-2 w-full h-full ">
+    <div
+      className="col-span-2 w-full h-full "
+      data-aos="fade-up"
+      data-aos-delay="200"
+      data-aos-duration="300"
+    >
       <div className="flex items-center justify-between pb-5">
         {/** Title of the container */}
         <h1 className="font-bold text-xl">Body weight</h1>

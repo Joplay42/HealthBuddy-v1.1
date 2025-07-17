@@ -85,10 +85,10 @@ const BarChart = ({ data, goal, nutrient }: barChartProps) => {
     return (
       <div className="w-full">
         <div className="flex items-center justify-between">
-          <h1 className="capitalize">{nutrient}</h1>
-          <h1>
+          <h3 className="capitalize">{nutrient}</h3>
+          <h3>
             {consumedGrams}g / {dailyGoalGrams}g
-          </h1>
+          </h3>
         </div>
         <Bar className="max-h-5" data={value} options={options} />
       </div>

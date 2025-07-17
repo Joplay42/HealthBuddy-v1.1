@@ -49,13 +49,23 @@ const Calorie = () => {
         "py-5 md:py-10 md:grid grid-cols-3 grid-rows-[minmax(150px,auto)_auto] space-y-5 md:space-y-0 md:gap-10"
       }
     >
-      <div className=" col-span-2">
+      <div
+        className=" col-span-2"
+        data-aos="fade-up"
+        data-aos-delay="200"
+        data-aos-duration="300"
+      >
         <Overview goal={userGoal} data={userCalorieInfo} loading={loading} />
       </div>
-      <div>
+      <div data-aos="fade-up" data-aos-delay="200" data-aos-duration="300">
         <Objective goal={userGoal} data={userCalorieInfo} loading={loading} />
       </div>
-      <div className="col-span-3">
+      <div
+        className="col-span-3"
+        data-aos="fade-up"
+        data-aos-delay="200"
+        data-aos-duration="300"
+      >
         <UserConsumedFoodProvider>
           <FoodEntries />
         </UserConsumedFoodProvider>

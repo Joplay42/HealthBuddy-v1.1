@@ -2,10 +2,13 @@
 import { DisplayWorkoutsProps, WeekDay, WorkoutPlanProps } from "@/types";
 import { useEffect, useState } from "react";
 import WorkoutDayCard from "./WorkoutDayCard";
+import WorkoutDayCardSqueleton from "@/components/Squeleton/WorkoutDayCardSqueleton";
 
 const DisplayWorkouts = ({ plan }: DisplayWorkoutsProps) => {
   // States for the current week
   const [weekDates, setWeekDates] = useState<WeekDay[]>([]);
+  // Loading states
+  const [loading, setLoading] = useState<boolean>(true);
 
   // Get the current week
   useEffect(() => {
@@ -29,14 +32,17 @@ const DisplayWorkouts = ({ plan }: DisplayWorkoutsProps) => {
     };
 
     setWeekDates(generateWeek());
+    setLoading(false);
   }, []);
+
+  if (loading) return <WorkoutDayCardSqueleton />;
 
   return (
     <div className="space-y-3">
       {weekDates.map((entry, index) => {
         const foundDays = plan.days.find(
           (workout) => workout.day === entry.day
-        ) ?? { name: "", day: "" };
+        ) ?? { name: "", desc: "", day: "" };
 
         return (
           <WorkoutDayCard day={entry.day} workout={foundDays} key={index} />

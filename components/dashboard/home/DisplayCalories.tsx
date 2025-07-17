@@ -46,7 +46,7 @@ const DisplayCalories = () => {
 
   return (
     <div className="flex flex-wrap justify-between items-center gap-x-6">
-      <div className="flex flex-wrap gap-10 items-center">
+      <div className="flex flex-wrap gap-8 items-center">
         <div className="w-60 h-auto relative">
           {/** Chart component to display the calorie consumed and remaining */}
           <PieChart data={caloriesConsumed} remaining={caloriesRemaining} />

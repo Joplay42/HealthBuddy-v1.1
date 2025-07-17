@@ -1,11 +1,7 @@
 const OverviewSqueleton = () => {
   return (
     // The card container
-    <div
-      className="bg-white p-5 rounded-3xl border border-neutral-400 col-span-2"
-      data-aos="fade-up"
-      data-aos-duration="300"
-    >
+    <div className="bg-white p-5 rounded-3xl border border-neutral-400 col-span-2">
       {/** The title */}
       <div className="h-6 bg-gray-200 animate-pulse rounded w-32 mb-10"></div>
       <div className="flex flex-wrap items-center justify-between gap-10">
