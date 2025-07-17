@@ -3,6 +3,7 @@ import { CalendarProps, WeekPlanningProps } from "@/types";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import CalendarDay from "./CalendarDay";
+import Calendarsqueleton from "@/components/Squeleton/Calendarsqueleton";
 
 const Calendar = ({
   today,
@@ -14,6 +15,8 @@ const Calendar = ({
   const [weekArray, setWeekArray] = useState<WeekPlanningProps[]>([]);
   // States for the week index
   const [weekIndex, setWeekIndex] = useState<number>(0);
+  // States for the loading
+  const [loading, setLoading] = useState<boolean>(false);
 
   const start = weekIndex * 7;
   const end = start + 7;
@@ -50,6 +53,8 @@ const Calendar = ({
 
     generateWeek();
   }, []);
+
+  if (loading) return <Calendarsqueleton />;
 
   return (
     <div className="bg-white p-5 rounded-3xl border border-neutral-400 h-full">
@@ -106,7 +111,7 @@ const Calendar = ({
           </button>
         </div>
       </div>
-      <div className="flex items-center justify-between border border-neutral-400">
+      <div className="relative flex items-center justify-between border border-neutral-400">
         {weekArray.slice(start, end).map((entry, index) => (
           <CalendarDay
             weekDay={entry}

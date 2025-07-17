@@ -1,12 +1,19 @@
 "use client";
+import WorkoutScheduleSqueleton from "@/components/Squeleton/WorkoutScheduleSqueleton";
 import { workoutScheduleProps } from "@/types";
+import { useState } from "react";
 
 const WorkoutSchedule = ({
   todaysWorkout,
   selectedDay,
 }: workoutScheduleProps) => {
+  // States for loading
+  const [loading, setLoading] = useState<boolean>(false);
+
+  if (loading) return <WorkoutScheduleSqueleton />;
+
   return (
-    <div className="bg-white p-5 rounded-3xl border border-neutral-400">
+    <div className="bg-white p-5 rounded-3xl border border-neutral-400 h-full">
       {/** The title */}
       <h1 className="font-bold text-lg md:text-xl mb-5">
         Workout - {selectedDay.toDateString()}

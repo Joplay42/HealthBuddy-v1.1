@@ -5,13 +5,13 @@ const DisplayWeightSqueleton = () => {
   const xTicks = [...Array(6)];
 
   return (
-    <div className="h-64 w-full p-4 animate-pulse">
+    <div className="h-64 w-full p-4 animate-pulse h-full">
       <div className="relative h-full w-full">
         {/* Y-axis grid lines + tick labels */}
         {yTicks.map((_, rowIndex) => (
           <div
             key={`row-${rowIndex}`}
-            className="absolute left-0 right-0 flex items-center "
+            className="absolute left-0 right-0 flex items-center justify-between"
             style={{ top: `${(rowIndex + 1) * 20}%` }}
           >
             {/* Y-axis tick placeholder */}

@@ -1,7 +1,14 @@
+"use client";
+import WeightsGridSqueleton from "@/components/Squeleton/WeightsGridSqueleton";
 import { WeightsGridProps } from "@/types";
-import React from "react";
+import { useState } from "react";
 
 const WeightsGrid = ({ weight }: WeightsGridProps) => {
+  // States for the loading
+  const [loading, setLoading] = useState<boolean>(false);
+
+  if (loading) return <WeightsGridSqueleton />;
+
   return (
     <div className="max-h-96 overflow-y-auto">
       <table className="table-auto w-full text-left">

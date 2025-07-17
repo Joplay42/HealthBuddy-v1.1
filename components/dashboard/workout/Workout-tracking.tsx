@@ -26,7 +26,12 @@ const WorkoutTracking = () => {
 
   return (
     <div className="py-5 md:py-10 md:grid grid-cols-3 grid-rows-[minmax(150px,auto)_auto] space-y-5 md:space-y-0 md:gap-10">
-      <div className="col-span-2">
+      <div
+        className="col-span-2"
+        data-aos="fade-up"
+        data-aos-delay="200"
+        data-aos-duration="300"
+      >
         <Calendar
           today={todaysDate}
           workoutPlan={workoutPlans[0].days}
@@ -34,11 +39,19 @@ const WorkoutTracking = () => {
           setSelectedDays={setSelectedDays}
         />
       </div>
-      <WorkoutSchedule
-        todaysWorkout={todaysWorkout}
-        selectedDay={selectedDays}
-      />
-      <div className="col-span-full">
+      <div data-aos="fade-up" data-aos-delay="200" data-aos-duration="300">
+        <WorkoutSchedule
+          todaysWorkout={todaysWorkout}
+          selectedDay={selectedDays}
+        />
+      </div>
+
+      <div
+        className="col-span-full"
+        data-aos="fade-up"
+        data-aos-delay="200"
+        data-aos-duration="300"
+      >
         <BodyWeight />
       </div>
     </div>

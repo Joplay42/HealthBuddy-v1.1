@@ -16,7 +16,7 @@ const CalendarDay = ({
       }
       ${
         weekDay.date.getDate() === selectedDay.getDate() &&
-        `outline outline-2 md:outline-4 outline-black z-50`
+        `outline outline-2 md:outline-4 outline-black z-50 transition-all duration-100 ease-in-out`
       }`}
       onClick={() => setSelectedDay(weekDay.date)}
     >

@@ -93,6 +93,10 @@ import WeightsGrid from "./dashboard/workout/WeightsGrid";
 import CalendarDay from "./dashboard/workout/CalendarDay";
 import WorkoutDayCardSqueleton from "./Squeleton/WorkoutDayCardSqueleton";
 import DisplayWeightSqueleton from "./Squeleton/DisplayWeightSqueleton";
+import Calendarsqueleton from "./Squeleton/Calendarsqueleton";
+import CalendarDaySqueleton from "./Squeleton/CalendarDaySqueleton";
+import WorkoutScheduleSqueleton from "./Squeleton/WorkoutScheduleSqueleton";
+import WeightsGridSqueleton from "./Squeleton/WeightsGridSqueleton";
 
 export {
   HeaderPage,
@@ -183,4 +187,8 @@ export {
   CalendarDay,
   WorkoutDayCardSqueleton,
   DisplayWeightSqueleton,
+  Calendarsqueleton,
+  CalendarDaySqueleton,
+  WorkoutScheduleSqueleton,
+  WeightsGridSqueleton,
 };
