@@ -1,15 +1,53 @@
 "use client";
-import Image from "next/image";
 import { useState } from "react";
+import Image from "next/image";
+
+type buttonIndexProps = {
+  objective: number;
+  intensity: number;
+};
 
 const CreateWorkoutObjective = () => {
+  // State for the loading
+  const [loading, setLoading] = useState<boolean>(false);
+  // States for the errors
+  const [error, setError] = useState();
+  // States to disable the button
+  const [disableButton, setDisableButton] = useState<boolean>(true);
+  // States for the weight
+  const [weight, setWeight] = useState<number>(0);
   // Button index states
-  const [buttonIndex, setButtonIndex] = useState<number>(0);
+  const [buttonIndex, setButtonIndex] = useState<buttonIndexProps>({
+    objective: 0,
+    intensity: 0,
+  });
+  // States for the range
+  const [range, setRange] = useState<number>(1);
 
   // Form submit function
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     // Prevent page reload
     e.preventDefault();
+  };
+
+  // Function to handle the range changes
+  const handleChange = (nb: number, input: string) => {
+    // Input range
+    if (input === "range") {
+      setRange(nb);
+    } else {
+      // Set the amount to the right number
+      setWeight(nb);
+      // Disable the button if 0 or negative number
+      if (nb <= 0) {
+        setWeight(0);
+        setDisableButton(true);
+      } else if (Number.isNaN(nb)) {
+        setDisableButton(true);
+      } else {
+        setDisableButton(false);
+      }
+    }
   };
 
   return (
@@ -35,9 +73,14 @@ const CreateWorkoutObjective = () => {
           <div className="flex items-center justify-between space-x-4">
             <button
               className={`flex items-center justify-center w-full font-medium border-2 border-neutral-500 rounded-lg py-2 ${
-                buttonIndex === 0 && "bg-neutral-500 text-white"
+                buttonIndex.objective === 0 && "bg-neutral-500 text-white"
               }`}
-              onClick={() => setButtonIndex(0)}
+              onClick={() =>
+                setButtonIndex((prev) => ({
+                  ...prev,
+                  objective: 0,
+                }))
+              }
             >
               <svg
                 width="40"
@@ -60,9 +103,14 @@ const CreateWorkoutObjective = () => {
             </button>
             <button
               className={`flex items-center justify-center w-full font-medium border-2 border-neutral-500 rounded-lg py-2 ${
-                buttonIndex === 1 && "bg-neutral-500 text-white"
+                buttonIndex.objective === 1 && "bg-neutral-500 text-white"
               }`}
-              onClick={() => setButtonIndex(1)}
+              onClick={() =>
+                setButtonIndex((prev) => ({
+                  ...prev,
+                  objective: 1,
+                }))
+              }
             >
               <svg
                 width="40"
@@ -85,9 +133,14 @@ const CreateWorkoutObjective = () => {
             </button>
             <button
               className={`flex items-center justify-center w-full font-medium border-2 border-neutral-500 rounded-lg py-2 ${
-                buttonIndex === 2 && "bg-neutral-500 text-white"
+                buttonIndex.objective === 2 && "bg-neutral-500 text-white"
               }`}
-              onClick={() => setButtonIndex(2)}
+              onClick={() =>
+                setButtonIndex((prev) => ({
+                  ...prev,
+                  objective: 2,
+                }))
+              }
             >
               <svg
                 width="40"
@@ -105,11 +158,117 @@ const CreateWorkoutObjective = () => {
                   fill="currentColor"
                 />
               </svg>
-
               <p>Maintain muscle</p>
             </button>
           </div>
         </div>
+        <div className="flex items-center justify-between space-x-4">
+          <div className="space-y-4 mt-6 lg:mt-10 w-1/3">
+            {/** Handle errors */}
+            <label className="font-semibold text-lg">Weight goal</label>
+            <input
+              value={weight || NaN}
+              onChange={(e) => handleChange(e.target.valueAsNumber, "number")}
+              type="number"
+              name="weight"
+              className="border-black rounded-xl w-full"
+              placeholder="ex. 175"
+            />
+          </div>
+          <div className="space-y-4 mt-6 lg:mt-10 w-full">
+            {/** Handle errors */}
+            <label className="font-semibold text-lg">Amount of time</label>
+            <div className="flex items-center space-x-2">
+              <input
+                type="range"
+                min={1}
+                max={12}
+                value={range}
+                onChange={(e) => handleChange(e.target.valueAsNumber, "range")}
+                name="time"
+                className="w-full"
+              />
+              <p className="min-w-24 font-semibold">
+                {range} month{range !== 1 && "s"}
+              </p>
+            </div>
+          </div>
+        </div>
+        <div className="space-y-4 mt-6 lg:mt-10 mb-20">
+          {/** Handle errors */}
+          <label className="font-semibold text-lg">Intensity</label>
+          <div className="flex items-center justify-between space-x-4">
+            <div className="w-full text-center space-y-2">
+              <button
+                className={`flex items-center justify-center w-full font-medium border-2 border-neutral-500 rounded-lg py-3 ${
+                  buttonIndex.intensity === 0 && "bg-neutral-500 text-white"
+                }`}
+                onClick={() =>
+                  setButtonIndex((prev) => ({
+                    ...prev,
+                    intensity: 0,
+                  }))
+                }
+              >
+                <p>Low</p>
+              </button>
+              <p className="w-full text-neutral-500 font-semibold">
+                1-2 days a week
+              </p>
+            </div>
+            <div className="w-full text-center space-y-2">
+              <button
+                className={`flex items-center justify-center w-full font-medium border-2 border-neutral-500 rounded-lg py-3 ${
+                  buttonIndex.intensity === 1 && "bg-neutral-500 text-white"
+                }`}
+                onClick={() =>
+                  setButtonIndex((prev) => ({
+                    ...prev,
+                    intensity: 1,
+                  }))
+                }
+              >
+                <p>Moderate</p>
+              </button>
+              <p className="w-full text-neutral-500 font-semibold">
+                3-4 days a week
+              </p>
+            </div>
+            <div className="w-full text-center space-y-2">
+              <button
+                className={`flex items-center justify-center w-full font-medium border-2 border-neutral-500 rounded-lg py-3 ${
+                  buttonIndex.intensity === 2 && "bg-neutral-500 text-white"
+                }`}
+                onClick={() =>
+                  setButtonIndex((prev) => ({
+                    ...prev,
+                    intensity: 2,
+                  }))
+                }
+              >
+                <p>High</p>
+              </button>
+              <p className="w-full text-neutral-500 font-semibold">
+                6-7 days a week
+              </p>
+            </div>
+          </div>
+        </div>
+        <button
+          className="mt-8 flex items-center gap-2 justify-center py-4 px-3 rounded-xl hover:opacity-75 hover:transition ease-in-out duration-300 bg-black text-white w-full disabled:opacity-60"
+          type="submit"
+          disabled={loading || disableButton}
+        >
+          Next
+          {loading && (
+            <Image
+              src="/loading.gif"
+              width={25}
+              height={25}
+              alt="Loading gif"
+            />
+          )}
+        </button>
       </form>
     </div>
   );

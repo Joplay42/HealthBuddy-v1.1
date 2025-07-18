@@ -59,7 +59,7 @@ html {
     brightness(101%) contrast(101%);
 }
 
-input,
+input:not([type="range"]),
 select {
   @apply border border-neutral-500 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-custom-green focus:ring-offset-2;
 }
@@ -67,6 +67,35 @@ select {
 /* Exclude specific input from global styles */
 input.no-focus-styles {
   @apply border-0 flex-1 w-full focus:outline-none focus:ring-0 focus:ring-offset-0 text-base md:text-lg py-[3px] md:py-2;
+}
+
+input[type="range"] {
+  @apply w-full h-2 appearance-none cursor-pointer bg-transparent;
+}
+
+/* WebKit browsers (Chrome, Safari, Edge) */
+input[type="range"]::-webkit-slider-runnable-track {
+  @apply bg-gray-300 rounded-lg h-2;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  @apply appearance-none w-4 h-4 bg-black rounded-full;
+  margin-top: -4px; /* vertically center the thumb */
+  position: relative;
+  z-index: 10;
+}
+
+/* Firefox */
+input[type="range"]::-moz-range-track {
+  @apply bg-gray-300 rounded-lg h-2;
+}
+
+input[type="range"]::-moz-range-progress {
+  @apply bg-green-500 h-2 rounded-lg;
+}
+
+input[type="range"]::-moz-range-thumb {
+  @apply appearance-none w-4 h-4 bg-black rounded-full;
 }
 
 @keyframes fade-in {
