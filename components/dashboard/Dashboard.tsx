@@ -9,6 +9,7 @@ import {
   AddRecipeModal,
   EditRecipeModal,
   DashboardSqueleton,
+  WorkoutObjective,
 } from "@/components";
 import { DashboardProps } from "@/types";
 import { FireBaseAuthProvider } from "@/context/UserContext";
@@ -49,6 +50,7 @@ const Content = ({ children }: DashboardProps) => {
   const isAddRecipeModalOpen = searchParams.get("modal") == "addrecipe";
   const isEditRecipeModalOpen = searchParams.get("modal") == "editrecipe";
   const isObjectiveModalOpen = searchParams.get("modal") === "objective";
+  const isWorkoutModalOpen = searchParams.get("modal") === "workout";
 
   useEffect(() => {
     AOS.init();
@@ -78,6 +80,7 @@ const Content = ({ children }: DashboardProps) => {
           {isAddFoodModalOpen && <AddFoodModal />}
           {isAddRecipeModalOpen && <AddRecipeModal />}
           {isEditRecipeModalOpen && <EditRecipeModal />}
+          {isWorkoutModalOpen && <WorkoutObjective />}
         </div>
       </UserInformationProvider>
     </FireBaseAuthProvider>

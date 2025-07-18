@@ -97,6 +97,8 @@ import Calendarsqueleton from "./Squeleton/Calendarsqueleton";
 import CalendarDaySqueleton from "./Squeleton/CalendarDaySqueleton";
 import WorkoutScheduleSqueleton from "./Squeleton/WorkoutScheduleSqueleton";
 import WeightsGridSqueleton from "./Squeleton/WeightsGridSqueleton";
+import WorkoutObjective from "./modals/WorkoutObjective";
+import CreateWorkoutObjective from "./dashboard/workout/CreateWorkoutObjective";
 
 export {
   HeaderPage,
@@ -191,4 +193,6 @@ export {
   CalendarDaySqueleton,
   WorkoutScheduleSqueleton,
   WeightsGridSqueleton,
+  WorkoutObjective,
+  CreateWorkoutObjective,
 };

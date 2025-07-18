@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import CalendarDay from "./CalendarDay";
 import Calendarsqueleton from "@/components/Squeleton/Calendarsqueleton";
+import { useRouter } from "next/navigation";
 
 const Calendar = ({
   today,
@@ -16,6 +17,8 @@ const Calendar = ({
   const [weekArray, setWeekArray] = useState<WeekPlanningProps[]>([]);
   // States for the week index
   const [weekIndex, setWeekIndex] = useState<number>(0);
+  // Router states
+  const router = useRouter();
 
   const start = weekIndex * 7;
   const end = start + 7;
@@ -81,7 +84,9 @@ const Calendar = ({
         {/** Button to add  a new food item */}
         <button
           className="hidden md:block w-fit bg-black text-white px-3 py-2 rounded-2xl text-center hover:opacity-75 hover:cursor-pointer"
-          onClick={() => {}}
+          onClick={() => {
+            router.push("?modal=workout", { scroll: false });
+          }}
         >
           Change workout plan
         </button>

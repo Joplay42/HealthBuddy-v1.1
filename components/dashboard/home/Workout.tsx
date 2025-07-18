@@ -1,10 +1,14 @@
 "use client";
+import { useRouter } from "next/navigation";
 import DisplayWorkouts from "./DisplayWorkouts";
 import { useUserInformationContext } from "@/context/UserInformationContext";
 
 const Workout = () => {
   // Fetch the user workout plan
   const { userWorkoutObjectiveInfo, loading } = useUserInformationContext();
+
+  // Router states
+  const router = useRouter();
 
   return (
     <div
@@ -20,7 +24,9 @@ const Workout = () => {
         {userWorkoutObjectiveInfo.workoutPlan.days.length !== 0 && (
           <button
             className="w-fit bg-black text-white px-3 py-2 rounded-2xl text-center hover:opacity-75 hover:cursor-pointer"
-            onClick={() => {}}
+            onClick={() => {
+              router.push("?modal=workout", { scroll: false });
+            }}
           >
             Schedule +
           </button>
