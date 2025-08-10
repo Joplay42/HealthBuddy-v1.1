@@ -15,7 +15,7 @@ const CreateWorkoutObjective = () => {
   // States to disable the button
   const [disableButton, setDisableButton] = useState<boolean>(true);
   // States for the weight
-  const [weight, setWeight] = useState<number>(0);
+  const [weight, setWeight] = useState<number | undefined>(undefined);
   // Button index states
   const [buttonIndex, setButtonIndex] = useState<buttonIndexProps>({
     objective: 0,
@@ -31,11 +31,17 @@ const CreateWorkoutObjective = () => {
   };
 
   // Function to handle the range changes
-  const handleChange = (nb: number, input: string) => {
+  const handleChange = (nb: number, input: string, rawValue: string) => {
     // Input range
     if (input === "range") {
       setRange(nb);
     } else {
+      // If the input is empty, store undefined instead of NaN
+      if (rawValue === "") {
+        setWeight(undefined);
+        setDisableButton(true);
+        return;
+      }
       // Set the amount to the right number
       setWeight(nb);
       // Disable the button if 0 or negative number
@@ -167,8 +173,10 @@ const CreateWorkoutObjective = () => {
             {/** Handle errors */}
             <label className="font-semibold text-lg">Weight goal</label>
             <input
-              value={weight || NaN}
-              onChange={(e) => handleChange(e.target.valueAsNumber, "number")}
+              value={weight ?? ""}
+              onChange={(e) =>
+                handleChange(e.target.valueAsNumber, "number", e.target.value)
+              }
               type="number"
               name="weight"
               className="border-black rounded-xl w-full"
@@ -184,7 +192,9 @@ const CreateWorkoutObjective = () => {
                 min={1}
                 max={12}
                 value={range}
-                onChange={(e) => handleChange(e.target.valueAsNumber, "range")}
+                onChange={(e) =>
+                  handleChange(e.target.valueAsNumber, "range", e.target.value)
+                }
                 name="time"
                 className="w-full"
               />
