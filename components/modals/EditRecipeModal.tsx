@@ -66,7 +66,7 @@ const EditRecipeModal = () => {
 
   return (
     <>
-      <Modal title={"Edit recipe"} backButton={true} route="recipe">
+      <Modal title={"Edit recipe"} backButton={true}>
         {index === "1" && (
           <InitialForm
             recipe={recipe}

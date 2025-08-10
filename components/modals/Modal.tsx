@@ -21,12 +21,10 @@ const Modal = ({
   children,
   title,
   backButton,
-  route,
 }: {
   children: React.ReactNode;
   title?: string;
   backButton?: boolean;
-  route?: string;
 }) => {
   // The router hooks to handle the navigation
   const router = useRouter();

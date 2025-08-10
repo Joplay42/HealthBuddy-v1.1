@@ -99,6 +99,8 @@ import WorkoutScheduleSqueleton from "./Squeleton/WorkoutScheduleSqueleton";
 import WeightsGridSqueleton from "./Squeleton/WeightsGridSqueleton";
 import WorkoutObjective from "./modals/WorkoutObjective";
 import CreateWorkoutObjective from "./dashboard/workout/CreateWorkoutObjective";
+import WorkoutFindingLoading from "./dashboard/workout/WorkoutFindingLoading";
+import WorkoutPlan from "./modals/WorkoutPlan";
 
 export {
   HeaderPage,
@@ -195,4 +197,6 @@ export {
   WeightsGridSqueleton,
   WorkoutObjective,
   CreateWorkoutObjective,
+  WorkoutFindingLoading,
+  WorkoutPlan,
 };

@@ -1,52 +1,62 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
+import { objectiveAlgorithmProps } from "@/types";
 
-type buttonIndexProps = {
-  objective: number;
-  intensity: number;
-};
-
-const CreateWorkoutObjective = () => {
+const CreateWorkoutObjective = ({
+  objectiveAlgorithm,
+  setObjectiveAlgorithm,
+  setIndex,
+}: {
+  objectiveAlgorithm: objectiveAlgorithmProps;
+  setObjectiveAlgorithm: React.Dispatch<
+    React.SetStateAction<objectiveAlgorithmProps>
+  >;
+  setIndex: (newIndex: string) => void;
+}) => {
   // State for the loading
   const [loading, setLoading] = useState<boolean>(false);
   // States for the errors
   const [error, setError] = useState();
   // States to disable the button
   const [disableButton, setDisableButton] = useState<boolean>(true);
-  // States for the weight
-  const [weight, setWeight] = useState<number | undefined>(undefined);
-  // Button index states
-  const [buttonIndex, setButtonIndex] = useState<buttonIndexProps>({
-    objective: 0,
-    intensity: 0,
-  });
-  // States for the range
-  const [range, setRange] = useState<number>(1);
+
+  // UseEffect to detect the button disability
+  useEffect(() => {
+    if (
+      objectiveAlgorithm.weightNumber !== undefined &&
+      objectiveAlgorithm.weightNumber > 0
+    ) {
+      setDisableButton(false);
+    } else {
+      setDisableButton(true);
+    }
+  }, [objectiveAlgorithm.weightNumber]);
 
   // Form submit function
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     // Prevent page reload
     e.preventDefault();
+    setIndex("2");
   };
 
   // Function to handle the range changes
   const handleChange = (nb: number, input: string, rawValue: string) => {
     // Input range
     if (input === "range") {
-      setRange(nb);
+      setObjectiveAlgorithm((prev) => ({ ...prev, timeRange: nb }));
     } else {
       // If the input is empty, store undefined instead of NaN
       if (rawValue === "") {
-        setWeight(undefined);
+        setObjectiveAlgorithm((prev) => ({ ...prev, weightNumber: undefined }));
         setDisableButton(true);
         return;
       }
       // Set the amount to the right number
-      setWeight(nb);
+      setObjectiveAlgorithm((prev) => ({ ...prev, weightNumber: nb }));
       // Disable the button if 0 or negative number
       if (nb <= 0) {
-        setWeight(0);
+        setObjectiveAlgorithm((prev) => ({ ...prev, weightNumber: 0 }));
         setDisableButton(true);
       } else if (Number.isNaN(nb)) {
         setDisableButton(true);
@@ -78,13 +88,15 @@ const CreateWorkoutObjective = () => {
           </label>
           <div className="flex items-center justify-between space-x-4">
             <button
+              type="button"
               className={`flex items-center justify-center w-full font-medium border-2 border-neutral-500 rounded-lg py-2 ${
-                buttonIndex.objective === 0 && "bg-neutral-500 text-white"
+                objectiveAlgorithm.weightObjective === 0 &&
+                "bg-neutral-500 text-white"
               }`}
               onClick={() =>
-                setButtonIndex((prev) => ({
+                setObjectiveAlgorithm((prev) => ({
                   ...prev,
-                  objective: 0,
+                  weightObjective: 0,
                 }))
               }
             >
@@ -108,13 +120,15 @@ const CreateWorkoutObjective = () => {
               <p>Lose weight</p>
             </button>
             <button
+              type="button"
               className={`flex items-center justify-center w-full font-medium border-2 border-neutral-500 rounded-lg py-2 ${
-                buttonIndex.objective === 1 && "bg-neutral-500 text-white"
+                objectiveAlgorithm.weightObjective === 1 &&
+                "bg-neutral-500 text-white"
               }`}
               onClick={() =>
-                setButtonIndex((prev) => ({
+                setObjectiveAlgorithm((prev) => ({
                   ...prev,
-                  objective: 1,
+                  weightObjective: 1,
                 }))
               }
             >
@@ -138,13 +152,15 @@ const CreateWorkoutObjective = () => {
               <p>Gain muscle</p>
             </button>
             <button
+              type="button"
               className={`flex items-center justify-center w-full font-medium border-2 border-neutral-500 rounded-lg py-2 ${
-                buttonIndex.objective === 2 && "bg-neutral-500 text-white"
+                objectiveAlgorithm.weightObjective === 2 &&
+                "bg-neutral-500 text-white"
               }`}
               onClick={() =>
-                setButtonIndex((prev) => ({
+                setObjectiveAlgorithm((prev) => ({
                   ...prev,
-                  objective: 2,
+                  weightObjective: 2,
                 }))
               }
             >
@@ -173,7 +189,7 @@ const CreateWorkoutObjective = () => {
             {/** Handle errors */}
             <label className="font-semibold text-lg">Weight goal</label>
             <input
-              value={weight ?? ""}
+              value={objectiveAlgorithm.weightNumber ?? ""}
               onChange={(e) =>
                 handleChange(e.target.valueAsNumber, "number", e.target.value)
               }
@@ -191,7 +207,7 @@ const CreateWorkoutObjective = () => {
                 type="range"
                 min={1}
                 max={12}
-                value={range}
+                value={objectiveAlgorithm.timeRange}
                 onChange={(e) =>
                   handleChange(e.target.valueAsNumber, "range", e.target.value)
                 }
@@ -199,7 +215,8 @@ const CreateWorkoutObjective = () => {
                 className="w-full"
               />
               <p className="min-w-24 font-semibold">
-                {range} month{range !== 1 && "s"}
+                {objectiveAlgorithm.timeRange} month
+                {objectiveAlgorithm.timeRange !== 1 && "s"}
               </p>
             </div>
           </div>
@@ -210,13 +227,15 @@ const CreateWorkoutObjective = () => {
           <div className="flex items-center justify-between space-x-4">
             <div className="w-full text-center space-y-2">
               <button
-                className={`flex items-center justify-center w-full font-medium border-2 border-neutral-500 rounded-lg py-3 ${
-                  buttonIndex.intensity === 0 && "bg-neutral-500 text-white"
+                type="button"
+                className={`flex items-center justify-center w-full font-medium border-2 border-neutral-500 rounded-lg py-2 ${
+                  objectiveAlgorithm.objectiveIntensity === 0 &&
+                  "bg-neutral-500 text-white"
                 }`}
                 onClick={() =>
-                  setButtonIndex((prev) => ({
+                  setObjectiveAlgorithm((prev) => ({
                     ...prev,
-                    intensity: 0,
+                    objectiveIntensity: 0,
                   }))
                 }
               >
@@ -228,13 +247,15 @@ const CreateWorkoutObjective = () => {
             </div>
             <div className="w-full text-center space-y-2">
               <button
-                className={`flex items-center justify-center w-full font-medium border-2 border-neutral-500 rounded-lg py-3 ${
-                  buttonIndex.intensity === 1 && "bg-neutral-500 text-white"
+                type="button"
+                className={`flex items-center justify-center w-full font-medium border-2 border-neutral-500 rounded-lg py-2 ${
+                  objectiveAlgorithm.objectiveIntensity === 1 &&
+                  "bg-neutral-500 text-white"
                 }`}
                 onClick={() =>
-                  setButtonIndex((prev) => ({
+                  setObjectiveAlgorithm((prev) => ({
                     ...prev,
-                    intensity: 1,
+                    objectiveIntensity: 1,
                   }))
                 }
               >
@@ -246,13 +267,15 @@ const CreateWorkoutObjective = () => {
             </div>
             <div className="w-full text-center space-y-2">
               <button
-                className={`flex items-center justify-center w-full font-medium border-2 border-neutral-500 rounded-lg py-3 ${
-                  buttonIndex.intensity === 2 && "bg-neutral-500 text-white"
+                type="button"
+                className={`flex items-center justify-center w-full font-medium border-2 border-neutral-500 rounded-lg py-2 ${
+                  objectiveAlgorithm.objectiveIntensity === 2 &&
+                  "bg-neutral-500 text-white"
                 }`}
                 onClick={() =>
-                  setButtonIndex((prev) => ({
+                  setObjectiveAlgorithm((prev) => ({
                     ...prev,
-                    intensity: 2,
+                    objectiveIntensity: 2,
                   }))
                 }
               >

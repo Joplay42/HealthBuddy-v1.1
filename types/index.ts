@@ -406,3 +406,10 @@ export type BodyWeightProps = {
   objective: userProgramProps;
   loading: boolean;
 };
+
+export type objectiveAlgorithmProps = {
+  weightObjective: 0 | 1 | 2;
+  weightNumber: number | undefined;
+  timeRange: number;
+  objectiveIntensity: 0 | 1 | 2;
+};
