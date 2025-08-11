@@ -339,7 +339,7 @@ export const userWorkoutObjective: userProgramProps = {
 
 export const workoutPlans: WorkoutPlanProps[] = [
   {
-    title: "Push/pull/leg",
+    title: "Push | pull | leg",
     categorie: ["Gain", "Maintain"],
     desc: "One day you focus on upper body pushing exercises, the next you focus on upper body pulling exercises, then finally, you train legs.",
     days: [

@@ -4,6 +4,7 @@ import CreateWorkoutObjective from "../dashboard/workout/CreateWorkoutObjective"
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { objectiveAlgorithmProps } from "@/types";
+import { workoutPlans } from "@/constant";
 
 const WorkoutObjective = () => {
   // Hooks for navigation
@@ -20,7 +21,7 @@ const WorkoutObjective = () => {
   });
 
   // Get the params
-  const index = searchParams.get("index") || "1";
+  const index = searchParams.get("index") || "2";
 
   // Function to update the params state
   const updateParams = (newIndex: string) => {
@@ -44,7 +45,7 @@ const WorkoutObjective = () => {
       )}
       {/** Handle the loading states */}
       {/** <WorkoutFindingLoading/> */}
-      {index === "2" && <WorkoutPlan />}
+      {index === "2" && <WorkoutPlan plan={workoutPlans[0]} />}
     </Modal>
   );
 };

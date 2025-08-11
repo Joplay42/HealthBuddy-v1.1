@@ -1,7 +1,68 @@
-import React from "react";
+import { WorkoutPlanProps } from "@/types";
+import Image from "next/image";
 
-const WorkoutPlan = () => {
-  return <div>WorkoutPlan</div>;
+const WorkoutPlan = ({ plan }: { plan: WorkoutPlanProps }) => {
+  return (
+    <div className="px-5 pb-5 md:px-10 lg:pb-10 lg:px-20">
+      <div className="lg:grid lg:grid-cols-2 lg:items-center">
+        <div className="space-y-3">
+          <div className="flex gap-1">
+            <h4 className="font-medium text-neutral-600">Recommanded plan</h4>
+            <Image src="/stars.svg" height={20} width={20} alt="Stars icon" />
+          </div>
+          <div className="space-y-2">
+            <h1 className="font-bold text-xl lg:text-2xl">{plan.title}</h1>
+            <div className="bg-custom-green h-1 w-12"></div>
+          </div>
+          <p className="text-neutral-600">{plan.desc}</p>
+          <div className="flex flex-wrap gap-3">
+            {plan.days
+              .filter(
+                (day, index, arr) =>
+                  index === arr.findIndex((d) => d.name === day.name)
+              )
+              .map((day, index) => (
+                <div
+                  key={index}
+                  className="border border-neutral-200 rounded-lg p-4 w-[48%]"
+                >
+                  <h4 className="font-semibold">{day.name}</h4>
+                  <p className="text-neutral-600 text-xs">{day.desc}</p>
+                </div>
+              ))}
+            <p className="font-medium">
+              Not satisfied?{" "}
+              <span className="font-bold text-custom-green hover:text-lime-400 hover:cursor-pointer">
+                Create your own plan
+              </span>
+            </p>
+          </div>
+          <button
+            className="mt-8 flex items-center gap-2 justify-center py-2 rounded-xl hover:opacity-75 hover:transition ease-in-out duration-300 bg-black text-white w-full disabled:opacity-60 text-sm"
+            type="submit"
+            // disabled={loading || disableButton}
+          >
+            Select
+            {/* {loading && (
+              <Image
+                src="/loading.gif"
+                width={25}
+                height={25}
+                alt="Loading gif"
+              />
+            )} */}
+          </button>
+        </div>
+        <Image
+          src="/set-objective.png"
+          alt=""
+          width={1000}
+          height={1000}
+          className="h-auto w-5/6 justify-self-end rounded-xl hidden lg:block"
+        />
+      </div>
+    </div>
+  );
 };
 
 export default WorkoutPlan;
