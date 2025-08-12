@@ -21,12 +21,13 @@ const WorkoutSchedule = ({
           {todaysWorkout?.name}
         </h3>
         <p className="text-[#828282] font-medium">{todaysWorkout?.desc}</p>
-        <button
+        {/* Implement muscle exercises */}
+        {/* <button
           className="w-fit bg-black text-white px-3 py-2 rounded-2xl text-center hover:opacity-75 hover:cursor-pointer"
           onClick={() => {}}
         >
           See exercises
-        </button>
+        </button> */}
       </div>
     </div>
   );
