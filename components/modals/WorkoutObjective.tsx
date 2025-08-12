@@ -141,7 +141,11 @@ const WorkoutObjective = () => {
       {/** Handle the loading states */}
       {loading && <WorkoutFindingLoading />}
       {index === "2" && loading != true && (
-        <WorkoutPlan plan={workoutPlan} setIndex={updateParams} />
+        <WorkoutPlan
+          plan={workoutPlan}
+          setPlan={setworkoutPlan}
+          setIndex={updateParams}
+        />
       )}
       {index === "3" && <CreateWorkoutPlan />}
     </Modal>

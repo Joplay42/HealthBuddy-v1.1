@@ -1,17 +1,38 @@
 "use client";
+import { workoutPlans } from "@/constant";
 import { WorkoutPlanProps } from "@/types";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { Dispatch, SetStateAction } from "react";
 
 const WorkoutPlan = ({
   plan,
+  setPlan,
   setIndex,
 }: {
   plan: WorkoutPlanProps;
+  setPlan: Dispatch<SetStateAction<WorkoutPlanProps>>;
   setIndex: (nb: string) => void;
 }) => {
   // Router hooks
   const router = useRouter();
+
+  // Function to change workout
+  const changeWorkout = () => {
+    // Find the current workout index
+    const currentPlanIndex = workoutPlans.findIndex(
+      (workout) => workout.title === plan.title
+    );
+
+    // Get the maximum index from the workout
+    const maxIndex = workoutPlans.length;
+
+    // Change the next index
+    const nextIndex = currentPlanIndex + 1 >= 8 ? 0 : currentPlanIndex + 1;
+
+    // next workout
+    setPlan(workoutPlans[nextIndex]);
+  };
 
   return (
     <div className="px-5 pb-5 md:px-10 lg:pb-10 lg:px-20">
@@ -70,6 +91,13 @@ const WorkoutPlan = ({
                 className="font-bold text-custom-green hover:text-lime-400 hover:cursor-pointer"
               >
                 Create your own plan
+              </button>{" "}
+              or{" "}
+              <button
+                onClick={() => changeWorkout()}
+                className="font-bold text-custom-green hover:text-lime-400 hover:cursor-pointer"
+              >
+                keep looking
               </button>
             </p>
           </div>
