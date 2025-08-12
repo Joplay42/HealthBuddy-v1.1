@@ -22,8 +22,9 @@ const WorkoutObjective = () => {
 
   // Hooks for the algorithm finding workout
   const [userCriteria, setUserCriteria] = useState<objectiveAlgorithmProps>({
-    weightObjective: "Lose",
-    weightNumber: undefined,
+    objective: "Lose",
+    currentWeight: undefined,
+    weightObjective: undefined,
     timeRange: 1,
     objectiveIntensity: "Low",
     experienceLevel: "Beginner",
@@ -77,6 +78,7 @@ const WorkoutObjective = () => {
         // Remove the loading state
         setLoading(false);
       }, 7000);
+      console.log(JSON.stringify({ userCriteria }));
     }
   };
 
@@ -89,7 +91,7 @@ const WorkoutObjective = () => {
     let score = 0;
 
     // Add score for the weight objective
-    if (plan.categorie.includes(criteria.weightObjective)) score += 5;
+    if (plan.categorie.includes(criteria.objective)) score += 5;
 
     // Add score for the intensity objective
     if (plan.intensity === criteria.objectiveIntensity) {

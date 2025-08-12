@@ -24,32 +24,56 @@ const CreateWorkoutObjective = ({
   // UseEffect to detect the button disability
   useEffect(() => {
     if (
-      objectiveAlgorithm.weightNumber !== undefined &&
-      objectiveAlgorithm.weightNumber > 0
+      objectiveAlgorithm.weightObjective !== undefined &&
+      objectiveAlgorithm.weightObjective > 0
     ) {
       setDisableButton(false);
     } else {
       setDisableButton(true);
     }
-  }, [objectiveAlgorithm.weightNumber]);
+  }, [objectiveAlgorithm.weightObjective]);
 
   // Function to handle the range changes
   const handleChange = (nb: number, input: string, rawValue: string) => {
     // Input range
     if (input === "range") {
       setObjectiveAlgorithm((prev) => ({ ...prev, timeRange: nb }));
-    } else {
+    } else if (input === "currentWeight") {
       // If the input is empty, store undefined instead of NaN
       if (rawValue === "") {
-        setObjectiveAlgorithm((prev) => ({ ...prev, weightNumber: undefined }));
+        setObjectiveAlgorithm((prev) => ({
+          ...prev,
+          currentWeight: undefined,
+        }));
         setDisableButton(true);
         return;
       }
       // Set the amount to the right number
-      setObjectiveAlgorithm((prev) => ({ ...prev, weightNumber: nb }));
+      setObjectiveAlgorithm((prev) => ({ ...prev, currentWeight: nb }));
       // Disable the button if 0 or negative number
       if (nb <= 0) {
-        setObjectiveAlgorithm((prev) => ({ ...prev, weightNumber: 0 }));
+        setObjectiveAlgorithm((prev) => ({ ...prev, currentWeight: 0 }));
+        setDisableButton(true);
+      } else if (Number.isNaN(nb)) {
+        setDisableButton(true);
+      } else {
+        setDisableButton(false);
+      }
+    } else if (input === "weightObjective") {
+      // If the input is empty, store undefined instead of NaN
+      if (rawValue === "") {
+        setObjectiveAlgorithm((prev) => ({
+          ...prev,
+          weightObjective: undefined,
+        }));
+        setDisableButton(true);
+        return;
+      }
+      // Set the amount to the right number
+      setObjectiveAlgorithm((prev) => ({ ...prev, weightObjective: nb }));
+      // Disable the button if 0 or negative number
+      if (nb <= 0) {
+        setObjectiveAlgorithm((prev) => ({ ...prev, weightObjective: 0 }));
         setDisableButton(true);
       } else if (Number.isNaN(nb)) {
         setDisableButton(true);
@@ -83,13 +107,13 @@ const CreateWorkoutObjective = ({
             <button
               type="button"
               className={`flex items-center justify-center w-full font-medium border-2 border-neutral-500 rounded-lg py-2 ${
-                objectiveAlgorithm.weightObjective === "Lose" &&
+                objectiveAlgorithm.objective === "Lose" &&
                 "bg-neutral-500 text-white"
               }`}
               onClick={() =>
                 setObjectiveAlgorithm((prev) => ({
                   ...prev,
-                  weightObjective: "Lose",
+                  objective: "Lose",
                 }))
               }
             >
@@ -115,13 +139,13 @@ const CreateWorkoutObjective = ({
             <button
               type="button"
               className={`flex items-center justify-center w-full font-medium border-2 border-neutral-500 rounded-lg py-2 ${
-                objectiveAlgorithm.weightObjective === "Gain" &&
+                objectiveAlgorithm.objective === "Gain" &&
                 "bg-neutral-500 text-white"
               }`}
               onClick={() =>
                 setObjectiveAlgorithm((prev) => ({
                   ...prev,
-                  weightObjective: "Gain",
+                  objective: "Gain",
                 }))
               }
             >
@@ -147,13 +171,13 @@ const CreateWorkoutObjective = ({
             <button
               type="button"
               className={`flex items-center justify-center w-full font-medium border-2 border-neutral-500 rounded-lg py-2 ${
-                objectiveAlgorithm.weightObjective === "Maintain" &&
+                objectiveAlgorithm.objective === "Maintain" &&
                 "bg-neutral-500 text-white"
               }`}
               onClick={() =>
                 setObjectiveAlgorithm((prev) => ({
                   ...prev,
-                  weightObjective: "Maintain",
+                  objective: "Maintain",
                 }))
               }
             >
@@ -180,11 +204,33 @@ const CreateWorkoutObjective = ({
         <div className="flex items-center justify-between space-x-4">
           <div className="space-y-4 mt-6 lg:mt-10 w-1/3">
             {/** Handle errors */}
+            <label className="font-semibold text-lg">Current weight</label>
+            <input
+              value={objectiveAlgorithm.currentWeight ?? ""}
+              onChange={(e) =>
+                handleChange(
+                  e.target.valueAsNumber,
+                  "currentWeight",
+                  e.target.value
+                )
+              }
+              type="number"
+              name="weight"
+              className="border-black rounded-xl w-full"
+              placeholder="ex. 175"
+            />
+          </div>
+          <div className="space-y-4 mt-6 lg:mt-10 w-1/3">
+            {/** Handle errors */}
             <label className="font-semibold text-lg">Weight goal</label>
             <input
-              value={objectiveAlgorithm.weightNumber ?? ""}
+              value={objectiveAlgorithm.weightObjective ?? ""}
               onChange={(e) =>
-                handleChange(e.target.valueAsNumber, "number", e.target.value)
+                handleChange(
+                  e.target.valueAsNumber,
+                  "weightObjective",
+                  e.target.value
+                )
               }
               type="number"
               name="weight"

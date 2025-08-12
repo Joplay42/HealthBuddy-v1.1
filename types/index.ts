@@ -410,8 +410,9 @@ export type BodyWeightProps = {
 };
 
 export type objectiveAlgorithmProps = {
-  weightObjective: PlanCategories;
-  weightNumber: number | undefined;
+  objective: PlanCategories;
+  currentWeight: number | undefined;
+  weightObjective: number | undefined;
   timeRange: number;
   objectiveIntensity: PlanIntensities;
   experienceLevel: PlanLevel;
