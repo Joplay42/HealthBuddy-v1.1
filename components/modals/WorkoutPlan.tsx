@@ -11,7 +11,29 @@ const WorkoutPlan = ({ plan }: { plan: WorkoutPlanProps }) => {
             <Image src="/stars.svg" height={20} width={20} alt="Stars icon" />
           </div>
           <div className="space-y-2">
-            <h1 className="font-bold text-xl lg:text-2xl">{plan.title}</h1>
+            <div className="flex gap-3">
+              <h1 className="font-bold text-xl lg:text-2xl">{plan.title}</h1>
+              {Array(5)
+                .fill(0)
+                .map((_, index) => {
+                  // Cut the array for each intensity
+                  let active = 0;
+
+                  if (plan.intensity === "Low") active = 1;
+                  if (plan.intensity === "Moderate") active = 3;
+                  if (plan.intensity === "High") active = 5;
+
+                  return (
+                    <div className="flex gap-1 items-center" key={index}>
+                      <div
+                        className={`w-3 h-3 rounded-full ${
+                          index < active ? "bg-custom-green" : "bg-neutral-300"
+                        }`}
+                      />
+                    </div>
+                  );
+                })}
+            </div>
             <div className="bg-custom-green h-1 w-12"></div>
           </div>
           <p className="text-neutral-600">{plan.desc}</p>

@@ -5,14 +5,14 @@ import { objectiveAlgorithmProps } from "@/types";
 
 const CreateWorkoutObjective = ({
   objectiveAlgorithm,
+  submit,
   setObjectiveAlgorithm,
-  setIndex,
 }: {
   objectiveAlgorithm: objectiveAlgorithmProps;
+  submit: (e: React.FormEvent<HTMLFormElement>) => void;
   setObjectiveAlgorithm: React.Dispatch<
     React.SetStateAction<objectiveAlgorithmProps>
   >;
-  setIndex: (newIndex: string) => void;
 }) => {
   // State for the loading
   const [loading, setLoading] = useState<boolean>(false);
@@ -32,13 +32,6 @@ const CreateWorkoutObjective = ({
       setDisableButton(true);
     }
   }, [objectiveAlgorithm.weightNumber]);
-
-  // Form submit function
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    // Prevent page reload
-    e.preventDefault();
-    setIndex("2");
-  };
 
   // Function to handle the range changes
   const handleChange = (nb: number, input: string, rawValue: string) => {
@@ -68,7 +61,7 @@ const CreateWorkoutObjective = ({
 
   return (
     <div className="px-5 pb-5 md:px-10 lg:pb-10 lg:px-20">
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={submit}>
         <div className="space-y-2 lg:space-y-4">
           <h1 className="font-bold text-2xl lg:text-3xl">
             Choose your fitness{" "}
@@ -90,13 +83,13 @@ const CreateWorkoutObjective = ({
             <button
               type="button"
               className={`flex items-center justify-center w-full font-medium border-2 border-neutral-500 rounded-lg py-2 ${
-                objectiveAlgorithm.weightObjective === 0 &&
+                objectiveAlgorithm.weightObjective === "Lose" &&
                 "bg-neutral-500 text-white"
               }`}
               onClick={() =>
                 setObjectiveAlgorithm((prev) => ({
                   ...prev,
-                  weightObjective: 0,
+                  weightObjective: "Lose",
                 }))
               }
             >
@@ -122,13 +115,13 @@ const CreateWorkoutObjective = ({
             <button
               type="button"
               className={`flex items-center justify-center w-full font-medium border-2 border-neutral-500 rounded-lg py-2 ${
-                objectiveAlgorithm.weightObjective === 1 &&
+                objectiveAlgorithm.weightObjective === "Gain" &&
                 "bg-neutral-500 text-white"
               }`}
               onClick={() =>
                 setObjectiveAlgorithm((prev) => ({
                   ...prev,
-                  weightObjective: 1,
+                  weightObjective: "Gain",
                 }))
               }
             >
@@ -154,13 +147,13 @@ const CreateWorkoutObjective = ({
             <button
               type="button"
               className={`flex items-center justify-center w-full font-medium border-2 border-neutral-500 rounded-lg py-2 ${
-                objectiveAlgorithm.weightObjective === 2 &&
+                objectiveAlgorithm.weightObjective === "Maintain" &&
                 "bg-neutral-500 text-white"
               }`}
               onClick={() =>
                 setObjectiveAlgorithm((prev) => ({
                   ...prev,
-                  weightObjective: 2,
+                  weightObjective: "Maintain",
                 }))
               }
             >
@@ -221,7 +214,7 @@ const CreateWorkoutObjective = ({
             </div>
           </div>
         </div>
-        <div className="space-y-4 mt-6 lg:mt-10 mb-20">
+        <div className="space-y-4 mt-6">
           {/** Handle errors */}
           <label className="font-semibold text-lg">Intensity</label>
           <div className="flex items-center justify-between space-x-4">
@@ -229,13 +222,13 @@ const CreateWorkoutObjective = ({
               <button
                 type="button"
                 className={`flex items-center justify-center w-full font-medium border-2 border-neutral-500 rounded-lg py-2 ${
-                  objectiveAlgorithm.objectiveIntensity === 0 &&
+                  objectiveAlgorithm.objectiveIntensity === "Low" &&
                   "bg-neutral-500 text-white"
                 }`}
                 onClick={() =>
                   setObjectiveAlgorithm((prev) => ({
                     ...prev,
-                    objectiveIntensity: 0,
+                    objectiveIntensity: "Low",
                   }))
                 }
               >
@@ -249,33 +242,33 @@ const CreateWorkoutObjective = ({
               <button
                 type="button"
                 className={`flex items-center justify-center w-full font-medium border-2 border-neutral-500 rounded-lg py-2 ${
-                  objectiveAlgorithm.objectiveIntensity === 1 &&
+                  objectiveAlgorithm.objectiveIntensity === "Moderate" &&
                   "bg-neutral-500 text-white"
                 }`}
                 onClick={() =>
                   setObjectiveAlgorithm((prev) => ({
                     ...prev,
-                    objectiveIntensity: 1,
+                    objectiveIntensity: "Moderate",
                   }))
                 }
               >
                 <p>Moderate</p>
               </button>
               <p className="w-full text-neutral-500 font-semibold">
-                3-4 days a week
+                3-5 days a week
               </p>
             </div>
             <div className="w-full text-center space-y-2">
               <button
                 type="button"
                 className={`flex items-center justify-center w-full font-medium border-2 border-neutral-500 rounded-lg py-2 ${
-                  objectiveAlgorithm.objectiveIntensity === 2 &&
+                  objectiveAlgorithm.objectiveIntensity === "High" &&
                   "bg-neutral-500 text-white"
                 }`}
                 onClick={() =>
                   setObjectiveAlgorithm((prev) => ({
                     ...prev,
-                    objectiveIntensity: 2,
+                    objectiveIntensity: "High",
                   }))
                 }
               >
@@ -284,6 +277,63 @@ const CreateWorkoutObjective = ({
               <p className="w-full text-neutral-500 font-semibold">
                 6-7 days a week
               </p>
+            </div>
+          </div>
+        </div>
+        <div className="space-y-4 mt-6 mb-20">
+          {/** Handle errors */}
+          <label className="font-semibold text-lg">Experience level</label>
+          <div className="flex items-center justify-between space-x-4">
+            <div className="w-full text-center space-y-2">
+              <button
+                type="button"
+                className={`flex items-center justify-center w-full font-medium border-2 border-neutral-500 rounded-lg py-2 ${
+                  objectiveAlgorithm.experienceLevel === "Beginner" &&
+                  "bg-neutral-500 text-white"
+                }`}
+                onClick={() =>
+                  setObjectiveAlgorithm((prev) => ({
+                    ...prev,
+                    experienceLevel: "Beginner",
+                  }))
+                }
+              >
+                <p>Beginner</p>
+              </button>
+            </div>
+            <div className="w-full text-center space-y-2">
+              <button
+                type="button"
+                className={`flex items-center justify-center w-full font-medium border-2 border-neutral-500 rounded-lg py-2 ${
+                  objectiveAlgorithm.experienceLevel === "Intermediate" &&
+                  "bg-neutral-500 text-white"
+                }`}
+                onClick={() =>
+                  setObjectiveAlgorithm((prev) => ({
+                    ...prev,
+                    experienceLevel: "Intermediate",
+                  }))
+                }
+              >
+                <p>Intermediate</p>
+              </button>
+            </div>
+            <div className="w-full text-center space-y-2">
+              <button
+                type="button"
+                className={`flex items-center justify-center w-full font-medium border-2 border-neutral-500 rounded-lg py-2 ${
+                  objectiveAlgorithm.experienceLevel === "Advanced" &&
+                  "bg-neutral-500 text-white"
+                }`}
+                onClick={() =>
+                  setObjectiveAlgorithm((prev) => ({
+                    ...prev,
+                    experienceLevel: "Advanced",
+                  }))
+                }
+              >
+                <p>Advanced</p>
+              </button>
             </div>
           </div>
         </div>

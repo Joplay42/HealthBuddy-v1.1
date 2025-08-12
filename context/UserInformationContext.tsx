@@ -38,6 +38,7 @@ export const UserInformationContext =
         desc: "",
         days: [],
         intensity: "High",
+        level: ["Beginner"],
       },
       objectiveWeight: 0,
       months: 3,

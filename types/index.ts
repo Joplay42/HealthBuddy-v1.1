@@ -339,6 +339,7 @@ export type WorkoutPlanProps = {
   desc: string;
   days: workoutDayProps[];
   intensity: PlanIntensities;
+  level: PlanLevel;
 };
 
 export type workoutDayProps = {
@@ -350,6 +351,7 @@ export type workoutDayProps = {
 
 type PlanIntensities = "Low" | "Moderate" | "High";
 type PlanCategories = "Gain" | "Maintain" | "Lose";
+type PlanLevel = "Beginner" | "Intermediate" | "Advanced";
 
 export type DisplayWorkoutsProps = {
   plan: WorkoutPlanProps;
@@ -408,8 +410,9 @@ export type BodyWeightProps = {
 };
 
 export type objectiveAlgorithmProps = {
-  weightObjective: 0 | 1 | 2;
+  weightObjective: PlanCategories;
   weightNumber: number | undefined;
   timeRange: number;
-  objectiveIntensity: 0 | 1 | 2;
+  objectiveIntensity: PlanIntensities;
+  experienceLevel: PlanLevel;
 };

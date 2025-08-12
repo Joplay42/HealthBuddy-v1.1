@@ -282,61 +282,6 @@ export const userWeights: userWeightProps[] = [
   },
 ];
 
-export const userWorkoutObjective: userProgramProps = {
-  workoutPlan: {
-    title: "Push/pull/leg",
-    categorie: ["Gain", "Maintain"],
-    desc: "One day you focus on upper body pushing exercises, the next you focus on upper body pulling exercises, then finally, you train legs.",
-    days: [
-      {
-        name: "Push day",
-        desc: "Push Day targets the chest, shoulders, and triceps using pushing movements. This session builds upper-body strength and improves muscle definition.",
-        day: "Mon",
-        // Implement exercise choice
-      },
-      {
-        name: "Pull day",
-        desc: "Pull Day focuses on the back, biceps, and rear shoulders using pulling exercises. It enhances posture, grip strength, and overall upper-body balance.",
-        day: "Tue",
-        // Implement exercise choice
-      },
-      {
-        name: "Leg day",
-        desc: "Leg Day targets the quads, hamstrings, glutes, and calves through compound and isolation movements. It builds lower-body strength, power, and stability for overall performance.",
-        day: "Wed",
-        // Implement exercise choice
-      },
-      {
-        name: "Rest & Cardio",
-        desc: "A light day focused on recovery with optional low-intensity cardio like walking or cycling. Helps improve blood flow, support active recovery, and maintain overall conditioning.",
-        day: "Thu",
-        // Implement exercise choice
-      },
-      {
-        name: "Push day",
-        desc: "Push Day targets the chest, shoulders, and triceps using pushing movements. This session builds upper-body strength and improves muscle definition.",
-        day: "Fri",
-        // Implement exercise choice
-      },
-      {
-        name: "Pull day",
-        desc: "Pull Day focuses on the back, biceps, and rear shoulders using pulling exercises. It enhances posture, grip strength, and overall upper-body balance.",
-        day: "Sat",
-        // Implement exercise choice
-      },
-      {
-        name: "Rest & Cardio",
-        desc: "A light day focused on recovery with optional low-intensity cardio like walking or cycling. Helps improve blood flow, support active recovery, and maintain overall conditioning.",
-        day: "Sun",
-        // Implement exercise choice
-      },
-    ],
-    intensity: "High",
-  },
-  objectiveWeight: 150,
-  months: 3,
-};
-
 export const workoutPlans: WorkoutPlanProps[] = [
   {
     title: "Push | pull | leg",
@@ -386,11 +331,12 @@ export const workoutPlans: WorkoutPlanProps[] = [
         // Implement exercise choice
       },
     ],
-    intensity: "High",
+    intensity: "Moderate",
+    level: "Intermediate",
   },
   {
     title: "Body part workout",
-    categorie: ["Maintain", "Lose"],
+    categorie: ["Gain", "Lose"],
     desc: "The body part workout split takes the foundations of the bro workout split, breaking up training into specific body parts, usually focusing on two body parts per day.",
     days: [
       {
@@ -436,11 +382,12 @@ export const workoutPlans: WorkoutPlanProps[] = [
         // Implement exercise choice
       },
     ],
-    intensity: "High",
+    intensity: "Moderate",
+    level: "Advanced",
   },
   {
     title: "Full body workout",
-    categorie: ["Gain", "Lose"],
+    categorie: ["Maintain"],
     desc: "The full body workout split will allow you to hit all the major muscle groups in less time, making it suited to those who are time-poor and looking for a 2 or 3-day workout split.",
     days: [
       {
@@ -486,11 +433,12 @@ export const workoutPlans: WorkoutPlanProps[] = [
         // Implement exercise choice
       },
     ],
-    intensity: "High",
+    intensity: "Moderate",
+    level: "Beginner",
   },
   {
     title: "Upper Lower workout",
-    categorie: ["Gain", "Maintain", "Lose"],
+    categorie: ["Lose"],
     desc: "This approach alternates between upper body and lower body workouts, allowing for focused training sessions on each muscle group and adequate recovery time.",
     days: [
       {
@@ -537,5 +485,188 @@ export const workoutPlans: WorkoutPlanProps[] = [
       },
     ],
     intensity: "Low",
+    level: "Beginner",
+  },
+  {
+    title: "Hybrid Athlete Program",
+    categorie: ["Gain", "Maintain"],
+    desc: "Blends weight training with conditioning work to build strength, endurance, and athletic performance.",
+    intensity: "Moderate",
+    level: "Advanced",
+    days: [
+      {
+        name: "Strength & Power",
+        desc: "Heavy compound lifts like squats, bench press, and rows to develop maximal strength and raw power.",
+        day: "Mon",
+      },
+      {
+        name: "Conditioning",
+        desc: "High-intensity intervals, sled pushes, and battle ropes to improve cardiovascular fitness and stamina.",
+        day: "Tue",
+      },
+      {
+        name: "Rest",
+        desc: "Mobility drills, foam rolling, and stretching to aid recovery and prevent injury.",
+        day: "Wed",
+      },
+      {
+        name: "Strength & Speed",
+        desc: "Explosive lifts, sprints, and plyometric work to boost speed, agility, and athleticism.",
+        day: "Thu",
+      },
+      {
+        name: "Conditioning & Core",
+        desc: "A blend of circuit training and targeted abdominal exercises to improve endurance while strengthening your midsection.",
+        day: "Fri",
+      },
+      {
+        name: "Active Recovery",
+        desc: "Low-intensity cardio and stretching to promote recovery without taxing the body.",
+        day: "Sat",
+      },
+      {
+        name: "Rest",
+        desc: "A day of complete rest to allow your muscles and nervous system to recover fully.",
+        day: "Sun",
+      },
+    ],
+  },
+  {
+    title: "Circuit Training Blast",
+    categorie: ["Maintain", "Lose"],
+    desc: "Fast-paced circuits combining strength and cardio to maximize calorie burn and muscular endurance.",
+    intensity: "Moderate",
+    level: "Beginner",
+    days: [
+      {
+        name: "Circuit A",
+        desc: "A challenging full-body circuit targeting both upper and lower body muscles, using minimal rest between exercises to keep your heart rate high and boost calorie burn.",
+        day: "Mon",
+      },
+      {
+        name: "Cardio & Core",
+        desc: "A blend of high-intensity interval cardio sessions paired with focused abdominal circuits to strengthen your midsection and improve overall fitness.",
+        day: "Tue",
+      },
+      {
+        name: "Rest",
+        desc: "A day dedicated to gentle activities like walking, light stretching, or yoga to aid recovery and prepare your body for the next intense session.",
+        day: "Wed",
+      },
+      {
+        name: "Circuit B",
+        desc: "An alternative full-body circuit with a new set of exercises, keeping your body guessing while improving muscular endurance and coordination.",
+        day: "Thu",
+      },
+      {
+        name: "Cardio & Core",
+        desc: "A steady-state cardio session followed by targeted core work to build a stronger, leaner midsection without overtaxing your joints.",
+        day: "Fri",
+      },
+      {
+        name: "Rest",
+        desc: "A full recovery day to let your muscles repair and adapt, ensuring better performance in the next workouts.",
+        day: "Sat",
+      },
+      {
+        name: "Active Recovery",
+        desc: "Mobility drills, stretching routines, or light recreational activities to maintain movement without causing fatigue.",
+        day: "Sun",
+      },
+    ],
+  },
+  {
+    title: "Powerlifting Program", // NEW PLAN 2
+    categorie: ["Gain"],
+    desc: "Strength-focused plan centered on the big 3 lifts: squat, bench, deadlift, with accessory work for balance.",
+    intensity: "Moderate",
+    level: "Intermediate",
+    days: [
+      {
+        name: "Squat Day",
+        desc: "Heavy back and front squats paired with accessory leg work to develop raw lower body power, stability, and explosive strength.",
+        day: "Mon",
+      },
+      {
+        name: "Bench Press Day",
+        desc: "Flat and incline bench presses combined with triceps and shoulder accessory exercises to maximize pushing strength and upper body muscle mass.",
+        day: "Tue",
+      },
+      {
+        name: "Rest",
+        desc: "A day to focus on mobility drills, foam rolling, and stretching to enhance recovery and joint health.",
+        day: "Wed",
+      },
+      {
+        name: "Deadlift Day",
+        desc: "Heavy deadlifts and variations to strengthen the posterior chain, improve grip, and increase pulling capacity.",
+        day: "Thu",
+      },
+      {
+        name: "Accessory Day",
+        desc: "Focused work on weak points, such as hamstring curls, rows, or overhead presses, to improve balance and lift performance.",
+        day: "Fri",
+      },
+      {
+        name: "Rest",
+        desc: "Light activity or active recovery to promote blood flow and prepare for the next training week.",
+        day: "Sat",
+      },
+      {
+        name: "Rest",
+        desc: "A complete day of rest to ensure full muscular recovery and nervous system reset.",
+        day: "Sun",
+      },
+    ],
+  },
+  {
+    title: "Calisthenics Mastery",
+    categorie: ["Maintain", "Lose"],
+    desc: "A bodyweight-focused plan to improve strength, control, and mobility without the need for equipment.",
+    intensity: "Moderate",
+    level: "Advanced",
+    days: [
+      {
+        name: "Push Strength",
+        desc: "Push-ups, dips, and advanced variations to target your chest, shoulders, and triceps while building upper body endurance and control.",
+        day: "Mon",
+      },
+      {
+        name: "Pull Strength",
+        desc: "Pull-ups, chin-ups, and inverted rows to strengthen your back and biceps while improving grip and posture.",
+        day: "Tue",
+      },
+      {
+        name: "Rest & Mobility",
+        desc: "Stretching, foam rolling, and light movement to improve flexibility, joint health, and overall mobility.",
+        day: "Wed",
+      },
+      {
+        name: "Leg Power",
+        desc: "Bodyweight squats, lunges, and plyometric exercises to enhance leg strength, explosiveness, and stability.",
+        day: "Thu",
+      },
+      {
+        name: "Core Stability",
+        desc: "Planks, leg raises, and rotational core work to build a strong, stable midsection for better performance and injury prevention.",
+        day: "Fri",
+      },
+      {
+        name: "Active Recovery",
+        desc: "Light jogging, yoga, or mobility drills to promote blood flow and aid muscle recovery.",
+        day: "Sat",
+      },
+      {
+        name: "Rest",
+        desc: "A complete rest day to allow your muscles and joints to recover fully.",
+        day: "Sun",
+      },
+    ],
   },
 ];
+
+export const userWorkoutObjective: userProgramProps = {
+  workoutPlan: workoutPlans[0],
+  objectiveWeight: 150,
+  months: 3,
+};
