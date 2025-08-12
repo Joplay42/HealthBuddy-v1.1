@@ -25,13 +25,15 @@ const CreateWorkoutObjective = ({
   useEffect(() => {
     if (
       objectiveAlgorithm.weightObjective !== undefined &&
-      objectiveAlgorithm.weightObjective > 0
+      objectiveAlgorithm.weightObjective > 0 &&
+      objectiveAlgorithm.currentWeight !== undefined &&
+      objectiveAlgorithm.currentWeight > 0
     ) {
       setDisableButton(false);
     } else {
       setDisableButton(true);
     }
-  }, [objectiveAlgorithm.weightObjective]);
+  }, [objectiveAlgorithm.weightObjective, objectiveAlgorithm.currentWeight]);
 
   // Function to handle the range changes
   const handleChange = (nb: number, input: string, rawValue: string) => {
