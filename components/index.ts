@@ -101,6 +101,7 @@ import WorkoutObjective from "./modals/WorkoutObjective";
 import CreateWorkoutObjective from "./dashboard/workout/CreateWorkoutObjective";
 import WorkoutFindingLoading from "./dashboard/workout/WorkoutFindingLoading";
 import WorkoutPlan from "./modals/WorkoutPlan";
+import CreateWorkoutPlan from "./modals/CreateWorkoutPlan";
 
 export {
   HeaderPage,
@@ -199,4 +200,5 @@ export {
   CreateWorkoutObjective,
   WorkoutFindingLoading,
   WorkoutPlan,
+  CreateWorkoutPlan,
 };

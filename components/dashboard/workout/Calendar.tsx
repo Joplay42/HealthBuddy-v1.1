@@ -25,9 +25,6 @@ const Calendar = ({
 
   // Hooks to create 2 next week and to assigne if there is a workout
   useEffect(() => {
-    // The days of the week
-    const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-
     const generateWeek = () => {
       // Simulate a 2 week loop
       for (let i = 0; i < 14; i++) {

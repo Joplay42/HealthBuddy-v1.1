@@ -342,6 +342,12 @@ export type WorkoutPlanProps = {
   level: PlanLevel;
 };
 
+export type UserWorkoutPlanProps = {
+  title: string;
+  desc: string;
+  days: workoutDayProps[];
+};
+
 export type workoutDayProps = {
   name: string;
   desc: string;

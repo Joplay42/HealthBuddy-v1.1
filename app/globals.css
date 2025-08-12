@@ -60,6 +60,7 @@ html {
 }
 
 input:not([type="range"]),
+textarea,
 select {
   @apply border border-neutral-500 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-custom-green focus:ring-offset-2;
 }

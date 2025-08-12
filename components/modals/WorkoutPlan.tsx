@@ -1,7 +1,18 @@
+"use client";
 import { WorkoutPlanProps } from "@/types";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
-const WorkoutPlan = ({ plan }: { plan: WorkoutPlanProps }) => {
+const WorkoutPlan = ({
+  plan,
+  setIndex,
+}: {
+  plan: WorkoutPlanProps;
+  setIndex: (nb: string) => void;
+}) => {
+  // Router hooks
+  const router = useRouter();
+
   return (
     <div className="px-5 pb-5 md:px-10 lg:pb-10 lg:px-20">
       <div className="lg:grid lg:grid-cols-2 lg:items-center">
@@ -54,9 +65,12 @@ const WorkoutPlan = ({ plan }: { plan: WorkoutPlanProps }) => {
               ))}
             <p className="font-medium">
               Not satisfied?{" "}
-              <span className="font-bold text-custom-green hover:text-lime-400 hover:cursor-pointer">
+              <button
+                onClick={() => setIndex("3")}
+                className="font-bold text-custom-green hover:text-lime-400 hover:cursor-pointer"
+              >
                 Create your own plan
-              </span>
+              </button>
             </p>
           </div>
           <button

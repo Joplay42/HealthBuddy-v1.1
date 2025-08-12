@@ -1,5 +1,10 @@
 "use client";
-import { Modal, WorkoutFindingLoading, WorkoutPlan } from "@/components";
+import {
+  CreateWorkoutPlan,
+  Modal,
+  WorkoutFindingLoading,
+  WorkoutPlan,
+} from "@/components";
 import CreateWorkoutObjective from "../dashboard/workout/CreateWorkoutObjective";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
@@ -135,7 +140,10 @@ const WorkoutObjective = () => {
       )}
       {/** Handle the loading states */}
       {loading && <WorkoutFindingLoading />}
-      {index === "2" && loading != true && <WorkoutPlan plan={workoutPlan} />}
+      {index === "2" && loading != true && (
+        <WorkoutPlan plan={workoutPlan} setIndex={updateParams} />
+      )}
+      {index === "3" && <CreateWorkoutPlan />}
     </Modal>
   );
 };
