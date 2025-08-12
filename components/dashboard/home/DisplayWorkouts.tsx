@@ -3,8 +3,12 @@ import { DisplayWorkoutsProps, WeekDay, WorkoutPlanProps } from "@/types";
 import { useEffect, useState } from "react";
 import WorkoutDayCard from "./WorkoutDayCard";
 import WorkoutDayCardSqueleton from "@/components/Squeleton/WorkoutDayCardSqueleton";
+import { useRouter } from "next/navigation";
 
 const DisplayWorkouts = ({ plan, loading }: DisplayWorkoutsProps) => {
+  // Router hooks for navigation
+  const router = useRouter();
+
   // States for the current week
   const [weekDates, setWeekDates] = useState<WeekDay[]>([]);
 
@@ -43,7 +47,12 @@ const DisplayWorkouts = ({ plan, loading }: DisplayWorkoutsProps) => {
           <span className="text-3xl"> 🎉</span>
         </h1>
         <div className="flex justify-center mt-5">
-          <button className="w-fit bg-black text-white px-5 py-2 rounded-2xl text-center hover:opacity-75">
+          <button
+            className="w-fit bg-black text-white px-5 py-2 rounded-2xl text-center hover:opacity-75"
+            onClick={() => {
+              router.push("?modal=workout", { scroll: false });
+            }}
+          >
             Find my workout
           </button>
         </div>

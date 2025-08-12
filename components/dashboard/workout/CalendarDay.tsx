@@ -33,7 +33,7 @@ const CalendarDay = ({
           weekDay.date.getDate() === today ? `text-white` : `text-neutral-500`
         }`}
       >
-        {weekDay.workout.name !== "Rest & Cardio" && (
+        {!weekDay.workout.name.startsWith("Rest") && (
           <div className="absolute bg-black rounded-full w-2 h-2 left-1/2 -translate-x-1/2 bottom-12 md:bottom-24" />
         )}
         <p className="text-lg md:text-2xl">{weekDay.date.getDate()}</p>
