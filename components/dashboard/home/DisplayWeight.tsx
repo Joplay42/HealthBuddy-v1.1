@@ -12,10 +12,13 @@ import {
   Filler,
   Legend,
 } from "chart.js";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Line } from "react-chartjs-2";
 
 const DisplayWeight = ({ weight, objective, loading }: DisplayWeightProps) => {
+  // Hooks for the router
+  const router = useRouter();
+
   ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -108,7 +111,12 @@ const DisplayWeight = ({ weight, objective, loading }: DisplayWeightProps) => {
           <span className="text-3xl"> 🎉</span>
         </h1>
         <div className="flex justify-center mt-5">
-          <button className="w-fit bg-black text-white px-5 py-2 rounded-2xl text-center hover:opacity-75">
+          <button
+            onClick={() => {
+              router.push("?modal=weight", { scroll: false });
+            }}
+            className="w-fit bg-black text-white px-5 py-2 rounded-2xl text-center hover:opacity-75"
+          >
             Track my weights
           </button>
         </div>

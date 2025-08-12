@@ -1,11 +1,16 @@
+"use client";
 import React from "react";
 import DisplayWeight from "./DisplayWeight";
 import { useUserInformationContext } from "@/context/UserInformationContext";
+import { useRouter } from "next/navigation";
 
 const Weight = () => {
   // Fetch the userWeight
   const { userWeightInfo, userWorkoutObjectiveInfo, loading } =
     useUserInformationContext();
+
+  // Router hooks
+  const router = useRouter();
 
   return (
     // The weight container
@@ -22,7 +27,9 @@ const Weight = () => {
         {userWeightInfo.length !== 0 && (
           <button
             className="w-fit bg-black text-white px-3 py-2 rounded-2xl text-center hover:opacity-75 hover:cursor-pointer"
-            onClick={() => {}}
+            onClick={() => {
+              router.push("?modal=weight", { scroll: false });
+            }}
           >
             Add weight +
           </button>
