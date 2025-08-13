@@ -53,7 +53,6 @@ export type userGoalProps = {
   carbs: number;
   protein: number;
   fat: number;
-  weight: number;
 };
 
 export type userCalorieProps = {
@@ -322,7 +321,7 @@ export type nutrients = "Calories" | "Protein" | "Carbs" | "Fat";
 export type userWeightProps = { number: number; date: Date };
 
 export type userProgramProps = {
-  workoutPlan: WorkoutPlanProps;
+  workoutPlan: UserWorkoutPlanProps;
   objectiveWeight: number;
   months: number;
 };
@@ -360,7 +359,7 @@ type PlanCategories = "Gain" | "Maintain" | "Lose";
 type PlanLevel = "Beginner" | "Intermediate" | "Advanced";
 
 export type DisplayWorkoutsProps = {
-  plan: WorkoutPlanProps;
+  plan: UserWorkoutPlanProps;
   loading: boolean;
 };
 

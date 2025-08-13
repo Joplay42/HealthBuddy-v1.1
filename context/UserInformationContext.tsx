@@ -18,7 +18,6 @@ import {
 import { doc, onSnapshot } from "firebase/firestore";
 import { auth, db } from "@/config/firebase";
 import { onAuthStateChanged, User } from "firebase/auth";
-import { userWeights, userWorkoutObjective } from "@/constant";
 
 export const UserInformationContext =
   createContext<userInformationContextProps>({
@@ -27,18 +26,20 @@ export const UserInformationContext =
       protein: 0,
       fat: 0,
       carbs: 0,
-      weight: 0,
     }, // Default values for userGoal
     userCalorieInfo: { calorie: 0, protein: 0, fat: 0, carbs: 0 }, // Default values for userCalorieInfo
     userWeightInfo: [],
     userWorkoutObjectiveInfo: {
       workoutPlan: {
         title: "",
-        categorie: ["Gain"],
         desc: "",
-        days: [],
-        intensity: "High",
-        level: "Beginner",
+        days: [
+          {
+            name: "",
+            desc: "",
+            day: "",
+          },
+        ],
       },
       objectiveWeight: 0,
       months: 3,
@@ -60,7 +61,6 @@ export const UserInformationProvider = ({
     protein: 0,
     fat: 0,
     carbs: 0,
-    weight: 0,
   });
   const [userCalorieInfo, setUserCalorieInfo] = useState<userCalorieProps>({
     calorie: 0,
@@ -68,10 +68,17 @@ export const UserInformationProvider = ({
     fat: 0,
     carbs: 0,
   });
-  const [userWeightInfo, setUserWeightInfo] =
-    useState<userWeightProps[]>(userWeights);
+  const [userWeightInfo, setUserWeightInfo] = useState<userWeightProps[]>([]);
   const [userWorkoutObjectiveInfo, setUserWorkoutObjectiveInfo] =
-    useState<userProgramProps>(userWorkoutObjective);
+    useState<userProgramProps>({
+      workoutPlan: {
+        title: "",
+        desc: "",
+        days: [],
+      },
+      objectiveWeight: 0,
+      months: 0,
+    });
 
   // loading state
   const [loading, setLoading] = useState(true);
@@ -141,7 +148,12 @@ export const UserInformationProvider = ({
     const fetchInitialWorkoutObjective = async () => {
       if (user && !userWeightInfo) {
         try {
-          // Fetch the user weights
+          // Fetch the user workouts
+          const res = await fetch(`/api/workouts?userid=${user.uid}`, {
+            method: "GET",
+          });
+          const result = await res.json();
+          setUserWorkoutObjectiveInfo(result);
         } catch (error: any) {
           console.error(
             "Error fetching the initial userWorkoutObjective : ",
@@ -164,9 +176,11 @@ export const UserInformationProvider = ({
         // Get the firestore doc
         const docGoalRef = doc(db, "UserGoal", user.uid);
         const docInfoRef = doc(db, "UserCalorieData", user.uid);
+        const docWorkoutRef = doc(db, "UserWorkouts", user.uid);
 
         let goalLoaded = false;
         let infoLoaded = false;
+        let workoutLoaded = false;
 
         // Fetch the data realtime
         const unsubscribeGoal = onSnapshot(docGoalRef, (snapshot) => {
@@ -175,7 +189,7 @@ export const UserInformationProvider = ({
             setUserGoal(snapshot.data() as userGoalProps);
           }
           goalLoaded = true;
-          if (goalLoaded && infoLoaded) setLoading(false);
+          if (goalLoaded && infoLoaded && workoutLoaded) setLoading(false);
         });
 
         // Fetch the data realtime
@@ -185,13 +199,24 @@ export const UserInformationProvider = ({
             setUserCalorieInfo(snapshot.data() as userCalorieProps);
           }
           infoLoaded = true;
-          if (goalLoaded && infoLoaded) setLoading(false);
+          if (goalLoaded && infoLoaded && workoutLoaded) setLoading(false);
+        });
+
+        // Fetch the data realtime
+        const unsubscribeWorkouts = onSnapshot(docWorkoutRef, (snapshot) => {
+          // If exists store it in the states
+          if (snapshot.exists()) {
+            setUserWorkoutObjectiveInfo(snapshot.data() as userProgramProps);
+          }
+          workoutLoaded = true;
+          if (goalLoaded && infoLoaded && workoutLoaded) setLoading(false);
         });
 
         // Clean up
         return () => {
           unsubscribeGoal();
           unsubscribeInfo();
+          unsubscribeWorkouts();
         };
       } catch (error: any) {
         console.error(error.message);

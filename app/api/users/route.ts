@@ -56,7 +56,12 @@ export const POST = async (request: Request) => {
     //Blank UserGoal firestore doc
     await setDoc(
       fireStoreUserGoalDoc,
-      { calorie: 0, carbs: 0, fat: 0, protein: 0, weight: 0 },
+      {
+        calorie: 0,
+        carbs: 0,
+        fat: 0,
+        protein: 0,
+      },
       { merge: true }
     );
 

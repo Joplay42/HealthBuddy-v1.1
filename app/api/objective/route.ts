@@ -28,7 +28,7 @@ export const GET = async (request: Request) => {
     if (!data.exists()) {
       return new NextResponse(
         JSON.stringify({
-          message: `No user has been found with an id of ${userId}`,
+          message: `No user has been found with an id of ${data}`,
         }),
         { status: 404 }
       );
