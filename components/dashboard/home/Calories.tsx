@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 const Calories = () => {
   // Router hooks to manage navigation
   const router = useRouter();
-  const { userGoal, userCalorieInfo, loading } = useUserInformationContext();
+  const { userGoal } = useUserInformationContext();
 
   return (
     // The calorie container

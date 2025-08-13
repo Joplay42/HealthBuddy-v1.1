@@ -1,9 +1,19 @@
 "use client";
-import { UserWorkoutPlanProps, workoutDayProps } from "@/types";
+import {
+  UserWorkoutPlanProps,
+  workoutDayProps,
+  WorkoutPlanProps,
+} from "@/types";
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
 
-const CreateWorkoutPlan = () => {
+const CreateWorkoutPlan = ({
+  submit,
+}: {
+  submit: (
+    e: React.FormEvent<HTMLFormElement>,
+    plan: WorkoutPlanProps | UserWorkoutPlanProps
+  ) => void;
+}) => {
   // Workout object created
   const [userWorkoutPlan, setUserWorkoutPlan] = useState<UserWorkoutPlanProps>({
     title: "",
@@ -79,15 +89,9 @@ const CreateWorkoutPlan = () => {
     generateWeek();
   }, []);
 
-  // Handle submit form function
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    // Remove the page refresh
-    e.preventDefault();
-  };
-
   return (
     <div className="px-5 pb-5 md:px-10 lg:pb-10 lg:px-20">
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={(e) => submit(e, userWorkoutPlan)}>
         <h1 className="font-bold text-2xl lg:text-3xl">
           Create your own{" "}
           <span className="text-custom-green">workout plan!</span>

@@ -1,6 +1,6 @@
 "use client";
 import { workoutPlans } from "@/constant";
-import { WorkoutPlanProps } from "@/types";
+import { UserWorkoutPlanProps, WorkoutPlanProps } from "@/types";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Dispatch, SetStateAction } from "react";
@@ -9,10 +9,15 @@ const WorkoutPlan = ({
   plan,
   setPlan,
   setIndex,
+  submit,
 }: {
   plan: WorkoutPlanProps;
   setPlan: Dispatch<SetStateAction<WorkoutPlanProps>>;
   setIndex: (nb: string) => void;
+  submit: (
+    e: React.FormEvent<HTMLFormElement>,
+    plan: WorkoutPlanProps | UserWorkoutPlanProps
+  ) => void;
 }) => {
   // Router hooks
   const router = useRouter();
@@ -37,7 +42,7 @@ const WorkoutPlan = ({
   return (
     <div className="px-5 pb-5 md:px-10 lg:pb-10 lg:px-20">
       <div className="lg:grid lg:grid-cols-2 lg:items-center">
-        <div className="space-y-3">
+        <form onSubmit={(e) => submit(e, plan)} className="space-y-3">
           <div className="flex gap-1">
             <h4 className="font-medium text-neutral-600">Recommanded plan</h4>
             <Image src="/stars.svg" height={20} width={20} alt="Stars icon" />
@@ -116,7 +121,7 @@ const WorkoutPlan = ({
               />
             )} */}
           </button>
-        </div>
+        </form>
         <Image
           src="/set-objective.png"
           alt=""

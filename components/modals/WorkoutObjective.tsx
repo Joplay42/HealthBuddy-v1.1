@@ -8,8 +8,15 @@ import {
 import CreateWorkoutObjective from "../dashboard/workout/CreateWorkoutObjective";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
-import { objectiveAlgorithmProps, WorkoutPlanProps } from "@/types";
+import {
+  objectiveAlgorithmProps,
+  userProgramProps,
+  UserWorkoutPlanProps,
+  WorkoutPlanProps,
+} from "@/types";
 import { workoutPlans } from "@/constant";
+import { useFirebaseAuth } from "@/context/UserContext";
+import { Slide, toast } from "react-toastify";
 
 const WorkoutObjective = () => {
   // Hooks for navigation
@@ -19,11 +26,20 @@ const WorkoutObjective = () => {
 
   // Loading state
   const [loading, setLoading] = useState(false);
+  // Error state
+  const [error, setError] = useState<string>();
+
+  // Get the userId to set the objective
+  const { user } = useFirebaseAuth();
+  const userId = user?.uid;
 
   // Hooks for the workout plan
   const [workoutPlan, setworkoutPlan] = useState<WorkoutPlanProps>(
     workoutPlans[0]
   );
+
+  // Hooks for the userWorkoutPlan
+  const [userWorkoutPlan, setUserWorkoutPlan] = useState<userProgramProps>();
 
   // Hooks for the algorithm finding workout
   const [userCriteria, setUserCriteria] = useState<objectiveAlgorithmProps>({
@@ -129,6 +145,68 @@ const WorkoutObjective = () => {
     return score;
   };
 
+  // Function to handle the error when submiting the forms
+  const handleSubmit = async (
+    e: React.FormEvent<HTMLFormElement>,
+    plan: WorkoutPlanProps | UserWorkoutPlanProps
+  ) => {
+    try {
+      // Clear the errors
+      setError("");
+      // Prevent page reload
+      e.preventDefault();
+      // enable the loading animation
+      setLoading(true);
+
+      // Check if a user was found
+      if (userId) {
+        const res = await fetch(`/api/workouts?userid=${userId}`, {
+          method: "POST",
+          body: JSON.stringify({
+            workoutPlan: plan,
+            objectiveWeight: userCriteria.weightObjective,
+            months: userCriteria.timeRange,
+          }),
+        });
+
+        // Store the data
+        const data = await res.json();
+        if (!res.ok) {
+          throw new Error(data.error);
+        }
+
+        // Closing the modal when the operation is done
+        // Get the current params
+        const currentParams = new URLSearchParams(window.location.search);
+        // Delete the current param
+        currentParams.delete("modal");
+        // Push the router to the route without params
+        router.replace(window.location.pathname);
+
+        setTimeout(() => {
+          // Notify the user
+          toast.success("A new objective has been set!", {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            transition: Slide,
+          });
+        }, 100);
+      }
+
+      // Disable the loading animation
+      setLoading(false);
+    } catch (error: any) {
+      console.error(error);
+      setError(error.message);
+    }
+  };
+
   return (
     <Modal backButton={index != "1"}>
       {index === "1" && loading != true && (
@@ -145,9 +223,10 @@ const WorkoutObjective = () => {
           plan={workoutPlan}
           setPlan={setworkoutPlan}
           setIndex={updateParams}
+          submit={handleSubmit}
         />
       )}
-      {index === "3" && <CreateWorkoutPlan />}
+      {index === "3" && <CreateWorkoutPlan submit={handleSubmit} />}
     </Modal>
   );
 };

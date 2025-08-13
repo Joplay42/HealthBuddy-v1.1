@@ -379,14 +379,14 @@ export type WeightsGridProps = {
 };
 
 export type workoutScheduleProps = {
-  todaysWorkout: workoutDayProps | undefined;
+  todaysWorkout?: workoutDayProps | undefined;
   selectedDay: Date;
   loading: boolean;
 };
 
 export type CalendarProps = {
   today: Date;
-  workoutPlan: workoutDayProps[];
+  workoutPlan: UserWorkoutPlanProps;
   selectedDays: Date;
   setSelectedDays: Dispatch<SetStateAction<Date>>;
   loading: boolean;
@@ -394,7 +394,7 @@ export type CalendarProps = {
 
 export type WeekPlanningProps = {
   date: Date;
-  workout: workoutDayProps;
+  workout?: workoutDayProps;
 };
 
 export type CalendarDayProps = {

@@ -25,37 +25,31 @@ const Calendar = ({
 
   // Hooks to create 2 next week and to assigne if there is a workout
   useEffect(() => {
-    const generateWeek = () => {
-      // Simulate a 2 week loop
-      for (let i = 0; i < 14; i++) {
-        // Get the current day
-        const current = new Date(today);
-        // Set the new simualted date
-        current.setDate(today.getDate() + i);
+    if (!workoutPlan?.days?.length) return;
 
-        // Get the day
-        const day = current.toDateString().substring(0, 3);
-        // Find the right workout for the day
-        const foundWorkout = workoutPlan.find((workout) => workout.day === day);
+    const newWeekArray: WeekPlanningProps[] = [];
 
-        if (foundWorkout) {
-          setWeekArray((prev) => [
-            ...prev,
-            {
-              date: current,
-              workout: foundWorkout,
-            },
-          ]);
-        }
-      }
-    };
+    for (let i = 0; i < 14; i++) {
+      const current = new Date(today);
+      current.setDate(today.getDate() + i);
 
-    generateWeek();
-  }, []);
+      const day = current.toDateString().substring(0, 3);
+      const foundWorkout = workoutPlan.days.find(
+        (workout) => workout.day === day
+      );
+
+      newWeekArray.push({
+        date: current,
+        workout: foundWorkout, // keep null if no workout
+      });
+    }
+
+    setWeekArray(newWeekArray);
+  }, [workoutPlan, today]);
 
   if (loading) return <Calendarsqueleton />;
 
-  if (workoutPlan.length === 0)
+  if (workoutPlan.days.length === 0)
     return (
       <div className="bg-white p-5 rounded-3xl border border-neutral-400 h-full">
         <div className="space-y-3 py-32">

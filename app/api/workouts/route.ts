@@ -1,5 +1,5 @@
 import { db } from "@/config/firebase";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import { NextResponse } from "next/server";
 
 export const GET = async (request: Request) => {
@@ -47,6 +47,74 @@ export const GET = async (request: Request) => {
     return new NextResponse(
       JSON.stringify({
         message: "An error occured while trying to fetch the users workout",
+        error: error.message,
+      }),
+      { status: 500 }
+    );
+  }
+};
+
+export const POST = async (request: Request) => {
+  // Error handling
+  try {
+    // The new searchParams
+    const { searchParams } = new URL(request.url);
+    // Get the user id
+    const userId = searchParams.get("userid");
+
+    // handle null values
+    if (!userId) {
+      return new NextResponse(
+        JSON.stringify({
+          message: "Missing parameters",
+        }),
+        { status: 422 }
+      );
+    }
+
+    // Get the body
+    const body = await request.json();
+
+    // Error handling
+    if (!body || Object.keys(body).length === 0) {
+      return new NextResponse(JSON.stringify({ message: "Invalid data" }), {
+        status: 400,
+      });
+    }
+
+    const {
+      workoutPlan: { title, desc, days },
+      objectiveWeight,
+      months,
+    } = body;
+
+    // Check any missing attribute
+    if (!objectiveWeight || !months || !title || !desc) {
+      return new NextResponse(
+        JSON.stringify({
+          message: "Missing object attribute",
+        }),
+        { status: 400 }
+      );
+    }
+
+    // reference of the users doc
+    const userGoalDocRef = doc(db, "UserWorkouts", userId);
+
+    // Set the new doc
+    const userGoal = await setDoc(userGoalDocRef, body);
+
+    // Return success message
+    return new NextResponse(
+      JSON.stringify({
+        message: "Objective has been created",
+        data: userGoal,
+      }),
+      { status: 200 }
+    );
+  } catch (error: any) {
+    return new NextResponse(
+      JSON.stringify({
         error: error.message,
       }),
       { status: 500 }

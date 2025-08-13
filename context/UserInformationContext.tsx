@@ -33,13 +33,7 @@ export const UserInformationContext =
       workoutPlan: {
         title: "",
         desc: "",
-        days: [
-          {
-            name: "",
-            desc: "",
-            day: "",
-          },
-        ],
+        days: [],
       },
       objectiveWeight: 0,
       months: 3,
@@ -146,7 +140,7 @@ export const UserInformationProvider = ({
     };
 
     const fetchInitialWorkoutObjective = async () => {
-      if (user && !userWeightInfo) {
+      if (user && !userWorkoutObjectiveInfo) {
         try {
           // Fetch the user workouts
           const res = await fetch(`/api/workouts?userid=${user.uid}`, {
@@ -167,7 +161,7 @@ export const UserInformationProvider = ({
     fetchInitialCalorie();
     fetchInitialWeight();
     fetchInitialWorkoutObjective();
-  }, [user, userGoal, userCalorieInfo]);
+  }, [user]);
 
   // Fetch the user doc
   useEffect(() => {

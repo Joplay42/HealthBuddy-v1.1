@@ -20,12 +20,14 @@ const WorkoutTracking = () => {
 
   // Hooks to find todays workout
   useEffect(() => {
-    // Find the workout for today
+    if (!userWorkoutObjectiveInfo?.workoutPlan?.days?.length) return;
+
     const workout = userWorkoutObjectiveInfo.workoutPlan.days.find(
-      (workout) => workout.day === selectedDays.toDateString().substring(0, 3)
+      (w) => w.day === selectedDays.toDateString().substring(0, 3)
     );
+
     setTodaysWorkout(workout);
-  }, [selectedDays]);
+  }, [selectedDays, userWorkoutObjectiveInfo]);
 
   return (
     <div className="py-5 md:py-10 md:grid grid-cols-3 grid-rows-[minmax(150px,auto)_auto] space-y-5 md:space-y-0 md:gap-10">
@@ -41,7 +43,7 @@ const WorkoutTracking = () => {
       >
         <Calendar
           today={todaysDate}
-          workoutPlan={userWorkoutObjectiveInfo.workoutPlan.days}
+          workoutPlan={userWorkoutObjectiveInfo.workoutPlan}
           selectedDays={selectedDays}
           setSelectedDays={setSelectedDays}
           loading={loading}
