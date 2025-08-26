@@ -136,10 +136,9 @@ const FoodCard = ({ item, setConsumedLoading }: foodCardProps) => {
             Fat: getNutrient(item, "Fat", portion),
           };
 
-          await consumeFood(parsedMacros, user.uid, multiplier);
-          await addFoodToConsumedList(meal, parsedFood, multiplier, user.uid);
-
-          setTimeout(() => {
+          setTimeout(async () => {
+            await consumeFood(parsedMacros, user.uid, multiplier);
+            await addFoodToConsumedList(meal, parsedFood, multiplier, user.uid);
             // Notify the user
             toast.success("Food has been consumed!", {
               position: "bottom-right",
@@ -204,28 +203,28 @@ const FoodCard = ({ item, setConsumedLoading }: foodCardProps) => {
           Calories={
             Math.round(
               (isFoodItemRecipe(item)
-                ? getNutrient(item, "Calories", portion) / item.NbServing
+                ? getNutrient(item, "Calories", portion)
                 : getNutrient(item, "Calories", portion)) * multiplier
             ) || 0
           }
           Protein={
             Math.round(
               (isFoodItemRecipe(item)
-                ? getNutrient(item, "Protein", portion) / item.NbServing
+                ? getNutrient(item, "Protein", portion)
                 : getNutrient(item, "Protein", portion)) * multiplier
             ) || 0
           }
           Carbs={
             Math.round(
               (isFoodItemRecipe(item)
-                ? getNutrient(item, "Carbs", portion) / item.NbServing
+                ? getNutrient(item, "Carbs", portion)
                 : getNutrient(item, "Carbs", portion)) * multiplier
             ) || 0
           }
           Fat={
             Math.round(
               (isFoodItemRecipe(item)
-                ? getNutrient(item, "Fat", portion) / item.NbServing
+                ? getNutrient(item, "Fat", portion)
                 : getNutrient(item, "Fat", portion)) * multiplier
             ) || 0
           }
@@ -243,7 +242,7 @@ const FoodCard = ({ item, setConsumedLoading }: foodCardProps) => {
             <span className="font-semibold">
               {Math.round(
                 (isFoodItemRecipe(item)
-                  ? getNutrient(item, "Protein", portion) / item.NbServing
+                  ? getNutrient(item, "Protein", portion)
                   : getNutrient(item, "Protein", portion)) * multiplier
               ) || 0}
             </span>
@@ -256,7 +255,7 @@ const FoodCard = ({ item, setConsumedLoading }: foodCardProps) => {
             <span className="font-semibold">
               {Math.round(
                 (isFoodItemRecipe(item)
-                  ? getNutrient(item, "Carbs", portion) / item.NbServing
+                  ? getNutrient(item, "Carbs", portion)
                   : getNutrient(item, "Carbs", portion)) * multiplier
               ) || 0}
             </span>
@@ -269,7 +268,7 @@ const FoodCard = ({ item, setConsumedLoading }: foodCardProps) => {
             <span className="font-semibold">
               {Math.round(
                 (isFoodItemRecipe(item)
-                  ? getNutrient(item, "Fat", portion) / item.NbServing
+                  ? getNutrient(item, "Fat", portion)
                   : getNutrient(item, "Fat", portion)) * multiplier
               ) || 0}
             </span>

@@ -146,12 +146,7 @@ export const DELETE = async (request: Request) => {
       );
     }
 
-    await setDoc(userGoalDocRef, {
-      calorie: 0,
-      carbs: 0,
-      fat: 0,
-      protein: 0,
-    });
+    await deleteDoc(userGoalDocRef);
 
     // Return success message
     return new NextResponse(

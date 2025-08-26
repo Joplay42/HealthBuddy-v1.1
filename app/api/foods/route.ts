@@ -1,6 +1,13 @@
 import { db } from "@/config/firebase";
 import { foodItemFetchedProps, foodItemProps, foodProps } from "@/types";
-import { addDoc, collection, deleteDoc, doc, setDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  setDoc,
+} from "firebase/firestore";
 import { NextResponse } from "next/server";
 
 export const GET = async (request: Request) => {
@@ -195,16 +202,31 @@ export const DELETE = async (request: Request) => {
     // Get the recipe id
     const deleteId = searchParams.get("del");
 
-    if (!deleteId || !userId) {
+    if (!userId) {
       return new NextResponse(
-        JSON.stringify({ message: "A userId and objectId is required" }),
+        JSON.stringify({ message: "A userId is required test" }),
         { status: 400 }
       );
     }
 
-    // Delete the user recipes
-    const docRef = doc(db, "UserFoods", userId, "foodList", deleteId);
-    await deleteDoc(docRef);
+    // Delete specific doc
+    if (deleteId) {
+      // Delete the user recipes
+      const docRef = doc(db, "UserFoods", userId, "foodList", deleteId);
+      await deleteDoc(docRef);
+    } else {
+      // Get the firestore doc
+      const recipesRef = collection(db, "UserFoods", userId, "foodList");
+
+      // Store the data for validation
+      const querySnapshot = await getDocs(recipesRef);
+
+      const deletions = querySnapshot.docs.map((docSnap) =>
+        deleteDoc(docSnap.ref)
+      );
+
+      await Promise.all(deletions);
+    }
 
     // Return a response
     return NextResponse.json(

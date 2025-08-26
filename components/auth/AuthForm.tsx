@@ -77,6 +77,7 @@ const AuthForm = ({ type }: authFormProps) => {
       } catch (error: any) {
         // Display the error
         setError(error.message);
+        setLoading(false);
       }
       // If the authForm is login
     } else if (type == "login") {

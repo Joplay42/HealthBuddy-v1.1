@@ -25,6 +25,8 @@ import {
   sendPasswordResetEmail,
   sendEmailVerification,
   deleteUser,
+  EmailAuthProvider,
+  reauthenticateWithCredential,
 } from "firebase/auth";
 import {
   addDoc,
@@ -260,36 +262,51 @@ export const changeAccountName = async ({
  * This functions is used to delete the user account.
  *
  */
-export const deleteAccount = async () => {
+export const deleteAccount = async (email: string, password: string) => {
   // Define the current user
   const user = auth.currentUser;
 
   // If the user exist
   if (user) {
-    // Use the firebase deleteUser function
-    await deleteUser(user);
+    try {
+      // Reauthenticate the user
+      const credential = EmailAuthProvider.credential(email, password);
+      await reauthenticateWithCredential(user, credential);
 
-    let res;
+      // The UserCalorieData firestore doc
+      await fetch(`/api/calories?userid=${user.uid}`, {
+        method: "DELETE",
+      });
 
-    // The UserCalorieData firestore doc
-    res = await fetch(`/api/calories?userid=${user.uid}`, {
-      method: "DELETE",
-    });
+      // The UserFoodList firestore doc
+      await fetch(`/api/foods?userid=${user.uid}`, {
+        method: "DELETE",
+      });
 
-    // The UserFoodList firestore doc
-    await fetch(`/api/foods/consumed?userid=${auth.currentUser?.uid}`, {
-      method: "DELETE",
-    });
+      // The UserRecipesList firestore doc
+      await fetch(`/api/foods/recipes?userid=${user.uid}`, {
+        method: "DELETE",
+      });
 
-    // The UserGoal firestoreDoc
-    res = await fetch(`/api/objective?userid=${user.uid}`, {
-      method: "DELETE",
-    });
+      // The UserConsumedFoodList firestore doc
+      await fetch(`/api/foods/consumed?userid=${user.uid}`, {
+        method: "DELETE",
+      });
 
-    // The UserWorkouts firestore doc
+      // The UserGoal firestoreDoc
+      await fetch(`/api/objective?userid=${user.uid}`, {
+        method: "DELETE",
+      });
 
-    // Error handling
-    if (!res.ok) {
+      // The UserWorkouts firestore doc
+      await fetch(`/api/workouts?userid=${user.uid}`, {
+        method: "DELETE",
+      });
+
+      // Use the firebase deleteUser function
+      await deleteUser(user);
+    } catch (error) {
+      // Error handling
       throw new Error("An error occured while trying to create the user");
     }
   }
@@ -478,7 +495,7 @@ export function getNutrient(
   portionIndex: number
 ) {
   if (isFoodItemRecipe(item)) {
-    return item.macronutrients?.[key] ?? 0;
+    return item.macronutrients?.[key] / item.NbServing;
   } else if (isFoodItemFetched(item)) {
     return item.portions[portionIndex]?.[key] ?? 0;
   } else if (isFoodItem(item)) {

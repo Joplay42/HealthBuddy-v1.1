@@ -6,7 +6,9 @@ import {
   deleteDoc,
   doc,
   getDoc,
+  getDocs,
   setDoc,
+  writeBatch,
 } from "firebase/firestore";
 import { NextResponse } from "next/server";
 
@@ -176,16 +178,31 @@ export const DELETE = async (request: Request) => {
     // Get the recipe id
     const deleteId = searchParams.get("del");
 
-    if (!deleteId || !userId) {
+    if (!userId) {
       return new NextResponse(
-        JSON.stringify({ message: "A userId and objectId is required" }),
+        JSON.stringify({ message: "A userId is required" }),
         { status: 400 }
       );
     }
 
-    // Delete the user recipes
-    const docRef = doc(db, "UserRecipes", userId, "recipesList", deleteId);
-    await deleteDoc(docRef);
+    // Delete specific recipes
+    if (deleteId) {
+      // Delete the user recipes
+      const docRef = doc(db, "UserRecipes", userId, "recipesList", deleteId);
+      await deleteDoc(docRef);
+    } else {
+      // Get the firestore doc
+      const recipesRef = collection(db, "UserRecipes", userId, "recipesList");
+
+      // Store the data for validation
+      const querySnapshot = await getDocs(recipesRef);
+
+      const deletions = querySnapshot.docs.map((docSnap) =>
+        deleteDoc(docSnap.ref)
+      );
+
+      await Promise.all(deletions);
+    }
 
     // Return a response
     return NextResponse.json(
