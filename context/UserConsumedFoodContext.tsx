@@ -63,6 +63,8 @@ export const UserConsumedFoodProvider = ({
             "Error fetching the initial userGoal : ",
             error.message
           );
+        } finally {
+          setLoading(false);
         }
       }
     };
