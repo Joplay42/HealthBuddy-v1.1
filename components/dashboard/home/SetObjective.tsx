@@ -26,10 +26,10 @@ const SetObjective = () => {
   const [error, setError] = useState("");
 
   // The value the user need to change
-  const [calorie, setCalorie] = useState(0);
-  const [protein, setProtein] = useState(0);
-  const [carb, setCarb] = useState(0);
-  const [fat, setFat] = useState(0);
+  const [calorie, setCalorie] = useState<number | undefined>(undefined);
+  const [protein, setProtein] = useState<number | undefined>(undefined);
+  const [carb, setCarb] = useState<number | undefined>(undefined);
+  const [fat, setFat] = useState<number | undefined>(undefined);
 
   // The nutrient converted to grams
   const [proteinGrams, setProteinGrams] = useState(0);
@@ -40,47 +40,56 @@ const SetObjective = () => {
   const [pourcentage, setPourcentage] = useState(0);
 
   // Function to handle change to calculate the grams of nutrient with the pourcentage
-  const handleOnChange = (type: string, value: number) => {
-    // Input validation
-    const validValue = isNaN(value) ? 0 : value;
-    // The variable to calculate the new pourcentage
-    let newProtein = protein;
-    let newCarb = carb;
-    let newFat = fat;
+  const handleOnChange = (type: string, rawValue: string) => {
+    // If user deletes input
+    if (rawValue === "") {
+      if (type === "protein") setProtein(undefined);
+      if (type === "carbs") setCarb(undefined);
+      if (type === "fat") setFat(undefined);
+      setPourcentage((protein ?? 0) + (carb ?? 0) + (fat ?? 0));
+      return;
+    }
 
-    if (type == "protein") {
-      newProtein = validValue;
+    const value = parseInt(rawValue, 10);
+    if (isNaN(value) || value <= 0) return;
+
+    let newProtein = protein ?? 0;
+    let newCarb = carb ?? 0;
+    let newFat = fat ?? 0;
+
+    if (type === "protein") {
+      newProtein = value;
       setProtein(value);
       setProteinGrams(
         calculateNutriantDaily({
-          dailyCalories: calorie,
-          nutrientPercentage: validValue,
+          dailyCalories: calorie ?? 0,
+          nutrientPercentage: value,
           nutrientType: type,
         })
       );
-    } else if (type == "carbs") {
-      newCarb = validValue;
+    } else if (type === "carbs") {
+      newCarb = value;
       setCarb(value);
       setCarbGrams(
         calculateNutriantDaily({
-          dailyCalories: calorie,
-          nutrientPercentage: validValue,
+          dailyCalories: calorie ?? 0,
+          nutrientPercentage: value,
           nutrientType: type,
         })
       );
-    } else if (type == "fat") {
-      newFat = validValue;
+    } else if (type === "fat") {
+      newFat = value;
       setFat(value);
       setFatGrams(
         calculateNutriantDaily({
-          dailyCalories: calorie,
-          nutrientPercentage: validValue,
+          dailyCalories: calorie ?? 0,
+          nutrientPercentage: value,
           nutrientType: type,
         })
       );
     }
-    const newTotal = newProtein + newCarb + newFat;
-    setPourcentage(newTotal);
+
+    setPourcentage(newProtein + newCarb + newFat);
   };
 
   // Function to handle the error when submiting the forms
@@ -179,8 +188,12 @@ const SetObjective = () => {
             <input
               type="number"
               name="calories"
-              value={calorie}
-              onChange={(e) => setCalorie(parseInt(e.target.value))}
+              value={calorie ?? ""}
+              onChange={(e) =>
+                setCalorie(
+                  e.target.value === "" ? undefined : parseInt(e.target.value)
+                )
+              }
               className="border-black rounded-xl w-full"
               placeholder="ex. 2000"
             />
@@ -191,10 +204,8 @@ const SetObjective = () => {
               <div className="space-y-2">
                 <input
                   type="number"
-                  value={protein}
-                  onChange={(e) =>
-                    handleOnChange("protein", parseInt(e.target.value))
-                  }
+                  value={protein ?? ""}
+                  onChange={(e) => handleOnChange("protein", e.target.value)}
                   className="border-black rounded-xl w-full"
                   placeholder="40"
                 />
@@ -206,10 +217,8 @@ const SetObjective = () => {
               <div className="space-y-2">
                 <input
                   type="number"
-                  value={carb}
-                  onChange={(e) =>
-                    handleOnChange("carbs", parseInt(e.target.value))
-                  }
+                  value={carb ?? ""}
+                  onChange={(e) => handleOnChange("carbs", e.target.value)}
                   className="border-black rounded-xl w-full"
                   placeholder="40"
                 />
@@ -221,10 +230,8 @@ const SetObjective = () => {
               <div className="space-y-2">
                 <input
                   type="number"
-                  value={fat}
-                  onChange={(e) =>
-                    handleOnChange("fat", parseInt(e.target.value))
-                  }
+                  value={fat ?? ""}
+                  onChange={(e) => handleOnChange("fat", e.target.value)}
                   className="border-black rounded-xl w-full"
                   placeholder="20"
                 />
