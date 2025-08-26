@@ -2,16 +2,10 @@ import {
   NavLinksWebsiteProps,
   WorkoutPlanProps,
   cardsWebsiteProps,
-  foodProps,
   navLinksDashboardProps,
   quotesProps,
   settingCardProps,
   settingSideBarProps,
-  userCalorieProps,
-  userGoalProps,
-  userProgramProps,
-  userProps,
-  userWeightProps,
 } from "@/types";
 
 // The website navLinks array with the name and the url
