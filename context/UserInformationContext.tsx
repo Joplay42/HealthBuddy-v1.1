@@ -15,7 +15,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import { doc, onSnapshot } from "firebase/firestore";
+import { collection, doc, onSnapshot } from "firebase/firestore";
 import { auth, db } from "@/config/firebase";
 import { onAuthStateChanged, User } from "firebase/auth";
 
@@ -129,7 +129,12 @@ export const UserInformationProvider = ({
     const fetchInitialWeight = async () => {
       if (user && !userWeightInfo) {
         try {
-          // Fetch the user weights
+          // Fetch from the api
+          const res = await fetch(`/api/workouts/weight?userid=${user.uid}`, {
+            method: "GET",
+          });
+          const result = await res.json();
+          setUserWeightInfo(result);
         } catch (error: any) {
           console.error(
             "Error fetching the initial userWeight : ",
@@ -171,10 +176,17 @@ export const UserInformationProvider = ({
         const docGoalRef = doc(db, "UserGoal", user.uid);
         const docInfoRef = doc(db, "UserCalorieData", user.uid);
         const docWorkoutRef = doc(db, "UserWorkouts", user.uid);
+        const colWeightRef = collection(
+          db,
+          "UserWeights",
+          user.uid,
+          "weightList"
+        );
 
         let goalLoaded = false;
         let infoLoaded = false;
         let workoutLoaded = false;
+        let weightsLoaded = false;
 
         // Fetch the data realtime
         const unsubscribeGoal = onSnapshot(docGoalRef, (snapshot) => {
@@ -206,11 +218,32 @@ export const UserInformationProvider = ({
           if (goalLoaded && infoLoaded && workoutLoaded) setLoading(false);
         });
 
+        // Weights listener
+        const unsubscribeWeights = onSnapshot(colWeightRef, (snapshot) => {
+          const weights = snapshot.docs.map((doc) => {
+            const data = doc.data();
+            return {
+              ...data,
+              date: data.date.toDate(), // Convert Firestore Timestamp -> JS Date
+              Id: doc.id,
+            };
+          }) as userWeightProps[];
+
+          // Sort by date (newest first, oldest last)
+          weights.sort((a, b) => a.date.getTime() - b.date.getTime());
+
+          setUserWeightInfo(weights);
+          weightsLoaded = true;
+          if (goalLoaded && infoLoaded && workoutLoaded && weightsLoaded)
+            setLoading(false);
+        });
+
         // Clean up
         return () => {
           unsubscribeGoal();
           unsubscribeInfo();
           unsubscribeWorkouts();
+          unsubscribeWeights();
         };
       } catch (error: any) {
         console.error(error.message);

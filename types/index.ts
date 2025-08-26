@@ -318,7 +318,7 @@ export type foodCardProps = {
 
 export type nutrients = "Calories" | "Protein" | "Carbs" | "Fat";
 
-export type userWeightProps = { number: number; date: Date };
+export type userWeightProps = { number: number; date: Date; Id?: string };
 
 export type userProgramProps = {
   workoutPlan: UserWorkoutPlanProps;

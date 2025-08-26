@@ -4,7 +4,6 @@ import {
   collection,
   deleteDoc,
   doc,
-  getDoc,
   getDocs,
   setDoc,
 } from "firebase/firestore";
@@ -96,10 +95,10 @@ export const POST = async (request: Request) => {
       });
     }
 
-    const { weight, date } = body;
+    const { number, date } = body;
 
     // Check any missing attribute
-    if (!weight || !date) {
+    if (!number || !date) {
       return new NextResponse(
         JSON.stringify({
           message: "Missing object attribute",
@@ -165,10 +164,10 @@ export const PATCH = async (request: Request) => {
       });
     }
 
-    const { weight, date } = body;
+    const { number, date } = body;
 
     // Check any missing attribute
-    if (!weight || !date) {
+    if (!number || !date) {
       return new NextResponse(
         JSON.stringify({
           message: "Missing object attribute",
@@ -182,7 +181,7 @@ export const PATCH = async (request: Request) => {
 
     // Update the doc
     const updateWeight = await setDoc(docRef, {
-      weight,
+      number,
       date,
     });
 
