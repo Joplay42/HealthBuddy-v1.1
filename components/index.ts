@@ -78,8 +78,6 @@ import SideBarSqueleton from "./Squeleton/SideBarSqueleton";
 import LibrarySearch from "./modals/LibrarySearch";
 import DisplayLibraryList from "./dashboard/calorie/DisplayLibraryList";
 import FoodCard from "./dashboard/calorie/FoodCard";
-import PatchNote from "./Patch/PatchNote";
-import PatchNoteModal from "./Patch/PatchNoteModal";
 import Weight from "./dashboard/home/Weight";
 import DisplayWeight from "./dashboard/home/DisplayWeight";
 import Workout from "./dashboard/home/Workout";
@@ -178,8 +176,6 @@ export {
   LibrarySearch,
   DisplayLibraryList,
   FoodCard,
-  PatchNote,
-  PatchNoteModal,
   Weight,
   DisplayWeight,
   Workout,
