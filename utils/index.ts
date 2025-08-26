@@ -286,6 +286,8 @@ export const deleteAccount = async () => {
       method: "DELETE",
     });
 
+    // The UserWorkouts firestore doc
+
     // Error handling
     if (!res.ok) {
       throw new Error("An error occured while trying to create the user");

@@ -185,7 +185,7 @@ const WorkoutObjective = () => {
 
         setTimeout(() => {
           // Notify the user
-          toast.success("A new objective has been set!", {
+          toast.success("A new workout objective has been set!", {
             position: "bottom-right",
             autoClose: 5000,
             hideProgressBar: false,
