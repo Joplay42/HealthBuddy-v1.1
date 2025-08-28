@@ -6,6 +6,7 @@ import {
   doc,
   getDocs,
   setDoc,
+  Timestamp,
 } from "firebase/firestore";
 import { NextResponse } from "next/server";
 
@@ -101,18 +102,24 @@ export const POST = async (request: Request) => {
     if (!number || !date) {
       return new NextResponse(
         JSON.stringify({
-          message: "Missing object attribute",
+          error: "Missing object attribute",
         }),
         { status: 400 }
       );
     }
+
+    const dateObj = new Date(date);
+    const firestoreDate = Timestamp.fromDate(dateObj);
 
     // Create a new object to databases
     const userWeightRef = doc(db, "UserWeights", userId);
     const userWeightlistRef = collection(userWeightRef, "weightList");
 
     // Set the doc with the recipe
-    const newDoc = await addDoc(userWeightlistRef, body);
+    const newDoc = await addDoc(userWeightlistRef, {
+      ...body,
+      date: firestoreDate,
+    });
     // Set the docId
     await setDoc(newDoc, { Id: newDoc.id }, { merge: true });
 

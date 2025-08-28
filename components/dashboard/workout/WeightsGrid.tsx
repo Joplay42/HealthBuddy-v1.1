@@ -34,7 +34,7 @@ const WeightsGrid = ({ weight, loading }: WeightsGridProps) => {
               key={index}
               className="border-y border-neutral-300 font-medium text-[#797979] animate-fade-in"
             >
-              <td className="py-2">{entry.number}</td>
+              <td className="py-2">{entry.number} lb</td>
               <td className="py-2">{entry.date.toDateString()}</td>
             </tr>
           ))}

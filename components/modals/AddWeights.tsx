@@ -1,10 +1,14 @@
 "use client";
 import React, { FormEvent, useEffect, useState } from "react";
 import Modal from "./Modal";
+import Image from "next/image";
+import { useFirebaseAuth } from "@/context/UserContext";
+import { Slide, toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 export type userWeightProps = {
   number: number | undefined;
-  date: string | undefined;
+  date: Date | undefined | null;
 };
 
 const AddWeights = () => {
@@ -13,8 +17,18 @@ const AddWeights = () => {
     number: undefined,
     date: undefined,
   });
+  // Loading state
+  const [loading, setLoading] = useState(false);
+  // Error state
+  const [error, setError] = useState<string>();
   // Hooks for the button
   const [buttonDisabled, setButtonDisabled] = useState<boolean>(true);
+
+  const router = useRouter();
+
+  // Get the userId to set the objective
+  const { user } = useFirebaseAuth();
+  const userId = user?.uid;
 
   // UseEFfect to detect the button disability
   useEffect(() => {
@@ -50,9 +64,59 @@ const AddWeights = () => {
   };
 
   // Function to handle the form submit
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    // Prevent refresh
-    e.preventDefault();
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    try {
+      // Clear the errors
+      setError("");
+      // Prevent page reload
+      e.preventDefault();
+      // enable the loading animation
+      setLoading(true);
+
+      // Check if a user was found
+      if (userId) {
+        const res = await fetch(`/api/workouts/weight?userid=${userId}`, {
+          method: "POST",
+          body: JSON.stringify(weight),
+        });
+
+        // Store the data
+        const data = await res.json();
+        if (!res.ok) {
+          throw new Error(data.error);
+        }
+
+        // Closing the modal when the operation is done
+        // Get the current params
+        const currentParams = new URLSearchParams(window.location.search);
+        // Delete the current param
+        currentParams.delete("modal");
+        // Push the router to the route without params
+        router.replace(window.location.pathname);
+
+        setTimeout(() => {
+          // Notify the user
+          toast.success("A new weight has been added!", {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            transition: Slide,
+          });
+        }, 100);
+      }
+
+      // Disable the loading animation
+      setLoading(false);
+    } catch (error: any) {
+      console.error(error);
+      setError(error.message);
+      setLoading(false);
+    }
   };
 
   return (
@@ -76,27 +140,33 @@ const AddWeights = () => {
               <label className="font-semibold text-lg">Date</label>
               <input
                 type="date"
-                value={weight?.date ?? ""}
+                value={
+                  weight?.date ? weight.date.toISOString().split("T")[0] : ""
+                }
                 onChange={(e) =>
-                  setWeight((prev) => ({ ...prev, date: e.target.value }))
+                  setWeight((prev) => ({
+                    ...prev,
+                    date: e.target.valueAsDate,
+                  }))
                 }
                 className="rounded-xl w-full"
               />
             </div>
+            {error && <p className="text-red-500">{error}</p>}
             <button
               className="my-8 flex items-center gap-2 justify-center py-4 px-3 rounded-xl hover:opacity-75 hover:transition ease-in-out duration-300 bg-black text-white w-full disabled:opacity-60"
               type="submit"
               disabled={buttonDisabled}
             >
               Add weight
-              {/* {loading && (
-                        <Image
-                          src="/loading.gif"
-                          width={35}
-                          height={35}
-                          alt="Loading gif"
-                        />
-                      )} */}
+              {loading && (
+                <Image
+                  src="/loading.gif"
+                  width={35}
+                  height={35}
+                  alt="Loading gif"
+                />
+              )}
             </button>
           </form>
         </div>
