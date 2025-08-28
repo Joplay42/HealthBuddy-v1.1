@@ -4,11 +4,12 @@ import Modal from "./Modal";
 import Image from "next/image";
 import { useFirebaseAuth } from "@/context/UserContext";
 import { Slide, toast } from "react-toastify";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Timestamp } from "firebase/firestore";
 
 export type userWeightProps = {
   number: number | undefined;
-  date: Date | undefined | null;
+  date: Date | undefined;
 };
 
 const AddWeights = () => {
@@ -24,11 +25,15 @@ const AddWeights = () => {
   // Hooks for the button
   const [buttonDisabled, setButtonDisabled] = useState<boolean>(true);
 
+  // Navigation params
   const router = useRouter();
+  const searchParams = useSearchParams();
 
-  // Get the userId to set the objective
+  // The context to get the currentUser
   const { user } = useFirebaseAuth();
-  const userId = user?.uid;
+
+  // Retrieve the url id
+  const id = searchParams.get("id");
 
   // UseEFfect to detect the button disability
   useEffect(() => {
@@ -38,6 +43,41 @@ const AddWeights = () => {
       setButtonDisabled(true);
     }
   }, [weight]);
+
+  // UseEffect to fetch the weight to update
+  useEffect(() => {
+    // Function to handle the item fetching if id in url
+    const fetchWeight = async () => {
+      try {
+        if (user) {
+          // Fetch the data
+          const res = await fetch(
+            `/api/workouts/weight?userid=${user.uid}&id=${id}`
+          );
+          const result = await res.json();
+
+          if (!res.ok) {
+            throw new Error(result.error || "Failed to fetch weight");
+          }
+
+          // Convert the date to a JS Date object
+          const weightData = {
+            ...result.data,
+            date: result.data.date ? new Date(result.data.date) : null,
+          };
+
+          // Store in state
+          setWeight(weightData);
+        }
+      } catch (error: any) {
+        // Error handling
+        console.error(error.message);
+      }
+    };
+    if (id) {
+      fetchWeight();
+    }
+  }, [user?.uid, id, router]);
 
   // Function to handle the range changes
   const handleChange = (nb: number, input: string, rawValue: string) => {
@@ -74,11 +114,33 @@ const AddWeights = () => {
       setLoading(true);
 
       // Check if a user was found
-      if (userId) {
-        const res = await fetch(`/api/workouts/weight?userid=${userId}`, {
-          method: "POST",
-          body: JSON.stringify(weight),
-        });
+      if (user) {
+        let payload = {
+          ...weight,
+          date:
+            weight.date instanceof Date
+              ? Timestamp.fromDate(weight.date)
+              : weight.date
+              ? Timestamp.fromDate(new Date(weight.date))
+              : null, // fallback if undefined
+        };
+
+        let res = null;
+
+        if (!id) {
+          res = await fetch(`/api/workouts/weight?userid=${user.uid}`, {
+            method: "POST",
+            body: JSON.stringify(payload),
+          });
+        } else {
+          res = await fetch(
+            `/api/workouts/weight?userid=${user.uid}&id=${id}`,
+            {
+              method: "PATCH",
+              body: JSON.stringify(payload),
+            }
+          );
+        }
 
         // Store the data
         const data = await res.json();
@@ -93,10 +155,14 @@ const AddWeights = () => {
         currentParams.delete("modal");
         // Push the router to the route without params
         router.replace(window.location.pathname);
+        // Succes messsage
+        const message = !id
+          ? "A new weight has been added!"
+          : "Weight has been updated";
 
         setTimeout(() => {
           // Notify the user
-          toast.success("A new weight has been added!", {
+          toast.success(message, {
             position: "bottom-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -141,15 +207,15 @@ const AddWeights = () => {
               <input
                 type="date"
                 value={
-                  weight?.date ? weight.date.toISOString().split("T")[0] : ""
+                  weight.date ? weight.date.toISOString().split("T")[0] : ""
                 }
-                onChange={(e) =>
-                  setWeight((prev) => ({
-                    ...prev,
-                    date: e.target.valueAsDate,
-                  }))
-                }
-                className="rounded-xl w-full"
+                onChange={(e) => {
+                  const [year, month, day] = e.target.value
+                    .split("-")
+                    .map(Number);
+                  const newDate = new Date(year, month - 1, day);
+                  setWeight((prev) => ({ ...prev, date: newDate }));
+                }}
               />
             </div>
             {error && <p className="text-red-500">{error}</p>}

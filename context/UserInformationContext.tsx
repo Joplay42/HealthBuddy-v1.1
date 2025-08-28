@@ -127,14 +127,20 @@ export const UserInformationProvider = ({
     };
 
     const fetchInitialWeight = async () => {
-      if (user && !userWeightInfo) {
+      if (user) {
         try {
-          // Fetch from the api
           const res = await fetch(`/api/workouts/weight?userid=${user.uid}`, {
             method: "GET",
           });
           const result = await res.json();
-          setUserWeightInfo(result);
+
+          // Convert each weight date to JS Date
+          const weights = result.data.map((w: any) => ({
+            ...w,
+            date: w.date ? new Date(w.date) : null,
+          }));
+
+          setUserWeightInfo(weights);
         } catch (error: any) {
           console.error(
             "Error fetching the initial userWeight : ",
@@ -218,19 +224,35 @@ export const UserInformationProvider = ({
           if (goalLoaded && infoLoaded && workoutLoaded) setLoading(false);
         });
 
-        // Weights listener
         const unsubscribeWeights = onSnapshot(colWeightRef, (snapshot) => {
           const weights = snapshot.docs.map((doc) => {
             const data = doc.data();
+
+            let dateObj: Date | null = null;
+
+            // Check if date exists
+            if (data.date) {
+              // Firestore raw timestamp object { seconds, nanoseconds }
+              if (data.date.seconds !== undefined) {
+                dateObj = new Date(data.date.seconds * 1000); // seconds → ms
+              }
+              // If somehow it's already a string
+              else if (typeof data.date === "string") {
+                dateObj = new Date(data.date);
+              }
+            }
+
             return {
               ...data,
-              date: data.date.toDate(), // Convert Firestore Timestamp -> JS Date
+              date: dateObj,
               Id: doc.id,
             };
           }) as userWeightProps[];
 
-          // Sort by date (newest first, oldest last)
-          weights.sort((a, b) => a.date.getTime() - b.date.getTime());
+          // Sort by date (oldest first)
+          weights.sort(
+            (a, b) => (a.date?.getTime() ?? 0) - (b.date?.getTime() ?? 0)
+          );
 
           setUserWeightInfo(weights);
           weightsLoaded = true;

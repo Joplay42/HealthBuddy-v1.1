@@ -4,6 +4,7 @@ import {
   collection,
   deleteDoc,
   doc,
+  getDoc,
   getDocs,
   setDoc,
   Timestamp,
@@ -18,6 +19,9 @@ export const GET = async (request: Request) => {
     // Get the userid
     const userId = searchParams.get("userid");
 
+    // Get the recipe id
+    const id = searchParams.get("id");
+
     // handle null values
     if (!userId) {
       return new NextResponse(
@@ -28,34 +32,82 @@ export const GET = async (request: Request) => {
       );
     }
 
-    // Get the firestore doc
-    const userWeightRef = doc(db, "UserWeights", userId);
-    const weightListRef = collection(userWeightRef, "weightList");
+    if (id) {
+      // Get the firestore doc
+      const userWeightRef = doc(db, "UserWeights", userId, "weightList", id);
 
-    const querySnapshot = await getDocs(weightListRef);
+      // Get the doc
+      const dataSnap = await getDoc(userWeightRef);
 
-    const data = querySnapshot.docs.map((doc) => ({
-      ...doc.data(),
-    }));
+      if (!dataSnap.data()) {
+        return new NextResponse(
+          JSON.stringify({
+            message: `No weight has been found of the id : ${id}`,
+          }),
+          { status: 404 }
+        );
+      } else {
+        const docData = dataSnap.data();
 
-    // Handle null values
-    if (!data.length) {
+        // Convert raw timestamp to JS Date
+        let dateObj: Date | null = null;
+        if (docData?.date?.seconds !== undefined) {
+          dateObj = new Date(docData.date.seconds * 1000); // convert seconds → ms
+        }
+
+        // Return the doc
+        return new NextResponse(
+          JSON.stringify({
+            message: "Document has been found",
+            data: {
+              ...docData,
+              date: dateObj, // JS Date object
+            },
+          }),
+          { status: 200 }
+        );
+      }
+    } else {
+      // Get the firestore doc
+      const userWeightRef = doc(db, "UserWeights", userId);
+      const weightListRef = collection(userWeightRef, "weightList");
+
+      const querySnapshot = await getDocs(weightListRef);
+
+      const data = querySnapshot.docs.map((doc) => {
+        const docData = doc.data();
+
+        let dateObj: Date | null = null;
+
+        if (docData.date?.seconds !== undefined) {
+          dateObj = new Date(docData.date.seconds * 1000);
+        }
+
+        return {
+          ...docData,
+          date: dateObj,
+        };
+      });
+
+      // Handle null values
+      if (!data.length) {
+        return new NextResponse(
+          JSON.stringify({
+            message: `No weights has been found for the user ${userId}`,
+          }),
+          { status: 404 }
+        );
+      }
+
+      // Return the doc
       return new NextResponse(
         JSON.stringify({
-          message: `No weights has been found for the user ${userId}`,
+          message: "Documents has been found",
+          data,
         }),
-        { status: 404 }
+        { status: 200 }
       );
     }
-
-    // Return the doc
-    return new NextResponse(
-      JSON.stringify({
-        message: "Document has been found",
-        data,
-      }),
-      { status: 200 }
-    );
   } catch (error: any) {
     // Return new error response
     return new NextResponse(
@@ -108,18 +160,12 @@ export const POST = async (request: Request) => {
       );
     }
 
-    const dateObj = new Date(date);
-    const firestoreDate = Timestamp.fromDate(dateObj);
-
     // Create a new object to databases
     const userWeightRef = doc(db, "UserWeights", userId);
     const userWeightlistRef = collection(userWeightRef, "weightList");
 
     // Set the doc with the recipe
-    const newDoc = await addDoc(userWeightlistRef, {
-      ...body,
-      date: firestoreDate,
-    });
+    const newDoc = await addDoc(userWeightlistRef, body);
     // Set the docId
     await setDoc(newDoc, { Id: newDoc.id }, { merge: true });
 

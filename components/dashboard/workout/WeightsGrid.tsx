@@ -1,9 +1,48 @@
 "use client";
 import WeightsGridSqueleton from "@/components/Squeleton/WeightsGridSqueleton";
-import { WeightsGridProps } from "@/types";
+import { useFirebaseAuth } from "@/context/UserContext";
+import { userWeightProps, WeightsGridProps } from "@/types";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const WeightsGrid = ({ weight, loading }: WeightsGridProps) => {
+  // Fetch the user
+  const { user } = useFirebaseAuth();
+
+  // Router naviation hook
+  const router = useRouter();
+
+  // Loading states
+  const [deletionLoading, setDeletionLoading] = useState(false);
+
+  // Function to delete the weight
+  const handleDeletion = async (weight: userWeightProps) => {
+    try {
+      // Enabled the deletion loading
+      setDeletionLoading(true);
+      // Check if there is id
+      if (weight.Id) {
+        // Call the library api DELETE method
+        const res = await fetch(
+          `/api/workouts/weight?userid=${user?.uid}&del=${weight.Id}`,
+          {
+            method: "DELETE",
+          }
+        );
+
+        const data = await res.json();
+        if (!res.ok) {
+          throw new Error(data.error);
+        }
+      }
+    } catch (error: any) {
+      console.log(error.message);
+    } finally {
+      setDeletionLoading(false);
+    }
+  };
+
   if (loading) return <WeightsGridSqueleton />;
 
   return (
@@ -36,6 +75,36 @@ const WeightsGrid = ({ weight, loading }: WeightsGridProps) => {
             >
               <td className="py-2">{entry.number} lb</td>
               <td className="py-2">{entry.date.toDateString()}</td>
+              <td>
+                <button
+                  disabled={deletionLoading}
+                  className={`${deletionLoading && `opacity-30`}`}
+                  onClick={() =>
+                    router.push(`?modal=weight&id=${entry.Id}`, {
+                      scroll: false,
+                    })
+                  }
+                >
+                  <Image
+                    src={"/edit.svg"}
+                    height={20}
+                    width={20}
+                    alt="Delete icon"
+                  />
+                </button>
+                <button
+                  disabled={deletionLoading}
+                  className={`${deletionLoading && `opacity-30`}`}
+                  onClick={() => handleDeletion(entry)}
+                >
+                  <Image
+                    src={"/trash.svg"}
+                    height={20}
+                    width={20}
+                    alt="Delete icon"
+                  />
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>
