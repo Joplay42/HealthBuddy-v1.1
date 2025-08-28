@@ -134,13 +134,15 @@ export const UserInformationProvider = ({
           });
           const result = await res.json();
 
-          // Convert each weight date to JS Date
-          const weights = result.data.map((w: any) => ({
-            ...w,
-            date: w.date ? new Date(w.date) : null,
-          }));
+          if (!result) {
+            // Convert each weight date to JS Date
+            const weights = result.data.map((w: any) => ({
+              ...w,
+              date: w.date ? new Date(w.date) : null,
+            }));
 
-          setUserWeightInfo(weights);
+            setUserWeightInfo(weights);
+          }
         } catch (error: any) {
           console.error(
             "Error fetching the initial userWeight : ",
