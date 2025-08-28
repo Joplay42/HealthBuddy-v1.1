@@ -91,19 +91,19 @@ const WorkoutPlan = ({
               ))}
             <p className="font-medium">
               Not satisfied?{" "}
-              <button
+              <span
                 onClick={() => setIndex("3")}
                 className="font-bold text-custom-green hover:text-lime-400 hover:cursor-pointer"
               >
                 Create your own plan
-              </button>{" "}
+              </span>{" "}
               or{" "}
-              <button
+              <span
                 onClick={() => changeWorkout()}
                 className="font-bold text-custom-green hover:text-lime-400 hover:cursor-pointer"
               >
                 keep looking
-              </button>
+              </span>
             </p>
           </div>
           <button
