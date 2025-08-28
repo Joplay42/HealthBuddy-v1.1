@@ -28,12 +28,8 @@ const CalendarDay = ({
           {weekDay.date.toDateString().substring(0, 1)}
         </p>
       </div>
-      <div
-        className={`relative font-medium pb-4 md:pb-6 pt-8 md:pt-12 ${
-          weekDay.date.getDate() === today ? `text-white` : `text-neutral-500`
-        }`}
-      >
-        {!weekDay.workout.name.startsWith("Rest") && (
+      <div className="relative font-medium pb-4 md:pb-6 pt-8 md:pt-12 text-neutral-500">
+        {!weekDay.workout?.name.startsWith("Rest") && (
           <div className="absolute bg-black rounded-full w-2 h-2 left-1/2 -translate-x-1/2 bottom-12 md:bottom-24" />
         )}
         <p className="text-lg md:text-2xl">{weekDay.date.getDate()}</p>

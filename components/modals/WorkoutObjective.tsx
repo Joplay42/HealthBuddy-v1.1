@@ -165,6 +165,7 @@ const WorkoutObjective = () => {
           body: JSON.stringify({
             workoutPlan: plan,
             objectiveWeight: userCriteria.weightObjective,
+            currentWeight: userCriteria.currentWeight,
             months: userCriteria.timeRange,
           }),
         });

@@ -1,5 +1,13 @@
 import { db } from "@/config/firebase";
-import { deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
+import { BodyWeightProps, userWeightProps } from "@/types";
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  getDoc,
+  setDoc,
+} from "firebase/firestore";
 import { NextResponse } from "next/server";
 
 export const GET = async (request: Request) => {
@@ -85,11 +93,12 @@ export const POST = async (request: Request) => {
     const {
       workoutPlan: { title, desc, days },
       objectiveWeight,
+      currentWeight,
       months,
     } = body;
 
     // Check any missing attribute
-    if (!objectiveWeight || !months || !title || !desc) {
+    if (!objectiveWeight || !currentWeight || !months || !title || !desc) {
       return new NextResponse(
         JSON.stringify({
           message: "Missing object attribute",
@@ -98,11 +107,22 @@ export const POST = async (request: Request) => {
       );
     }
 
-    // reference of the users doc
+    // reference of the userWorkout doc
     const userGoalDocRef = doc(db, "UserWorkouts", userId);
-
     // Set the new doc
     const userGoal = await setDoc(userGoalDocRef, body);
+
+    // Reference the userWeights doc
+    const userWeightRef = doc(db, "UserWeights", userId);
+    const userWeightlistRef = collection(userWeightRef, "weightList");
+
+    // Create new weight object
+    const weight: userWeightProps = { number: currentWeight, date: new Date() };
+
+    // Set the doc with the recipe
+    const newDoc = await addDoc(userWeightlistRef, weight);
+    // Set the docId
+    await setDoc(newDoc, { Id: newDoc.id }, { merge: true });
 
     // Return success message
     return new NextResponse(
