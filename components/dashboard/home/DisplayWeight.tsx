@@ -77,16 +77,39 @@ const DisplayWeight = ({ weight, objective, loading }: DisplayWeightProps) => {
     maintainAspectRatio: false,
   };
 
-  const labels = weight.map((entry) =>
+  let labels = weight.map((entry) =>
     entry.date.toLocaleDateString("en-US", { month: "short", day: "numeric" })
   );
+
+  // If only one weight, add a "future" label to make the chart wider
+  if (labels.length === 1) {
+    const firstDate = weight[0].date;
+    const extraDate = new Date(firstDate);
+    extraDate.setDate(extraDate.getDate() + 1); // add 1 day
+    labels = [
+      firstDate.toLocaleDateString("en-US", { month: "short", day: "numeric" }),
+      extraDate.toLocaleDateString("en-US", { month: "short", day: "numeric" }),
+    ];
+  }
+
+  // Weight data
+  let weightData: number[];
+  if (weight.length === 1) {
+    // Duplicate value so a flat line is drawn
+    weightData = [weight[0].number, weight[0].number];
+  } else {
+    weightData = weight.map((entry) => entry.number);
+  }
+
+  // Objective data (flat line)
+  const objectiveData = labels.map(() => objective.objectiveWeight);
 
   const data = {
     labels,
     datasets: [
       {
         fill: true,
-        data: weight.map((entry) => entry.number),
+        data: weightData,
         borderColor: "#AFF921",
         backgroundColor: "#ffffff00",
         tension: 0.3,
@@ -94,7 +117,7 @@ const DisplayWeight = ({ weight, objective, loading }: DisplayWeightProps) => {
       {
         label: "objective",
         fill: true,
-        data: labels.map((entry) => objective.objectiveWeight),
+        data: objectiveData,
         borderColor: "#656565",
         backgroundColor: "#ffffff00",
         borderDash: [5, 5],
