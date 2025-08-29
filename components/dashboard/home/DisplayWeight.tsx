@@ -19,6 +19,26 @@ const DisplayWeight = ({ weight, objective, loading }: DisplayWeightProps) => {
   // Hooks for the router
   const router = useRouter();
 
+  // Function to find the smallest weight number
+  const findSmallest = () => {
+    if (weight.length === 1) return -1;
+
+    // Smallest
+    let min = weight[0].number;
+
+    weight.forEach((w) => {
+      if (w.number < min) {
+        min = w.number;
+      }
+    });
+
+    return min;
+
+    return min;
+  };
+
+  const smallestIndex = findSmallest();
+
   ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -54,7 +74,8 @@ const DisplayWeight = ({ weight, objective, loading }: DisplayWeightProps) => {
     },
     scales: {
       y: {
-        min: objective.objectiveWeight - 6,
+        min:
+          smallestIndex !== -1 ? smallestIndex : objective.objectiveWeight - 6,
         ticks: {
           font: {
             family: '"Montserrat", sans-serif',
