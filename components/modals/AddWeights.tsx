@@ -206,6 +206,7 @@ const AddWeights = () => {
               <label className="font-semibold text-lg">Date</label>
               <input
                 type="date"
+                max={new Date().toISOString().split("T")[0]}
                 value={
                   weight.date ? weight.date.toISOString().split("T")[0] : ""
                 }
