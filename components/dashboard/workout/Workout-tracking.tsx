@@ -50,27 +50,28 @@ const WorkoutTracking = () => {
         />
       </div>
       {userWorkoutObjectiveInfo.workoutPlan.days.length !== 0 && (
-        <div data-aos="fade-up" data-aos-delay="200" data-aos-duration="300">
-          <WorkoutSchedule
-            todaysWorkout={todaysWorkout}
-            selectedDay={selectedDays}
-            loading={loading}
-          />
-        </div>
+        <>
+          <div data-aos="fade-up" data-aos-delay="200" data-aos-duration="300">
+            <WorkoutSchedule
+              todaysWorkout={todaysWorkout}
+              selectedDay={selectedDays}
+              loading={loading}
+            />
+          </div>
+          <div
+            className="col-span-full"
+            data-aos="fade-up"
+            data-aos-delay="200"
+            data-aos-duration="300"
+          >
+            <BodyWeight
+              weight={userWeightInfo}
+              objective={userWorkoutObjectiveInfo}
+              loading={loading}
+            />
+          </div>
+        </>
       )}
-
-      <div
-        className="col-span-full"
-        data-aos="fade-up"
-        data-aos-delay="200"
-        data-aos-duration="300"
-      >
-        <BodyWeight
-          weight={userWeightInfo}
-          objective={userWorkoutObjectiveInfo}
-          loading={loading}
-        />
-      </div>
     </div>
   );
 };
