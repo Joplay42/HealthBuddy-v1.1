@@ -33,8 +33,6 @@ const DisplayWeight = ({ weight, objective, loading }: DisplayWeightProps) => {
     });
 
     return min;
-
-    return min;
   };
 
   const smallestIndex = findSmallest();
@@ -75,7 +73,11 @@ const DisplayWeight = ({ weight, objective, loading }: DisplayWeightProps) => {
     scales: {
       y: {
         min:
-          smallestIndex !== -1 ? smallestIndex : objective.objectiveWeight - 6,
+          Math.min(
+            smallestIndex !== -1 ? smallestIndex : weight[0].number,
+            objective.objectiveWeight
+          ) - 5,
+
         ticks: {
           font: {
             family: '"Montserrat", sans-serif',
@@ -133,7 +135,6 @@ const DisplayWeight = ({ weight, objective, loading }: DisplayWeightProps) => {
         data: weightData,
         borderColor: "#AFF921",
         backgroundColor: "#ffffff00",
-        tension: 0.3,
       },
       {
         label: "objective",

@@ -234,6 +234,7 @@ export const PATCH = async (request: Request) => {
 
     // Update the doc
     const updateWeight = await setDoc(docRef, {
+      Id: weightId,
       number,
       date,
     });

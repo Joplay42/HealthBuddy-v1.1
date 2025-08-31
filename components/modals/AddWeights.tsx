@@ -6,15 +6,16 @@ import { useFirebaseAuth } from "@/context/UserContext";
 import { Slide, toast } from "react-toastify";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Timestamp } from "firebase/firestore";
+import { userWeightProps } from "@/types";
 
-export type userWeightProps = {
+export type weight = {
   number: number | undefined;
   date: Date | undefined;
 };
 
 const AddWeights = () => {
   // Hooks for the weight object
-  const [weight, setWeight] = useState<userWeightProps>({
+  const [weight, setWeight] = useState<weight>({
     number: undefined,
     date: undefined,
   });
@@ -33,7 +34,7 @@ const AddWeights = () => {
   const { user } = useFirebaseAuth();
 
   // Retrieve the url id
-  const id = searchParams.get("id");
+  let id = searchParams.get("id");
 
   // UseEFfect to detect the button disability
   useEffect(() => {
@@ -125,6 +126,30 @@ const AddWeights = () => {
               : null, // fallback if undefined
         };
 
+        // Get the user weight data
+        const weightRes = await fetch(
+          `/api/workouts/weight?userid=${user.uid}`,
+          {
+            method: "GET",
+          }
+        );
+
+        // Store the weights array
+        const weightData = await weightRes.json();
+        const weights = weightData.data;
+
+        if (weights) {
+          // Check if the date is the same as in the database
+          weights.forEach((item: userWeightProps) => {
+            // If another date as the same date
+            if (weight.date?.toISOString() === item.date.toString()) {
+              // Add the id
+              if (item.Id) id = item.Id;
+            }
+          });
+        }
+
+        // Response to POST or PATCH
         let res = null;
 
         if (!id) {
