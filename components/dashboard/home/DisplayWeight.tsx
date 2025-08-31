@@ -23,8 +23,76 @@ const DisplayWeight = ({ weight, objective, loading }: DisplayWeightProps) => {
   // Hook for the objective view
   const [showObjective, setObjectiveDisplay] = useState<boolean>(false);
 
-  if (loading || !weight || weight.length === 0)
-    return <DisplayWeightSqueleton />;
+  if (loading) return <DisplayWeightSqueleton />;
+
+  if (!weight || weight.length === 0) {
+    ChartJS.register(
+      CategoryScale,
+      LinearScale,
+      PointElement,
+      LineElement,
+      Title,
+      Tooltip,
+      Filler,
+      Legend
+    );
+    // Empty chart data
+    const emptyData = {
+      labels: [], // no labels
+      datasets: [
+        {
+          label: "Weight",
+          data: [], // no points
+          borderColor: "#AFF921",
+          backgroundColor: "#ffffff00",
+          fill: true,
+        },
+      ],
+    };
+    // Empty chart options
+    const emptyOptions = {
+      responsive: true,
+      plugins: {
+        tooltip: { enabled: false }, // no tooltips
+        legend: { display: false }, // hide legend
+        title: { display: false },
+      },
+      scales: {
+        y: {
+          min: 0,
+          max: 200, // or any reasonable default range
+          ticks: {
+            font: {
+              family: '"Montserrat", sans-serif',
+              size: 12,
+            },
+            stepSize: 50,
+          },
+          grid: {
+            color: "#e5e5e5",
+          },
+        },
+        x: {
+          ticks: {
+            font: {
+              family: '"Montserrat", sans-serif',
+              size: 12,
+            },
+          },
+          grid: {
+            color: "#e5e5e5",
+          },
+        },
+      },
+      maintainAspectRatio: false,
+    };
+    // Render an empty chart or a placeholder grid
+    return (
+      <div className={`relative h-full w-full mt-6`}>
+        <Line options={emptyOptions} data={emptyData} />
+      </div>
+    );
+  }
 
   // Function to find the smallest weight number
   const findSmallest = () => {
@@ -162,12 +230,33 @@ const DisplayWeight = ({ weight, objective, loading }: DisplayWeightProps) => {
   return (
     <div className={`relative h-full w-full mt-6`}>
       <div className="absolute right-4 -top-10 space-x-2 font-semibold text-md flex items-center">
-        <input
-          type="checkbox"
-          checked={showObjective}
-          onChange={() => setObjectiveDisplay(!showObjective)}
-          className="h-5 w-5"
-        />
+        <div className="inline-flex items-center">
+          <label className="flex items-center cursor-pointer relative">
+            <input
+              type="checkbox"
+              checked={showObjective}
+              onChange={() => setObjectiveDisplay(!showObjective)}
+              className="peer h-5 w-5 cursor-pointer transition-all appearance-none rounded shadow hover:shadow-md border border-slate-300 checked:bg-slate-800 checked:border-slate-800"
+              id="check"
+            />
+            <span className="absolute text-white opacity-0 peer-checked:opacity-100 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-3.5 w-3.5"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                stroke="currentColor"
+                stroke-width="1"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clipRule="evenodd"
+                ></path>
+              </svg>
+            </span>
+          </label>
+        </div>
         <label>Show objective</label>
       </div>
       <Line options={options} data={data} />

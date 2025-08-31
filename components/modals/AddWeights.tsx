@@ -38,7 +38,11 @@ const AddWeights = () => {
 
   // UseEFfect to detect the button disability
   useEffect(() => {
-    if (weight?.number !== undefined && weight?.date !== undefined) {
+    if (
+      weight?.number !== undefined &&
+      weight?.date !== undefined &&
+      weight.number > 0
+    ) {
       setButtonDisabled(false);
     } else {
       setButtonDisabled(true);
