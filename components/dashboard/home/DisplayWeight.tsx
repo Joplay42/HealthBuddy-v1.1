@@ -13,11 +13,18 @@ import {
   Legend,
 } from "chart.js";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { Line } from "react-chartjs-2";
 
 const DisplayWeight = ({ weight, objective, loading }: DisplayWeightProps) => {
   // Hooks for the router
   const router = useRouter();
+
+  // Hook for the objective view
+  const [showObjective, setObjectiveDisplay] = useState<boolean>(false);
+
+  if (loading || !weight || weight.length === 0)
+    return <DisplayWeightSqueleton />;
 
   // Function to find the smallest weight number
   const findSmallest = () => {
@@ -72,11 +79,10 @@ const DisplayWeight = ({ weight, objective, loading }: DisplayWeightProps) => {
     },
     scales: {
       y: {
-        min:
-          Math.min(
-            smallestIndex !== -1 ? smallestIndex : weight[0].number,
-            objective.objectiveWeight
-          ) - 5,
+        min: Math.min(
+          smallestIndex !== -1 ? smallestIndex - 2 : weight[0].number - 2,
+          showObjective ? objective.objectiveWeight - 5 : smallestIndex - 2
+        ),
 
         ticks: {
           font: {
@@ -127,30 +133,43 @@ const DisplayWeight = ({ weight, objective, loading }: DisplayWeightProps) => {
   // Objective data (flat line)
   const objectiveData = labels.map(() => objective.objectiveWeight);
 
+  // Dynamically display the objective
+  const datasets: any[] = [
+    {
+      fill: true,
+      data: weightData,
+      borderColor: "#AFF921",
+      backgroundColor: "#ffffff00",
+    },
+  ];
+
+  if (showObjective) {
+    datasets.push({
+      label: "Objective",
+      fill: true,
+      data: objectiveData,
+      borderColor: "#656565",
+      backgroundColor: "#ffffff00",
+      borderDash: [5, 5],
+    });
+  }
+
   const data = {
     labels,
-    datasets: [
-      {
-        fill: true,
-        data: weightData,
-        borderColor: "#AFF921",
-        backgroundColor: "#ffffff00",
-      },
-      {
-        label: "objective",
-        fill: true,
-        data: objectiveData,
-        borderColor: "#656565",
-        backgroundColor: "#ffffff00",
-        borderDash: [5, 5],
-      },
-    ],
+    datasets,
   };
 
-  if (loading) return <DisplayWeightSqueleton />;
-
   return (
-    <div className={`relative h-full w-full`}>
+    <div className={`relative h-full w-full mt-6`}>
+      <div className="absolute right-4 -top-10 space-x-2 font-semibold text-md flex items-center">
+        <input
+          type="checkbox"
+          checked={showObjective}
+          onChange={() => setObjectiveDisplay(!showObjective)}
+          className="h-5 w-5"
+        />
+        <label>Show objective</label>
+      </div>
       <Line options={options} data={data} />
     </div>
   );
