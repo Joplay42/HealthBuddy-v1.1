@@ -10,6 +10,7 @@ const WorkoutPlan = ({
   setPlan,
   setIndex,
   submit,
+  loading,
 }: {
   plan: WorkoutPlanProps;
   setPlan: Dispatch<SetStateAction<WorkoutPlanProps>>;
@@ -18,6 +19,7 @@ const WorkoutPlan = ({
     e: React.FormEvent<HTMLFormElement>,
     plan: WorkoutPlanProps | UserWorkoutPlanProps
   ) => void;
+  loading: boolean;
 }) => {
   // Router hooks
   const router = useRouter();
@@ -109,17 +111,17 @@ const WorkoutPlan = ({
           <button
             className="mt-8 flex items-center gap-2 justify-center py-2 rounded-xl hover:opacity-75 hover:transition ease-in-out duration-300 bg-black text-white w-full disabled:opacity-60 text-sm"
             type="submit"
-            // disabled={loading || disableButton}
+            disabled={loading}
           >
             Select
-            {/* {loading && (
+            {loading && (
               <Image
                 src="/loading.gif"
                 width={25}
                 height={25}
                 alt="Loading gif"
               />
-            )} */}
+            )}
           </button>
         </form>
         <Image

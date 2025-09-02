@@ -6,7 +6,12 @@ import {
   deleteDoc,
   doc,
   getDoc,
+  getDocs,
+  query,
   setDoc,
+  Timestamp,
+  updateDoc,
+  where,
 } from "firebase/firestore";
 import { NextResponse } from "next/server";
 
@@ -116,22 +121,52 @@ export const POST = async (request: Request) => {
     const userWeightRef = doc(db, "UserWeights", userId);
     const userWeightlistRef = collection(userWeightRef, "weightList");
 
-    // Create new weight object
-    const weight: userWeightProps = { number: currentWeight, date: new Date() };
+    // Define today boundaries
+    const startOfDay = new Date();
+    startOfDay.setHours(0, 0, 0, 0);
 
-    // Set the doc with the recipe
-    const newDoc = await addDoc(userWeightlistRef, weight);
-    // Set the docId
-    await setDoc(newDoc, { Id: newDoc.id }, { merge: true });
+    const endOfDay = new Date();
+    endOfDay.setHours(23, 59, 59, 999);
 
-    // Return success message
-    return new NextResponse(
-      JSON.stringify({
-        message: "Objective has been created",
-        data: userGoal,
-      }),
-      { status: 200 }
+    // Query for today's entry
+    const q = query(
+      userWeightlistRef,
+      where("date", ">=", Timestamp.fromDate(startOfDay)),
+      where("date", "<=", Timestamp.fromDate(endOfDay))
     );
+
+    const querySnapshot = await getDocs(q);
+
+    if (!querySnapshot.empty) {
+      // Update existing weight for today
+      const existingDoc = querySnapshot.docs[0].ref;
+      await updateDoc(existingDoc, {
+        number: currentWeight,
+        date: new Date(),
+      });
+
+      // Return success message
+      return new NextResponse(
+        JSON.stringify({
+          message: "Weight updated for today",
+        }),
+        { status: 200 }
+      );
+    } else {
+      // Create new weight entry
+      const weight = { number: currentWeight, date: new Date() };
+      const newDoc = await addDoc(userWeightlistRef, weight);
+      await setDoc(newDoc, { Id: newDoc.id }, { merge: true });
+
+      // Return success message
+      return new NextResponse(
+        JSON.stringify({
+          message: "Weight added",
+          data: newDoc,
+        }),
+        { status: 201 }
+      );
+    }
   } catch (error: any) {
     return new NextResponse(
       JSON.stringify({

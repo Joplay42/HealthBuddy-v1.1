@@ -25,6 +25,7 @@ const WorkoutObjective = () => {
   const router = useRouter();
 
   // Loading state
+  const [finding, setFinding] = useState(false);
   const [loading, setLoading] = useState(false);
   // Error state
   const [error, setError] = useState<string>();
@@ -71,7 +72,7 @@ const WorkoutObjective = () => {
       // Prevent page reload
       e.preventDefault();
       // Activate the loading state
-      setLoading(true);
+      setFinding(true);
 
       // The current best plan
       let bestPlan = workoutPlans[0];
@@ -97,9 +98,8 @@ const WorkoutObjective = () => {
       // Simulate a loading time for the ux
       setTimeout(() => {
         // Remove the loading state
-        setLoading(false);
+        setFinding(false);
       }, 7000);
-      console.log(JSON.stringify({ userCriteria }));
     }
   };
 
@@ -218,13 +218,14 @@ const WorkoutObjective = () => {
         />
       )}
       {/** Handle the loading states */}
-      {loading && <WorkoutFindingLoading />}
-      {index === "2" && loading != true && (
+      {finding && <WorkoutFindingLoading />}
+      {index === "2" && finding != true && (
         <WorkoutPlan
           plan={workoutPlan}
           setPlan={setworkoutPlan}
           setIndex={updateParams}
           submit={handleSubmit}
+          loading={loading}
         />
       )}
       {index === "3" && <CreateWorkoutPlan submit={handleSubmit} />}
