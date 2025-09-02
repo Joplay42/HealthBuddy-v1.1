@@ -255,12 +255,12 @@ const DisplayWeight = ({ weight, objective, loading }: DisplayWeightProps) => {
 
   return (
     <div className={`relative h-full w-full mt-6`}>
-      <div className="absolute left-0 -top-14">
+      <div className="absolute -top-12 space-x-2 font-semibold text-md flex items-center justify-between w-full">
         <div className="inline-flex items-center gap-2">
           <select
             value={timeDisplay}
             onChange={(e) => setTimeDisplay(parseInt(e.target.value))}
-            className="w-fit rounded-lg h-auto "
+            className="w-fit rounded-lg h-9 text-sm"
           >
             <option value="7">1 week</option>
             <option value="30" defaultChecked>
@@ -272,10 +272,8 @@ const DisplayWeight = ({ weight, objective, loading }: DisplayWeightProps) => {
           </select>
           <label className="font-semibold">Display</label>
         </div>
-      </div>
-      <div className="absolute right-4 -top-10 space-x-2 font-semibold text-md flex items-center">
-        <div className="inline-flex items-center">
-          <label className="flex items-center cursor-pointer relative">
+        <div className="inline-flex items-center gap-2">
+          <div className="flex items-center cursor-pointer relative">
             <input
               type="checkbox"
               checked={showObjective}
@@ -299,9 +297,9 @@ const DisplayWeight = ({ weight, objective, loading }: DisplayWeightProps) => {
                 ></path>
               </svg>
             </span>
-          </label>
+          </div>
+          <label>Show objective</label>
         </div>
-        <label>Show objective</label>
       </div>
       <Line options={options} data={data} />
     </div>
