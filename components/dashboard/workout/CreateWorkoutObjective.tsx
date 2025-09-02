@@ -205,7 +205,7 @@ const CreateWorkoutObjective = ({
         </div>
         <div className="md:flex items-center justify-between space-x-4">
           <div className="flex items-center space-x-4">
-            <div className="space-y-4 mt-6 lg:mt-10 w-full md:w-1/3">
+            <div className="space-y-4 mt-6 lg:mt-10 w-full md:w-1/2">
               {/** Handle errors */}
               <label className="font-semibold text-lg">Current weight</label>
               <input
@@ -223,7 +223,7 @@ const CreateWorkoutObjective = ({
                 placeholder="ex. 175"
               />
             </div>
-            <div className="space-y-4 mt-6 lg:mt-10 w-full md:w-1/3">
+            <div className="space-y-4 mt-6 lg:mt-10 w-full md:w-1/2">
               {/** Handle errors */}
               <label className="font-semibold text-lg">Weight goal</label>
               <input
