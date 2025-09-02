@@ -105,10 +105,10 @@ const CreateWorkoutObjective = ({
           <label className="font-semibold text-lg">
             Overall weight objective
           </label>
-          <div className="flex items-center justify-between space-x-4">
+          <div className="md:flex items-center justify-between space-y-4 md:space-y-0">
             <button
               type="button"
-              className={`flex items-center justify-center w-full font-medium border-2 border-neutral-500 rounded-lg py-2 ${
+              className={`flex items-center justify-center w-full md:w-[30%] font-medium border-2 border-neutral-500 rounded-lg py-2 ${
                 objectiveAlgorithm.objective === "Lose" &&
                 "bg-neutral-500 text-white"
               }`}
@@ -140,7 +140,7 @@ const CreateWorkoutObjective = ({
             </button>
             <button
               type="button"
-              className={`flex items-center justify-center w-full font-medium border-2 border-neutral-500 rounded-lg py-2 ${
+              className={`flex items-center justify-center w-full md:w-[30%] font-medium border-2 border-neutral-500 rounded-lg py-2 ${
                 objectiveAlgorithm.objective === "Gain" &&
                 "bg-neutral-500 text-white"
               }`}
@@ -172,7 +172,7 @@ const CreateWorkoutObjective = ({
             </button>
             <button
               type="button"
-              className={`flex items-center justify-center w-full font-medium border-2 border-neutral-500 rounded-lg py-2 ${
+              className={`flex items-center justify-center w-full md:w-[30%] font-medium border-2 border-neutral-500 rounded-lg py-2 ${
                 objectiveAlgorithm.objective === "Maintain" &&
                 "bg-neutral-500 text-white"
               }`}
@@ -203,42 +203,44 @@ const CreateWorkoutObjective = ({
             </button>
           </div>
         </div>
-        <div className="flex items-center justify-between space-x-4">
-          <div className="space-y-4 mt-6 lg:mt-10 w-1/3">
-            {/** Handle errors */}
-            <label className="font-semibold text-lg">Current weight</label>
-            <input
-              value={objectiveAlgorithm.currentWeight ?? ""}
-              onChange={(e) =>
-                handleChange(
-                  e.target.valueAsNumber,
-                  "currentWeight",
-                  e.target.value
-                )
-              }
-              type="number"
-              name="weight"
-              className="border-black rounded-xl w-full"
-              placeholder="ex. 175"
-            />
-          </div>
-          <div className="space-y-4 mt-6 lg:mt-10 w-1/3">
-            {/** Handle errors */}
-            <label className="font-semibold text-lg">Weight goal</label>
-            <input
-              value={objectiveAlgorithm.weightObjective ?? ""}
-              onChange={(e) =>
-                handleChange(
-                  e.target.valueAsNumber,
-                  "weightObjective",
-                  e.target.value
-                )
-              }
-              type="number"
-              name="weight"
-              className="border-black rounded-xl w-full"
-              placeholder="ex. 175"
-            />
+        <div className="md:flex items-center justify-between space-x-4">
+          <div className="flex items-center space-x-4">
+            <div className="space-y-4 mt-6 lg:mt-10 w-full md:w-1/3">
+              {/** Handle errors */}
+              <label className="font-semibold text-lg">Current weight</label>
+              <input
+                value={objectiveAlgorithm.currentWeight ?? ""}
+                onChange={(e) =>
+                  handleChange(
+                    e.target.valueAsNumber,
+                    "currentWeight",
+                    e.target.value
+                  )
+                }
+                type="number"
+                name="weight"
+                className="border-black rounded-xl w-full"
+                placeholder="ex. 175"
+              />
+            </div>
+            <div className="space-y-4 mt-6 lg:mt-10 w-full md:w-1/3">
+              {/** Handle errors */}
+              <label className="font-semibold text-lg">Weight goal</label>
+              <input
+                value={objectiveAlgorithm.weightObjective ?? ""}
+                onChange={(e) =>
+                  handleChange(
+                    e.target.valueAsNumber,
+                    "weightObjective",
+                    e.target.value
+                  )
+                }
+                type="number"
+                name="weight"
+                className="border-black rounded-xl w-full"
+                placeholder="ex. 175"
+              />
+            </div>
           </div>
           <div className="space-y-4 mt-6 lg:mt-10 w-full">
             {/** Handle errors */}
@@ -265,7 +267,7 @@ const CreateWorkoutObjective = ({
         <div className="space-y-4 mt-6">
           {/** Handle errors */}
           <label className="font-semibold text-lg">Intensity</label>
-          <div className="flex items-center justify-between space-x-4">
+          <div className="flex items-center justify-between space-x-2 sm:space-x-4">
             <div className="w-full text-center space-y-2">
               <button
                 type="button"
@@ -331,7 +333,7 @@ const CreateWorkoutObjective = ({
         <div className="space-y-4 mt-6 mb-20">
           {/** Handle errors */}
           <label className="font-semibold text-lg">Experience level</label>
-          <div className="flex items-center justify-between space-x-4">
+          <div className="flex items-center justify-between space-x-1 sm:space-x-4">
             <div className="w-full text-center space-y-2">
               <button
                 type="button"

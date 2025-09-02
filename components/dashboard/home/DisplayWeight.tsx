@@ -254,9 +254,9 @@ const DisplayWeight = ({ weight, objective, loading }: DisplayWeightProps) => {
   };
 
   return (
-    <div className={`relative h-full w-full mt-6`}>
-      <div className="absolute -top-12 space-x-2 font-semibold text-md flex items-center justify-between w-full">
-        <div className="inline-flex items-center gap-2">
+    <div className="relative h-full w-full mt-14 md:mt-6">
+      <div className="absolute -top-20 md:-top-12 font-semibold text-md space-y-2 md:space-y-0 flex flex-wrap items-center justify-between w-full">
+        <div className="inline-flex items-center space-x-2">
           <select
             value={timeDisplay}
             onChange={(e) => setTimeDisplay(parseInt(e.target.value))}
@@ -272,7 +272,7 @@ const DisplayWeight = ({ weight, objective, loading }: DisplayWeightProps) => {
           </select>
           <label className="font-semibold">Display</label>
         </div>
-        <div className="inline-flex items-center gap-2">
+        <div className="inline-flex items-center space-x-2">
           <div className="flex items-center cursor-pointer relative">
             <input
               type="checkbox"

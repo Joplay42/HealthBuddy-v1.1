@@ -14,15 +14,27 @@ const BodyWeight = ({ weight, objective, loading }: BodyWeightProps) => {
         <h1 className="font-bold text-xl">Body weights</h1>
         {/** Button to add  a new food item */}
         <button
-          className="w-fit bg-black text-white px-3 py-2 rounded-2xl text-center hover:opacity-75 hover:cursor-pointer"
+          className="hidden sm:block w-fit bg-black text-white px-3 py-2 rounded-2xl text-center hover:opacity-75 hover:cursor-pointer"
           onClick={() => {
             router.push("?modal=weight", { scroll: false });
           }}
         >
           Add weights +
         </button>
+        <button
+          className="sm:hidden w-fit bg-black text-white px-3 py-2 rounded-2xl text-center hover:opacity-75 hover:cursor-pointer"
+          onClick={() => {
+            router.push("?modal=weight", { scroll: false });
+          }}
+        >
+          +
+        </button>
       </div>
-      <div className="lg:grid grid-cols-4 grid-rows-[minmax(150px,auto)_auto] space-y-5 md:space-y-0 md:gap-10 items-start">
+      <div
+        className={`lg:grid grid-cols-4 grid-rows-[minmax(150px,auto)_auto] space-y-5 md:space-y-0 md:gap-10 items-start ${
+          weight.length > 0 && "pt-4"
+        }`}
+      >
         <div className="col-span-3 h-[400px]">
           <DisplayWeight
             weight={weight}

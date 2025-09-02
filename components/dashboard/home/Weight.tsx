@@ -37,7 +37,7 @@ const Weight = () => {
           </button>
         )}
       </div>
-      <div className="bg-white p-10 rounded-3xl border border-neutral-400 h-[340px]">
+      <div className="bg-white px-3 pt-10 pb-16 md:p-10 rounded-3xl border border-neutral-400 h-[340px]">
         <DisplayWeight
           weight={userWeightInfo}
           objective={userWorkoutObjectiveInfo}

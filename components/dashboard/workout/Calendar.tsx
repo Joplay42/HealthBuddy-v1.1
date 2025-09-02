@@ -65,7 +65,9 @@ const Calendar = ({
         </button>
         <button
           className="md:hidden w-fit bg-black text-white px-3 py-2 rounded-2xl text-center hover:opacity-75 hover:cursor-pointer"
-          onClick={() => {}}
+          onClick={() => {
+            router.push("?modal=workout", { scroll: false });
+          }}
         >
           Change
         </button>
