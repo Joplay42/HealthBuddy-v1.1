@@ -143,6 +143,19 @@ export const settingsSideBar: settingSideBarProps = [
       },
     ],
   },
+  {
+    title: "Workout tracker",
+    category: [
+      {
+        name: "Set workout plan",
+        link: "set-workout",
+      },
+      {
+        name: "Add weight",
+        link: "add-weight",
+      },
+    ],
+  },
 ];
 
 export const settingCard: settingCardProps = [
@@ -209,6 +222,27 @@ export const settingCard: settingCardProps = [
           "Welcome to the recipe contribution section! Share your favorite recipes with our community and track their nutritional values effortlessly.",
         input: [],
         button: "Create new recipe",
+      },
+    ],
+  },
+  {
+    category: "Workout tracker",
+    cards: [
+      {
+        id: "set-workout",
+        title: "Set workout",
+        description:
+          "Create a personalized workout plan tailored to your fitness goals. Choose your training style, set the number of workouts per week, and structure exercises that fit your schedule and objectives — whether it’s building strength, losing fat, or improving endurance.",
+        input: [],
+        button: "Create workout plan",
+      },
+      {
+        id: "add-weight",
+        title: "Add weight",
+        description:
+          "Easily add your current weight to your log and keep track of every update. By recording your weight regularly, you’ll be able to monitor your progress over time, visualize trends, and stay motivated as you move closer to your fitness goals.",
+        input: [],
+        button: "Create new food",
       },
     ],
   },

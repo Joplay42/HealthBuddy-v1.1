@@ -49,7 +49,9 @@ const Modal = ({
       // Delete the current param
       currentParams.delete("modal");
       // Push the router to the route without params
-      router.replace(window.location.pathname);
+      router.replace(window.location.pathname, {
+        scroll: false,
+      });
     }, 200);
   };
 

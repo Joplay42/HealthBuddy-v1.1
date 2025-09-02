@@ -97,6 +97,14 @@ const SettingsCard = ({ card }: cardProps) => {
       const url = router.push("/dashboard/setting?modal=addrecipe&index=1", {
         scroll: false,
       });
+    } else if (card.title == "Set workout") {
+      const url = router.push("/dashboard/setting?modal=workout", {
+        scroll: false,
+      });
+    } else if (card.title == "Add weight") {
+      const url = router.push("/dashboard/setting?modal=weight", {
+        scroll: false,
+      });
     }
     setFirstName("");
     setLastName("");
