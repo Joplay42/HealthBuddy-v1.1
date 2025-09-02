@@ -1,6 +1,6 @@
 "use client";
 import DisplayWeightSqueleton from "@/components/Squeleton/DisplayWeightSqueleton";
-import { DisplayWeightProps } from "@/types";
+import { DisplayWeightProps, userWeightProps } from "@/types";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -13,7 +13,7 @@ import {
   Legend,
 } from "chart.js";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 
 const DisplayWeight = ({ weight, objective, loading }: DisplayWeightProps) => {
@@ -22,10 +22,34 @@ const DisplayWeight = ({ weight, objective, loading }: DisplayWeightProps) => {
 
   // Hook for the objective view
   const [showObjective, setObjectiveDisplay] = useState<boolean>(false);
+  // Hook for the timeDisplay
+  const [timeDisplay, setTimeDisplay] = useState<number>(30);
+  // Hooks for the weights filtering
+  const [filteredWeight, setFilteredWeights] = useState<userWeightProps[]>([]);
 
+  useEffect(() => {
+    // Function to display the weights with the timeDisplay states
+    const filterDates = (weight: userWeightProps[], days: number) => {
+      // Get todays date
+      const today = new Date();
+      const pastLimit = new Date();
+      pastLimit.setDate(today.getDate() - days);
+
+      return weight.filter(
+        (item) => item.date >= pastLimit && item.date <= today
+      );
+    };
+
+    const newWeights = filterDates(weight, timeDisplay);
+
+    setFilteredWeights(newWeights);
+  }, [timeDisplay, weight]);
+
+  // Handle loading ui
   if (loading) return <DisplayWeightSqueleton />;
 
-  if (!weight || weight.length === 0) {
+  // Handle null values
+  if (!filteredWeight || filteredWeight.length === 0) {
     ChartJS.register(
       CategoryScale,
       LinearScale,
@@ -96,12 +120,12 @@ const DisplayWeight = ({ weight, objective, loading }: DisplayWeightProps) => {
 
   // Function to find the smallest weight number
   const findSmallest = () => {
-    if (weight.length === 1) return -1;
+    if (filteredWeight.length === 1) return -1;
 
     // Smallest
-    let min = weight[0].number;
+    let min = filteredWeight[0].number;
 
-    weight.forEach((w) => {
+    filteredWeight.forEach((w) => {
       if (w.number < min) {
         min = w.number;
       }
@@ -148,7 +172,9 @@ const DisplayWeight = ({ weight, objective, loading }: DisplayWeightProps) => {
     scales: {
       y: {
         min: Math.min(
-          smallestIndex !== -1 ? smallestIndex - 2 : weight[0].number - 2,
+          smallestIndex !== -1
+            ? smallestIndex - 2
+            : filteredWeight[0].number - 2,
           showObjective ? objective.objectiveWeight - 5 : smallestIndex - 2
         ),
 
@@ -174,13 +200,13 @@ const DisplayWeight = ({ weight, objective, loading }: DisplayWeightProps) => {
     maintainAspectRatio: false,
   };
 
-  let labels = weight.map((entry) =>
+  let labels = filteredWeight.map((entry) =>
     entry.date.toLocaleDateString("en-US", { month: "short", day: "numeric" })
   );
 
   // If only one weight, add a "future" label to make the chart wider
   if (labels.length === 1) {
-    const firstDate = weight[0].date;
+    const firstDate = filteredWeight[0].date;
     const extraDate = new Date(firstDate);
     extraDate.setDate(extraDate.getDate() + 1); // add 1 day
     labels = [
@@ -191,11 +217,11 @@ const DisplayWeight = ({ weight, objective, loading }: DisplayWeightProps) => {
 
   // Weight data
   let weightData: number[];
-  if (weight.length === 1) {
+  if (filteredWeight.length === 1) {
     // Duplicate value so a flat line is drawn
-    weightData = [weight[0].number, weight[0].number];
+    weightData = [filteredWeight[0].number, filteredWeight[0].number];
   } else {
-    weightData = weight.map((entry) => entry.number);
+    weightData = filteredWeight.map((entry) => entry.number);
   }
 
   // Objective data (flat line)
@@ -229,6 +255,24 @@ const DisplayWeight = ({ weight, objective, loading }: DisplayWeightProps) => {
 
   return (
     <div className={`relative h-full w-full mt-6`}>
+      <div className="absolute left-0 -top-14">
+        <div className="inline-flex items-center gap-2">
+          <select
+            value={timeDisplay}
+            onChange={(e) => setTimeDisplay(parseInt(e.target.value))}
+            className="w-fit rounded-lg h-auto "
+          >
+            <option value="7">1 week</option>
+            <option value="30" defaultChecked>
+              1 month
+            </option>
+            <option value="90">3 months</option>
+            <option value="180">6 months</option>
+            <option value="360">1 year</option>
+          </select>
+          <label className="font-semibold">Display</label>
+        </div>
+      </div>
       <div className="absolute right-4 -top-10 space-x-2 font-semibold text-md flex items-center">
         <div className="inline-flex items-center">
           <label className="flex items-center cursor-pointer relative">
@@ -246,7 +290,7 @@ const DisplayWeight = ({ weight, objective, loading }: DisplayWeightProps) => {
                 viewBox="0 0 20 20"
                 fill="currentColor"
                 stroke="currentColor"
-                stroke-width="1"
+                strokeWidth="1"
               >
                 <path
                   fillRule="evenodd"
