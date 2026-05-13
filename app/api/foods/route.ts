@@ -32,7 +32,7 @@ export const GET = async (request: Request) => {
     // The url
     let fetchUrl = url;
     if (!fetchUrl) {
-      fetchUrl = `https://api.edamam.com/api/food-database/v2/parser?app_id=${process.env.NEXT_PUBLIC_APPID}&app_key=${process.env.NEXT_PUBLIC_API_KEY}&ingr=${search}`;
+      fetchUrl = `https://api.edamam.com/api/food-database/v2/parser?app_id=${process.env.EDAMAM_APP_ID}&app_key=${process.env.EDAMAM_API_KEY}&ingr=${search}`;
     }
 
     // Fetch the api
@@ -202,9 +202,13 @@ export const DELETE = async (request: Request) => {
     // Get the recipe id
     const deleteId = searchParams.get("del");
 
+    if (!deleteId) {
+      return new NextResponse(JSON.stringify({ message: "Missing 'del' parameter" }), { status: 400 });
+    }
+
     if (!userId) {
       return new NextResponse(
-        JSON.stringify({ message: "A userId is required test" }),
+        JSON.stringify({ message: "A userId is required" }),
         { status: 400 }
       );
     }

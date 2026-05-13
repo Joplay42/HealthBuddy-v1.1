@@ -83,6 +83,13 @@ const AuthForm = ({ type }: authFormProps) => {
     } else if (type == "login") {
       // Handle the errors
       try {
+        // Handle invalid email regex
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          setError('Please enter a valid email address')
+          setLoading(false)
+          return
+        }
+
         // Call the logInUser fonction using email and password
         await loginUser({
           email: email,
@@ -193,7 +200,7 @@ const AuthForm = ({ type }: authFormProps) => {
             {type == "login" ? "Sign up" : "Log in"}
           </Link>
         </div>
-        {error && <p className="text-red-500">{error}</p>}
+        {error && <p aria-label="error-message" className="text-red-500">{error}</p>}
         <button
           className="flex items-center gap-2 justify-center py-4 px-3 rounded-xl hover:opacity-75 hover:transition ease-in-out duration-300 bg-black text-white w-full disabled:opacity-60"
           type="submit"

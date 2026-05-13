@@ -72,58 +72,8 @@ export const UserInformationProvider = ({
     };
   }, []);
 
-  // Call the initial values using the api
+  // Call the initial weight values using the api
   useEffect(() => {
-    const fetchInitialGoal = async () => {
-      if (user && !userGoal) {
-        try {
-          // Fetch from the api
-          const res = await fetch(`/api/objective?userid=${user.uid}`, {
-            method: "GET",
-          });
-          const result = await res.json();
-          if (result.data) {
-            setUserGoal({
-              calorie: sanitizeNum(result.data?.calorie),
-              protein: sanitizeNum(result.data?.protein),
-              carbs:   sanitizeNum(result.data?.carbs),
-              fat:     sanitizeNum(result.data?.fat),
-            });
-          }
-        } catch (error: any) {
-          console.error(
-            "Error fetching the initial userGoal : ",
-            error.message,
-          );
-        }
-      }
-    };
-
-    const fetchInitialCalorie = async () => {
-      if (user && !userCalorieInfo) {
-        try {
-          // Fetch from the api
-          const res = await fetch(`/api/calories?userid=${user.uid}`, {
-            method: "GET",
-          });
-          const result = await res.json();
-          if (result.data) {
-            setUserCalorieInfo({
-              calorie: sanitizeNum(result.data?.calorie),
-              protein: sanitizeNum(result.data?.protein),
-              carbs:   sanitizeNum(result.data?.carbs),
-              fat:     sanitizeNum(result.data?.fat),
-            });
-          }
-        } catch (error: any) {
-          console.error(
-            "Error fetching the initial userCalorie : ",
-            error.message,
-          );
-        }
-      }
-    };
-
     const fetchInitialWeight = async () => {
       if (user) {
         try {
@@ -132,7 +82,7 @@ export const UserInformationProvider = ({
           });
           const result = await res.json();
 
-          if (!result) {
+          if (result && result.data) {
             // Convert each weight date to JS Date
             const weights = result.data.map((w: any) => ({
               ...w,
@@ -150,35 +100,8 @@ export const UserInformationProvider = ({
       }
     };
 
-    const fetchInitialWorkoutObjective = async () => {
-      if (user && !userWorkoutObjectiveInfo) {
-        try {
-          // Fetch the user workouts
-          const res = await fetch(`/api/workouts?userid=${user.uid}`, {
-            method: "GET",
-          });
-          const result = await res.json();
-          if (result.data) {
-            setUserWorkoutObjectiveInfo({
-              workoutPlan: result.data?.workoutPlan ?? { title: "", desc: "", days: [] },
-              objectiveWeight: sanitizeNum(result.data?.objectiveWeight),
-              months: sanitizeNum(result.data?.months) || 3,
-            });
-          }
-        } catch (error: any) {
-          console.error(
-            "Error fetching the initial userWorkoutObjective : ",
-            error.message,
-          );
-        }
-      }
-    };
-
-    fetchInitialGoal();
-    fetchInitialCalorie();
     fetchInitialWeight();
-    fetchInitialWorkoutObjective();
-  }, [user, userCalorieInfo, userGoal, userWorkoutObjectiveInfo]);
+  }, []);
 
   // Fetch the user doc
   useEffect(() => {
