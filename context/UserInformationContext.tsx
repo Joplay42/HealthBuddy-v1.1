@@ -15,6 +15,7 @@ import {
   useEffect,
   useState,
 } from "react";
+import { sanitizeNum } from "@/utils";
 import { collection, doc, onSnapshot } from "firebase/firestore";
 import { auth, db } from "@/config/firebase";
 import { onAuthStateChanged, User } from "firebase/auth";
@@ -50,29 +51,12 @@ export const UserInformationProvider = ({
   const [user, setUser] = useState<User | null>(null);
 
   // Store the goal and information
-  const [userGoal, setUserGoal] = useState<userGoalProps>({
-    calorie: 0,
-    protein: 0,
-    fat: 0,
-    carbs: 0,
-  });
-  const [userCalorieInfo, setUserCalorieInfo] = useState<userCalorieProps>({
-    calorie: 0,
-    protein: 0,
-    fat: 0,
-    carbs: 0,
-  });
+  const [userGoal, setUserGoal] = useState<userGoalProps | null>(null);
+  const [userCalorieInfo, setUserCalorieInfo] =
+    useState<userCalorieProps | null>(null);
   const [userWeightInfo, setUserWeightInfo] = useState<userWeightProps[]>([]);
   const [userWorkoutObjectiveInfo, setUserWorkoutObjectiveInfo] =
-    useState<userProgramProps>({
-      workoutPlan: {
-        title: "",
-        desc: "",
-        days: [],
-      },
-      objectiveWeight: 0,
-      months: 0,
-    });
+    useState<userProgramProps | null>(null);
 
   // loading state
   const [loading, setLoading] = useState(true);
@@ -98,11 +82,18 @@ export const UserInformationProvider = ({
             method: "GET",
           });
           const result = await res.json();
-          setUserGoal(result);
+          if (result.data) {
+            setUserGoal({
+              calorie: sanitizeNum(result.data?.calorie),
+              protein: sanitizeNum(result.data?.protein),
+              carbs:   sanitizeNum(result.data?.carbs),
+              fat:     sanitizeNum(result.data?.fat),
+            });
+          }
         } catch (error: any) {
           console.error(
             "Error fetching the initial userGoal : ",
-            error.message
+            error.message,
           );
         }
       }
@@ -116,11 +107,18 @@ export const UserInformationProvider = ({
             method: "GET",
           });
           const result = await res.json();
-          setUserCalorieInfo(result);
+          if (result.data) {
+            setUserCalorieInfo({
+              calorie: sanitizeNum(result.data?.calorie),
+              protein: sanitizeNum(result.data?.protein),
+              carbs:   sanitizeNum(result.data?.carbs),
+              fat:     sanitizeNum(result.data?.fat),
+            });
+          }
         } catch (error: any) {
           console.error(
             "Error fetching the initial userCalorie : ",
-            error.message
+            error.message,
           );
         }
       }
@@ -146,7 +144,7 @@ export const UserInformationProvider = ({
         } catch (error: any) {
           console.error(
             "Error fetching the initial userWeight : ",
-            error.message
+            error.message,
           );
         }
       }
@@ -160,11 +158,17 @@ export const UserInformationProvider = ({
             method: "GET",
           });
           const result = await res.json();
-          setUserWorkoutObjectiveInfo(result);
+          if (result.data) {
+            setUserWorkoutObjectiveInfo({
+              workoutPlan: result.data?.workoutPlan ?? { title: "", desc: "", days: [] },
+              objectiveWeight: sanitizeNum(result.data?.objectiveWeight),
+              months: sanitizeNum(result.data?.months) || 3,
+            });
+          }
         } catch (error: any) {
           console.error(
             "Error fetching the initial userWorkoutObjective : ",
-            error.message
+            error.message,
           );
         }
       }
@@ -174,7 +178,7 @@ export const UserInformationProvider = ({
     fetchInitialCalorie();
     fetchInitialWeight();
     fetchInitialWorkoutObjective();
-  }, [user]);
+  }, [user, userCalorieInfo, userGoal, userWorkoutObjectiveInfo]);
 
   // Fetch the user doc
   useEffect(() => {
@@ -188,7 +192,7 @@ export const UserInformationProvider = ({
           db,
           "UserWeights",
           user.uid,
-          "weightList"
+          "weightList",
         );
 
         let goalLoaded = false;
@@ -198,9 +202,14 @@ export const UserInformationProvider = ({
 
         // Fetch the data realtime
         const unsubscribeGoal = onSnapshot(docGoalRef, (snapshot) => {
-          // If exists store it in the states
           if (snapshot.exists()) {
-            setUserGoal(snapshot.data() as userGoalProps);
+            const d = snapshot.data();
+            setUserGoal({
+              calorie: sanitizeNum(d?.calorie),
+              protein: sanitizeNum(d?.protein),
+              carbs:   sanitizeNum(d?.carbs),
+              fat:     sanitizeNum(d?.fat),
+            });
           }
           goalLoaded = true;
           if (goalLoaded && infoLoaded && workoutLoaded) setLoading(false);
@@ -208,9 +217,14 @@ export const UserInformationProvider = ({
 
         // Fetch the data realtime
         const unsubscribeInfo = onSnapshot(docInfoRef, (snapshot) => {
-          // If exists store it in the states
           if (snapshot.exists()) {
-            setUserCalorieInfo(snapshot.data() as userCalorieProps);
+            const d = snapshot.data();
+            setUserCalorieInfo({
+              calorie: sanitizeNum(d?.calorie),
+              protein: sanitizeNum(d?.protein),
+              carbs:   sanitizeNum(d?.carbs),
+              fat:     sanitizeNum(d?.fat),
+            });
           }
           infoLoaded = true;
           if (goalLoaded && infoLoaded && workoutLoaded) setLoading(false);
@@ -218,9 +232,13 @@ export const UserInformationProvider = ({
 
         // Fetch the data realtime
         const unsubscribeWorkouts = onSnapshot(docWorkoutRef, (snapshot) => {
-          // If exists store it in the states
           if (snapshot.exists()) {
-            setUserWorkoutObjectiveInfo(snapshot.data() as userProgramProps);
+            const d = snapshot.data();
+            setUserWorkoutObjectiveInfo({
+              workoutPlan: d?.workoutPlan ?? { title: "", desc: "", days: [] },
+              objectiveWeight: sanitizeNum(d?.objectiveWeight),
+              months: sanitizeNum(d?.months) || 3,
+            });
           }
           workoutLoaded = true;
           if (goalLoaded && infoLoaded && workoutLoaded) setLoading(false);
@@ -246,6 +264,7 @@ export const UserInformationProvider = ({
 
             return {
               ...data,
+              number: sanitizeNum(data.number),
               date: dateObj,
               Id: doc.id,
             };
@@ -253,7 +272,7 @@ export const UserInformationProvider = ({
 
           // Sort by date (oldest first)
           weights.sort(
-            (a, b) => (a.date?.getTime() ?? 0) - (b.date?.getTime() ?? 0)
+            (a, b) => (a.date?.getTime() ?? 0) - (b.date?.getTime() ?? 0),
           );
 
           setUserWeightInfo(weights);

@@ -26,7 +26,7 @@ const Calories = () => {
         {/** Title of the container */}
         <h1 className="font-bold text-xl">Calories</h1>
         {/** If the user has no objective */}
-        {userGoal.calorie !== 0 && (
+        {userGoal && (
           <button
             className="w-fit bg-black text-white px-3 py-2 rounded-2xl text-center hover:opacity-75 hover:cursor-pointer"
             onClick={() =>

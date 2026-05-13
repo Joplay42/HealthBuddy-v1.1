@@ -247,10 +247,10 @@ export type NutrientsChartsProps = {
 };
 
 export type userInformationContextProps = {
-  userGoal: userGoalProps;
-  userCalorieInfo: userCalorieProps;
+  userGoal: userGoalProps | null;
+  userCalorieInfo: userCalorieProps | null;
   userWeightInfo: userWeightProps[];
-  userWorkoutObjectiveInfo: userProgramProps;
+  userWorkoutObjectiveInfo: userProgramProps | null;
   loading: boolean;
 };
 

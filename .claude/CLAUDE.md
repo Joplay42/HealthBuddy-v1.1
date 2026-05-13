@@ -40,12 +40,14 @@ Dashboard routes are wrapped with `FireBaseAuthProvider` (in `context/UserContex
 
 React Context API only — no Redux or Zustand. Four providers, all in `context/`:
 
+|---------------------------------------------------------------------------|
 | Context | Purpose |
-|---|---|
+|-------------------------------|-------------------------------------------|
 | `UserContext.tsx` | Firebase auth state |
 | `UserInformationContext.tsx` | Aggregated user health data |
 | `UserFoodContext.tsx` | Food library (custom + Algolia) |
 | `UserRecipesContext.tsx` | User recipes |
+|---------------------------------------------------------------------------|
 
 Firestore real-time updates use `onSnapshot` listeners inside context providers.
 
@@ -76,11 +78,11 @@ UserWorkouts/{userId}
 
 ### Key types
 
-All TypeScript interfaces live in `types/index.ts`: `foodProps`, `recipeProps`, `userGoalProps`, `userCalorieProps`, `userWeightProps`, `userProgramProps`, `workoutDayProps`.
+All TypeScript interfaces live in `types/index.ts`: `foodProps`, `recipeProps`, `userGoalProps`, `userCalorieProps`, `userWeightProps`, `userProgramProps`, `workoutDayProps`. Always specify the type of an object since typescript is really useful.
 
 ## Environment variables
 
-The app requires `.env.local` with Firebase and Algolia credentials. See `.env.local` for the required variable names (Firebase project is `healthbuddy-dev` in development).
+The app requires `.env.local` with Firebase and Algolia credentials. See `.env.local` for the required variable names (Firebase project is `healthbuddy-dev` in development). The .env.local uses local variables for a developpement database from firebase. On the hosting using vercel I am using another .env file for the real database for development purposes.
 
 ## Component conventions
 
@@ -89,3 +91,13 @@ The app requires `.env.local` with Firebase and Algolia credentials. See `.env.l
 - Modals for data entry (e.g., `components/modals/addRecipe/`)
 - Toast notifications via `react-toastify` for user feedback
 - `@/*` path alias maps to the project root
+
+## Branching strategy
+
+The git repository has two main branch, production and developpement. The production is the ready code that is hosted right now, never add code in this branch unless told to. The developpement is mainly where we will be adding new features of fixing bugs. Here is the commit strategy :
+
+- [ADD] New implementation
+- [FIX] Fixed existing bugs
+- [REMOVE] Removed lines of code
+- [REFRACTORING] Update or refractore code
+- [TEST] Add new tests

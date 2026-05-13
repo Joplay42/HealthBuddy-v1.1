@@ -32,7 +32,9 @@ const WorkoutTracking = () => {
     setTodaysWorkout(workout);
   }, [selectedDays, userWorkoutObjectiveInfo]);
 
-  if (userWorkoutObjectiveInfo.workoutPlan.days.length === 0 && !loading)
+  if (loading) return null;
+
+  if (!userWorkoutObjectiveInfo || userWorkoutObjectiveInfo.workoutPlan.days.length === 0)
     return (
       <div className="py-5 md:py-10">
         <div className="bg-white p-5 rounded-3xl border border-neutral-400 h-full">

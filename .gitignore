@@ -37,3 +37,7 @@ next-env.d.ts
 
 # migration
 /data/
+
+# Claude
+.claude/PLAN.md
+.claude/PROMPT.md

@@ -10,8 +10,9 @@ const Calorie = () => {
   // Router hooks to manage the navigation
   const router = useRouter();
 
-  // Display a text to set an objective if the user doesnt have one
-  if (userGoal.calorie === 0 && !loading) {
+  if (loading) return null;
+
+  if (!userGoal) {
     return (
       <div
         className="py-5 md:py-10 space-y-5 md:space-y-0 md:gap-10"
@@ -28,7 +29,6 @@ const Calorie = () => {
           <div className="flex justify-center mt-5">
             <button
               className="w-fit bg-black text-white px-5 py-2 rounded-2xl text-center hover:opacity-75"
-              // Open the modal
               onClick={() =>
                 router.push("/dashboard/calorie-tracking?modal=objective", {
                   scroll: false,
@@ -55,10 +55,10 @@ const Calorie = () => {
         data-aos-delay="200"
         data-aos-duration="300"
       >
-        <Overview goal={userGoal} data={userCalorieInfo} loading={loading} />
+        <Overview goal={userGoal} data={userCalorieInfo ?? { calorie: 0, protein: 0, fat: 0, carbs: 0 }} loading={loading} />
       </div>
       <div data-aos="fade-up" data-aos-delay="200" data-aos-duration="300">
-        <Objective goal={userGoal} data={userCalorieInfo} loading={loading} />
+        <Objective goal={userGoal} data={userCalorieInfo ?? { calorie: 0, protein: 0, fat: 0, carbs: 0 }} loading={loading} />
       </div>
       <div
         className="col-span-3"

@@ -26,13 +26,15 @@ const BarChart = ({ data, goal, nutrient }: barChartProps) => {
     const remaininGrams = Math.max(dailyGoalGrams - consumedGrams, 0); // Prevents negative numbers
 
     const totalGrams = consumedGrams + remaininGrams;
+    const consumedPct = totalGrams === 0 ? 0 : (consumedGrams / totalGrams) * 100;
+    const remainingPct = totalGrams === 0 ? 100 : (remaininGrams / totalGrams) * 100;
 
     const value = {
       labels: ["Calories"], // Single label for the horizontal bar
       datasets: [
         {
           label: "Consumed",
-          data: [(consumedGrams / totalGrams) * 100],
+          data: [consumedPct],
           backgroundColor: "#AFF921",
           borderRadius: {
             topRight: 0,
@@ -44,7 +46,7 @@ const BarChart = ({ data, goal, nutrient }: barChartProps) => {
         },
         {
           label: "Remaining",
-          data: [(remaininGrams / totalGrams) * 100],
+          data: [remainingPct],
           backgroundColor: "#656565",
           borderRadius: {
             topRight: 25,

@@ -12,7 +12,7 @@ const Weight = () => {
   // Router hooks
   const router = useRouter();
 
-  if (userWorkoutObjectiveInfo.workoutPlan.days.length === 0) return;
+  if (loading || !userWorkoutObjectiveInfo?.workoutPlan?.days?.length) return null;
 
   return (
     // The weight container

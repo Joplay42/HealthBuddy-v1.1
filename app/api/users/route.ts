@@ -1,6 +1,7 @@
-import { auth, db } from "@/config/firebase";
+import { auth } from "@/config/firebase";
+import { db } from "@/config/firebase-server";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore/lite";
 import { NextResponse } from "next/server";
 
 export const POST = async (request: Request) => {

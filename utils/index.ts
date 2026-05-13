@@ -67,6 +67,11 @@ export const quotesTimer = ({
   return () => clearInterval(interval);
 };
 
+export const sanitizeNum = (value: unknown): number => {
+  const n = Number(value);
+  return Number.isFinite(n) ? n : 0;
+};
+
 /**
  * This functions is used to calculate the daily amount of nutrient depending of the nutrient
  * type.
@@ -82,7 +87,7 @@ export const calculateNutriantDaily = ({
   nutrientType,
 }: calculateNutriantDailyProps) => {
   // The amount of nutrient using the pourcentage
-  const nutrientCalories = (nutrientPercentage / 100) * dailyCalories;
+  const nutrientCalories = ((nutrientPercentage || 0) / 100) * (dailyCalories || 0);
 
   // Determine of nutrient with the calorie goal
   let caloriesPerGram: number;
@@ -192,6 +197,10 @@ export const loginUser = async ({ email, password }: loginUserProps) => {
     });
     await fetch(`/api/foods/consumed?userid=${auth.currentUser?.uid}`, {
       method: "DELETE",
+    });
+    // Recreate the blank calorie doc for the new day
+    await fetch(`/api/calories?userid=${auth.currentUser?.uid}`, {
+      method: "POST",
     });
   }
 
@@ -495,7 +504,9 @@ export function getNutrient(
   portionIndex: number
 ) {
   if (isFoodItemRecipe(item)) {
-    return item.macronutrients?.[key] / item.NbServing;
+    const nbServing = sanitizeNum(item.NbServing);
+    const macro = sanitizeNum(item.macronutrients?.[key]);
+    return nbServing === 0 ? 0 : macro / nbServing;
   } else if (isFoodItemFetched(item)) {
     return item.portions[portionIndex]?.[key] ?? 0;
   } else if (isFoodItem(item)) {

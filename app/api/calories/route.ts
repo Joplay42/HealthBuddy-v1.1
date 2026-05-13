@@ -1,5 +1,5 @@
-import { db } from "@/config/firebase";
-import { deleteDoc, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import { db } from "@/config/firebase-server";
+import { deleteDoc, doc, getDoc, setDoc, updateDoc } from "firebase/firestore/lite";
 import { NextResponse } from "next/server";
 
 export const GET = async (request: Request) => {
@@ -236,13 +236,13 @@ export const PATCH = async (request: Request) => {
         fat: updatedFat,
       });
     } else {
-      // Handle null values
-      return new NextResponse(
-        JSON.stringify({
-          message: `No user has been found with an id of ${userId}`,
-        }),
-        { status: 404 }
-      );
+      // Doc missing — create it with the values from this food
+      await setDoc(userCalorieDoc, {
+        calorie: Math.round(macros.Calories * multiplier),
+        protein: Math.round(macros.Protein * multiplier),
+        carbs: Math.round(macros.Carbs * multiplier),
+        fat: Math.round(macros.Fat * multiplier),
+      });
     }
 
     // Return the doc

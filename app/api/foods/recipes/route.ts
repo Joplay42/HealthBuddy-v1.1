@@ -1,4 +1,4 @@
-import { db } from "@/config/firebase";
+import { db } from "@/config/firebase-server";
 import { foodProps, macronutrients, recipeProps } from "@/types";
 import {
   addDoc,
@@ -9,7 +9,7 @@ import {
   getDocs,
   setDoc,
   writeBatch,
-} from "firebase/firestore";
+} from "firebase/firestore/lite";
 import { NextResponse } from "next/server";
 
 export const GET = async (request: Request) => {

@@ -10,13 +10,11 @@ const DisplayCalories = () => {
   // Router hooks to manage the navigation
   const router = useRouter();
 
-  // Display the skeleton is it is loading
   if (loading) {
     return <CalorieSqueleton />;
   }
 
-  // Display a text to set an objective if the user doesnt have one
-  if (userGoal.calorie === 0 && !loading) {
+  if (!userGoal) {
     return (
       <div className="py-16">
         <h1 className="text-3xl font-bold text-center">
@@ -27,7 +25,6 @@ const DisplayCalories = () => {
         <div className="flex justify-center mt-5">
           <button
             className="w-fit bg-black text-white px-5 py-2 rounded-2xl text-center hover:opacity-75"
-            // Open the modal
             onClick={() =>
               router.push("/dashboard?modal=objective", {
                 scroll: false,
@@ -41,8 +38,9 @@ const DisplayCalories = () => {
     );
   }
 
-  const caloriesConsumed = userCalorieInfo.calorie;
-  const caloriesRemaining = userGoal.calorie - userCalorieInfo.calorie;
+  const calorieInfo = userCalorieInfo ?? { calorie: 0, protein: 0, fat: 0, carbs: 0 };
+  const caloriesConsumed = calorieInfo.calorie;
+  const caloriesRemaining = userGoal.calorie - caloriesConsumed;
 
   return (
     <div className="flex flex-wrap justify-between items-center gap-x-6">
@@ -73,7 +71,7 @@ const DisplayCalories = () => {
             <p className="font-light text-lg">
               Consumed :{" "}
               <span className="font-extrabold text-neutral-600 text-xl">
-                {userCalorieInfo.calorie}
+                {calorieInfo.calorie}
               </span>
             </p>
           </div>
@@ -81,9 +79,9 @@ const DisplayCalories = () => {
       </div>
       <div className="flex flex-col w-full 2xl:w-96">
         {/** BarChart component to display the amount of nutrients */}
-        <BarChart data={userCalorieInfo} goal={userGoal} nutrient="protein" />
-        <BarChart data={userCalorieInfo} goal={userGoal} nutrient="carbs" />
-        <BarChart data={userCalorieInfo} goal={userGoal} nutrient="fat" />
+        <BarChart data={calorieInfo} goal={userGoal} nutrient="protein" />
+        <BarChart data={calorieInfo} goal={userGoal} nutrient="carbs" />
+        <BarChart data={calorieInfo} goal={userGoal} nutrient="fat" />
       </div>
     </div>
   );

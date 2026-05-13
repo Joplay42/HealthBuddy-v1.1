@@ -7,16 +7,16 @@ import { Chart, ArcElement, Tooltip, Legend } from "chart.js";
 Chart.register(ArcElement, Tooltip, Legend);
 
 const PieChart = ({ data, remaining }: chartProps) => {
-  // Make a maximum to make it not exceed
   const safeRemaining = Math.max(0, remaining);
+  const isEmpty = data === 0 && safeRemaining === 0;
 
   const value = {
-    labels: ["consumed", "remaining"],
+    labels: isEmpty ? ["empty"] : ["consumed", "remaining"],
     datasets: [
       {
         label: "Calories",
-        data: [data, safeRemaining],
-        backgroundColor: ["#AFF921", "#656565"],
+        data: isEmpty ? [1] : [data, safeRemaining],
+        backgroundColor: isEmpty ? ["#D1D5DB"] : ["#AFF921", "#656565"],
         borderWidth: 1,
         cutout: "60%",
       },

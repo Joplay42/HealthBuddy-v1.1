@@ -1,5 +1,5 @@
-import { auth, db } from "@/config/firebase";
-import { deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
+import { db } from "@/config/firebase-server";
+import { deleteDoc, doc, getDoc, setDoc } from "firebase/firestore/lite";
 import { NextResponse } from "next/server";
 
 export const GET = async (request: Request) => {

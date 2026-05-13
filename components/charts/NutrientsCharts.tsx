@@ -19,13 +19,16 @@ const NutrientsCharts = ({
   size,
   fontSize,
 }: NutrientsChartsProps) => {
-  // Set the charts value options
+  const isEmpty = Protein === 0 && Carbs === 0 && Fat === 0;
+
   const value = {
     datasets: [
       {
         label: "Calories",
-        data: [Protein, Carbs, Fat, Empty],
-        backgroundColor: ["#AFF921", "#73af00", "#d7ff8a", "#656565"],
+        data: isEmpty ? [1] : [Protein, Carbs, Fat],
+        backgroundColor: isEmpty
+          ? ["#D1D5DB"]
+          : ["#AFF921", "#73af00", "#d7ff8a"],
         borderWidth: 1,
         cutout: "70%",
       },

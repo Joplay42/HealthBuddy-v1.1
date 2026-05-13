@@ -21,7 +21,7 @@ const Workout = () => {
         {/** Title of the container */}
         <h1 className="font-bold text-xl">Workouts</h1>
 
-        {userWorkoutObjectiveInfo.workoutPlan.days.length !== 0 && (
+        {!userWorkoutObjectiveInfo && (
           <button
             className="w-fit bg-black text-white px-3 py-2 rounded-2xl text-center hover:opacity-75 hover:cursor-pointer"
             onClick={() => {
@@ -34,7 +34,7 @@ const Workout = () => {
       </div>
       <div className="w-full bg-white p-5 rounded-3xl border border-neutral-400">
         <DisplayWorkouts
-          plan={userWorkoutObjectiveInfo.workoutPlan}
+          plan={userWorkoutObjectiveInfo?.workoutPlan ?? { title: "", desc: "", days: [] }}
           loading={loading}
         />
       </div>
