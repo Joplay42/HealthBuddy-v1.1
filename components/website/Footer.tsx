@@ -1,55 +1,62 @@
-// Import the navLinks from the website constant
-import { navLinksWebsite } from "@/constant";
-// NextJs image import
 import Image from "next/image";
-// NextJs link import
 import Link from "next/link";
+import Copyrights from "./Copyrights";
 
-/**
- * This component is the footer of the website
- *
- * @returns
- */
+const navLinks = [
+	{ name: "About", href: "#about" },
+	{ name: "Calorie Tracker", href: "#calories" },
+	{ name: "Workout", href: "#workout" },
+	{ name: "Contact", href: "#contact" },
+];
+
+const actualYear = new Date().getFullYear();
+
 const Footer = () => {
-  return (
-    // Container of the footer
-    <div className="max-w-[1440px] mx-auto px-4 py-10">
-      {/** Flex container */}
-      <div className="flex flex-wrap justify-between items-center">
-        {/** Logo */}
-        <Link href="#home">
-          <Image
-            src="/Logo-mobile.png"
-            width={120}
-            height={120}
-            alt="logo mobile"
-          />
-        </Link>
-        {/** The right section */}
-        <div className="flex space-x-4 lg:space-x-8 font-normal text-md">
-          {/** Display the links of the website */}
-          {navLinksWebsite.map((link) => (
-            // Anchor to navigate in the website
-            <a
-              key={link.name}
-              className="link hover:font-bold"
-              href={`/#${link.url}`}
-            >
-              {link.name}
-            </a>
-          ))}
-        </div>
-      </div>
-      {/** The under section of the footer (Copyright, privacy policy and terms and condition)*/}
-      <div className=" space-y-4 lg:space-y-0 lg:flex justify-between items-center pt-10 text-neutral-400">
-        <p>© 2024 HealthBuddy All rights reserved</p>
-        <div className="flex gap-x-10">
-          <Link href="/Policy">Privacy policy</Link>
-          <Link href="/Conditions">Terms and condition</Link>
-        </div>
-      </div>
-    </div>
-  );
+	return (
+		<footer className='relative border-t border-white/5 bg-ink-900'>
+			<div className='max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 py-8 sm:py-10 grid md:grid-cols-12 gap-8 items-center '>
+				{/* Brand with logo */}
+				<div className='md:col-span-4 flex items-center gap-3'>
+					<Link href='/' className='shrink-0'>
+						<Image
+							src='/Logo-mobile.png'
+							width={80}
+							height={80}
+							alt='HealthBuddy logo'
+						/>
+					</Link>
+					<p className='text-[12px] text-white/40 mt-1 max-w-xs'>
+						Calorie &amp; workout tracking for athletes who trains harder than
+						ever.
+					</p>
+				</div>
+
+				{/* Nav links */}
+				<div className='md:col-span-5 flex flex-wrap gap-x-6 sm:gap-x-8 gap-y-2 md:justify-end'>
+					{navLinks.map((link) => (
+						<a
+							key={link.name}
+							href={link.href}
+							className='text-lime hover:text-lime-400 text-sm font-semibold transition'
+						>
+							{link.name}
+						</a>
+					))}
+				</div>
+
+				{/* Legal */}
+				<div className='md:col-span-3 flex gap-6 md:justify-end text-[12px] text-white/40'>
+					<Link href='/Policy' className='hover:text-white transition'>
+						Privacy policy
+					</Link>
+					<Link href='/Conditions' className='hover:text-white transition'>
+						Terms and service
+					</Link>
+				</div>
+			</div>
+			<Copyrights width={1280} />
+		</footer>
+	);
 };
 
 export default Footer;

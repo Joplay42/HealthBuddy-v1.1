@@ -11,7 +11,7 @@ import {
 
 const page = () => {
   return (
-    <div>
+    <div className="min-h-screen bg-ink-950 text-bone font-sans overflow-x-hidden">
       <HeaderPage />
       <HeroSection />
       <SectionTwo />
@@ -19,9 +19,7 @@ const page = () => {
       <SectionFour />
       <SectionFive />
       <SectionSix />
-      <div className="bg-custom-dark">
-        <Footer />
-      </div>
+      <Footer />
     </div>
   );
 };

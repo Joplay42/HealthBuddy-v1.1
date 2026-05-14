@@ -1,102 +1,84 @@
 "use client";
-// Hooks import
-import { useEffect, useState } from "react";
-// NextJs image import
+import { useState } from "react";
 import Image from "next/image";
-// Constant links import
-import { navLinksWebsite } from "@/constant";
-// Component imports
-import { Custombutton, MobileMenu } from "@/components";
+import Link from "next/link";
+import MobileMenu from "./MobileMenu";
 
-/**
- * This component is the header of the website, it is responsive in mobile, tablet and computer
- *
- * @returns
- */
+const navLinks = [
+  { name: "About", href: "#about" },
+  { name: "Calorie Tracker", href: "#calories" },
+  { name: "Workout", href: "#workout" },
+  { name: "Contact", href: "#contact" },
+];
+
 const HeaderPage = () => {
-  // hooks for the mobile menu
   const [menuOpen, setMenuOpen] = useState(false);
-
-  // UseEffect hook
-  useEffect(() => {
-    if (menuOpen) {
-      document.body.classList.add("no-scroll");
-    } else {
-      document.body.classList.remove("no-scroll");
-    }
-
-    // Cleanup on component unmount
-    return () => {
-      document.body.classList.remove("no-scroll");
-    };
-  }, [menuOpen]);
 
   return (
     <>
-      {/** The header container */}
-      <div className="HeaderWrapper">
-        {/** The logo with an anchor to navigate */}
-        <a href="#home">
-          {/** The logo for large screen */}
-          <Image
-            className="hidden lg:block"
-            src="/Logo-desktop-dark.png"
-            width={200}
-            height={100}
-            alt="Logo website"
-          />
-          {/** The logo for mobile */}
-          <Image
-            className="block lg:hidden"
-            src="/Logo-mobile.png"
-            width={100}
-            height={100}
-            alt="Logo website"
-          />
-        </a>
-        {/** The wrapper for the links to navigate */}
-        <div className="NavLinksWrapper">
-          {/** Link map */}
-          {navLinksWebsite.map((link) => (
-            // Anchor to navigate to each section
-            <a
-              key={link.name}
-              className="link hover:font-bold"
-              href={`/#${link.url}`}
-            >
-              {link.name}
-            </a>
-          ))}
+      <header className="relative z-30">
+        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-10 pt-4 sm:pt-6">
+          <nav className="flex items-center justify-between rounded-2xl bg-ink-900/70 backdrop-blur ring-soft px-3 py-3">
+            <Link href="/" className="flex items-center pl-2">
+              <Image
+                className="hidden lg:block"
+                src="/Logo-desktop-dark.png"
+                width={160}
+                height={80}
+                alt="HealthBuddy logo"
+              />
+              <Image
+                className="block lg:hidden"
+                src="/Logo-mobile.png"
+                width={80}
+                height={80}
+                alt="HealthBuddy logo"
+              />
+            </Link>
+
+            <ul className="hidden md:flex items-center gap-1 text-[14px] text-white/70">
+              {navLinks.map((link) => (
+                <li key={link.name}>
+                  <a
+                    className="px-4 py-2 rounded-lg hover:text-white hover:bg-white/5 transition"
+                    href={link.href}
+                  >
+                    {link.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+
+            <div className="flex items-center gap-2">
+              <Link
+                href="/login"
+                className="hidden sm:inline-flex text-lime hover:text-lime-400 text-sm font-semibold px-3 py-2 transition"
+              >
+                Log in
+              </Link>
+              <Link
+                href="/signin"
+                className="inline-flex items-center gap-2 bg-lime hover:bg-lime-400 text-ink-950 text-sm font-semibold px-4 py-2.5 rounded-xl transition"
+              >
+                Get started
+                <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round">
+                  <path d="M5 12h14M13 6l6 6-6 6" />
+                </svg>
+              </Link>
+              <button
+                className="md:hidden ml-1 p-2 rounded-lg text-white/70 hover:text-white hover:bg-white/5"
+                onClick={() => setMenuOpen(true)}
+                aria-label="Open menu"
+              >
+                <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round">
+                  <path d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              </button>
+            </div>
+          </nav>
         </div>
-        {/** The log in and sign in button */}
-        <div className="lg:flex space-x-6 hidden ">
-          {/** The custom button component for the log in button */}
-          <Custombutton
-            text="Log in"
-            link="login"
-            style="text-custom-green font-semibold hover:transition-transform hover:-translate-y-2 ease-in-out duration-300 hover:text-opacity-75"
-          />
-          {/** The custom button component for the sign in button */}
-          <Custombutton
-            text="Get started"
-            link="signin"
-            style="text-white bg-black font-semibold hover:bg-neutral-900"
-          />
-        </div>
-        {/** The mobile section */}
-        <div className="block lg:hidden ">
-          {/** The mobile menu button */}
-          <Image
-            src="/menu-nav.svg"
-            width={40}
-            height={40}
-            alt="Menu navigation icon"
-            // On click make the menu open
-            onClick={() => setMenuOpen(!menuOpen)}
-          />
-        </div>
-      </div>
-      {/** If the menu is open it displays the mobileMenu */}
+      </header>
+
       {menuOpen && <MobileMenu setMenuOpen={setMenuOpen} />}
     </>
   );

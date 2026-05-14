@@ -1,39 +1,67 @@
-// The website links constant
-import { navLinksWebsite } from "@/constant";
-// props import
+"use client";
+import Link from "next/link";
 import { mobileMenuProps } from "@/types";
-// CustomButton component import
-import { Custombutton } from "@/components";
 
-/**
- * This component is used for mobile when the navigation menu opens
- *
- * @param setMenuOpen handles the menu opening
- * @returns
- */
+const navLinks = [
+  { name: "About", href: "#about" },
+  { name: "Calorie Tracker", href: "#calories" },
+  { name: "Workout", href: "#workout" },
+  { name: "Contact", href: "#contact" },
+];
+
 const MobileMenu = ({ setMenuOpen }: mobileMenuProps) => {
   return (
-    // The screen containe
-    <div className="text-light h-screen flex flex-col justify-center items-center">
-      <div className="flex flex-col space-y-6 text-center">
-        {/** Maps the link */}
-        {navLinksWebsite.map((link) => (
-          // Anchor to navigate to each section
+    <div className="fixed inset-0 z-50 flex flex-col bg-ink-950/95 backdrop-blur-md">
+      <div className="flex items-center justify-between px-4 pt-4 pb-4 border-b border-white/5">
+        <span className="font-extrabold tracking-tight text-bone text-[15px]">
+          HealthBuddy
+        </span>
+        <button
+          className="p-2 rounded-lg text-white/70 hover:text-white hover:bg-white/5"
+          onClick={() => setMenuOpen(false)}
+          aria-label="Close menu"
+        >
+          <svg
+            className="h-5 w-5"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={2}
+            strokeLinecap="round"
+          >
+            <path d="M18 6L6 18M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <nav className="flex flex-col gap-1 p-4 flex-1">
+        {navLinks.map((link) => (
           <a
             key={link.name}
-            className="hover:text-green transition ease-in-out duration-300"
-            // Set the id to the url of the link
-            href={`#${link.url}`}
-            // Make the menu close
+            href={link.href}
             onClick={() => setMenuOpen(false)}
+            className="px-4 py-3 rounded-xl text-white/80 hover:text-white hover:bg-white/5 text-[15px] font-medium transition"
           >
             {link.name}
           </a>
         ))}
-      </div>
-      {/** The get started button on mobile to register and log in */}
-      <div className="flex justify-center mt-10">
-        <Custombutton text="Log in" link="/login" style="bg-black text-white" />
+      </nav>
+
+      <div className="p-4 border-t border-white/5 flex flex-col gap-3">
+        <Link
+          href="/login"
+          onClick={() => setMenuOpen(false)}
+          className="text-center text-lime font-semibold py-3 rounded-xl hover:bg-white/5 transition"
+        >
+          Log in
+        </Link>
+        <Link
+          href="/signin"
+          onClick={() => setMenuOpen(false)}
+          className="text-center bg-lime hover:bg-lime-400 text-ink-950 font-semibold py-3 rounded-xl transition"
+        >
+          Get started
+        </Link>
       </div>
     </div>
   );
