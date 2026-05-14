@@ -2,7 +2,7 @@ import React from "react";
 
 const CalendarDaySqueleton = () => {
   return (
-    <div className="w-full hover:cursor-pointer border">
+    <div className="w-full hover:cursor-pointer border dark:border-white/10">
       <div className="bg-neutral-100 dark:bg-ink-800 p-2 border-b dark:border-white/10 animate-pulse">
         <div className="h-4 w-6 mx-auto bg-gray-200 dark:bg-ink-800 animate-pulse rounded"></div>
       </div>

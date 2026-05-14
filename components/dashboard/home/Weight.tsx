@@ -5,23 +5,17 @@ import { useUserInformationContext } from "@/context/UserInformationContext";
 import { useRouter } from "next/navigation";
 
 const Weight = () => {
-  // Fetch the userWeight
-  const { userWeightInfo, userWorkoutObjectiveInfo, loading } =
+  const { userWeightInfo, userWorkoutObjectiveInfo } =
     useUserInformationContext();
 
   // Router hooks
   const router = useRouter();
 
-  if (loading || !userWorkoutObjectiveInfo?.workoutPlan?.days?.length) return null;
+  if (!userWorkoutObjectiveInfo?.workoutPlan?.days?.length) return null;
 
   return (
     // The weight container
-    <div
-      className="col-span-2 w-full h-full "
-      data-aos="fade-up"
-      data-aos-delay="200"
-      data-aos-duration="300"
-    >
+    <div className="col-span-2 w-full h-full animate-fade-in">
       <div className="flex items-center justify-between pb-5">
         {/** Title of the container */}
         <h1 className="font-bold text-xl dark:text-bone">Body weight</h1>
@@ -41,7 +35,7 @@ const Weight = () => {
         <DisplayWeight
           weight={userWeightInfo}
           objective={userWorkoutObjectiveInfo}
-          loading={loading}
+          loading={false}
         />
       </div>
     </div>

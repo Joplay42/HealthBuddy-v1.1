@@ -1,7 +1,7 @@
 const HeaderSqueleton = () => {
   return (
     // Header container
-    <div className="py-9 pl-12 border-b border-neutral-300 space-y-4">
+    <div className="py-9 pl-12 border-b border-neutral-300 dark:border-white/10 bg-white dark:bg-ink-950 space-y-4">
       {/** Displays the current page name */}
       <div className="h-6 w-32 bg-gray-200 dark:bg-ink-800 animate-pulse rounded"></div>
       {/** Displays a nice greeting message */}

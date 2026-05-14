@@ -73,7 +73,7 @@ const FoodEntriesListSqueleton = () => {
         {/** Body of the table */}
         <tbody>
           {/** The food display */}
-          <tr className="border-y border-neutral-300 font-bold relative">
+          <tr className="border-y border-neutral-300 dark:border-white/10 font-bold relative">
             {/** Display the information */}
             <td className="h-6 w-20 bg-gray-200 dark:bg-ink-800 animate-pulse rounded"></td>
           </tr>

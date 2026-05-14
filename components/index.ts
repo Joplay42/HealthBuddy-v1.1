@@ -102,6 +102,7 @@ import WorkoutPlan from "./modals/WorkoutPlan";
 import CreateWorkoutPlan from "./modals/CreateWorkoutPlan";
 import AddWeights from "./modals/AddWeights";
 import Copyrights from "./website/Copyrights";
+import PasswordResetConfirmation from "./auth/PasswordResetConfirmation";
 
 export {
 	HeaderPage,
@@ -201,4 +202,5 @@ export {
 	CreateWorkoutPlan,
 	AddWeights,
 	Copyrights,
+	PasswordResetConfirmation,
 };
