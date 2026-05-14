@@ -512,6 +512,7 @@ const AuthForm = ({ type }: authFormProps) => {
 						)}
 
 						<button
+							aria-label='submit'
 							type='submit'
 							disabled={loading}
 							className='mt-8 w-full inline-flex items-center justify-center gap-2 bg-lime hover:bg-lime-400 text-ink-950 font-semibold py-3.5 rounded-xl glow-lime transition disabled:opacity-60'

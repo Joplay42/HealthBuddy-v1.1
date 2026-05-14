@@ -166,7 +166,7 @@ const FoodCard = ({ item, setConsumedLoading }: foodCardProps) => {
 
   return (
     // Grid container
-    <div className="flex flex-wrap items-center justify-center sm:justify-between gap-6 md:gap-4 py-5 border-neutral-300 border-t animate-fade-in">
+    <div className="flex flex-wrap items-center justify-center sm:justify-between gap-6 md:gap-4 py-5 border-neutral-300 dark:border-white/10 border-t animate-fade-in">
       {/** Food name */}
       <div className="text-md md:text-lg w-full md:w-40">
         <h3 className="font-semibold line-clamp-3">{capitalize(item.Name)}</h3>
@@ -237,7 +237,7 @@ const FoodCard = ({ item, setConsumedLoading }: foodCardProps) => {
       {/** Food nutrient informations */}
       <div className="flex items-center space-x-10 justify-self-end sm:space-x-4">
         <div className="text-center">
-          <h3 className="font-bold text-[#AFF921]">Protein</h3>
+          <h3 className="font-bold text-[#AFF921] dark:text-lime">Protein</h3>
           <p>
             <span className="font-semibold">
               {Math.round(
@@ -250,7 +250,7 @@ const FoodCard = ({ item, setConsumedLoading }: foodCardProps) => {
           </p>
         </div>
         <div className="text-center">
-          <h3 className="font-bold text-[#73af00]">Carbs</h3>
+          <h3 className="font-bold text-[#73af00] dark:text-lime-700">Carbs</h3>
           <p>
             <span className="font-semibold">
               {Math.round(
@@ -263,7 +263,7 @@ const FoodCard = ({ item, setConsumedLoading }: foodCardProps) => {
           </p>
         </div>
         <div className="text-center">
-          <h3 className="font-bold text-[#d7ff8a]">Fat</h3>
+          <h3 className="font-bold text-[#d7ff8a] dark:text-lime-400">Fat</h3>
           <p>
             <span className="font-semibold">
               {Math.round(
@@ -351,7 +351,7 @@ const FoodCard = ({ item, setConsumedLoading }: foodCardProps) => {
           </button>
         )}
         <button
-          className="disabled:opacity-50 bg-black text-white rounded-xl text-2xl h-10 lg:h-16 w-full lg:w-12 col-span-2 sm:col-span-3 md:col-span-4 lg:col-span-1 lg:justify-self-end"
+          className="disabled:opacity-50 bg-black dark:bg-lime text-white dark:text-ink-950 rounded-xl text-2xl h-10 lg:h-16 w-full lg:w-12 col-span-2 sm:col-span-3 md:col-span-4 lg:col-span-1 lg:justify-self-end"
           onClick={() => handleSubmit(item, multiplier)}
           disabled={disableButton}
         >

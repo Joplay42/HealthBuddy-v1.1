@@ -20,12 +20,12 @@ const SideBarSettings = () => {
   return (
     <>
       {/** Desktop sidebar */}
-      <div className="hidden lg:block w-60 border-r border-neutral-400 ">
+      <div className="hidden lg:block w-60 border-r border-neutral-400 dark:border-white/10">
         {/** Mapping the settings in the dispplay */}
         {settingsSideBar.map((item, index) => (
           <div key={index}>
             {/** title */}
-            <h1 className="text-lg text-neutral-500 py-3 mt-10">
+            <h1 className="text-lg text-neutral-500 dark:text-white/55 py-3 mt-10">
               {item.title}
             </h1>
             <div className="flex flex-col space-y-3">
@@ -35,7 +35,7 @@ const SideBarSettings = () => {
                 <button
                   key={index}
                   onClick={() => handleNavigation(category.link)}
-                  className="text-lg font-semibold py-3"
+                  className="text-lg font-semibold py-3 dark:text-bone"
                 >
                   {category.name}
                 </button>
@@ -53,12 +53,12 @@ const SideBarSettings = () => {
               {item.category.map((category, index) => (
                 <div
                   key={index}
-                  className="p-5 border border-neutral-400 hover:bg-neutral-300"
+                  className="p-5 border border-neutral-400 dark:border-white/10 hover:bg-neutral-300 dark:hover:bg-ink-800"
                 >
                   <button
                     key={index}
                     onClick={() => handleNavigation(category.link)}
-                    className="font-semibold"
+                    className="font-semibold dark:text-bone"
                   >
                     {category.name}
                   </button>

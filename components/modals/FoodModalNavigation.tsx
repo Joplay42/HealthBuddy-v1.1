@@ -12,10 +12,10 @@ const FoodModalNavigation = ({
   const router = useRouter();
 
   return (
-    <div className="grid grid-cols-3 text-center text-neutral-600 text-md md:text-lg lg:text-xl font-semibold">
+    <div className="grid grid-cols-3 text-center text-neutral-600 dark:text-white text-md md:text-lg lg:text-xl font-semibold">
       <button
-        className={`border border-neutral-200 py-2 md:py-6 transition-all duration-300 ease-in-out flex items-center justify-center space-x-2 ${
-          page === "search" ? "bg-custom-green opacity-100" : "opacity-80"
+        className={`border border-neutral-200 dark:border-white/10 py-2 md:py-6 transition-all duration-300 ease-in-out flex items-center justify-center space-x-2 ${
+          page === "search" ? "bg-custom-green dark:bg-lime dark:text-ink-950 opacity-100" : "opacity-80"
         }`}
         onClick={() => setPage("search")}
       >
@@ -23,8 +23,8 @@ const FoodModalNavigation = ({
         <p>Search</p>
       </button>
       <button
-        className={`border border-neutral-200 py-2 md:py-6 transition-all duration-300 ease-in-out flex items-center justify-center space-x-2 ${
-          page === "library" ? "bg-custom-green opacity-100" : "opacity-80"
+        className={`border border-neutral-200 dark:border-white/10 py-2 md:py-6 transition-all duration-300 ease-in-out flex items-center justify-center space-x-2 ${
+          page === "library" ? "bg-custom-green dark:bg-lime dark:text-ink-950 opacity-100" : "opacity-80"
         }`}
         onClick={() => setPage("library")}
       >
@@ -32,8 +32,8 @@ const FoodModalNavigation = ({
         <p>Library</p>
       </button>
       <button
-        className={`border border-neutral-200 py-2 md:py-6 transition-all duration-300 ease-in-out flex items-center justify-center space-x-2 ${
-          page === "recipe" ? "bg-custom-green opacity-100" : "opacity-80"
+        className={`border border-neutral-200 dark:border-white/10 py-2 md:py-6 transition-all duration-300 ease-in-out flex items-center justify-center space-x-2 ${
+          page === "recipe" ? "bg-custom-green dark:bg-lime dark:text-ink-950 opacity-100" : "opacity-80"
         }`}
         onClick={() => setPage("recipe")}
       >

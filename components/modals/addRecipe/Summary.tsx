@@ -111,7 +111,7 @@ const Summary = ({
       <form onSubmit={handleSubmit}>
         <div className="lg:grid grid-cols-2 gap-x-6">
           <div className="space-y-4 mt-6 lg:mt-10 flex flex-col">
-            <label className="font-semibold text-lg">Name</label>
+            <label className="font-semibold text-lg dark:text-bone">Name</label>
             <input
               type="text"
               value={recipe.Name}
@@ -124,7 +124,7 @@ const Summary = ({
             />
           </div>
           <div className="space-y-4 mt-6 lg:mt-10 flex flex-col">
-            <label className="font-semibold text-lg">Amount of servings</label>
+            <label className="font-semibold text-lg dark:text-bone">Amount of servings</label>
             <input
               type="number"
               value={recipe.NbServing}
@@ -144,7 +144,7 @@ const Summary = ({
         <div className="mt-6 lg:mt-10 grid md:grid-cols-2">
           <div className="my-6 gap-6 h-auto">
             <div className="space-y-4">
-              <h1 className="font-semibold text-lg">
+              <h1 className="font-semibold text-lg dark:text-bone">
                 Macronutrient informations (per portions)
               </h1>
               <div className="flex flex-wrap gap-10">
@@ -173,7 +173,7 @@ const Summary = ({
                 {/** Food nutrient informations */}
                 <div className="flex items-center gap-x-10">
                   <div className="text-center">
-                    <h3 className="font-bold text-[#AFF921]">Protein</h3>
+                    <h3 className="font-bold text-[#AFF921] dark:text-lime">Protein</h3>
                     <p>
                       <span className="font-semibold">
                         {Math.round(
@@ -184,7 +184,7 @@ const Summary = ({
                     </p>
                   </div>
                   <div className="text-center">
-                    <h3 className="font-bold text-[#73af00]">Carbs</h3>
+                    <h3 className="font-bold text-[#73af00] dark:text-lime-700">Carbs</h3>
                     <p>
                       <span className="font-semibold">
                         {Math.round(
@@ -195,7 +195,7 @@ const Summary = ({
                     </p>
                   </div>
                   <div className="text-center">
-                    <h3 className="font-bold text-[#d7ff8a]">Fat</h3>
+                    <h3 className="font-bold text-[#d7ff8a] dark:text-lime-400">Fat</h3>
                     <p>
                       <span className="font-semibold">
                         {Math.round(
@@ -211,7 +211,7 @@ const Summary = ({
           </div>
           <div className="flex flex-col my-6 h-auto">
             <div className="space-y-4">
-              <h1 className="font-semibold text-lg">List of ingredients</h1>
+              <h1 className="font-semibold text-lg dark:text-bone">List of ingredients</h1>
             </div>
             <div className="space-y-2 mt-2">
               {recipe.foods.map((foods, index) => (
@@ -224,7 +224,7 @@ const Summary = ({
           </div>
         </div>
         <button
-          className=" my-10 flex items-center gap-2 justify-center py-4 px-3 rounded-xl hover:opacity-75 hover:transition ease-in-out duration-300 bg-black text-white w-full disabled:opacity-60"
+          className=" my-10 flex items-center gap-2 justify-center py-4 px-3 rounded-xl hover:opacity-75 hover:transition ease-in-out duration-300 bg-black dark:bg-lime text-white dark:text-ink-950 w-full disabled:opacity-60"
           type="submit"
           disabled={buttonDisabled || loading}
         >

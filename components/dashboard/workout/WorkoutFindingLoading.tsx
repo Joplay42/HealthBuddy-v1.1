@@ -25,7 +25,7 @@ const WorkoutFindingLoading = () => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center justify-center py-60 text-custom-dark">
+    <div className="flex flex-col items-center justify-center py-60 text-custom-dark dark:text-bone">
       {/* GIF */}
       <Image
         src="/finding.gif"

@@ -16,11 +16,9 @@ const ObjectiveCard = ({ goal, data, nutrient }: ObjectiveCardProps) => {
   return (
     <div className="grid grid-cols-2 md:block items-center">
       {/** The name of the nutrient */}
-      <h2 className="font-semibold capitalize">{nutrient} :</h2>
-      {/** Display the information */}
-      <p className="font-light">
-        {/** Display the nutrient information */}
-        <span className="font-medium text-green text-3xl">
+      <h2 className="font-semibold capitalize dark:text-bone">{nutrient} :</h2>
+      <p className="font-light dark:text-white/55">
+        <span className="font-medium text-green dark:text-lime text-3xl">
           {Math.round(data[nutrient])}
         </span>
         {"g / "}

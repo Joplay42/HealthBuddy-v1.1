@@ -1,7 +1,7 @@
-// The type imports
+"use client";
 import { NutrientsChartsProps } from "@/types";
-// Library improts
 import { Pie } from "react-chartjs-2";
+import { useTheme } from "@/context/ThemeContext";
 
 /**
  * This component is used to display the nutrient information of the food
@@ -19,17 +19,21 @@ const NutrientsCharts = ({
   size,
   fontSize,
 }: NutrientsChartsProps) => {
+  const { theme } = useTheme();
   const isEmpty = Protein === 0 && Carbs === 0 && Fat === 0;
+  const colors = theme === "dark"
+    ? ["#C7F94C", "#86B61C", "#D6FF6B"]
+    : ["#AFF921", "#73af00", "#d7ff8a"];
+  const emptyColor = theme === "dark" ? "#2c2c30" : "#D1D5DB";
 
   const value = {
     datasets: [
       {
         label: "Calories",
         data: isEmpty ? [1] : [Protein, Carbs, Fat],
-        backgroundColor: isEmpty
-          ? ["#D1D5DB"]
-          : ["#AFF921", "#73af00", "#d7ff8a"],
-        borderWidth: 1,
+        backgroundColor: isEmpty ? [emptyColor] : colors,
+        borderColor: "transparent",
+        borderWidth: 0,
         cutout: "70%",
       },
     ],

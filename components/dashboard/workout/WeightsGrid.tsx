@@ -51,7 +51,7 @@ const WeightsGrid = ({ weight, loading }: WeightsGridProps) => {
       <table className="hidden sm:table table-auto w-full text-left">
         <thead className="sticky top-0">
           {/** The head of the table */}
-          <tr className="font-semibold text-neutral-400">
+          <tr className="font-semibold text-neutral-400 dark:text-white/40">
             <td className="pb-3">Weight</td>
             <td className="pb-3">Date</td>
           </tr>
@@ -63,7 +63,7 @@ const WeightsGrid = ({ weight, loading }: WeightsGridProps) => {
               .map((_, index) => (
                 <tr
                   key={index}
-                  className="border-y border-neutral-300 font-medium text-[#797979] animate-fade-in"
+                  className="border-y border-neutral-300 dark:border-white/10 font-medium text-[#797979] dark:text-white/55 animate-fade-in"
                 >
                   <td className="py-2">---</td>
                   <td className="py-2">--/--/--</td>
@@ -114,7 +114,7 @@ const WeightsGrid = ({ weight, loading }: WeightsGridProps) => {
       <table className="sm:hidden table-auto w-full text-left">
         <thead className="sticky top-0">
           {/** The head of the table */}
-          <tr className="font-semibold text-neutral-400">
+          <tr className="font-semibold text-neutral-400 dark:text-white/40">
             <td className="pb-3">Weight</td>
             {weight.length === 0 && <td className="pb-3">Date</td>}
           </tr>
@@ -126,7 +126,7 @@ const WeightsGrid = ({ weight, loading }: WeightsGridProps) => {
               .map((_, index) => (
                 <tr
                   key={index}
-                  className="border-y border-neutral-300 font-medium text-[#797979] animate-fade-in"
+                  className="border-y border-neutral-300 dark:border-white/10 font-medium text-[#797979] dark:text-white/55 animate-fade-in"
                 >
                   <td className="py-2">---</td>
                   <td className="py-2">--/--/--</td>

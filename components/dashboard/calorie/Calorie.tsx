@@ -20,15 +20,15 @@ const Calorie = () => {
         data-aos-delay="200"
         data-aos-duration="300"
       >
-        <div className="bg-white p-5 rounded-3xl border border-neutral-400 w-full py-40">
-          <h1 className="text-3xl font-bold text-center">
-            Welcome to <span className="text-custom-green">HealthBuddy</span>{" "}
+        <div className="bg-white dark:bg-ink-900 p-5 rounded-3xl border border-neutral-400 dark:border-white/10 w-full py-40">
+          <h1 className="text-3xl font-bold text-center dark:text-bone">
+            Welcome to <span className="text-custom-green dark:text-lime">HealthBuddy</span>{" "}
             calorie tracker!
             <span className="text-5xl"> 🎉</span>
           </h1>
           <div className="flex justify-center mt-5">
             <button
-              className="w-fit bg-black text-white px-5 py-2 rounded-2xl text-center hover:opacity-75"
+              className="w-fit bg-black dark:bg-lime text-white dark:text-ink-950 px-5 py-2 rounded-2xl text-center hover:opacity-75"
               onClick={() =>
                 router.push("/dashboard/calorie-tracking?modal=objective", {
                   scroll: false,

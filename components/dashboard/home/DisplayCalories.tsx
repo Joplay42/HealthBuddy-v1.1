@@ -18,13 +18,13 @@ const DisplayCalories = () => {
     return (
       <div className="py-16">
         <h1 className="text-3xl font-bold text-center">
-          Welcome to <span className="text-custom-green">HealthBuddy</span>{" "}
+          Welcome to <span className="text-custom-green dark:text-lime">HealthBuddy</span>{" "}
           calorie tracker!
           <span className="text-5xl"> 🎉</span>
         </h1>
         <div className="flex justify-center mt-5">
           <button
-            className="w-fit bg-black text-white px-5 py-2 rounded-2xl text-center hover:opacity-75"
+            className="w-fit bg-black dark:bg-lime text-white dark:text-ink-950 px-5 py-2 rounded-2xl text-center hover:opacity-75"
             onClick={() =>
               router.push("/dashboard?modal=objective", {
                 scroll: false,
@@ -50,27 +50,26 @@ const DisplayCalories = () => {
           <PieChart data={caloriesConsumed} remaining={caloriesRemaining} />
           <div className="absolute bottom-1/2 right-1/2 translate-x-1/2 translate-y-1/2 text-center">
             {/** Display of the calorie remaining */}
-            <h1 className="font-bold text-4xl">{caloriesRemaining}</h1>
-            <p>Remaining</p>
+            <h1 className="font-bold text-4xl dark:text-bone">{caloriesRemaining}</h1>
+            <p className="dark:text-white/55">Remaining</p>
           </div>
         </div>
         <div className="flex flex-wrap gap-6 py-6 lg:flex-col lg:space-y-4">
           <div className="flex space-x-1">
             {/** Display of the calorie objective */}
             <Image src="/flag.svg" width={25} height={25} alt="flag icon" />
-            <p className="font-light text-lg">
+            <p className="font-light text-lg dark:text-white/55">
               Objective :{" "}
-              <span className="font-extrabold text-neutral-600 text-xl">
+              <span className="font-extrabold text-neutral-600 dark:text-white/70 text-xl">
                 {userGoal.calorie}
               </span>
             </p>
           </div>
           <div className="flex space-x-1">
-            {/** Display of the calories */}
             <Image src="/fork.svg" width={25} height={25} alt="flag icon" />
-            <p className="font-light text-lg">
+            <p className="font-light text-lg dark:text-white/55">
               Consumed :{" "}
-              <span className="font-extrabold text-neutral-600 text-xl">
+              <span className="font-extrabold text-neutral-600 dark:text-white/70 text-xl">
                 {calorieInfo.calorie}
               </span>
             </p>

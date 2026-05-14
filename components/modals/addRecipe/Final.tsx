@@ -13,13 +13,13 @@ const Final = () => {
     <div>
       <div className="flex flex-col items-center py-20">
         <Image src="/Final.svg" width={200} height={200} alt="Loading gif" />
-        <h1 className="text-3xl text-custom-green font-bold">
+        <h1 className="text-3xl text-custom-green dark:text-lime font-bold">
           Congratulation!
         </h1>
-        <p>Your new recipe has been created</p>
+        <p className="dark:text-bone">Your new recipe has been created</p>
       </div>
       <button
-        className="mx-4 lg:mx-10 my-8 flex items-center gap-2 justify-center py-4 px-3 rounded-xl hover:opacity-75 hover:transition ease-in-out duration-300 bg-black text-white w-[95%] disabled:opacity-60"
+        className="mx-4 lg:mx-10 my-8 flex items-center gap-2 justify-center py-4 px-3 rounded-xl hover:opacity-75 hover:transition ease-in-out duration-300 bg-black dark:bg-lime text-white dark:text-ink-950 w-[95%] disabled:opacity-60"
         type="submit"
         disabled={loading}
         onClick={() => {

@@ -30,7 +30,7 @@ const FoodEntriesList = ({ label, data }: foodEntriesListProps) => {
       <table className="hidden lg:table w-full text-left">
         <thead>
           {/** The head of the table */}
-          <tr className="font-semibold text-neutral-400">
+          <tr className="font-semibold text-neutral-400 dark:text-white/40">
             {/** Mapping of the categories */}
             {label.map((label, index) => (
               // Display of the categories
@@ -51,7 +51,7 @@ const FoodEntriesList = ({ label, data }: foodEntriesListProps) => {
             // A single row
             <tr
               key={index}
-              className="border-y border-neutral-300 font-bold animate-fade-in"
+              className="border-y border-neutral-300 dark:border-white/10 font-bold animate-fade-in dark:text-bone"
             >
               {/** Display each item properties */}
               <td className="py-5">{item.Meal}</td>
@@ -70,7 +70,7 @@ const FoodEntriesList = ({ label, data }: foodEntriesListProps) => {
         {/** The header of the table */}
         <thead>
           {/** A single row */}
-          <tr className="font-semibold text-neutral-400">
+          <tr className="font-semibold text-neutral-400 dark:text-white/40">
             {/** Display of only the first and second categories */}
             {label.slice(0, 2).map((item, index) => (
               // Display
@@ -96,7 +96,7 @@ const FoodEntriesList = ({ label, data }: foodEntriesListProps) => {
               // The food display
               <tr
                 key={index}
-                className="border-y border-neutral-300 font-bold animate-fade-in"
+                className="border-y border-neutral-300 dark:border-white/10 font-bold animate-fade-in dark:text-bone"
               >
                 {/** Display the information */}
                 <td className="">{item.Meal}</td>

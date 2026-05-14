@@ -1,16 +1,17 @@
 "use client";
 // Component import
 import {
-  Sidebar,
-  Header,
-  FoodModal,
-  ObjectiveModals,
-  AddFoodModal,
-  AddRecipeModal,
-  EditRecipeModal,
-  DashboardSqueleton,
-  WorkoutObjective,
-  AddWeights,
+	Sidebar,
+	Header,
+	FoodModal,
+	ObjectiveModals,
+	AddFoodModal,
+	AddRecipeModal,
+	EditRecipeModal,
+	DashboardSqueleton,
+	WorkoutObjective,
+	AddWeights,
+	Copyrights,
 } from "@/components";
 import { DashboardProps } from "@/types";
 import { FireBaseAuthProvider } from "@/context/UserContext";
@@ -22,17 +23,17 @@ import AOS from "aos";
 
 // handle the fallBack method for this components
 const Dashboard = ({ children }: DashboardProps) => {
-  return (
-    // The custom context to pass the user
-    <FireBaseAuthProvider>
-      {/** The custom context to pass the userInformation */}
-      <UserInformationProvider>
-        <Suspense fallback={<DashboardSqueleton />}>
-          <Content>{children}</Content>
-        </Suspense>
-      </UserInformationProvider>
-    </FireBaseAuthProvider>
-  );
+	return (
+		// The custom context to pass the user
+		<FireBaseAuthProvider>
+			{/** The custom context to pass the userInformation */}
+			<UserInformationProvider>
+				<Suspense fallback={<DashboardSqueleton />}>
+					<Content>{children}</Content>
+				</Suspense>
+			</UserInformationProvider>
+		</FireBaseAuthProvider>
+	);
 };
 
 /**
@@ -43,51 +44,52 @@ const Dashboard = ({ children }: DashboardProps) => {
  * @returns
  */
 const Content = ({ children }: DashboardProps) => {
-  // SearchParams hooks from next/navigation
-  const searchParams = useSearchParams();
-  // Get the params
-  const isFoodModalOpen = searchParams.get("modal") === "food";
-  const isAddFoodModalOpen = searchParams.get("modal") == "addfood";
-  const isAddRecipeModalOpen = searchParams.get("modal") == "addrecipe";
-  const isEditRecipeModalOpen = searchParams.get("modal") == "editrecipe";
-  const isObjectiveModalOpen = searchParams.get("modal") === "objective";
-  const isWorkoutModalOpen = searchParams.get("modal") === "workout";
-  const isWeightModalOpen = searchParams.get("modal") === "weight";
+	// SearchParams hooks from next/navigation
+	const searchParams = useSearchParams();
+	// Get the params
+	const isFoodModalOpen = searchParams.get("modal") === "food";
+	const isAddFoodModalOpen = searchParams.get("modal") == "addfood";
+	const isAddRecipeModalOpen = searchParams.get("modal") == "addrecipe";
+	const isEditRecipeModalOpen = searchParams.get("modal") == "editrecipe";
+	const isObjectiveModalOpen = searchParams.get("modal") === "objective";
+	const isWorkoutModalOpen = searchParams.get("modal") === "workout";
+	const isWeightModalOpen = searchParams.get("modal") === "weight";
 
-  useEffect(() => {
-    AOS.init();
-    AOS.refresh();
-  }, []);
+	useEffect(() => {
+		AOS.init();
+		AOS.refresh();
+	}, []);
 
-  return (
-    // The custom context to pass the user
-    <FireBaseAuthProvider>
-      {/** The custom context to pass the userInformation */}
-      <UserInformationProvider>
-        <div>
-          {/** Sidebar component */}
-          <Sidebar />
-          <div className="ml-[48px] md:ml-[80px] lg:ml-[128px]">
-            {/** Header container */}
-            <Header />
-            {/** The content of the dashboard */}
-            <div className="bg-neutral-200 min-h-screen px-5 md:px-12">
-              {children}
-              <ToastContainer />
-            </div>
-          </div>
-          {/** Handle the foodMoal opening with url params */}
-          {isFoodModalOpen && <FoodModal />}
-          {isObjectiveModalOpen && <ObjectiveModals />}
-          {isAddFoodModalOpen && <AddFoodModal />}
-          {isAddRecipeModalOpen && <AddRecipeModal />}
-          {isEditRecipeModalOpen && <EditRecipeModal />}
-          {isWorkoutModalOpen && <WorkoutObjective />}
-          {isWeightModalOpen && <AddWeights />}
-        </div>
-      </UserInformationProvider>
-    </FireBaseAuthProvider>
-  );
+	return (
+		// The custom context to pass the user
+		<FireBaseAuthProvider>
+			{/** The custom context to pass the userInformation */}
+			<UserInformationProvider>
+				<div className='font-sans'>
+					{/** Sidebar component */}
+					<Sidebar />
+					<div className='ml-[48px] md:ml-[80px] lg:ml-[128px]'>
+						{/** Header container */}
+						<Header />
+						{/** The content of the dashboard */}
+						<div className='bg-neutral-200 dark:bg-ink-950 min-h-screen px-5 md:px-12'>
+							{children}
+							<ToastContainer />
+						</div>
+						<Copyrights width={"auto"} />
+					</div>
+					{/** Handle the foodMoal opening with url params */}
+					{isFoodModalOpen && <FoodModal />}
+					{isObjectiveModalOpen && <ObjectiveModals />}
+					{isAddFoodModalOpen && <AddFoodModal />}
+					{isAddRecipeModalOpen && <AddRecipeModal />}
+					{isEditRecipeModalOpen && <EditRecipeModal />}
+					{isWorkoutModalOpen && <WorkoutObjective />}
+					{isWeightModalOpen && <AddWeights />}
+				</div>
+			</UserInformationProvider>
+		</FireBaseAuthProvider>
+	);
 };
 
 export default Dashboard;

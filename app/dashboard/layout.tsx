@@ -1,15 +1,15 @@
 import { Dashboard } from "@/components";
+import { ThemeProvider } from "@/context/ThemeContext";
 
 const layout = ({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
-  // Return the dashboard component to fetch the user
   return (
-    <>
+    <ThemeProvider>
       <Dashboard>{children}</Dashboard>
-    </>
+    </ThemeProvider>
   );
 };
 

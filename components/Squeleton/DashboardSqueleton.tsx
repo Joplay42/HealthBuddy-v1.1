@@ -10,7 +10,7 @@ const DashboardSqueleton = () => {
         {/** Header container */}
         <HeaderSqueleton />
         {/** The content of the dashboard */}
-        <div className="bg-neutral-200 min-h-screen px-5 md:px-12"></div>
+        <div className="bg-neutral-200 dark:bg-ink-950 min-h-screen px-5 md:px-12"></div>
       </div>
     </div>
   );

@@ -10,25 +10,25 @@ const FoodEntriesListSqueleton = () => {
           {/** The head of the table */}
           <tr className="font-semibold text-neutral-400">
             <td className="pr-10">
-              <div className="h-6 w-10 bg-gray-200 animate-pulse rounded mb-2"></div>
+              <div className="h-6 w-10 bg-gray-200 dark:bg-ink-800 animate-pulse rounded mb-2"></div>
             </td>
             <td className="pr-10">
-              <div className="h-6 w-20 bg-gray-200 animate-pulse rounded mb-2"></div>
+              <div className="h-6 w-20 bg-gray-200 dark:bg-ink-800 animate-pulse rounded mb-2"></div>
             </td>
             <td className="pr-10">
-              <div className="h-6 w-10 bg-gray-200 animate-pulse rounded mb-2"></div>
+              <div className="h-6 w-10 bg-gray-200 dark:bg-ink-800 animate-pulse rounded mb-2"></div>
             </td>
             <td className="pr-10">
-              <div className="h-6 w-10 bg-gray-200 animate-pulse rounded mb-2"></div>
+              <div className="h-6 w-10 bg-gray-200 dark:bg-ink-800 animate-pulse rounded mb-2"></div>
             </td>
             <td className="pr-10">
-              <div className="h-6 w-10 bg-gray-200 animate-pulse rounded mb-2"></div>
+              <div className="h-6 w-10 bg-gray-200 dark:bg-ink-800 animate-pulse rounded mb-2"></div>
             </td>
             <td className="pr-10">
-              <div className="h-6 w-10 bg-gray-200 animate-pulse rounded mb-2"></div>
+              <div className="h-6 w-10 bg-gray-200 dark:bg-ink-800 animate-pulse rounded mb-2"></div>
             </td>
             <td>
-              <div className="h-6 w-full bg-gray-200 animate-pulse rounded mb-2"></div>
+              <div className="h-6 w-full bg-gray-200 dark:bg-ink-800 animate-pulse rounded mb-2"></div>
             </td>
           </tr>
         </thead>
@@ -37,25 +37,25 @@ const FoodEntriesListSqueleton = () => {
           {/** A single row */}
           <tr className="font-semibold text-neutral-400">
             <td className="pr-10">
-              <div className="h-6 w-10 bg-gray-200 animate-pulse rounded mb-2"></div>
+              <div className="h-6 w-10 bg-gray-200 dark:bg-ink-800 animate-pulse rounded mb-2"></div>
             </td>
             <td className="pr-10">
-              <div className="h-6 w-20 bg-gray-200 animate-pulse rounded mb-2"></div>
+              <div className="h-6 w-20 bg-gray-200 dark:bg-ink-800 animate-pulse rounded mb-2"></div>
             </td>
             <td className="pr-10">
-              <div className="h-6 w-10 bg-gray-200 animate-pulse rounded mb-2"></div>
+              <div className="h-6 w-10 bg-gray-200 dark:bg-ink-800 animate-pulse rounded mb-2"></div>
             </td>
             <td className="pr-10">
-              <div className="h-6 w-10 bg-gray-200 animate-pulse rounded mb-2"></div>
+              <div className="h-6 w-10 bg-gray-200 dark:bg-ink-800 animate-pulse rounded mb-2"></div>
             </td>
             <td className="pr-10">
-              <div className="h-6 w-10 bg-gray-200 animate-pulse rounded mb-2"></div>
+              <div className="h-6 w-10 bg-gray-200 dark:bg-ink-800 animate-pulse rounded mb-2"></div>
             </td>
             <td className="pr-10">
-              <div className="h-6 w-10 bg-gray-200 animate-pulse rounded mb-2"></div>
+              <div className="h-6 w-10 bg-gray-200 dark:bg-ink-800 animate-pulse rounded mb-2"></div>
             </td>
             <td>
-              <div className="h-6 w-full bg-gray-200 animate-pulse rounded mb-2"></div>
+              <div className="h-6 w-full bg-gray-200 dark:bg-ink-800 animate-pulse rounded mb-2"></div>
             </td>
           </tr>
         </tbody>
@@ -67,7 +67,7 @@ const FoodEntriesListSqueleton = () => {
           {/** A single row */}
           <tr className="font-semibold text-neutral-400">
             {/** Display of only the first and second categories */}
-            <td className="h-6 w-20 bg-gray-200 animate-pulse rounded"></td>
+            <td className="h-6 w-20 bg-gray-200 dark:bg-ink-800 animate-pulse rounded"></td>
           </tr>
         </thead>
         {/** Body of the table */}
@@ -75,7 +75,7 @@ const FoodEntriesListSqueleton = () => {
           {/** The food display */}
           <tr className="border-y border-neutral-300 font-bold relative">
             {/** Display the information */}
-            <td className="h-6 w-20 bg-gray-200 animate-pulse rounded"></td>
+            <td className="h-6 w-20 bg-gray-200 dark:bg-ink-800 animate-pulse rounded"></td>
           </tr>
         </tbody>
       </table>

@@ -5,7 +5,7 @@ const FoodEntriesSqueleton = () => {
   return (
     // Food entries container
     <div
-      className="bg-white p-5 rounded-3xl border border-neutral-400"
+      className="bg-white dark:bg-ink-900 p-5 rounded-3xl border border-neutral-400 dark:border-white/10"
       data-aos="fade-up"
       data-aos-duration="300"
     >

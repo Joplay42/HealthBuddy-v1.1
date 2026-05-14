@@ -3,10 +3,14 @@ import { chartProps } from "@/types";
 import React from "react";
 import { Pie } from "react-chartjs-2";
 import { Chart, ArcElement, Tooltip, Legend } from "chart.js";
+import { useTheme } from "@/context/ThemeContext";
 
 Chart.register(ArcElement, Tooltip, Legend);
 
 const PieChart = ({ data, remaining }: chartProps) => {
+  const { theme } = useTheme();
+  const accentColor = theme === "dark" ? "#C7F94C" : "#AFF921";
+  const emptyColor = theme === "dark" ? "#2c2c30" : "#D1D5DB";
   const safeRemaining = Math.max(0, remaining);
   const isEmpty = data === 0 && safeRemaining === 0;
 
@@ -16,8 +20,9 @@ const PieChart = ({ data, remaining }: chartProps) => {
       {
         label: "Calories",
         data: isEmpty ? [1] : [data, safeRemaining],
-        backgroundColor: isEmpty ? ["#D1D5DB"] : ["#AFF921", "#656565"],
-        borderWidth: 1,
+        backgroundColor: isEmpty ? [emptyColor] : [accentColor, "#656565"],
+        borderColor: "transparent",
+        borderWidth: 0,
         cutout: "60%",
       },
     ],

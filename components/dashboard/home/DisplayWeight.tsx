@@ -1,6 +1,7 @@
 "use client";
 import DisplayWeightSqueleton from "@/components/Squeleton/DisplayWeightSqueleton";
 import { DisplayWeightProps, userWeightProps } from "@/types";
+import { useTheme } from "@/context/ThemeContext";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -17,8 +18,11 @@ import { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 
 const DisplayWeight = ({ weight, objective, loading }: DisplayWeightProps) => {
-  // Hooks for the router
   const router = useRouter();
+  const { theme } = useTheme();
+  const accentColor = theme === "dark" ? "#C7F94C" : "#AFF921";
+  const gridColor = theme === "dark" ? "rgba(255,255,255,0.08)" : "#e5e5e5";
+  const tickFont = { family: '"Inter", sans-serif', size: 12 };
 
   // Hook for the objective view
   const [showObjective, setObjectiveDisplay] = useState<boolean>(false);
@@ -66,8 +70,8 @@ const DisplayWeight = ({ weight, objective, loading }: DisplayWeightProps) => {
       datasets: [
         {
           label: "Weight",
-          data: [], // no points
-          borderColor: "#AFF921",
+          data: [],
+          borderColor: accentColor,
           backgroundColor: "#ffffff00",
           fill: true,
         },
@@ -84,28 +88,13 @@ const DisplayWeight = ({ weight, objective, loading }: DisplayWeightProps) => {
       scales: {
         y: {
           min: 0,
-          max: 200, // or any reasonable default range
-          ticks: {
-            font: {
-              family: '"Montserrat", sans-serif',
-              size: 12,
-            },
-            stepSize: 50,
-          },
-          grid: {
-            color: "#e5e5e5",
-          },
+          max: 200,
+          ticks: { font: tickFont, stepSize: 50 },
+          grid: { color: gridColor },
         },
         x: {
-          ticks: {
-            font: {
-              family: '"Montserrat", sans-serif',
-              size: 12,
-            },
-          },
-          grid: {
-            color: "#e5e5e5",
-          },
+          ticks: { font: tickFont },
+          grid: { color: gridColor },
         },
       },
       maintainAspectRatio: false,
@@ -151,7 +140,7 @@ const DisplayWeight = ({ weight, objective, loading }: DisplayWeightProps) => {
     plugins: {
       tooltip: {
         font: {
-          family: '"Montserrat", sans-serif', // your app font here
+          family: '"Inter", sans-serif',
           size: 14,
           weight: "normal",
         },
@@ -178,23 +167,11 @@ const DisplayWeight = ({ weight, objective, loading }: DisplayWeightProps) => {
           showObjective ? objective.objectiveWeight - 5 : smallestIndex - 2
         ),
 
-        ticks: {
-          font: {
-            family: '"Montserrat", sans-serif',
-            size: 12,
-          },
-          stepSize: 1,
-          maxTicksLimit: 6,
-        },
+        ticks: { font: tickFont, stepSize: 1, maxTicksLimit: 6 },
         beginAtZero: false,
       },
       x: {
-        ticks: {
-          font: {
-            family: '"Montserrat", sans-serif',
-            size: 12,
-          },
-        },
+        ticks: { font: tickFont },
       },
     },
     maintainAspectRatio: false,
@@ -232,7 +209,7 @@ const DisplayWeight = ({ weight, objective, loading }: DisplayWeightProps) => {
     {
       fill: true,
       data: weightData,
-      borderColor: "#AFF921",
+      borderColor: accentColor,
       backgroundColor: "#ffffff00",
     },
   ];
@@ -270,7 +247,7 @@ const DisplayWeight = ({ weight, objective, loading }: DisplayWeightProps) => {
             <option value="180">6 months</option>
             <option value="360">1 year</option>
           </select>
-          <label className="font-semibold">Display</label>
+          <label className="font-semibold dark:text-bone">Display</label>
         </div>
         <div className="inline-flex items-center space-x-2">
           <div className="flex items-center cursor-pointer relative">
@@ -278,7 +255,7 @@ const DisplayWeight = ({ weight, objective, loading }: DisplayWeightProps) => {
               type="checkbox"
               checked={showObjective}
               onChange={() => setObjectiveDisplay(!showObjective)}
-              className="peer h-5 w-5 cursor-pointer transition-all appearance-none rounded shadow hover:shadow-md border border-slate-300 checked:bg-slate-800 checked:border-slate-800"
+              className="peer h-5 w-5 cursor-pointer transition-all appearance-none rounded shadow hover:shadow-md border border-slate-300 checked:bg-slate-800 checked:border-slate-800 dark:checked:bg-lime dark:checked:border-lime"
               id="check"
             />
             <span className="absolute text-white opacity-0 peer-checked:opacity-100 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none">
@@ -298,7 +275,7 @@ const DisplayWeight = ({ weight, objective, loading }: DisplayWeightProps) => {
               </svg>
             </span>
           </div>
-          <label>Show objective</label>
+          <label className="dark:text-bone">Show objective</label>
         </div>
       </div>
       <Line options={options} data={data} />

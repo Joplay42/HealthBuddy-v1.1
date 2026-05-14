@@ -94,11 +94,11 @@ const CreateWorkoutPlan = ({
       <form onSubmit={(e) => submit(e, userWorkoutPlan)}>
         <h1 className="font-bold text-2xl lg:text-3xl">
           Create your own{" "}
-          <span className="text-custom-green">workout plan!</span>
+          <span className="text-custom-green dark:text-lime">workout plan!</span>
         </h1>
         <div className="space-y-2 mt-6 lg:mt-10">
           {/** Handle errors */}
-          <label className="font-semibold text-md">Program title</label>
+          <label className="font-semibold text-md dark:text-bone">Program title</label>
           <input
             value={userWorkoutPlan.title}
             onChange={(e) =>
@@ -109,13 +109,13 @@ const CreateWorkoutPlan = ({
             }
             type="text"
             name="title"
-            className="border-black rounded-xl w-full"
+            className="border-black dark:border-white/20 rounded-xl w-full"
             placeholder="ex. Push | Pull | Leg"
           />
         </div>
         <div className="space-y-2 mt-6">
           {/** Handle errors */}
-          <label className="font-semibold text-md">Program description</label>
+          <label className="font-semibold text-md dark:text-bone">Program description</label>
           <textarea
             value={userWorkoutPlan.desc}
             onChange={(e) =>
@@ -127,19 +127,19 @@ const CreateWorkoutPlan = ({
             rows={4}
             maxLength={500}
             name="title"
-            className="border border-black rounded-xl w-full p-2 resize-none"
+            className="border border-black dark:border-white/20 rounded-xl w-full p-2 resize-none"
             placeholder="ex. Overall equipment and intensity of the workouts"
           />
         </div>
         <div className="space-y-2 mt-6 mb-10">
-          <label className="font-semibold text-md">Days selection</label>
+          <label className="font-semibold text-md dark:text-bone">Days selection</label>
           <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-5 md:gap-10">
             {userWorkoutPlan.days.map((item, index) => (
               <div
                 className={`h-60 ${
                   !daysActive.includes(index)
-                    ? "outline-1 outline-neutral-400 outline-dashed"
-                    : "border-2 border-black"
+                    ? "outline-1 outline-neutral-400 dark:outline-white/20 outline-dashed"
+                    : "border-2 border-black dark:border-lime"
                 } rounded-lg flex justify-center items-center relative`}
                 key={index}
               >
@@ -153,7 +153,7 @@ const CreateWorkoutPlan = ({
                 ) : (
                   <div className="space-y-2 mt-10">
                     <div className="px-2 space-y-2">
-                      <label className="font-semibold text-sm">Name</label>
+                      <label className="font-semibold text-sm dark:text-bone">Name</label>
                       <input
                         value={userWorkoutPlan.days[index]?.name || ""}
                         onChange={(e) =>
@@ -168,12 +168,12 @@ const CreateWorkoutPlan = ({
                         }
                         type="text"
                         name="title"
-                        className="border-black rounded-md w-full text-sm"
+                        className="border-black dark:border-white/20 rounded-md w-full text-sm"
                         placeholder="ex. Arm day"
                       />
                     </div>
                     <div className="px-2 space-y-2">
-                      <label className="font-semibold text-sm">
+                      <label className="font-semibold text-sm dark:text-bone">
                         Description
                       </label>
                       <textarea
@@ -191,13 +191,13 @@ const CreateWorkoutPlan = ({
                         rows={2}
                         maxLength={200}
                         name="title"
-                        className="border border-black rounded-md w-full p-2 resize-none"
+                        className="border border-black dark:border-white/20 rounded-md w-full p-2 resize-none"
                         placeholder="ex. Arm day"
                       />
                     </div>
                   </div>
                 )}
-                <p className="absolute top-2 font-bold">{item.day}</p>
+                <p className="absolute top-2 font-bold dark:text-bone">{item.day}</p>
               </div>
             ))}
           </div>
@@ -206,7 +206,7 @@ const CreateWorkoutPlan = ({
           <p className="text-red-500">All the fields should be filled</p>
         )}
         <button
-          className="flex items-center gap-2 justify-center py-4 px-3 rounded-xl hover:opacity-75 hover:transition ease-in-out duration-300 bg-black text-white w-full disabled:opacity-60"
+          className="flex items-center gap-2 justify-center py-4 px-3 rounded-xl hover:opacity-75 hover:transition ease-in-out duration-300 bg-black dark:bg-lime text-white dark:text-ink-950 w-full disabled:opacity-60"
           type="submit"
           disabled={buttonDisabled}
         >

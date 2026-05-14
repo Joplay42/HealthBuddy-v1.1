@@ -26,11 +26,13 @@ beforeAll(() => {
 });
 
 test("Rendering signin AuthForm test", () => {
-	expect(screen.getAllByText("Create a new account")).toBeDefined();
+	expect(
+		screen.getByRole("h2", { name: "Create a new account" }),
+	).toBeDefined();
 });
 
 test("Test all invalid input signin form", async () => {
-	fireEvent.submit(screen.getByRole("button", { name: "Create new account" }));
+	fireEvent.submit(screen.getByRole("button", { name: "submit" }));
 	await waitFor(() => {
 		expect(
 			screen.getByRole("paragraph", { name: "error-message" }),
@@ -38,4 +40,14 @@ test("Test all invalid input signin form", async () => {
 	});
 });
 
-test("", async () => {});
+test("Test name invalid input signin form", async () => {
+	// Enter all value except firstName
+
+	// Submit signin
+	fireEvent.submit(screen.getByRole("button", { name: "submit" }));
+	await waitFor(() => {
+		expect(
+			screen.getByRole("paragraph", { name: "error-message" }),
+		).toBeDefined();
+	});
+});

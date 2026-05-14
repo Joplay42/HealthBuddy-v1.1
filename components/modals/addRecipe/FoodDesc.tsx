@@ -83,7 +83,7 @@ const FoodDesc = ({
             value={multiplier}
             onChange={(e) => handleQuantityChange(e.target.valueAsNumber)}
             type="number"
-            className="border-black rounded-xl w-full md:w-40"
+            className="border-black dark:border-white/20 rounded-xl w-full md:w-40"
             placeholder="ex. 4"
           />
         </div>
@@ -95,7 +95,7 @@ const FoodDesc = ({
               </span>
               g
             </p>
-            <h3 className="font-bold text-[#AFF921]">Protein</h3>
+            <h3 className="font-bold text-[#AFF921] dark:text-lime">Protein</h3>
           </div>
           <div className="text-lg md:text-xl">
             <p>
@@ -104,14 +104,14 @@ const FoodDesc = ({
               </span>
               g
             </p>
-            <h3 className="font-bold text-[#73af00]">Carbs</h3>
+            <h3 className="font-bold text-[#73af00] dark:text-lime-700">Carbs</h3>
           </div>
           <div className="text-lg md:text-xl">
             <p>
               <span className="font-semibold">{Math.round(food.Fat) || 0}</span>
               g
             </p>
-            <h3 className="font-bold text-[#d7ff8a]">Fat</h3>
+            <h3 className="font-bold text-[#d7ff8a] dark:text-lime-400">Fat</h3>
           </div>
         </div>
       </div>
@@ -125,7 +125,7 @@ const FoodDesc = ({
             update(food);
           }
         }}
-        className="mx-4 lg:mx- md:my-8 flex items-center gap-2 justify-center py-4 px-3 rounded-xl hover:opacity-75 hover:transition ease-in-out duration-300 bg-black text-white w-[95%] disabled:opacity-60"
+        className="mx-4 lg:mx- md:my-8 flex items-center gap-2 justify-center py-4 px-3 rounded-xl hover:opacity-75 hover:transition ease-in-out duration-300 bg-black dark:bg-lime text-white dark:text-ink-950 w-[95%] disabled:opacity-60"
         type="submit"
         disabled={loading || disableButton}
       >

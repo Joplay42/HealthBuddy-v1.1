@@ -220,7 +220,7 @@ const AddWeights = () => {
         <div className="py-5 px-4 lg:px-10">
           <form onSubmit={handleSubmit}>
             <div className="space-y-4 mt-6 lg:mt-10 flex flex-col">
-              <label className="font-semibold text-lg">Weight</label>
+              <label className="font-semibold text-lg dark:text-bone">Weight</label>
               <input
                 type="number"
                 value={weight?.number ?? ""}
@@ -232,7 +232,7 @@ const AddWeights = () => {
               />
             </div>
             <div className="space-y-4 mt-6 lg:mt-10 flex flex-col">
-              <label className="font-semibold text-lg">Date</label>
+              <label className="font-semibold text-lg dark:text-bone">Date</label>
               <input
                 type="date"
                 max={new Date().toISOString().split("T")[0]}
@@ -250,7 +250,7 @@ const AddWeights = () => {
             </div>
             {error && <p className="text-red-500">{error}</p>}
             <button
-              className="my-8 flex items-center gap-2 justify-center py-4 px-3 rounded-xl hover:opacity-75 hover:transition ease-in-out duration-300 bg-black text-white w-full disabled:opacity-60"
+              className="my-8 flex items-center gap-2 justify-center py-4 px-3 rounded-xl hover:opacity-75 hover:transition ease-in-out duration-300 bg-black dark:bg-lime text-white dark:text-ink-950 w-full disabled:opacity-60"
               type="submit"
               disabled={buttonDisabled}
             >

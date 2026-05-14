@@ -106,27 +106,27 @@ const NewFood = () => {
       <form onSubmit={handleSubmit}>
         <div className="lg:grid grid-cols-2 gap-x-6">
           <div className="space-y-4 mt-6 lg:mt-10 flex flex-col">
-            <label className="font-semibold text-lg">Name</label>
+            <label className="font-semibold text-lg dark:text-bone">Name</label>
             <input
               type="text"
               value={foodItem?.Name}
               onChange={(e) => handleChange("Name", e)}
               className={`rounded-xl w-full ${
                 errors?.Name &&
-                `border-red-500 focus:ring-red-500 focus:border-black`
+                `border-red-500 focus:ring-red-500 focus:border-black dark:border-white/20`
               }`}
               placeholder="ex. Banana"
             />
           </div>
           <div className="space-y-4 mt-6 lg:mt-10">
-            <label className="font-semibold text-lg">Brand</label>
+            <label className="font-semibold text-lg dark:text-bone">Brand</label>
             <input
               type="text"
               value={foodItem?.Brand}
               onChange={(e) => handleChange("Brand", e)}
-              className={`rounded-xl w-full border-black ${
+              className={`rounded-xl w-full border-black dark:border-white/20 ${
                 errors?.Brand &&
-                `border-red-500 focus:ring-red-500 focus:border-black`
+                `border-red-500 focus:ring-red-500 focus:border-black dark:border-white/20`
               }`}
               placeholder="ex. No name"
             />
@@ -143,11 +143,11 @@ const NewFood = () => {
                   handleChange("Quantity", e);
                 }
               }}
-              className="border-black rounded-xl w-40 md:w-fit"
+              className="border-black dark:border-white/20 rounded-xl w-40 md:w-fit"
               placeholder="ex. 1"
             />
             <select
-              className="w-20 md:w-32 lg:w-fit rounded-lg border-2 border-black font-semibold"
+              className="w-20 md:w-32 lg:w-fit rounded-lg border-2 border-black dark:border-white/20 font-semibold"
               value={foodItem?.Unit || ""}
               onChange={(e) => {
                 setFoodItem((prevItem) => ({
@@ -171,7 +171,7 @@ const NewFood = () => {
         <div className="flex flex-wrap justify-between">
           <div className="flex space-x-4">
             <div className="space-y-4 mt-6 lg:mt-10">
-              <label className="font-semibold text-lg">Protein (g)</label>
+              <label className="font-semibold text-lg dark:text-bone">Protein (g)</label>
               <input
                 type="number"
                 value={foodItem?.Protein}
@@ -180,12 +180,12 @@ const NewFood = () => {
                     handleChange("Protein", e);
                   }
                 }}
-                className="border-black rounded-xl w-full"
+                className="border-black dark:border-white/20 rounded-xl w-full"
                 placeholder="ex. 12"
               />
             </div>
             <div className="space-y-4 mt-6 lg:mt-10">
-              <label className="font-semibold text-lg">Carbs (g)</label>
+              <label className="font-semibold text-lg dark:text-bone">Carbs (g)</label>
               <input
                 type="number"
                 value={foodItem?.Carbs}
@@ -194,13 +194,13 @@ const NewFood = () => {
                     handleChange("Carbs", e);
                   }
                 }}
-                className="border-black rounded-xl w-full"
+                className="border-black dark:border-white/20 rounded-xl w-full"
                 placeholder="ex. 12"
               />
             </div>
 
             <div className="space-y-4 mt-6 lg:mt-10">
-              <label className="font-semibold text-lg">Fat (g)</label>
+              <label className="font-semibold text-lg dark:text-bone">Fat (g)</label>
               <input
                 type="number"
                 value={foodItem?.Fat}
@@ -209,13 +209,13 @@ const NewFood = () => {
                     handleChange("Fat", e);
                   }
                 }}
-                className="border-black rounded-xl w-full"
+                className="border-black dark:border-white/20 rounded-xl w-full"
                 placeholder="ex. 12"
               />
             </div>
           </div>
           <div className="space-y-4 mt-6 lg:mt-10">
-            <label className="font-semibold text-lg">
+            <label className="font-semibold text-lg dark:text-bone">
               calories per portions
             </label>
             <input
@@ -226,13 +226,13 @@ const NewFood = () => {
                   handleChange("Calories", e);
                 }
               }}
-              className="border-black rounded-xl w-full"
+              className="border-black dark:border-white/20 rounded-xl w-full"
               placeholder="ex. 250"
             />
           </div>
         </div>
         <button
-          className="my-8 flex items-center gap-2 justify-center py-4 px-3 rounded-xl hover:opacity-75 hover:transition ease-in-out duration-300 bg-black text-white w-full disabled:opacity-60"
+          className="my-8 flex items-center gap-2 justify-center py-4 px-3 rounded-xl hover:opacity-75 hover:transition ease-in-out duration-300 bg-black dark:bg-lime text-white dark:text-ink-950 w-full disabled:opacity-60"
           type="submit"
           disabled={buttonDisabled || loading}
         >

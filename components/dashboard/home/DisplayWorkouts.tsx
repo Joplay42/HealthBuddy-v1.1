@@ -42,13 +42,13 @@ const DisplayWorkouts = ({ plan, loading }: DisplayWorkoutsProps) => {
     return (
       <div className="space-y-3 py-32">
         <h1 className="text-2xl font-bold text-center">
-          Start your <span className="text-custom-green">Fitness journey</span>{" "}
+          Start your <span className="text-custom-green dark:text-lime">Fitness journey</span>{" "}
           Today!
           <span className="text-3xl"> 🎉</span>
         </h1>
         <div className="flex justify-center mt-5">
           <button
-            className="w-fit bg-black text-white px-5 py-2 rounded-2xl text-center hover:opacity-75"
+            className="w-fit bg-black dark:bg-lime text-white dark:text-ink-950 px-5 py-2 rounded-2xl text-center hover:opacity-75"
             onClick={() => {
               router.push("?modal=workout", { scroll: false });
             }}

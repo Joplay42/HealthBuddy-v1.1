@@ -148,7 +148,7 @@ const AddFood = ({
         }}
       />
       <button
-        className="my-2 md:my-4 text-md md:text-lg w-fit bg-black text-white px-3 md:px-4 py-2 md:py-3 rounded-2xl text-center hover:opacity-75 hover:cursor-pointer"
+        className="my-2 md:my-4 text-md md:text-lg w-fit bg-black dark:bg-lime text-white dark:text-ink-950 px-3 md:px-4 py-2 md:py-3 rounded-2xl text-center hover:opacity-75 hover:cursor-pointer"
         onClick={() =>
           router.push("?modal=addfood", {
             scroll: false,
@@ -159,7 +159,7 @@ const AddFood = ({
       </button>
       <div className="my-4 md:mt-5 lg:mt-10">
         {foodList && (
-          <h4 className="font-bold text-md md:text-lg text-neutral-500 my-1 md:my-4">
+          <h4 className="font-bold text-md md:text-lg text-neutral-500 dark:text-white/55 my-1 md:my-4">
             Results ({foodList.length})
           </h4>
         )}

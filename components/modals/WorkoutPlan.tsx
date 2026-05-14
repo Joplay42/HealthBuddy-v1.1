@@ -46,12 +46,12 @@ const WorkoutPlan = ({
       <div className="lg:grid lg:grid-cols-2 lg:items-center">
         <form onSubmit={(e) => submit(e, plan)} className="space-y-3">
           <div className="flex gap-1">
-            <h4 className="font-medium text-neutral-600">Recommanded plan</h4>
+            <h4 className="font-medium text-neutral-600 dark:text-white/55">Recommanded plan</h4>
             <Image src="/stars.svg" height={20} width={20} alt="Stars icon" />
           </div>
           <div className="space-y-2">
             <div className="flex gap-3">
-              <h1 className="font-bold text-xl lg:text-2xl">{plan.title}</h1>
+              <h1 className="font-bold text-xl lg:text-2xl dark:text-bone">{plan.title}</h1>
               {Array(5)
                 .fill(0)
                 .map((_, index) => {
@@ -66,16 +66,16 @@ const WorkoutPlan = ({
                     <div className="flex gap-1 items-center" key={index}>
                       <div
                         className={`w-3 h-3 rounded-full ${
-                          index < active ? "bg-custom-green" : "bg-neutral-300"
+                          index < active ? "bg-custom-green dark:bg-lime" : "bg-neutral-300 dark:bg-ink-700"
                         }`}
                       />
                     </div>
                   );
                 })}
             </div>
-            <div className="bg-custom-green h-1 w-12"></div>
+            <div className="bg-custom-green dark:bg-lime h-1 w-12"></div>
           </div>
-          <p className="text-neutral-600">{plan.desc}</p>
+          <p className="text-neutral-600 dark:text-white/55">{plan.desc}</p>
           <div className="flex flex-wrap gap-3">
             {plan.days
               .filter(
@@ -85,31 +85,31 @@ const WorkoutPlan = ({
               .map((day, index) => (
                 <div
                   key={index}
-                  className="border border-neutral-200 rounded-lg p-4 w-[48%]"
+                  className="border border-neutral-200 dark:border-white/10 rounded-lg p-4 w-[48%]"
                 >
-                  <h4 className="font-semibold">{day.name}</h4>
-                  <p className="text-neutral-600 text-xs">{day.desc}</p>
+                  <h4 className="font-semibold dark:text-bone">{day.name}</h4>
+                  <p className="text-neutral-600 dark:text-white/55 text-xs">{day.desc}</p>
                 </div>
               ))}
             <p className="font-medium">
               Not satisfied?{" "}
               <span
                 onClick={() => setIndex("3")}
-                className="font-bold text-custom-green hover:text-lime-400 hover:cursor-pointer"
+                className="font-bold text-custom-green dark:text-lime hover:text-lime-400 hover:cursor-pointer"
               >
                 Create your own plan
               </span>{" "}
               or{" "}
               <span
                 onClick={() => changeWorkout()}
-                className="font-bold text-custom-green hover:text-lime-400 hover:cursor-pointer"
+                className="font-bold text-custom-green dark:text-lime hover:text-lime-400 hover:cursor-pointer"
               >
                 keep looking
               </span>
             </p>
           </div>
           <button
-            className="mt-8 flex items-center gap-2 justify-center py-2 rounded-xl hover:opacity-75 hover:transition ease-in-out duration-300 bg-black text-white w-full disabled:opacity-60 text-sm"
+            className="mt-8 flex items-center gap-2 justify-center py-2 rounded-xl hover:opacity-75 hover:transition ease-in-out duration-300 bg-black dark:bg-lime text-white dark:text-ink-950 w-full disabled:opacity-60 text-sm"
             type="submit"
             disabled={loading}
           >

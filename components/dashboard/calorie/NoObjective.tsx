@@ -9,7 +9,7 @@ const NoObjective = () => {
   return (
     <div className="flex items-center justify-center flex-col gap-y-6 my-10">
       <h1 className="text-3xl font-semibold w-2/3 text-center">
-        You have no <span className="text-custom-green">objective</span> set at
+        You have no <span className="text-custom-green dark:text-lime">objective</span> set at
         the moment!
       </h1>
       <DashboardButton text={"Create an objective? +"} action={setModal} />

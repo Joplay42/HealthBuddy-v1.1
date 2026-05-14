@@ -54,7 +54,7 @@ const InitialForm = ({
   return (
     <div className="py-5 px-4 lg:px-10">
       <div className="space-y-4 mt-6 lg:mt-10 flex flex-col">
-        <label className="font-semibold text-lg">Name</label>
+        <label className="font-semibold text-lg dark:text-bone">Name</label>
         <input
           value={recipe.Name}
           onChange={(e) => handleChange("Name", e)}
@@ -67,7 +67,7 @@ const InitialForm = ({
         />
       </div>
       <div className="space-y-4 mt-6 lg:mt-10 flex flex-col">
-        <label className="font-semibold text-lg">Numbers of servings</label>
+        <label className="font-semibold text-lg dark:text-bone">Numbers of servings</label>
         <input
           value={recipe.NbServing}
           onChange={(e) => {
@@ -76,12 +76,12 @@ const InitialForm = ({
             }
           }}
           type="number"
-          className="border-black rounded-xl w-40"
+          className="border-black dark:border-white/20 rounded-xl w-40"
           placeholder="ex. 4"
         />
       </div>
       <button
-        className="my-8 flex items-center gap-2 justify-center py-4 px-3 rounded-xl hover:opacity-75 hover:transition ease-in-out duration-300 bg-black text-white w-full disabled:opacity-60"
+        className="my-8 flex items-center gap-2 justify-center py-4 px-3 rounded-xl hover:opacity-75 hover:transition ease-in-out duration-300 bg-black dark:bg-lime text-white dark:text-ink-950 w-full disabled:opacity-60"
         type="submit"
         disabled={buttonDisabled}
         onClick={() => setIndex("2")}

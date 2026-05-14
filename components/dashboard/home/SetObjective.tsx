@@ -170,10 +170,10 @@ const SetObjective = () => {
       <div className="lg:grid lg:grid-cols-2 lg:items-center">
         <form onSubmit={(e) => handleSubmit(e)}>
           <div className="space-y-2 lg:space-y-4">
-            <h1 className="font-bold text-2xl lg:text-3xl">
-              Set and <span className="text-custom-green">objective</span>
+            <h1 className="font-bold text-2xl lg:text-3xl dark:text-bone">
+              Set and <span className="text-custom-green dark:text-lime">objective</span>
             </h1>
-            <p className="text-neutral-600">
+            <p className="text-neutral-600 dark:text-white/55">
               Set your daily calories and nutrients to meet your health goals.
               Tracking these helps maintain a balanced diet and optimize energy
               levels. Adjust based on your activity level and dietary needs for
@@ -182,7 +182,7 @@ const SetObjective = () => {
           </div>
           <div className="space-y-4 mt-6 lg:mt-10">
             {error && <p className="text-red-500">{error}</p>}
-            <label className="font-semibold text-lg">
+            <label className="font-semibold text-lg dark:text-bone">
               Daily calorie objective
             </label>
             <input
@@ -194,45 +194,45 @@ const SetObjective = () => {
                   e.target.value === "" ? undefined : parseInt(e.target.value)
                 )
               }
-              className="border-black rounded-xl w-full"
+              className="border-black dark:border-white/20 rounded-xl w-full dark:bg-ink-800 dark:text-bone"
               placeholder="ex. 2000"
             />
           </div>
           <div className="md:flex justify-between md:space-x-4 lg:space-x-8">
             <div className="space-y-4 mt-4">
-              <label className="font-semibold text-lg">Protein %</label>
+              <label className="font-semibold text-lg dark:text-bone">Protein %</label>
               <div className="space-y-2">
                 <input
                   type="number"
                   value={protein ?? ""}
                   onChange={(e) => handleOnChange("protein", e.target.value)}
-                  className="border-black rounded-xl w-full"
+                  className="border-black dark:border-white/20 dark:bg-ink-800 dark:text-bone rounded-xl w-full"
                   placeholder="40"
                 />
                 <p>{proteinGrams}g</p>
               </div>
             </div>
             <div className="space-y-4 mt-4">
-              <label className="font-semibold text-lg">Carbs %</label>
+              <label className="font-semibold text-lg dark:text-bone">Carbs %</label>
               <div className="space-y-2">
                 <input
                   type="number"
                   value={carb ?? ""}
                   onChange={(e) => handleOnChange("carbs", e.target.value)}
-                  className="border-black rounded-xl w-full"
+                  className="border-black dark:border-white/20 dark:bg-ink-800 dark:text-bone rounded-xl w-full"
                   placeholder="40"
                 />
                 <p>{carbgrams}g</p>
               </div>
             </div>
             <div className="space-y-4 mt-4">
-              <label className="font-semibold text-lg">Fat %</label>
+              <label className="font-semibold text-lg dark:text-bone">Fat %</label>
               <div className="space-y-2">
                 <input
                   type="number"
                   value={fat ?? ""}
                   onChange={(e) => handleOnChange("fat", e.target.value)}
-                  className="border-black rounded-xl w-full"
+                  className="border-black dark:border-white/20 dark:bg-ink-800 dark:text-bone rounded-xl w-full"
                   placeholder="20"
                 />
                 <p>{fatGrams}g</p>
@@ -247,11 +247,11 @@ const SetObjective = () => {
               {pourcentage}
             </span>
           </h4>
-          <p className="text-md text-neutral-500">
+          <p className="text-md text-neutral-500 dark:text-white/55">
             Macronutrients should total 100%
           </p>
           <button
-            className="mt-8 flex items-center gap-2 justify-center py-4 px-3 rounded-xl hover:opacity-75 hover:transition ease-in-out duration-300 bg-black text-white w-full disabled:opacity-60"
+            className="mt-8 flex items-center gap-2 justify-center py-4 px-3 rounded-xl hover:opacity-75 hover:transition ease-in-out duration-300 bg-black dark:bg-lime text-white dark:text-ink-950 w-full disabled:opacity-60"
             type="submit"
             disabled={loading}
           >

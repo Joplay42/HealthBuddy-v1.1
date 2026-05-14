@@ -22,7 +22,7 @@ const SearchBar = ({ searchTerm, setSearchTerm, onSubmit }: SearchBarProps) => {
     // The container
     <form
       onSubmit={handleSubmit}
-      className="border-2 border-neutral-300 rounded-full flex items-center justify-between px-2 gap-x-2 "
+      className="border-2 border-neutral-300 dark:border-white/10 dark:bg-ink-800 rounded-full flex items-center justify-between px-2 gap-x-2 "
     >
       {/** The search icon */}
       <button

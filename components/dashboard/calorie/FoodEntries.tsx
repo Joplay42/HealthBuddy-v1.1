@@ -26,13 +26,11 @@ const FoodEntries = () => {
   return (
     // Food entries container
 
-    <div className="bg-white p-5 rounded-3xl border border-neutral-400">
+    <div className="bg-white dark:bg-ink-900 p-5 rounded-3xl border border-neutral-400 dark:border-white/10">
       <div className="flex items-center justify-between mb-10">
-        {/** title */}
-        <h1 className="font-bold text-xl">Food entries</h1>
-        {/** Button to add  a new food item */}
+        <h1 className="font-bold text-xl dark:text-bone">Food entries</h1>
         <button
-          className="w-fit bg-black text-white px-3 py-2 rounded-2xl text-center hover:opacity-75 hover:cursor-pointer"
+          className="w-fit bg-black dark:bg-lime text-white dark:text-ink-950 px-3 py-2 rounded-2xl text-center hover:opacity-75 hover:cursor-pointer"
           onClick={() =>
             router.push("?modal=food&index=search", {
               scroll: false,

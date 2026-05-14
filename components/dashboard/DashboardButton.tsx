@@ -24,7 +24,7 @@ const DashboardButton = ({
   return (
     // The button container
     <div
-      className={`bg-black text-white px-3 py-2 rounded-2xl text-center hover:opacity-75 hover:cursor-pointer ${
+      className={`bg-black dark:bg-lime text-white dark:text-ink-950 px-3 py-2 rounded-2xl text-center hover:opacity-75 hover:cursor-pointer ${
         // Handles if the button will be full
         !full ? `w-fit` : `w-full`
       }`}

@@ -23,10 +23,10 @@ const FoodItem = ({
       className={`flex justify-between items-center py-4 md:py-6 px-4 lg:px-10 ${style}`}
     >
       <div>
-        <h4 className="font-semibold text-md md:text-xl">
+        <h4 className="font-semibold text-md md:text-xl dark:text-bone">
           {capitalize(food.Name)}
         </h4>
-        <p>
+        <p className="dark:text-white/55">
           {food.Unit + " (" + food.Quantity + "g)"}, {Math.round(food.Calories)}{" "}
           calories
         </p>

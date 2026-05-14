@@ -1,6 +1,7 @@
 "use client";
 import { barChartProps, chartProps } from "@/types";
 import React from "react";
+import { useTheme } from "@/context/ThemeContext";
 import {
   Chart,
   BarElement,
@@ -15,6 +16,8 @@ import { calculateNutriantDaily } from "@/utils";
 Chart.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 const BarChart = ({ data, goal, nutrient }: barChartProps) => {
+  const { theme } = useTheme();
+  const accentColor = theme === "dark" ? "#C7F94C" : "#AFF921";
   if (data && goal) {
     const dailyGoalGrams = calculateNutriantDaily({
       dailyCalories: goal.calorie,
@@ -35,7 +38,7 @@ const BarChart = ({ data, goal, nutrient }: barChartProps) => {
         {
           label: "Consumed",
           data: [consumedPct],
-          backgroundColor: "#AFF921",
+          backgroundColor: accentColor,
           borderRadius: {
             topRight: 0,
             bottomRight: 0,
@@ -87,8 +90,8 @@ const BarChart = ({ data, goal, nutrient }: barChartProps) => {
     return (
       <div className="w-full">
         <div className="flex items-center justify-between">
-          <h3 className="capitalize">{nutrient}</h3>
-          <h3>
+          <h3 className="capitalize dark:text-bone">{nutrient}</h3>
+          <h3 className="dark:text-white/55">
             {consumedGrams}g / {dailyGoalGrams}g
           </h3>
         </div>

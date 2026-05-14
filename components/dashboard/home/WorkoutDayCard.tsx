@@ -22,10 +22,10 @@ const WorkoutDayCard = ({ day, workout }: WorkoutDayCardProps) => {
 
   return (
     <div className="flex flex-col space-y-2">
-      <p className="text-lg text-custom-green">{workout.day}</p>
-      <div className="rounded-xl border-2 border-[#b2b2b2] p-4 flex justify-between">
-        <p className="font-medium">{workout.name}</p>
-        <p>
+      <p className="text-lg text-custom-green dark:text-lime">{workout.day}</p>
+      <div className="rounded-xl border-2 border-[#b2b2b2] dark:border-white/10 p-4 flex justify-between dark:bg-ink-800">
+        <p className="font-medium dark:text-bone">{workout.name}</p>
+        <p className="dark:text-white/55">
           {remaining === 0
             ? "Today"
             : remaining === 1

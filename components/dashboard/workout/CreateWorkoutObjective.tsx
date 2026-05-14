@@ -91,9 +91,9 @@ const CreateWorkoutObjective = ({
         <div className="space-y-2 lg:space-y-4">
           <h1 className="font-bold text-2xl lg:text-3xl">
             Choose your fitness{" "}
-            <span className="text-custom-green">objectives!</span>
+            <span className="text-custom-green dark:text-lime">objectives!</span>
           </h1>
-          <p className="text-neutral-600">
+          <p className="text-neutral-600 dark:text-white/55">
             Choosing a specific goal will help you structure your exercise
             routine effectively. It will also guide you in selecting the right
             exercises, sets, and repetitions tailored to your specific needs,
@@ -108,9 +108,9 @@ const CreateWorkoutObjective = ({
           <div className="md:flex items-center justify-between space-y-4 md:space-y-0">
             <button
               type="button"
-              className={`flex items-center justify-center w-full md:w-[30%] font-medium border-2 border-neutral-500 rounded-lg py-2 ${
+              className={`flex items-center justify-center w-full md:w-[30%] font-medium border-2 border-neutral-500 dark:border-white/20 rounded-lg py-2 dark:text-bone ${
                 objectiveAlgorithm.objective === "Lose" &&
-                "bg-neutral-500 text-white"
+                "bg-neutral-500 dark:bg-lime text-white dark:text-ink-950"
               }`}
               onClick={() =>
                 setObjectiveAlgorithm((prev) => ({
@@ -140,9 +140,9 @@ const CreateWorkoutObjective = ({
             </button>
             <button
               type="button"
-              className={`flex items-center justify-center w-full md:w-[30%] font-medium border-2 border-neutral-500 rounded-lg py-2 ${
+              className={`flex items-center justify-center w-full md:w-[30%] font-medium border-2 border-neutral-500 dark:border-white/20 rounded-lg py-2 dark:text-bone ${
                 objectiveAlgorithm.objective === "Gain" &&
-                "bg-neutral-500 text-white"
+                "bg-neutral-500 dark:bg-lime text-white dark:text-ink-950"
               }`}
               onClick={() =>
                 setObjectiveAlgorithm((prev) => ({
@@ -172,9 +172,9 @@ const CreateWorkoutObjective = ({
             </button>
             <button
               type="button"
-              className={`flex items-center justify-center w-full md:w-[30%] font-medium border-2 border-neutral-500 rounded-lg py-2 ${
+              className={`flex items-center justify-center w-full md:w-[30%] font-medium border-2 border-neutral-500 dark:border-white/20 rounded-lg py-2 dark:text-bone ${
                 objectiveAlgorithm.objective === "Maintain" &&
-                "bg-neutral-500 text-white"
+                "bg-neutral-500 dark:bg-lime text-white dark:text-ink-950"
               }`}
               onClick={() =>
                 setObjectiveAlgorithm((prev) => ({
@@ -219,7 +219,7 @@ const CreateWorkoutObjective = ({
                 }
                 type="number"
                 name="weight"
-                className="border-black rounded-xl w-full"
+                className="border-black dark:border-white/20 dark:bg-ink-800 dark:text-bone rounded-xl w-full"
                 placeholder="ex. 175"
               />
             </div>
@@ -237,7 +237,7 @@ const CreateWorkoutObjective = ({
                 }
                 type="number"
                 name="weight"
-                className="border-black rounded-xl w-full"
+                className="border-black dark:border-white/20 dark:bg-ink-800 dark:text-bone rounded-xl w-full"
                 placeholder="ex. 175"
               />
             </div>
@@ -271,7 +271,7 @@ const CreateWorkoutObjective = ({
             <div className="w-full text-center space-y-2">
               <button
                 type="button"
-                className={`flex items-center justify-center w-full font-medium border-2 border-neutral-500 rounded-lg py-2 ${
+                className={`flex items-center justify-center w-full font-medium border-2 border-neutral-500 dark:border-white/20 rounded-lg py-2 dark:text-bone ${
                   objectiveAlgorithm.objectiveIntensity === "Low" &&
                   "bg-neutral-500 text-white"
                 }`}
@@ -284,14 +284,14 @@ const CreateWorkoutObjective = ({
               >
                 <p>Low</p>
               </button>
-              <p className="w-full text-neutral-500 font-semibold">
+              <p className="w-full text-neutral-500 dark:text-white/55 font-semibold">
                 1-2 days a week
               </p>
             </div>
             <div className="w-full text-center space-y-2">
               <button
                 type="button"
-                className={`flex items-center justify-center w-full font-medium border-2 border-neutral-500 rounded-lg py-2 ${
+                className={`flex items-center justify-center w-full font-medium border-2 border-neutral-500 dark:border-white/20 rounded-lg py-2 dark:text-bone ${
                   objectiveAlgorithm.objectiveIntensity === "Moderate" &&
                   "bg-neutral-500 text-white"
                 }`}
@@ -304,14 +304,14 @@ const CreateWorkoutObjective = ({
               >
                 <p>Moderate</p>
               </button>
-              <p className="w-full text-neutral-500 font-semibold">
+              <p className="w-full text-neutral-500 dark:text-white/55 font-semibold">
                 3-5 days a week
               </p>
             </div>
             <div className="w-full text-center space-y-2">
               <button
                 type="button"
-                className={`flex items-center justify-center w-full font-medium border-2 border-neutral-500 rounded-lg py-2 ${
+                className={`flex items-center justify-center w-full font-medium border-2 border-neutral-500 dark:border-white/20 rounded-lg py-2 dark:text-bone ${
                   objectiveAlgorithm.objectiveIntensity === "High" &&
                   "bg-neutral-500 text-white"
                 }`}
@@ -324,7 +324,7 @@ const CreateWorkoutObjective = ({
               >
                 <p>High</p>
               </button>
-              <p className="w-full text-neutral-500 font-semibold">
+              <p className="w-full text-neutral-500 dark:text-white/55 font-semibold">
                 6-7 days a week
               </p>
             </div>
@@ -337,7 +337,7 @@ const CreateWorkoutObjective = ({
             <div className="w-full text-center space-y-2">
               <button
                 type="button"
-                className={`flex items-center justify-center w-full font-medium border-2 border-neutral-500 rounded-lg py-2 ${
+                className={`flex items-center justify-center w-full font-medium border-2 border-neutral-500 dark:border-white/20 rounded-lg py-2 dark:text-bone ${
                   objectiveAlgorithm.experienceLevel === "Beginner" &&
                   "bg-neutral-500 text-white"
                 }`}
@@ -354,7 +354,7 @@ const CreateWorkoutObjective = ({
             <div className="w-full text-center space-y-2">
               <button
                 type="button"
-                className={`flex items-center justify-center w-full font-medium border-2 border-neutral-500 rounded-lg py-2 ${
+                className={`flex items-center justify-center w-full font-medium border-2 border-neutral-500 dark:border-white/20 rounded-lg py-2 dark:text-bone ${
                   objectiveAlgorithm.experienceLevel === "Intermediate" &&
                   "bg-neutral-500 text-white"
                 }`}
@@ -371,7 +371,7 @@ const CreateWorkoutObjective = ({
             <div className="w-full text-center space-y-2">
               <button
                 type="button"
-                className={`flex items-center justify-center w-full font-medium border-2 border-neutral-500 rounded-lg py-2 ${
+                className={`flex items-center justify-center w-full font-medium border-2 border-neutral-500 dark:border-white/20 rounded-lg py-2 dark:text-bone ${
                   objectiveAlgorithm.experienceLevel === "Advanced" &&
                   "bg-neutral-500 text-white"
                 }`}
@@ -388,7 +388,7 @@ const CreateWorkoutObjective = ({
           </div>
         </div>
         <button
-          className="mt-8 flex items-center gap-2 justify-center py-4 px-3 rounded-xl hover:opacity-75 hover:transition ease-in-out duration-300 bg-black text-white w-full disabled:opacity-60"
+          className="mt-8 flex items-center gap-2 justify-center py-4 px-3 rounded-xl hover:opacity-75 hover:transition ease-in-out duration-300 bg-black dark:bg-lime text-white dark:text-ink-950 w-full disabled:opacity-60"
           type="submit"
           disabled={loading || disableButton}
         >
