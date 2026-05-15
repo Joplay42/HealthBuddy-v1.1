@@ -101,6 +101,7 @@ import WorkoutFindingLoading from "./dashboard/workout/WorkoutFindingLoading";
 import WorkoutPlan from "./modals/WorkoutPlan";
 import CreateWorkoutPlan from "./modals/CreateWorkoutPlan";
 import AddWeights from "./modals/AddWeights";
+import EditGoal from "./modals/EditGoal";
 import Copyrights from "./website/Copyrights";
 import PasswordResetConfirmation from "./auth/PasswordResetConfirmation";
 import PromoModal from "./modals/PromoModal";
@@ -203,6 +204,7 @@ export {
 	WorkoutPlan,
 	CreateWorkoutPlan,
 	AddWeights,
+	EditGoal,
 	Copyrights,
 	PasswordResetConfirmation,
 	PromoModal,

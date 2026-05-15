@@ -157,10 +157,28 @@ export const UserInformationProvider = ({
         const unsubscribeWorkouts = onSnapshot(docWorkoutRef, (snapshot) => {
           if (snapshot.exists()) {
             const d = snapshot.data();
+
+            let startDateObj: Date | undefined;
+            const rawStart = d?.startDate;
+            if (rawStart) {
+              if (rawStart.seconds !== undefined) {
+                startDateObj = new Date(rawStart.seconds * 1000);
+              } else if (typeof rawStart === "string") {
+                startDateObj = new Date(rawStart);
+              } else if (rawStart instanceof Date) {
+                startDateObj = rawStart;
+              }
+            }
+
             setUserWorkoutObjectiveInfo({
               workoutPlan: d?.workoutPlan ?? { title: "", desc: "", days: [] },
               objectiveWeight: sanitizeNum(d?.objectiveWeight),
               months: sanitizeNum(d?.months) || 3,
+              currentWeight:
+                d?.currentWeight !== undefined
+                  ? sanitizeNum(d.currentWeight)
+                  : undefined,
+              startDate: startDateObj,
             });
           }
           workoutLoaded = true;

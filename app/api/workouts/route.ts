@@ -114,8 +114,11 @@ export const POST = async (request: Request) => {
 
     // reference of the userWorkout doc
     const userGoalDocRef = doc(db, "UserWorkouts", userId);
-    // Set the new doc
-    const userGoal = await setDoc(userGoalDocRef, body);
+    // Set the new doc — stamp startDate so we can compute progression baselines.
+    const userGoal = await setDoc(userGoalDocRef, {
+      ...body,
+      startDate: Timestamp.fromDate(new Date()),
+    });
 
     // Reference the userWeights doc
     const userWeightRef = doc(db, "UserWeights", userId);
@@ -172,6 +175,79 @@ export const POST = async (request: Request) => {
       JSON.stringify({
         error: error.message,
       }),
+      { status: 500 }
+    );
+  }
+};
+
+export const PATCH = async (request: Request) => {
+  try {
+    const { searchParams } = new URL(request.url);
+    const userId = searchParams.get("userid");
+
+    if (!userId) {
+      return new NextResponse(
+        JSON.stringify({ message: "Missing parameters" }),
+        { status: 422 }
+      );
+    }
+
+    const body = await request.json();
+
+    if (!body || Object.keys(body).length === 0) {
+      return new NextResponse(JSON.stringify({ message: "Invalid data" }), {
+        status: 400,
+      });
+    }
+
+    const { objectiveWeight, months, resetBaseline, currentWeight } = body;
+
+    if (
+      objectiveWeight === undefined ||
+      months === undefined ||
+      Number(objectiveWeight) <= 0 ||
+      Number(months) <= 0
+    ) {
+      return new NextResponse(
+        JSON.stringify({ message: "Missing object attribute" }),
+        { status: 400 }
+      );
+    }
+
+    const userGoalDocRef = doc(db, "UserWorkouts", userId);
+    const existing = await getDoc(userGoalDocRef);
+
+    if (!existing.exists()) {
+      return new NextResponse(
+        JSON.stringify({ message: "No workout objective exists yet" }),
+        { status: 404 }
+      );
+    }
+
+    const update: Record<string, any> = {
+      objectiveWeight: Number(objectiveWeight),
+      months: Number(months),
+    };
+
+    if (resetBaseline) {
+      update.startDate = Timestamp.fromDate(new Date());
+      if (currentWeight !== undefined && Number(currentWeight) > 0) {
+        update.currentWeight = Number(currentWeight);
+      }
+    } else if (!existing.data()?.startDate) {
+      // Backfill startDate for users whose objective predates this field.
+      update.startDate = Timestamp.fromDate(new Date());
+    }
+
+    await updateDoc(userGoalDocRef, update);
+
+    return new NextResponse(
+      JSON.stringify({ message: "Workout objective updated" }),
+      { status: 200 }
+    );
+  } catch (error: any) {
+    return new NextResponse(
+      JSON.stringify({ error: error.message }),
       { status: 500 }
     );
   }

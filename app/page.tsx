@@ -1,17 +1,12 @@
-import {
-	Footer,
-	HeaderPage,
-	HeroSection,
-	SectionFive,
-	SectionFour,
-	SectionSix,
-	SectionThree,
-	SectionTwo,
-	Website,
-} from "@/components";
+import { Website } from "@/components";
+import { Suspense } from "react";
 
 const page = () => {
-	return <Website />;
+	return (
+		<Suspense>
+			<Website />
+		</Suspense>
+	);
 };
 
 export default page;

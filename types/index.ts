@@ -324,12 +324,53 @@ export type userProgramProps = {
   workoutPlan: UserWorkoutPlanProps;
   objectiveWeight: number;
   months: number;
+  currentWeight?: number;
+  startDate?: Date;
+};
+
+export type GoalDirection = "lose" | "gain" | "maintain";
+
+export type DeltaDirection = "up" | "down" | "flat";
+
+export type OnTrackStatus =
+  | "ahead"
+  | "on_track"
+  | "behind"
+  | "wrong_direction"
+  | "achieved";
+
+export type WeightStreakResult = {
+  current: number;
+  longest: number;
+  lastLogDate: Date | null;
+};
+
+export type WeightDeltaResult = {
+  delta: number;
+  percent: number;
+  direction: DeltaDirection;
+};
+
+export type WeightProjectionResult = {
+  etaDate: Date | null;
+  daysRemainingPlanned: number;
+  daysRemainingProjected: number | null;
+  onTrack: OnTrackStatus;
+  expectedNow: number | null;
+  deviation: number | null;
+};
+
+export type EditGoalModalProps = {
+  objective: userProgramProps | null;
+  latestWeight: number | null;
 };
 
 export type DisplayWeightProps = {
   weight: userWeightProps[];
   objective: userProgramProps;
   loading: boolean;
+  headerAccessory?: ReactNode;
+  onFilteredChange?: (filtered: userWeightProps[]) => void;
 };
 
 export type WorkoutPlanProps = {

@@ -11,6 +11,7 @@ import {
 	DashboardSqueleton,
 	WorkoutObjective,
 	AddWeights,
+	EditGoal,
 	Copyrights,
 } from "@/components";
 import { DashboardProps } from "@/types";
@@ -54,6 +55,7 @@ const Content = ({ children }: DashboardProps) => {
 	const isObjectiveModalOpen = searchParams.get("modal") === "objective";
 	const isWorkoutModalOpen = searchParams.get("modal") === "workout";
 	const isWeightModalOpen = searchParams.get("modal") === "weight";
+	const isEditGoalModalOpen = searchParams.get("modal") === "editGoal";
 
 	useEffect(() => {
 		AOS.init();
@@ -86,6 +88,7 @@ const Content = ({ children }: DashboardProps) => {
 					{isEditRecipeModalOpen && <EditRecipeModal />}
 					{isWorkoutModalOpen && <WorkoutObjective />}
 					{isWeightModalOpen && <AddWeights />}
+					{isEditGoalModalOpen && <EditGoal />}
 				</div>
 			</UserInformationProvider>
 		</FireBaseAuthProvider>

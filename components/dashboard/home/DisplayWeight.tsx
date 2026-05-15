@@ -17,7 +17,13 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 
-const DisplayWeight = ({ weight, objective, loading }: DisplayWeightProps) => {
+const DisplayWeight = ({
+  weight,
+  objective,
+  loading,
+  headerAccessory,
+  onFilteredChange,
+}: DisplayWeightProps) => {
   const router = useRouter();
   const { theme } = useTheme();
   const accentColor = theme === "dark" ? "#C7F94C" : "#AFF921";
@@ -32,22 +38,23 @@ const DisplayWeight = ({ weight, objective, loading }: DisplayWeightProps) => {
   const [filteredWeight, setFilteredWeights] = useState<userWeightProps[]>([]);
 
   useEffect(() => {
-    // Function to display the weights with the timeDisplay states
-    const filterDates = (weight: userWeightProps[], days: number) => {
-      // Get todays date
+    let newWeights: userWeightProps[];
+
+    if (timeDisplay === 0) {
+      // "All time" — skip the date filter entirely.
+      newWeights = weight;
+    } else {
       const today = new Date();
       const pastLimit = new Date();
-      pastLimit.setDate(today.getDate() - days);
-
-      return weight.filter(
+      pastLimit.setDate(today.getDate() - timeDisplay);
+      newWeights = weight.filter(
         (item) => item.date >= pastLimit && item.date <= today
       );
-    };
-
-    const newWeights = filterDates(weight, timeDisplay);
+    }
 
     setFilteredWeights(newWeights);
-  }, [timeDisplay, weight]);
+    onFilteredChange?.(newWeights);
+  }, [timeDisplay, weight, onFilteredChange]);
 
   // Handle loading ui
   if (loading) return <DisplayWeightSqueleton />;
@@ -246,8 +253,12 @@ const DisplayWeight = ({ weight, objective, loading }: DisplayWeightProps) => {
             <option value="90">3 months</option>
             <option value="180">6 months</option>
             <option value="360">1 year</option>
+            <option value="0">All time</option>
           </select>
           <label className="font-semibold dark:text-bone">Display</label>
+          {headerAccessory && (
+            <div className="ml-2">{headerAccessory}</div>
+          )}
         </div>
         <div className="inline-flex items-center space-x-2">
           <div className="flex items-center cursor-pointer relative">
