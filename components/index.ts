@@ -103,6 +103,8 @@ import CreateWorkoutPlan from "./modals/CreateWorkoutPlan";
 import AddWeights from "./modals/AddWeights";
 import Copyrights from "./website/Copyrights";
 import PasswordResetConfirmation from "./auth/PasswordResetConfirmation";
+import PromoModal from "./modals/PromoModal";
+import Website from "./website/Website";
 
 export {
 	HeaderPage,
@@ -203,4 +205,6 @@ export {
 	AddWeights,
 	Copyrights,
 	PasswordResetConfirmation,
+	PromoModal,
+	Website,
 };

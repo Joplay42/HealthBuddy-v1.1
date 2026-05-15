@@ -201,7 +201,7 @@ const HeroSection = () => {
 							</svg>
 						</a>
 						<a
-							href='#about'
+							href='?modal=promo'
 							className='inline-flex items-center gap-2 text-white/80 hover:text-white text-sm font-medium px-4 py-3.5 rounded-xl ring-soft bg-white/5 transition'
 						>
 							<svg className='h-4 w-4' viewBox='0 0 24 24' fill='currentColor'>

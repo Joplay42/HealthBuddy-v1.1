@@ -486,7 +486,7 @@ const AuthForm = ({ type }: authFormProps) => {
 
 						{isLogin && (
 							<div className='mt-6 flex items-center justify-between'>
-								<label className='inline-flex items-center gap-2 text-[12px] text-white/55 cursor-pointer'>
+								<label className='flex items-center gap-2 text-[12px] text-white/55 cursor-pointer'>
 									<input
 										type='checkbox'
 										className='h-4 w-4 rounded border-white/20 bg-ink-800 text-lime focus:ring-lime focus:ring-offset-0 no-focus-styles'

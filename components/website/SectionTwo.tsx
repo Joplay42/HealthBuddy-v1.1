@@ -72,7 +72,7 @@ const SectionTwo = () => {
 						</div>
 
 						{/* dashboard mock */}
-						<div className='absolute left-6 top-1/2 -translate-y-1/2 w-[56%] rounded-2xl bg-ink-900 ring-soft p-4 shadow-2xl shadow-black/60'>
+						<div className='absolute left-6 top-1/2 -translate-y-1/2 w-[86%] md:w-[56%] rounded-2xl bg-ink-900 ring-soft p-4 shadow-2xl shadow-black/60'>
 							<div className='flex items-center justify-between'>
 								<div>
 									<p className='text-[11px] text-white/40'>Calories</p>
@@ -200,7 +200,7 @@ const SectionTwo = () => {
 						</div>
 
 						{/* athlete portrait using actual image */}
-						<div className='absolute right-4 top-6 bottom-6 w-[36%] rounded-2xl overflow-hidden ring-soft'>
+						<div className='absolute right-4 top-6 bottom-6 w-[36%] rounded-2xl overflow-hidden ring-soft hidden md:block'>
 							<Image
 								src='/Section-two.png'
 								alt='Athlete portrait'
