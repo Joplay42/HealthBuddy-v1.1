@@ -33,9 +33,7 @@ const AddFood = ({
   const [loading, setLoading] = useState(false);
 
   // Pagination states
-  const [currentPage, setCurrentPage] = useState(0);
-  const [nextUrl, setNextUrl] = useState<string | null>(null);
-  const [urlStack, setUrlStack] = useState<string[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
 
   // Calculate the total pages
   const [totalPages, setTotalPages] = useState(0);
@@ -44,28 +42,21 @@ const AddFood = ({
 
   // function to handle the nextPage
   const handleNext = () => {
-    if (nextUrl) {
+    if (currentPage < totalPages) {
       if (modalContentRef.current) {
-        modalContentRef.current.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
+        modalContentRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
       }
-      getFood(searchQuery!, currentPage + 1, nextUrl, true);
+      getFood(searchQuery!, currentPage + 1);
     }
   };
 
   // Function to handle the previous page
   const handlePrev = () => {
-    if (urlStack.length >= 2) {
+    if (currentPage > 1) {
       if (modalContentRef.current) {
-        modalContentRef.current.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
+        modalContentRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
       }
-      const prevUrl = urlStack[urlStack.length - 2]; // The page before the current
-      getFood(searchQuery!, currentPage - 1, prevUrl, false, true);
+      getFood(searchQuery!, currentPage - 1);
     }
   };
 
@@ -73,57 +64,35 @@ const AddFood = ({
   useEffect(() => {
     if (searchQuery) {
       setSearchTerm(searchQuery);
-      getFood(searchQuery, 0);
+      getFood(searchQuery, 1);
     } else {
       setSearchTerm("");
       setError("");
       setFoodList([]);
-      setCurrentPage(0);
+      setCurrentPage(1);
       setTotalPages(0);
     }
   }, [searchQuery]);
 
   // The new API food fetching with the custom API we created
-  const getFood = async (
-    term: string,
-    page: number,
-    url?: string,
-    isNext = false,
-    isPrev = false
-  ) => {
+  const getFood = async (term: string, page: number = 1) => {
     setFoodList([]);
     setLoading(true);
     setError("");
 
     try {
-      let fetchUrl = `/api/foods?search=${term}`;
-      if (url) fetchUrl += `&url=${encodeURIComponent(url)}`;
-
-      const res = await fetch(fetchUrl);
+      const res = await fetch(`/api/foods?search=${term}&page=${page}`);
 
       if (!res.ok) {
         const errorData = await res.json();
         throw new Error(errorData.message);
       }
 
-      // Storing the data
       const data = await res.json();
 
       setFoodList(data.foodList);
-      setNextUrl(data.nextUrl || null);
-      setCurrentPage(page);
-
-      setUrlStack((prev) => {
-        if (isNext) {
-          return [...prev, url!];
-        } else if (isPrev) {
-          return prev.slice(0, -1);
-        } else {
-          return [url || ""];
-        }
-      });
-
-      setTotalPages(Math.ceil(data.count / 20));
+      setCurrentPage(data.currentPage);
+      setTotalPages(data.totalPages);
     } catch (error: any) {
       setError(error.message);
     } finally {

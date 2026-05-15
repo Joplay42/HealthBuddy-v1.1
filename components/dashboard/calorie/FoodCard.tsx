@@ -182,7 +182,7 @@ const FoodCard = ({ item, setConsumedLoading }: foodCardProps) => {
 					// Only display portions if the item is fetched
 					isFoodItemFetched(item) && (
 						<select
-							className={`w-fit rounded-lg md:h-auto `}
+							className={`w-full max-w-full rounded-lg md:h-auto `}
 							onChange={(e) => {
 								const selectedIndex = parseInt(e.target.value);
 								setPortion(selectedIndex);

@@ -12,68 +12,77 @@ import { NextResponse } from "next/server";
 
 export const GET = async (request: Request) => {
   try {
-    // The new searchParams
     const { searchParams } = new URL(request.url);
-
-    // Get the searchterm
-    const search = searchParams.get("search")?.toLowerCase();
-    // Get the page numbers
+    const search = searchParams.get("search");
     const page = Number(searchParams.get("page")) || 1;
-    // Get the nextUrl
-    const url = searchParams.get("url");
 
-    // If no search term is provided produce an error
     if (!search) {
       return new NextResponse(
         JSON.stringify({ message: "Search term is required" }),
         { status: 400 }
       );
     }
-    // The url
-    let fetchUrl = url;
-    if (!fetchUrl) {
-      fetchUrl = `https://api.edamam.com/api/food-database/v2/parser?app_id=${process.env.EDAMAM_APP_ID}&app_key=${process.env.EDAMAM_API_KEY}&ingr=${search}`;
-    }
 
-    // Fetch the api
+    const fetchUrl = `https://api.nal.usda.gov/fdc/v1/foods/search?query=${encodeURIComponent(search)}&api_key=${process.env.USDA_API_KEY}&pageSize=20&pageNumber=${page}`;
+
     const res = await fetch(fetchUrl);
-
-    // Get the data
     const data = await res.json();
 
-    // Parse the data
-    const foodList: foodItemFetchedProps[] = data.hints.map((item: any) => {
-      // Store food and nutrients
-      const food = item.food;
-      const nutrients = food.nutrients;
+    const getNutrient = (nutrients: any[], id: number): number =>
+      nutrients.find((n: any) => n.nutrientId === id)?.value || 0;
 
-      // Calculate nutrients per grams
-      const caloriesPerGram = (nutrients.ENERC_KCAL || 0) / 100;
-      const proteinPerGram = (nutrients.PROCNT || 0) / 100;
-      const carbsPerGram = (nutrients.CHOCDF || 0) / 100;
-      const fatPerGram = (nutrients.FAT || 0) / 100;
-
-      // Mapping the portion sizes
-      const portions = item.measures.map((measure: any) => {
-        // Store the weight of each measure
-        const weight = measure.weight;
-
-        // Return the portions
-        return {
-          Quantity: parseFloat(weight.toFixed(2)),
-          Unit: measure.label,
-          Calories: Math.round(caloriesPerGram * weight),
-          Protein: parseFloat((proteinPerGram * weight).toFixed(2)),
-          Carbs: parseFloat((carbsPerGram * weight).toFixed(2)),
-          Fat: parseFloat((fatPerGram * weight).toFixed(2)),
-        };
-      });
-
-      // Return the entire food object
+    const calcPortion = (
+      cal100: number,
+      pro100: number,
+      carb100: number,
+      fat100: number,
+      gramWeight: number,
+      label: string
+    ) => {
+      const ratio = gramWeight / 100;
       return {
-        Id: food.foodId,
-        Name: food.label,
-        Brand: food.Brand || "Generic food",
+        Quantity: gramWeight,
+        Unit: label,
+        Calories: Math.round(cal100 * ratio),
+        Protein: parseFloat((pro100 * ratio).toFixed(2)),
+        Carbs: parseFloat((carb100 * ratio).toFixed(2)),
+        Fat: parseFloat((fat100 * ratio).toFixed(2)),
+      };
+    };
+
+    const foodList: foodItemFetchedProps[] = (data.foods ?? []).map((food: any) => {
+      const cal100 = getNutrient(food.foodNutrients, 1008);
+      const pro100 = getNutrient(food.foodNutrients, 1003);
+      const carb100 = getNutrient(food.foodNutrients, 1005);
+      const fat100 = getNutrient(food.foodNutrients, 1004);
+
+      const portions: foodItemFetchedProps["portions"] = [
+        calcPortion(cal100, pro100, carb100, fat100, 100, "100g"),
+      ];
+
+      // Foundation/SR Legacy foods include household measures (1 cup, 1 slice, 1 medium, etc.)
+      if (food.foodMeasures && food.foodMeasures.length > 0) {
+        for (const measure of food.foodMeasures) {
+          if (measure.gramWeight > 0) {
+            const label =
+              measure.disseminationText ||
+              measure.portionDescription ||
+              `${measure.gramWeight}g`;
+            portions.push(calcPortion(cal100, pro100, carb100, fat100, measure.gramWeight, label));
+          }
+        }
+      } else if (food.servingSize && food.servingSizeUnit) {
+        // Branded foods: use manufacturer serving size
+        const label =
+          food.householdServingFullText ||
+          `${food.servingSize} ${food.servingSizeUnit}`;
+        portions.push(calcPortion(cal100, pro100, carb100, fat100, food.servingSize, label));
+      }
+
+      return {
+        Id: String(food.fdcId),
+        Name: food.description,
+        Brand: food.brandOwner || food.brandName || "Generic",
         portions,
       };
     });
@@ -81,18 +90,15 @@ export const GET = async (request: Request) => {
     return new NextResponse(
       JSON.stringify({
         foodList,
-        count: data.count,
-        nextUrl: data._links?.next?.href ?? null,
+        totalPages: data.totalPages ?? 1,
+        currentPage: data.currentPage ?? 1,
       }),
       { status: 200 }
     );
-
-    // Catch any errors
   } catch (error: any) {
-    // Display an error message
     return new NextResponse(
       JSON.stringify({
-        message: "Error in fetching the food items",
+        message: "Error fetching food items",
         error: error.message,
       }),
       { status: 500 }
