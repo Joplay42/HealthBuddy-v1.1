@@ -514,3 +514,55 @@ export function getNutrient(
   }
   return 0;
 }
+
+// ─── Search utilities ─────────────────────────────────────────────────────────
+
+function flipNumber(word: string): string {
+  const w = word.toLowerCase();
+  // Plural → singular (check FIRST so "blueberries" singularizes before the +es rule fires)
+  if (w.endsWith("ies") && w.length > 4) return w.slice(0, -3) + "y"; // berries → berry
+  if (/(?:sh|ch|x|z)es$/.test(w) && w.length > 4) return w.slice(0, -2); // peaches → peach
+  if (w.endsWith("s") && !w.endsWith("ss") && w.length > 3) return w.slice(0, -1); // apples → apple
+  // Singular → plural
+  if (/[^aeiou]y$/.test(w)) return w.slice(0, -1) + "ies"; // berry → berries
+  if (/(?:sh|ch|x|z)$/.test(w)) return w + "es";           // peach → peaches
+  // Default plural
+  return w + "s";
+}
+
+/**
+ * Generates up to 4 query variants for USDA food search.
+ * Handles singular/plural alternation and 2-word order reversal.
+ */
+export function generateSearchVariants(query: string): string[] {
+  const clean = query.trim().toLowerCase();
+  const words = clean.split(/\s+/);
+  const variants: string[] = [clean];
+
+  // Flip the number (singular↔plural) on every word
+  const flipped = words.map(flipNumber).join(" ");
+  if (flipped !== clean) variants.push(flipped);
+
+  // For 2-word queries, also try word-reversed order
+  if (words.length === 2) {
+    const reversed = [...words].reverse().join(" ");
+    if (!variants.includes(reversed)) variants.push(reversed);
+    const reversedFlipped = words.map(flipNumber).reverse().join(" ");
+    if (!variants.includes(reversedFlipped)) variants.push(reversedFlipped);
+  }
+
+  return variants.slice(0, 4);
+}
+
+/**
+ * Removes noise from USDA loose (OR-logic) search results.
+ * When ≥3 items match ALL query words, discards items that only match some words.
+ */
+export function filterByRelevance(foods: any[], queryWords: string[]): any[] {
+  if (queryWords.length <= 1) return foods;
+  const allMatch = foods.filter((food) => {
+    const desc = (food.description ?? "").toLowerCase();
+    return queryWords.every((w) => desc.includes(w));
+  });
+  return allMatch.length >= 3 ? allMatch : foods;
+}

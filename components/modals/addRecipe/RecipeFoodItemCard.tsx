@@ -147,9 +147,9 @@ const RecipeFoodItemCard = ({
           <h3 className="font-bold dark:text-bone">Qty</h3>
           <input
             type="number"
-            step=".1"
+            step="1"
             className="w-16 h-auto md:w-20 rounded-lg text-center"
-            value={multiplier}
+            value={multiplier || NaN}
             onChange={(e) => handleQuantityChange(e.target.valueAsNumber)}
           />
         </div>

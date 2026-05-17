@@ -1,5 +1,6 @@
 import { db } from "@/config/firebase-server";
 import { foodItemFetchedProps, foodItemProps, foodProps } from "@/types";
+import { generateSearchVariants, filterByRelevance } from "@/utils";
 import {
   addDoc,
   collection,
@@ -13,7 +14,8 @@ import { NextResponse } from "next/server";
 export const GET = async (request: Request) => {
   try {
     const { searchParams } = new URL(request.url);
-    const search = searchParams.get("search");
+    const rawSearch = searchParams.get("search");
+    const search = rawSearch?.trim();
     const page = Number(searchParams.get("page")) || 1;
 
     if (!search) {
@@ -23,10 +25,61 @@ export const GET = async (request: Request) => {
       );
     }
 
-    const fetchUrl = `https://api.nal.usda.gov/fdc/v1/foods/search?query=${encodeURIComponent(search)}&api_key=${process.env.USDA_API_KEY}&pageSize=20&pageNumber=${page}`;
+    const apiKey = process.env.USDA_API_KEY ?? "";
+    const fetchUrl = `https://api.nal.usda.gov/fdc/v1/foods/search?api_key=${apiKey}`;
 
-    const res = await fetch(fetchUrl);
-    const data = await res.json();
+    // Returns null when the USDA API rejects the request (bad key, invalid params, etc.)
+    const searchUsda = async (query: string, requireAllWords: boolean) => {
+      const body = {
+        query,
+        dataType: ["Foundation", "SR Legacy", "Survey (FNDDS)", "Branded"],
+        pageSize: 25,
+        pageNumber: page,
+        sortBy: "dataType.keyword",
+        sortOrder: "asc",
+        requireAllWords,
+      };
+      const response = await fetch(fetchUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      if (!response.ok) return null;
+      return response.json();
+    };
+
+    const variants = generateSearchVariants(search);
+    let data: any = null;
+    let apiReachable = false;
+
+    // Phase 1 — strict (all words required), try each variant in order
+    for (const variant of variants) {
+      const result = await searchUsda(variant, true);
+      if (result !== null) apiReachable = true;
+      const count = result?.foods?.length ?? 0;
+      if (count > (data?.foods?.length ?? 0)) data = result;
+      if (count >= 5) break;
+    }
+
+    // Phase 2 — loose (any word), only if strict gave fewer than 5 results
+    if ((data?.foods?.length ?? 0) < 5) {
+      for (const variant of variants) {
+        const result = await searchUsda(variant, false);
+        if (result !== null) apiReachable = true;
+        const queryWords = variant.split(/\s+/);
+        const filtered = {
+          ...result,
+          foods: filterByRelevance(result?.foods ?? [], queryWords),
+        };
+        if (filtered.foods.length > (data?.foods?.length ?? 0)) data = filtered;
+        if (filtered.foods.length >= 5) break;
+      }
+    }
+
+    // If every USDA call failed (null), the API is unreachable or the key is invalid
+    if (!apiReachable) {
+      throw new Error("Food database is unreachable. Check your USDA_API_KEY or try again later.");
+    }
 
     const getNutrient = (nutrients: any[], id: number): number =>
       nutrients.find((n: any) => n.nutrientId === id)?.value || 0;
@@ -50,7 +103,7 @@ export const GET = async (request: Request) => {
       };
     };
 
-    const foodList: foodItemFetchedProps[] = (data.foods ?? []).map((food: any) => {
+    const foodList: foodItemFetchedProps[] = (data?.foods ?? []).map((food: any) => {
       const cal100 = getNutrient(food.foodNutrients, 1008);
       const pro100 = getNutrient(food.foodNutrients, 1003);
       const carb100 = getNutrient(food.foodNutrients, 1005);
@@ -90,8 +143,8 @@ export const GET = async (request: Request) => {
     return new NextResponse(
       JSON.stringify({
         foodList,
-        totalPages: data.totalPages ?? 1,
-        currentPage: data.currentPage ?? 1,
+        totalPages: data?.totalPages ?? 1,
+        currentPage: data?.currentPage ?? 1,
       }),
       { status: 200 }
     );

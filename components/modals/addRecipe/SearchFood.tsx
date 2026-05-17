@@ -76,7 +76,7 @@ const SearchFood = ({ addFood }: { addFood: (food: foodProps) => void }) => {
     setError("");
 
     try {
-      const res = await fetch(`/api/foods?search=${term}&page=${page}`);
+      const res = await fetch(`/api/foods?search=${encodeURIComponent(term)}&page=${page}`);
 
       if (!res.ok) {
         const errorData = await res.json();
