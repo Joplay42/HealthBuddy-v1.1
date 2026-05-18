@@ -31,7 +31,7 @@ const DisplayWeight = ({
   const tickFont = { family: '"Inter", sans-serif', size: 12 };
 
   // Hook for the objective view
-  const [showObjective, setObjectiveDisplay] = useState<boolean>(false);
+  const [showObjective, setObjectiveDisplay] = useState<boolean>(true);
   // Hook for the timeDisplay
   const [timeDisplay, setTimeDisplay] = useState<number>(30);
   // Hooks for the weights filtering
@@ -48,7 +48,7 @@ const DisplayWeight = ({
       const pastLimit = new Date();
       pastLimit.setDate(today.getDate() - timeDisplay);
       newWeights = weight.filter(
-        (item) => item.date >= pastLimit && item.date <= today
+        (item) => item.date >= pastLimit && item.date <= today,
       );
     }
 
@@ -69,7 +69,7 @@ const DisplayWeight = ({
       Title,
       Tooltip,
       Filler,
-      Legend
+      Legend,
     );
     // Empty chart data
     const emptyData = {
@@ -140,7 +140,7 @@ const DisplayWeight = ({
     Title,
     Tooltip,
     Filler,
-    Legend
+    Legend,
   );
   const options = {
     responsive: true,
@@ -171,7 +171,7 @@ const DisplayWeight = ({
           smallestIndex !== -1
             ? smallestIndex - 2
             : filteredWeight[0].number - 2,
-          showObjective ? objective.objectiveWeight - 5 : smallestIndex - 2
+          showObjective ? objective.objectiveWeight - 5 : smallestIndex - 2,
         ),
 
         ticks: { font: tickFont, stepSize: 1, maxTicksLimit: 6 },
@@ -185,7 +185,7 @@ const DisplayWeight = ({
   };
 
   let labels = filteredWeight.map((entry) =>
-    entry.date.toLocaleDateString("en-US", { month: "short", day: "numeric" })
+    entry.date.toLocaleDateString("en-US", { month: "short", day: "numeric" }),
   );
 
   // If only one weight, add a "future" label to make the chart wider
@@ -256,9 +256,7 @@ const DisplayWeight = ({
             <option value="0">All time</option>
           </select>
           <label className="font-semibold dark:text-bone">Display</label>
-          {headerAccessory && (
-            <div className="ml-2">{headerAccessory}</div>
-          )}
+          {headerAccessory && <div className="ml-2">{headerAccessory}</div>}
         </div>
         <div className="inline-flex items-center space-x-2">
           <div className="flex items-center cursor-pointer relative">
