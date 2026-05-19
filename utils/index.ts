@@ -312,6 +312,16 @@ export const deleteAccount = async (email: string, password: string) => {
         method: "DELETE",
       });
 
+      // The UserWeights subcollection (all weigh-ins)
+      await fetch(`/api/workouts/weight?userid=${user.uid}`, {
+        method: "DELETE",
+      });
+
+      // The Users profile doc (onboarding flags + name/email)
+      await fetch(`/api/users/profile?userid=${user.uid}`, {
+        method: "DELETE",
+      });
+
       // Use the firebase deleteUser function
       await deleteUser(user);
     } catch (error) {

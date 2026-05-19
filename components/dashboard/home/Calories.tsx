@@ -3,6 +3,7 @@
 import { DisplayCalories } from "@/components";
 import { useUserInformationContext } from "@/context/UserInformationContext";
 import { useRouter } from "next/navigation";
+import HelpBubble from "@/components/onboarding/HelpBubble";
 
 /**
  * This component is used to display the content in the calories page. It assembles many
@@ -16,10 +17,17 @@ const Calories = () => {
 
 	return (
 		// The calorie container
-		<div className='col-span-2 w-full h-full'>
+		<div data-tour='home-calories' className='col-span-2 w-full h-full'>
 			<div className='flex items-center justify-between pb-5'>
 				{/** Title of the container */}
-				<h1 className='font-bold text-xl dark:text-bone'>Calories</h1>
+				<div className='flex items-center gap-2'>
+					<h1 className='font-bold text-xl dark:text-bone'>Calories</h1>
+					<HelpBubble
+						id='home-calories'
+						placement='right'
+						content="Quick view of today's calories vs. your goal. Open the Calorie tracker page for the full macro breakdown and to log food."
+					/>
+				</div>
 				{/** If the user has no objective */}
 				{userGoal && (
 					<button

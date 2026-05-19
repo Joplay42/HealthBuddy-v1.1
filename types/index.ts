@@ -455,6 +455,25 @@ export type BodyWeightProps = {
   loading: boolean;
 };
 
+export type tourKey = "Overview" | "Calories" | "Workout" | "Weight";
+
+export type userProfileProps = {
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  hasCompletedOverviewTour: boolean;
+  hasCompletedCaloriesTour: boolean;
+  hasCompletedWorkoutTour: boolean;
+  hasCompletedWeightTour: boolean;
+};
+
+export type userProfileContextProps = {
+  profile: userProfileProps | null;
+  loading: boolean;
+  completeTour: (key: tourKey) => Promise<void>;
+  restartAllTours: () => Promise<void>;
+};
+
 export type objectiveAlgorithmProps = {
   objective: PlanCategories;
   currentWeight: number | undefined;

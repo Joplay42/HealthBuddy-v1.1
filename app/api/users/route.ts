@@ -66,6 +66,23 @@ export const POST = async (request: Request) => {
       { merge: true }
     );
 
+    // Create the Users profile doc with onboarding flags so the tutorial fires
+    const fireStoreUserDoc = await doc(db, "Users", userCredential.user.uid);
+    await setDoc(
+      fireStoreUserDoc,
+      {
+        firstName,
+        lastName,
+        email,
+        hasCompletedOverviewTour: false,
+        hasCompletedCaloriesTour: false,
+        hasCompletedWorkoutTour: false,
+        hasCompletedWeightTour: false,
+        createdAt: new Date(),
+      },
+      { merge: true }
+    );
+
     // Make a single name with firstName and LastName
     const displayName = firstName + " " + lastName;
 

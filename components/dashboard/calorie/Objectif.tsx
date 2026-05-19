@@ -11,6 +11,7 @@ import {
   SetObjective,
 } from "@/components";
 import { useRouter } from "next/navigation";
+import HelpBubble from "@/components/onboarding/HelpBubble";
 
 /**
  * This component display all the nutrient information out of the goal and the
@@ -31,7 +32,14 @@ const Objective = ({ data, goal, loading }: objectiveProps) => {
     // The objective cards container
     <div className="bg-white dark:bg-ink-900 p-5 rounded-3xl border border-neutral-400 dark:border-white/10 flex flex-col justify-between lg:h-full">
       <div>
-        <h1 className="font-bold text-xl mb-10 dark:text-bone">Objective</h1>
+        <div className="flex items-center gap-2 mb-10">
+          <h1 className="font-bold text-xl dark:text-bone">Objective</h1>
+          <HelpBubble
+            id="calorie-objective"
+            placement="right"
+            content="Your daily macro targets. The colored number is what you've eaten, the second number is your goal. Tap Set objective to update them."
+          />
+        </div>
         {/** A grid to display each info */}
         <div className="lg:grid grid-cols-2 gap-10 pb-7">
           {/** The first item display */}
@@ -52,6 +60,7 @@ const Objective = ({ data, goal, loading }: objectiveProps) => {
       </div>
       {/** Button to change the objective */}
       <button
+        data-tour="set-objective-btn"
         className="w-full bg-black dark:bg-lime text-white dark:text-ink-950 px-3 py-2 rounded-2xl text-center hover:opacity-75"
         // Open the modal
         onClick={() =>

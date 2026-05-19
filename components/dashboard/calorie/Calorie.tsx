@@ -52,6 +52,7 @@ const CalorieContent = () => {
 					</h1>
 					<div className='flex justify-center mt-5'>
 						<button
+							data-tour='set-objective-empty-btn'
 							className='w-fit bg-black dark:bg-lime text-white dark:text-ink-950 px-5 py-2 rounded-2xl text-center hover:opacity-75'
 							onClick={() =>
 								router.push("/dashboard/calorie-tracking?modal=objective", {
@@ -69,7 +70,7 @@ const CalorieContent = () => {
 
 	return (
 		<div className='py-5 md:py-10 md:grid grid-cols-3 grid-rows-[minmax(150px,auto)_auto] space-y-5 md:space-y-0 md:gap-10 animate-fade-in'>
-			<div className='col-span-2'>
+			<div data-tour='calorie-overview' className='col-span-2'>
 				<Overview
 					goal={userGoal}
 					data={userCalorieInfo ?? { calorie: 0, protein: 0, fat: 0, carbs: 0 }}
@@ -83,7 +84,7 @@ const CalorieContent = () => {
 					loading={false}
 				/>
 			</div>
-			<div className='col-span-3'>
+			<div data-tour='food-entries' className='col-span-3'>
 				<FoodEntries />
 			</div>
 		</div>

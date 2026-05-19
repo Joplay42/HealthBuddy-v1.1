@@ -39,7 +39,10 @@ const Sidebar = () => {
 
 	return (
 		// The sideBAr
-		<div className='h-screen fixed bg-custom-dark dark:bg-ink-900 dark:border-r dark:border-white/10 min-w-auto md:min-w-20 lg:min-w-32 flex flex-col'>
+		<div
+			data-tour='sidebar'
+			className='h-screen fixed bg-custom-dark dark:bg-ink-900 dark:border-r dark:border-white/10 min-w-auto md:min-w-20 lg:min-w-32 flex flex-col'
+		>
 			{/** The sideBar logo */}
 			<Image
 				src='/Logo-mobile.png'

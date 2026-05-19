@@ -2,6 +2,7 @@
 import WorkoutScheduleSqueleton from "@/components/Squeleton/WorkoutScheduleSqueleton";
 import { workoutScheduleProps } from "@/types";
 import { useState } from "react";
+import HelpBubble from "@/components/onboarding/HelpBubble";
 
 const WorkoutSchedule = ({
   todaysWorkout,
@@ -12,9 +13,16 @@ const WorkoutSchedule = ({
 
   return (
     <div className="bg-white dark:bg-ink-900 p-5 rounded-3xl border border-neutral-400 dark:border-white/10 h-full">
-      <h1 className="font-bold text-lg md:text-xl mb-5 dark:text-bone">
-        Workout - {selectedDay.toDateString()}
-      </h1>
+      <div className="flex items-center gap-2 mb-5">
+        <h1 className="font-bold text-lg md:text-xl dark:text-bone">
+          Workout - {selectedDay.toDateString()}
+        </h1>
+        <HelpBubble
+          id="workout-schedule"
+          placement="bottom"
+          content="The exercises for the selected day. Pick a different day in the calendar above to see its workout."
+        />
+      </div>
       <div className="space-y-3">
         <h3 className="font-semibold text-lg text-custom-green dark:text-lime">
           {todaysWorkout?.name}

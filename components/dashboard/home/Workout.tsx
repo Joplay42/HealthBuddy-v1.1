@@ -2,6 +2,7 @@
 import { useRouter } from "next/navigation";
 import DisplayWorkouts from "./DisplayWorkouts";
 import { useUserInformationContext } from "@/context/UserInformationContext";
+import HelpBubble from "@/components/onboarding/HelpBubble";
 
 const Workout = () => {
   // Fetch the user workout plan
@@ -11,10 +12,17 @@ const Workout = () => {
   const router = useRouter();
 
   return (
-    <div className="w-full h-full row-span-2">
+    <div data-tour="home-workout" className="w-full h-full row-span-2">
       <div className="flex items-center justify-between pb-5">
         {/** Title of the container */}
-        <h1 className="font-bold text-xl dark:text-bone">Workouts</h1>
+        <div className="flex items-center gap-2">
+          <h1 className="font-bold text-xl dark:text-bone">Workouts</h1>
+          <HelpBubble
+            id="home-workout"
+            placement="right"
+            content="Your scheduled workouts for the upcoming days. Visit the Workout page to manage your plan."
+          />
+        </div>
 
         {!userWorkoutObjectiveInfo && (
           <button

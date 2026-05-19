@@ -76,6 +76,7 @@ const WorkoutTracking = () => {
 						</h1>
 						<div className='flex justify-center mt-5'>
 							<button
+								data-tour='find-workout-empty-btn'
 								className='w-fit bg-black dark:bg-lime text-white dark:text-ink-950 px-5 py-2 rounded-2xl text-center hover:opacity-75'
 								onClick={() => {
 									router.push("?modal=workout", { scroll: false });
@@ -91,7 +92,7 @@ const WorkoutTracking = () => {
 
 	return (
 		<div className='py-5 md:py-10 md:grid grid-cols-3 grid-rows-[minmax(150px,auto)_auto] space-y-5 md:space-y-0 md:gap-10 animate-fade-in'>
-			<div className='col-span-2'>
+			<div data-tour='workout-calendar' className='col-span-2'>
 				<Calendar
 					today={todaysDate}
 					workoutPlan={userWorkoutObjectiveInfo.workoutPlan}
@@ -100,7 +101,7 @@ const WorkoutTracking = () => {
 					loading={loading}
 				/>
 			</div>
-			<div>
+			<div data-tour='workout-schedule'>
 				<WorkoutSchedule
 					todaysWorkout={todaysWorkout}
 					selectedDay={selectedDays}

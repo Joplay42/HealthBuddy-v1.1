@@ -11,6 +11,7 @@ import {
 } from "@/utils/weightStats";
 import WeightStatCards from "./WeightStatCards";
 import DeltaPill from "./DeltaPill";
+import HelpBubble from "@/components/onboarding/HelpBubble";
 
 const BodyWeight = ({ weight, objective, loading }: BodyWeightProps) => {
 	const router = useRouter();
@@ -56,8 +57,16 @@ const BodyWeight = ({ weight, objective, loading }: BodyWeightProps) => {
 	return (
 		<div className='bg-white dark:bg-ink-900 p-5 rounded-3xl border border-neutral-400 dark:border-white/10'>
 			<div className='flex items-center justify-between mb-6'>
-				<h1 className='font-bold text-xl dark:text-bone'>Body weights</h1>
+				<div className='flex items-center gap-2'>
+					<h1 className='font-bold text-xl dark:text-bone'>Body weights</h1>
+					<HelpBubble
+						id='body-weights'
+						placement='right'
+						content="Track your weigh-ins over time. The stat cards show current weight, goal, streak, and your estimated time to reach your target based on your trend."
+					/>
+				</div>
 				<button
+					data-tour='add-weight-btn'
 					className='hidden sm:block w-fit bg-black dark:bg-lime text-white dark:text-ink-950 px-3 py-2 rounded-2xl text-center hover:opacity-75 hover:cursor-pointer'
 					onClick={() => {
 						router.push("?modal=weight", { scroll: false });
@@ -66,6 +75,7 @@ const BodyWeight = ({ weight, objective, loading }: BodyWeightProps) => {
 					Add weights +
 				</button>
 				<button
+					data-tour='add-weight-btn-mobile'
 					className='sm:hidden w-fit bg-black dark:bg-lime text-white dark:text-ink-950 px-3 py-2 rounded-2xl text-center hover:opacity-75 hover:cursor-pointer'
 					onClick={() => {
 						router.push("?modal=weight", { scroll: false });
@@ -89,7 +99,7 @@ const BodyWeight = ({ weight, objective, loading }: BodyWeightProps) => {
 					weight.length > 0 && "pt-4"
 				}`}
 			>
-				<div className='col-span-3 h-[400px]'>
+				<div data-tour='weight-chart' className='col-span-3 h-[400px]'>
 					<DisplayWeight
 						weight={weight}
 						objective={objective}
@@ -102,7 +112,9 @@ const BodyWeight = ({ weight, objective, loading }: BodyWeightProps) => {
 						}
 					/>
 				</div>
-				<WeightsGrid weight={weight} loading={loading} />
+				<div data-tour='weights-grid'>
+					<WeightsGrid weight={weight} loading={loading} />
+				</div>
 			</div>
 		</div>
 	);

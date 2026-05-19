@@ -17,10 +17,12 @@ import {
 import { DashboardProps } from "@/types";
 import { FireBaseAuthProvider } from "@/context/UserContext";
 import { UserInformationProvider } from "@/context/UserInformationContext";
+import { UserProfileProvider } from "@/context/UserProfileContext";
 import { useSearchParams } from "next/navigation";
 import { Slide, ToastContainer } from "react-toastify";
 import { Suspense, useEffect } from "react";
 import AOS from "aos";
+import AppTour from "@/components/onboarding/AppTour";
 
 // handle the fallBack method for this components
 const Dashboard = ({ children }: DashboardProps) => {
@@ -67,29 +69,33 @@ const Content = ({ children }: DashboardProps) => {
 		<FireBaseAuthProvider>
 			{/** The custom context to pass the userInformation */}
 			<UserInformationProvider>
-				<div className='font-sans'>
-					{/** Sidebar component */}
-					<Sidebar />
-					<div className='ml-[48px] md:ml-[80px] lg:ml-[128px]'>
-						{/** Header container */}
-						<Header />
-						{/** The content of the dashboard */}
-						<div className='bg-neutral-200 dark:bg-ink-950 min-h-screen px-5 md:px-12'>
-							{children}
-							<ToastContainer />
+				<UserProfileProvider>
+					<div className='font-sans'>
+						{/** Sidebar component */}
+						<Sidebar />
+						<div className='ml-[48px] md:ml-[80px] lg:ml-[128px]'>
+							{/** Header container */}
+							<Header />
+							{/** The content of the dashboard */}
+							<div className='bg-neutral-200 dark:bg-ink-950 min-h-screen px-5 md:px-12'>
+								{children}
+								<ToastContainer />
+							</div>
+							<Copyrights width={"auto"} />
 						</div>
-						<Copyrights width={"auto"} />
+						{/** Handle the foodMoal opening with url params */}
+						{isFoodModalOpen && <FoodModal />}
+						{isObjectiveModalOpen && <ObjectiveModals />}
+						{isAddFoodModalOpen && <AddFoodModal />}
+						{isAddRecipeModalOpen && <AddRecipeModal />}
+						{isEditRecipeModalOpen && <EditRecipeModal />}
+						{isWorkoutModalOpen && <WorkoutObjective />}
+						{isWeightModalOpen && <AddWeights />}
+						{isEditGoalModalOpen && <EditGoal />}
+						{/** First-time user tutorial */}
+						<AppTour />
 					</div>
-					{/** Handle the foodMoal opening with url params */}
-					{isFoodModalOpen && <FoodModal />}
-					{isObjectiveModalOpen && <ObjectiveModals />}
-					{isAddFoodModalOpen && <AddFoodModal />}
-					{isAddRecipeModalOpen && <AddRecipeModal />}
-					{isEditRecipeModalOpen && <EditRecipeModal />}
-					{isWorkoutModalOpen && <WorkoutObjective />}
-					{isWeightModalOpen && <AddWeights />}
-					{isEditGoalModalOpen && <EditGoal />}
-				</div>
+				</UserProfileProvider>
 			</UserInformationProvider>
 		</FireBaseAuthProvider>
 	);

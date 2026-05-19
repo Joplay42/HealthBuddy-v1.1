@@ -6,6 +6,7 @@ import { CalorieSqueleton, OverviewSqueleton, PieChart } from "@/components";
 import Image from "next/image";
 // Utils function imports
 import { calculateNutriantDaily } from "@/utils";
+import HelpBubble from "@/components/onboarding/HelpBubble";
 
 /**
  * This component is used to display the overview information of the user
@@ -27,7 +28,14 @@ const Overview = ({ goal, data, loading }: overViewProps) => {
 	return (
 		// The card container
 		<div className='bg-white dark:bg-ink-900 p-5 rounded-3xl border border-neutral-400 dark:border-white/10'>
-			<h1 className='font-bold text-xl mb-10 dark:text-bone'>Overview</h1>
+			<div className='flex items-center gap-2 mb-10'>
+				<h1 className='font-bold text-xl dark:text-bone'>Overview</h1>
+				<HelpBubble
+					id='calorie-overview'
+					placement='right'
+					content="Live snapshot of what you've eaten today. The big number is calories remaining (negative means over your goal). The smaller circles show protein, carbs, and fat in grams."
+				/>
+			</div>
 			<div className='flex flex-wrap items-center justify-center gap-10 lg:justify-around'>
 				<div className='flex flex-wrap items-center justify-center gap-x-8'>
 					{/** Calories display */}
