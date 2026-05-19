@@ -14,22 +14,20 @@ import { auth, db } from "@/config/firebase";
 import { tourKey, userProfileContextProps, userProfileProps } from "@/types";
 
 const DEFAULT_PROFILE: userProfileProps = {
-  hasCompletedOverviewTour: false,
-  hasCompletedCaloriesTour: false,
+  hasCompletedHomeFallbackTour: false,
+  hasCompletedCalorieFallbackTour: false,
+  hasCompletedCalorieTour: false,
+  hasCompletedWorkoutFallbackTour: false,
   hasCompletedWorkoutTour: false,
-  hasCompletedWeightTour: false,
 };
 
-const tourKeyToField = (key: tourKey) => {
+const tourKeyToField = (key: tourKey): keyof userProfileProps => {
   switch (key) {
-    case "Overview":
-      return "hasCompletedOverviewTour";
-    case "Calories":
-      return "hasCompletedCaloriesTour";
-    case "Workout":
-      return "hasCompletedWorkoutTour";
-    case "Weight":
-      return "hasCompletedWeightTour";
+    case "HomeFallback":       return "hasCompletedHomeFallbackTour";
+    case "CalorieFallback":    return "hasCompletedCalorieFallbackTour";
+    case "Calorie":            return "hasCompletedCalorieTour";
+    case "WorkoutFallback":    return "hasCompletedWorkoutFallbackTour";
+    case "Workout":            return "hasCompletedWorkoutTour";
   }
 };
 
@@ -90,10 +88,11 @@ export const UserProfileProvider = ({ children }: { children: ReactNode }) => {
             firstName: data.firstName,
             lastName: data.lastName,
             email: data.email,
-            hasCompletedOverviewTour: data.hasCompletedOverviewTour ?? false,
-            hasCompletedCaloriesTour: data.hasCompletedCaloriesTour ?? false,
+            hasCompletedHomeFallbackTour: data.hasCompletedHomeFallbackTour ?? false,
+            hasCompletedCalorieFallbackTour: data.hasCompletedCalorieFallbackTour ?? false,
+            hasCompletedCalorieTour: data.hasCompletedCalorieTour ?? false,
+            hasCompletedWorkoutFallbackTour: data.hasCompletedWorkoutFallbackTour ?? false,
             hasCompletedWorkoutTour: data.hasCompletedWorkoutTour ?? false,
-            hasCompletedWeightTour: data.hasCompletedWeightTour ?? false,
           });
         } else {
           setProfile({ ...DEFAULT_PROFILE });
@@ -137,10 +136,11 @@ export const UserProfileProvider = ({ children }: { children: ReactNode }) => {
 
   const restartAllTours = useCallback(async () => {
     await patchProfile({
-      hasCompletedOverviewTour: false,
-      hasCompletedCaloriesTour: false,
+      hasCompletedHomeFallbackTour: false,
+      hasCompletedCalorieFallbackTour: false,
+      hasCompletedCalorieTour: false,
+      hasCompletedWorkoutFallbackTour: false,
       hasCompletedWorkoutTour: false,
-      hasCompletedWeightTour: false,
     });
   }, [patchProfile]);
 

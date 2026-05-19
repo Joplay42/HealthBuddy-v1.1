@@ -38,7 +38,7 @@ const CalorieContent = () => {
 		);
 	}
 
-	if (!userGoal) {
+	if (!userGoal || userGoal.calorie === 0) {
 		return (
 			<div className='py-5 md:py-10 space-y-5 md:space-y-0 md:gap-10 animate-fade-in'>
 				<div className='bg-white dark:bg-ink-900 p-5 rounded-3xl border border-neutral-400 dark:border-white/10 w-full py-40'>

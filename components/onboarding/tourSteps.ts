@@ -1,6 +1,8 @@
 import type { Step } from "react-joyride";
 
-export const overviewSteps: Step[] = [
+// --- Home page ---
+
+export const homeFallbackSteps: Step[] = [
   {
     target: '[data-tour="sidebar"]',
     title: "Welcome to HealthBuddy 👋",
@@ -9,29 +11,24 @@ export const overviewSteps: Step[] = [
     placement: "right",
   },
   {
-    target: '[data-tour="home-calories"]',
-    title: "Today's calories at a glance",
+    target: '[data-tour="home-calorie-empty-btn"]',
+    title: "Set your calorie goal",
     content:
-      "This card shows what you've eaten today vs. your daily goal. The full breakdown lives on the Calorie tracker page.",
+      "Before you can track calories, you need a daily goal. Tap here to set your objective — it only takes a few seconds.",
     placement: "bottom",
   },
   {
-    target: '[data-tour="home-workout"]',
-    title: "Your workout plan",
+    target: '[data-tour="home-workout-empty-btn"]',
+    title: "Set your workout plan",
     content:
-      "See the next workouts on your schedule. Build or change your plan from the Workout page.",
-    placement: "left",
-  },
-  {
-    target: '[data-tour="home-weight"]',
-    title: "Weights tracking",
-    content:
-      "See the weight trends in a graph. Select the time span to see the weights.",
+      "Before you can track you workouts, you need a weekly split. Tap here to generate or create a custom fitness plan — it only takes a few seconds.",
     placement: "bottom",
   },
 ];
 
-export const caloriesEmptySteps: Step[] = [
+// --- Calorie tracking page ---
+
+export const calorieFallbackSteps: Step[] = [
   {
     target: '[data-tour="set-objective-empty-btn"]',
     title: "Start by setting your goal",
@@ -41,7 +38,7 @@ export const caloriesEmptySteps: Step[] = [
   },
 ];
 
-export const caloriesSteps: Step[] = [
+export const calorieSteps: Step[] = [
   {
     target: '[data-tour="calorie-overview"]',
     title: "Live macro overview",
@@ -72,7 +69,9 @@ export const caloriesSteps: Step[] = [
   },
 ];
 
-export const workoutEmptySteps: Step[] = [
+// --- Workout page ---
+
+export const workoutFallbackSteps: Step[] = [
   {
     target: '[data-tour="find-workout-empty-btn"]',
     title: "Build your first plan",
@@ -82,7 +81,7 @@ export const workoutEmptySteps: Step[] = [
   },
 ];
 
-export const workoutSteps: Step[] = [
+export const workoutFullSteps: Step[] = [
   {
     target: '[data-tour="workout-calendar"]',
     title: "Your weekly calendar",
@@ -103,9 +102,6 @@ export const workoutSteps: Step[] = [
       "Need a different routine? Open the planner from here to swap it out.",
     placement: "bottom",
   },
-];
-
-export const weightSteps: Step[] = [
   {
     target: '[data-tour="add-weight-btn"]',
     title: "Log your weight",

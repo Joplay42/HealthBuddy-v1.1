@@ -14,12 +14,11 @@ import { useUserInformationContext } from "@/context/UserInformationContext";
 import { useTheme } from "@/context/ThemeContext";
 import { tourKey } from "@/types";
 import {
-  caloriesEmptySteps,
-  caloriesSteps,
-  overviewSteps,
-  weightSteps,
-  workoutEmptySteps,
-  workoutSteps,
+  calorieFallbackSteps,
+  calorieSteps,
+  homeFallbackSteps,
+  workoutFallbackSteps,
+  workoutFullSteps,
 } from "./tourSteps";
 
 type ActiveTour = { key: tourKey; steps: Step[] } | null;
@@ -54,34 +53,32 @@ const AppTour = () => {
   const nextTour: ActiveTour = useMemo(() => {
     if (!profile || loading || infoLoading) return null;
 
-    if (pathname === "/dashboard" && !profile.hasCompletedOverviewTour) {
-      return { key: "Overview", steps: overviewSteps };
+    const isCalorieEmpty = !userGoal || userGoal.calorie === 0;
+    const hasPlan =
+      !!userWorkoutObjectiveInfo &&
+      userWorkoutObjectiveInfo.workoutPlan?.days?.length > 0;
+
+    if (pathname === "/dashboard") {
+      if (!profile.hasCompletedHomeFallbackTour && isCalorieEmpty) {
+        return { key: "HomeFallback", steps: homeFallbackSteps };
+      }
     }
 
-    if (
-      pathname === "/dashboard/calorie-tracking" &&
-      !profile.hasCompletedCaloriesTour
-    ) {
-      const steps = userGoal ? caloriesSteps : caloriesEmptySteps;
-      return { key: "Calories", steps };
+    if (pathname === "/dashboard/calorie-tracking") {
+      if (!profile.hasCompletedCalorieFallbackTour && isCalorieEmpty) {
+        return { key: "CalorieFallback", steps: calorieFallbackSteps };
+      }
+      if (!profile.hasCompletedCalorieTour && !isCalorieEmpty) {
+        return { key: "Calorie", steps: calorieSteps };
+      }
     }
 
     if (pathname === "/dashboard/workout") {
-      const hasPlan =
-        !!userWorkoutObjectiveInfo &&
-        userWorkoutObjectiveInfo.workoutPlan?.days?.length > 0;
-
-      if (!profile.hasCompletedWorkoutTour) {
-        const steps = hasPlan ? workoutSteps : workoutEmptySteps;
-        return { key: "Workout", steps };
+      if (!profile.hasCompletedWorkoutFallbackTour && !hasPlan) {
+        return { key: "WorkoutFallback", steps: workoutFallbackSteps };
       }
-
-      if (
-        profile.hasCompletedWorkoutTour &&
-        !profile.hasCompletedWeightTour &&
-        hasPlan
-      ) {
-        return { key: "Weight", steps: weightSteps };
+      if (!profile.hasCompletedWorkoutTour && hasPlan) {
+        return { key: "Workout", steps: workoutFullSteps };
       }
     }
 

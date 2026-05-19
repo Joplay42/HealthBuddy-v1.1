@@ -5,15 +5,55 @@ import {
   WorkoutPlanProps,
 } from "@/types";
 import React, { useEffect, useState } from "react";
+import {
+  EVENTS,
+  Joyride,
+  STATUS,
+  type EventData,
+  type Step,
+} from "react-joyride";
+import { useTheme } from "@/context/ThemeContext";
+
+let createPlanTourShown = false;
+
+const CREATE_PLAN_STEPS: Step[] = [
+  {
+    target: '[data-tour="cp-title"]',
+    title: "Plan name",
+    content:
+      'Give your plan a descriptive name — for example "Push / Pull / Legs" or "Full Body 3x". This is what you\'ll see on your dashboard.',
+    placement: "bottom",
+    isFixed: true,
+  },
+  {
+    target: '[data-tour="cp-desc"]',
+    title: "Plan description",
+    content:
+      "Write a short summary of the plan: the equipment needed, overall intensity, or any other notes. This helps you remember what the plan is about when you come back to it.",
+    placement: "bottom",
+    isFixed: true,
+  },
+  {
+    target: '[data-tour="cp-days"]',
+    title: "Build your weekly schedule",
+    content:
+      'Tap the + on each day to activate it, then fill in a workout name and a short description for that day. All 7 days must be filled before you can submit — rest days count too (just name them "Rest" and describe them as recovery).',
+    placement: "top",
+    isFixed: true,
+  },
+];
 
 const CreateWorkoutPlan = ({
   submit,
 }: {
   submit: (
     e: React.FormEvent<HTMLFormElement>,
-    plan: WorkoutPlanProps | UserWorkoutPlanProps
+    plan: WorkoutPlanProps | UserWorkoutPlanProps,
   ) => void;
 }) => {
+  const { theme } = useTheme();
+  const [tourRun, setTourRun] = useState(false);
+
   // Workout object created
   const [userWorkoutPlan, setUserWorkoutPlan] = useState<UserWorkoutPlanProps>({
     title: "",
@@ -40,7 +80,7 @@ const CreateWorkoutPlan = ({
         userWorkoutPlan.title.length > 0 &&
         userWorkoutPlan.desc.length > 0 &&
         userWorkoutPlan.days.every(
-          (day) => day.name.length > 0 && day.desc.length > 0
+          (day) => day.name.length > 0 && day.desc.length > 0,
         )
       ) {
         setButtonDisabled(false);
@@ -89,16 +129,29 @@ const CreateWorkoutPlan = ({
     generateWeek();
   }, []);
 
+  useEffect(() => {
+    if (createPlanTourShown) return;
+    const t = setTimeout(() => {
+      createPlanTourShown = true;
+      setTourRun(true);
+    }, 500);
+    return () => clearTimeout(t);
+  }, []);
+
   return (
     <div className="px-5 pb-5 md:px-10 lg:pb-10 lg:px-20">
       <form onSubmit={(e) => submit(e, userWorkoutPlan)}>
         <h1 className="font-bold text-2xl lg:text-3xl">
           Create your own{" "}
-          <span className="text-custom-green dark:text-lime">workout plan!</span>
+          <span className="text-custom-green dark:text-lime">
+            workout plan!
+          </span>
         </h1>
-        <div className="space-y-2 mt-6 lg:mt-10">
+        <div data-tour="cp-title" className="space-y-2 mt-6 lg:mt-10">
           {/** Handle errors */}
-          <label className="font-semibold text-md dark:text-bone">Program title</label>
+          <label className="font-semibold text-md dark:text-bone">
+            Program title
+          </label>
           <input
             value={userWorkoutPlan.title}
             onChange={(e) =>
@@ -113,9 +166,11 @@ const CreateWorkoutPlan = ({
             placeholder="ex. Push | Pull | Leg"
           />
         </div>
-        <div className="space-y-2 mt-6">
+        <div data-tour="cp-desc" className="space-y-2 mt-6">
           {/** Handle errors */}
-          <label className="font-semibold text-md dark:text-bone">Program description</label>
+          <label className="font-semibold text-md dark:text-bone">
+            Program description
+          </label>
           <textarea
             value={userWorkoutPlan.desc}
             onChange={(e) =>
@@ -131,8 +186,10 @@ const CreateWorkoutPlan = ({
             placeholder="ex. Overall equipment and intensity of the workouts"
           />
         </div>
-        <div className="space-y-2 mt-6 mb-10">
-          <label className="font-semibold text-md dark:text-bone">Days selection</label>
+        <div data-tour="cp-days" className="space-y-2 mt-6 mb-10">
+          <label className="font-semibold text-md dark:text-bone">
+            Days selection
+          </label>
           <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-5 md:gap-10">
             {userWorkoutPlan.days.map((item, index) => (
               <div
@@ -153,7 +210,9 @@ const CreateWorkoutPlan = ({
                 ) : (
                   <div className="space-y-2 mt-10">
                     <div className="px-2 space-y-2">
-                      <label className="font-semibold text-sm dark:text-bone">Name</label>
+                      <label className="font-semibold text-sm dark:text-bone">
+                        Name
+                      </label>
                       <input
                         value={userWorkoutPlan.days[index]?.name || ""}
                         onChange={(e) =>
@@ -162,7 +221,7 @@ const CreateWorkoutPlan = ({
                             days: prev.days.map((day, i) =>
                               i === index
                                 ? { ...day, name: e.target.value }
-                                : day
+                                : day,
                             ),
                           }))
                         }
@@ -184,7 +243,7 @@ const CreateWorkoutPlan = ({
                             days: prev.days.map((day, i) =>
                               i === index
                                 ? { ...day, desc: e.target.value }
-                                : day
+                                : day,
                             ),
                           }))
                         }
@@ -197,7 +256,9 @@ const CreateWorkoutPlan = ({
                     </div>
                   </div>
                 )}
-                <p className="absolute top-2 font-bold dark:text-bone">{item.day}</p>
+                <p className="absolute top-2 font-bold dark:text-bone">
+                  {item.day}
+                </p>
               </div>
             ))}
           </div>
@@ -221,6 +282,70 @@ const CreateWorkoutPlan = ({
           )} */}
         </button>
       </form>
+      {tourRun && (
+        <Joyride
+          steps={CREATE_PLAN_STEPS}
+          run
+          continuous
+          scrollToFirstStep
+          onEvent={(data: EventData) => {
+            const { status, type } = data;
+            if (
+              status === STATUS.FINISHED ||
+              status === STATUS.SKIPPED ||
+              type === EVENTS.TARGET_NOT_FOUND
+            ) {
+              setTourRun(false);
+            }
+          }}
+          locale={{
+            back: "Back",
+            close: "Close",
+            last: "Got it",
+            next: "Next",
+            skip: "Skip",
+          }}
+          options={{
+            primaryColor: "#AFF921",
+            textColor: theme === "dark" ? "#F4F4F0" : "#2B2B2B",
+            backgroundColor: theme === "dark" ? "#1f1f1f" : "#ffffff",
+            arrowColor: theme === "dark" ? "#1f1f1f" : "#ffffff",
+            overlayColor:
+              theme === "dark" ? "rgba(0,0,0,0.55)" : "rgba(43,43,43,0.45)",
+            zIndex: 99999,
+            showProgress: true,
+            buttons: ["back", "skip", "primary"],
+            overlayClickAction: false,
+            skipBeacon: true,
+            spotlightPadding: 8,
+            spotlightRadius: 12,
+          }}
+          styles={{
+            tooltip: { borderRadius: 16, padding: 16, maxWidth: "90vw" },
+            tooltipTitle: {
+              fontSize: 16,
+              fontWeight: 700,
+              margin: 0,
+              marginBottom: 6,
+            },
+            tooltipContent: { fontSize: 14, padding: 6 },
+            buttonPrimary: {
+              backgroundColor: "#AFF921",
+              color: "#2B2B2B",
+              borderRadius: 12,
+              padding: "8px 16px",
+              fontWeight: 600,
+            },
+            buttonBack: {
+              color: theme === "dark" ? "#F4F4F0" : "#2B2B2B",
+              marginRight: 8,
+            },
+            buttonSkip: {
+              color: theme === "dark" ? "rgba(255,255,255,0.55)" : "#797979",
+            },
+          }}
+        />
+      )}
     </div>
   );
 };

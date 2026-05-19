@@ -9,10 +9,11 @@ import {
 import { NextResponse } from "next/server";
 
 const ONBOARDING_FIELDS = new Set([
-  "hasCompletedOverviewTour",
-  "hasCompletedCaloriesTour",
+  "hasCompletedHomeFallbackTour",
+  "hasCompletedCalorieFallbackTour",
+  "hasCompletedCalorieTour",
+  "hasCompletedWorkoutFallbackTour",
   "hasCompletedWorkoutTour",
-  "hasCompletedWeightTour",
 ]);
 
 export const GET = async (request: Request) => {
@@ -32,10 +33,11 @@ export const GET = async (request: Request) => {
 
     if (!snapshot.exists()) {
       const defaults = {
-        hasCompletedOverviewTour: false,
-        hasCompletedCaloriesTour: false,
+        hasCompletedHomeFallbackTour: false,
+        hasCompletedCalorieFallbackTour: false,
+        hasCompletedCalorieTour: false,
+        hasCompletedWorkoutFallbackTour: false,
         hasCompletedWorkoutTour: false,
-        hasCompletedWeightTour: false,
         createdAt: new Date(),
         backfilled: true,
       };

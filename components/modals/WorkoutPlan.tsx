@@ -3,7 +3,38 @@ import { workoutPlans } from "@/constant";
 import { UserWorkoutPlanProps, WorkoutPlanProps } from "@/types";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { EVENTS, Joyride, STATUS, type EventData, type Step } from "react-joyride";
+import { useTheme } from "@/context/ThemeContext";
+
+let workoutPlanTourShown = false;
+
+const WORKOUT_PLAN_STEPS: Step[] = [
+  {
+    target: '[data-tour="wp-header"]',
+    title: "Your generated plan",
+    content:
+      "This plan was picked by the algorithm based on your goal, weights, intensity, and experience. The dots show intensity level — more filled dots means a harder programme.",
+    placement: "bottom",
+    isFixed: true,
+  },
+  {
+    target: '[data-tour="wp-days"]',
+    title: "Training days",
+    content:
+      "These cards show the workout types included in the plan and what each session focuses on. Tap Select below to lock this plan in.",
+    placement: "bottom",
+    isFixed: true,
+  },
+  {
+    target: '[data-tour="wp-actions"]',
+    title: "Not a good fit?",
+    content:
+      "Tap \"keep looking\" to cycle through other pre-built plans until you find one that suits you. Or tap \"Create your own plan\" to build a fully custom weekly schedule from scratch.",
+    placement: "top",
+    isFixed: true,
+  },
+];
 
 const WorkoutPlan = ({
   plan,
@@ -23,6 +54,18 @@ const WorkoutPlan = ({
 }) => {
   // Router hooks
   const router = useRouter();
+
+  const { theme } = useTheme();
+  const [tourRun, setTourRun] = useState(false);
+
+  useEffect(() => {
+    if (workoutPlanTourShown) return;
+    const t = setTimeout(() => {
+      workoutPlanTourShown = true;
+      setTourRun(true);
+    }, 500);
+    return () => clearTimeout(t);
+  }, []);
 
   // Function to change workout
   const changeWorkout = () => {
@@ -49,7 +92,7 @@ const WorkoutPlan = ({
             <h4 className="font-medium text-neutral-600 dark:text-white/55">Recommanded plan</h4>
             <Image src="/stars.svg" height={20} width={20} alt="Stars icon" />
           </div>
-          <div className="space-y-2">
+          <div data-tour="wp-header" className="space-y-2">
             <div className="flex gap-3">
               <h1 className="font-bold text-xl lg:text-2xl dark:text-bone">{plan.title}</h1>
               {Array(5)
@@ -76,7 +119,7 @@ const WorkoutPlan = ({
             <div className="bg-custom-green dark:bg-lime h-1 w-12"></div>
           </div>
           <p className="text-neutral-600 dark:text-white/55">{plan.desc}</p>
-          <div className="flex flex-wrap gap-3">
+          <div data-tour="wp-days" className="flex flex-wrap gap-3">
             {plan.days
               .filter(
                 (day, index, arr) =>
@@ -91,7 +134,7 @@ const WorkoutPlan = ({
                   <p className="text-neutral-600 dark:text-white/55 text-xs">{day.desc}</p>
                 </div>
               ))}
-            <p className="font-medium">
+            <p data-tour="wp-actions" className="font-medium">
               Not satisfied?{" "}
               <span
                 onClick={() => setIndex("3")}
@@ -132,6 +175,43 @@ const WorkoutPlan = ({
           className="h-auto w-5/6 justify-self-end rounded-xl hidden lg:block"
         />
       </div>
+      {tourRun && (
+        <Joyride
+          steps={WORKOUT_PLAN_STEPS}
+          run
+          continuous
+          scrollToFirstStep
+          onEvent={(data: EventData) => {
+            const { status, type } = data;
+            if (status === STATUS.FINISHED || status === STATUS.SKIPPED || type === EVENTS.TARGET_NOT_FOUND) {
+              setTourRun(false);
+            }
+          }}
+          locale={{ back: "Back", close: "Close", last: "Got it", next: "Next", skip: "Skip" }}
+          options={{
+            primaryColor: "#AFF921",
+            textColor: theme === "dark" ? "#F4F4F0" : "#2B2B2B",
+            backgroundColor: theme === "dark" ? "#1f1f1f" : "#ffffff",
+            arrowColor: theme === "dark" ? "#1f1f1f" : "#ffffff",
+            overlayColor: theme === "dark" ? "rgba(0,0,0,0.55)" : "rgba(43,43,43,0.45)",
+            zIndex: 99999,
+            showProgress: true,
+            buttons: ["back", "skip", "primary"],
+            overlayClickAction: false,
+            skipBeacon: true,
+            spotlightPadding: 8,
+            spotlightRadius: 12,
+          }}
+          styles={{
+            tooltip: { borderRadius: 16, padding: 16, maxWidth: "90vw" },
+            tooltipTitle: { fontSize: 16, fontWeight: 700, margin: 0, marginBottom: 6 },
+            tooltipContent: { fontSize: 14, padding: 6 },
+            buttonPrimary: { backgroundColor: "#AFF921", color: "#2B2B2B", borderRadius: 12, padding: "8px 16px", fontWeight: 600 },
+            buttonBack: { color: theme === "dark" ? "#F4F4F0" : "#2B2B2B", marginRight: 8 },
+            buttonSkip: { color: theme === "dark" ? "rgba(255,255,255,0.55)" : "#797979" },
+          }}
+        />
+      )}
     </div>
   );
 };

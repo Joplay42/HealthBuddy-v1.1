@@ -2,6 +2,45 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { objectiveAlgorithmProps } from "@/types";
+import { EVENTS, Joyride, STATUS, type EventData, type Step } from "react-joyride";
+import { useTheme } from "@/context/ThemeContext";
+
+let workoutObjectiveTourShown = false;
+
+const WORKOUT_OBJECTIVE_STEPS: Step[] = [
+  {
+    target: '[data-tour="wo-goal"]',
+    title: "Your fitness goal",
+    content:
+      "Pick what you want to achieve — lose fat, build muscle, or maintain your current shape. This drives the algorithm that selects the best workout plan for you.",
+    placement: "bottom",
+    isFixed: true,
+  },
+  {
+    target: '[data-tour="wo-weights-time"]',
+    title: "Weights & timeframe",
+    content:
+      "Enter your current weight and target weight, then drag the slider to set how many months you have. These three values tell the algorithm how ambitious your plan should be.",
+    placement: "bottom",
+    isFixed: true,
+  },
+  {
+    target: '[data-tour="wo-intensity"]',
+    title: "Training intensity",
+    content:
+      "How many days per week can you commit? Low is 1–2 days, Moderate is 3–5, and High is 6–7. Be realistic — consistency beats intensity.",
+    placement: "top",
+    isFixed: true,
+  },
+  {
+    target: '[data-tour="wo-experience"]',
+    title: "Experience level",
+    content:
+      "Your level shapes the complexity of exercises in the generated plan. Beginners get foundational movements; advanced athletes get more demanding splits.",
+    placement: "top",
+    isFixed: true,
+  },
+];
 
 const CreateWorkoutObjective = ({
   objectiveAlgorithm,
@@ -20,6 +59,18 @@ const CreateWorkoutObjective = ({
   const [error, setError] = useState();
   // States to disable the button
   const [disableButton, setDisableButton] = useState<boolean>(true);
+
+  const { theme } = useTheme();
+  const [tourRun, setTourRun] = useState(false);
+
+  useEffect(() => {
+    if (workoutObjectiveTourShown) return;
+    const t = setTimeout(() => {
+      workoutObjectiveTourShown = true;
+      setTourRun(true);
+    }, 500);
+    return () => clearTimeout(t);
+  }, []);
 
   // UseEffect to detect the button disability
   useEffect(() => {
@@ -100,7 +151,7 @@ const CreateWorkoutObjective = ({
             bringing you closer to your fitness goals.
           </p>
         </div>
-        <div className="space-y-4 mt-6 lg:mt-10">
+        <div data-tour="wo-goal" className="space-y-4 mt-6 lg:mt-10">
           {/** Handle errors */}
           <label className="font-semibold text-lg">
             Overall weight objective
@@ -203,7 +254,7 @@ const CreateWorkoutObjective = ({
             </button>
           </div>
         </div>
-        <div className="md:flex items-center justify-between space-x-4">
+        <div data-tour="wo-weights-time" className="md:flex items-center justify-between space-x-4">
           <div className="flex items-center space-x-4">
             <div className="space-y-4 mt-6 lg:mt-10 w-full md:w-1/2">
               {/** Handle errors */}
@@ -264,7 +315,7 @@ const CreateWorkoutObjective = ({
             </div>
           </div>
         </div>
-        <div className="space-y-4 mt-6">
+        <div data-tour="wo-intensity" className="space-y-4 mt-6">
           {/** Handle errors */}
           <label className="font-semibold text-lg">Intensity</label>
           <div className="flex items-center justify-between space-x-2 sm:space-x-4">
@@ -330,7 +381,7 @@ const CreateWorkoutObjective = ({
             </div>
           </div>
         </div>
-        <div className="space-y-4 mt-6 mb-20">
+        <div data-tour="wo-experience" className="space-y-4 mt-6 mb-20">
           {/** Handle errors */}
           <label className="font-semibold text-lg">Experience level</label>
           <div className="flex items-center justify-between space-x-1 sm:space-x-4">
@@ -403,6 +454,43 @@ const CreateWorkoutObjective = ({
           )}
         </button>
       </form>
+      {tourRun && (
+        <Joyride
+          steps={WORKOUT_OBJECTIVE_STEPS}
+          run
+          continuous
+          scrollToFirstStep
+          onEvent={(data: EventData) => {
+            const { status, type } = data;
+            if (status === STATUS.FINISHED || status === STATUS.SKIPPED || type === EVENTS.TARGET_NOT_FOUND) {
+              setTourRun(false);
+            }
+          }}
+          locale={{ back: "Back", close: "Close", last: "Got it", next: "Next", skip: "Skip" }}
+          options={{
+            primaryColor: "#AFF921",
+            textColor: theme === "dark" ? "#F4F4F0" : "#2B2B2B",
+            backgroundColor: theme === "dark" ? "#1f1f1f" : "#ffffff",
+            arrowColor: theme === "dark" ? "#1f1f1f" : "#ffffff",
+            overlayColor: theme === "dark" ? "rgba(0,0,0,0.55)" : "rgba(43,43,43,0.45)",
+            zIndex: 99999,
+            showProgress: true,
+            buttons: ["back", "skip", "primary"],
+            overlayClickAction: false,
+            skipBeacon: true,
+            spotlightPadding: 8,
+            spotlightRadius: 12,
+          }}
+          styles={{
+            tooltip: { borderRadius: 16, padding: 16, maxWidth: "90vw" },
+            tooltipTitle: { fontSize: 16, fontWeight: 700, margin: 0, marginBottom: 6 },
+            tooltipContent: { fontSize: 14, padding: 6 },
+            buttonPrimary: { backgroundColor: "#AFF921", color: "#2B2B2B", borderRadius: 12, padding: "8px 16px", fontWeight: 600 },
+            buttonBack: { color: theme === "dark" ? "#F4F4F0" : "#2B2B2B", marginRight: 8 },
+            buttonSkip: { color: theme === "dark" ? "rgba(255,255,255,0.55)" : "#797979" },
+          }}
+        />
+      )}
     </div>
   );
 };

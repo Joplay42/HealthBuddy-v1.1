@@ -3,7 +3,38 @@ import { useFirebaseAuth } from "@/context/UserContext";
 import { calculateNutriantDaily } from "@/utils";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { EVENTS, Joyride, STATUS, type EventData, type Step } from "react-joyride";
+import { useTheme } from "@/context/ThemeContext";
+
+let objectiveFormTourShown = false;
+
+const OBJECTIVE_TOUR_STEPS: Step[] = [
+  {
+    target: '[data-tour="objective-calorie"]',
+    title: "Daily calorie target",
+    content:
+      "Enter how many calories you want to consume per day. A typical baseline is 2 000 kcal — increase it if you are very active, lower it to lose weight.",
+    placement: "bottom",
+    isFixed: true,
+  },
+  {
+    target: '[data-tour="objective-macros"]',
+    title: "Macronutrient split",
+    content:
+      "Distribute your calories across Protein, Carbs, and Fat using percentages. Protein and Carbs each provide 4 kcal/g; Fat provides 9 kcal/g. The gram values below each field update automatically as you type. A balanced starting point: Protein 30 %, Carbs 40 %, Fat 30 %.",
+    placement: "bottom",
+    isFixed: true,
+  },
+  {
+    target: '[data-tour="objective-total"]',
+    title: "Must reach 100 %",
+    content:
+      "All three percentages must add up to exactly 100 %. The counter turns green when you hit the mark — the form won't submit until it does.",
+    placement: "top",
+    isFixed: true,
+  },
+];
 import { Slide, toast } from "react-toastify";
 
 /**
@@ -38,6 +69,19 @@ const SetObjective = () => {
 
   // Value to calculate the pourcentage
   const [pourcentage, setPourcentage] = useState(0);
+
+  // Objective form tour
+  const { theme } = useTheme();
+  const [tourRun, setTourRun] = useState(false);
+
+  useEffect(() => {
+    if (objectiveFormTourShown) return;
+    const t = setTimeout(() => {
+      objectiveFormTourShown = true;
+      setTourRun(true);
+    }, 500);
+    return () => clearTimeout(t);
+  }, []);
 
   // Function to handle change to calculate the grams of nutrient with the pourcentage
   const handleOnChange = (type: string, rawValue: string) => {
@@ -180,7 +224,7 @@ const SetObjective = () => {
               the best results.
             </p>
           </div>
-          <div className="space-y-4 mt-6 lg:mt-10">
+          <div data-tour="objective-calorie" className="space-y-4 mt-6 lg:mt-10">
             {error && <p className="text-red-500">{error}</p>}
             <label className="font-semibold text-lg dark:text-bone">
               Daily calorie objective
@@ -198,7 +242,7 @@ const SetObjective = () => {
               placeholder="ex. 2000"
             />
           </div>
-          <div className="md:flex justify-between md:space-x-4 lg:space-x-8">
+          <div data-tour="objective-macros" className="md:flex justify-between md:space-x-4 lg:space-x-8">
             <div className="space-y-4 mt-4">
               <label className="font-semibold text-lg dark:text-bone">Protein %</label>
               <div className="space-y-2">
@@ -239,7 +283,7 @@ const SetObjective = () => {
               </div>
             </div>
           </div>
-          <h4 className="font-semibold text-lg mt-4">
+          <h4 data-tour="objective-total" className="font-semibold text-lg mt-4">
             % Total :{" "}
             <span
               className={pourcentage == 100 ? `text-green-500` : `text-red-500`}
@@ -274,6 +318,53 @@ const SetObjective = () => {
           className="h-auto w-5/6 justify-self-end rounded-xl hidden lg:block"
         />
       </div>
+      {tourRun && (
+        <Joyride
+          steps={OBJECTIVE_TOUR_STEPS}
+          run
+          continuous
+          scrollToFirstStep
+          onEvent={(data: EventData) => {
+            const { status, type } = data;
+            if (
+              status === STATUS.FINISHED ||
+              status === STATUS.SKIPPED ||
+              type === EVENTS.TARGET_NOT_FOUND
+            ) {
+              setTourRun(false);
+            }
+          }}
+          locale={{ back: "Back", close: "Close", last: "Got it", next: "Next", skip: "Skip" }}
+          options={{
+            primaryColor: "#AFF921",
+            textColor: theme === "dark" ? "#F4F4F0" : "#2B2B2B",
+            backgroundColor: theme === "dark" ? "#1f1f1f" : "#ffffff",
+            arrowColor: theme === "dark" ? "#1f1f1f" : "#ffffff",
+            overlayColor: theme === "dark" ? "rgba(0,0,0,0.55)" : "rgba(43,43,43,0.45)",
+            zIndex: 99999,
+            showProgress: true,
+            buttons: ["back", "skip", "primary"],
+            overlayClickAction: false,
+            skipBeacon: true,
+            spotlightPadding: 8,
+            spotlightRadius: 12,
+          }}
+          styles={{
+            tooltip: { borderRadius: 16, padding: 16, maxWidth: "90vw" },
+            tooltipTitle: { fontSize: 16, fontWeight: 700, margin: 0, marginBottom: 6 },
+            tooltipContent: { fontSize: 14, padding: 6 },
+            buttonPrimary: {
+              backgroundColor: "#AFF921",
+              color: "#2B2B2B",
+              borderRadius: 12,
+              padding: "8px 16px",
+              fontWeight: 600,
+            },
+            buttonBack: { color: theme === "dark" ? "#F4F4F0" : "#2B2B2B", marginRight: 8 },
+            buttonSkip: { color: theme === "dark" ? "rgba(255,255,255,0.55)" : "#797979" },
+          }}
+        />
+      )}
     </div>
   );
 };

@@ -455,16 +455,22 @@ export type BodyWeightProps = {
   loading: boolean;
 };
 
-export type tourKey = "Overview" | "Calories" | "Workout" | "Weight";
+export type tourKey =
+  | "HomeFallback"
+  | "CalorieFallback"
+  | "Calorie"
+  | "WorkoutFallback"
+  | "Workout";
 
 export type userProfileProps = {
   firstName?: string;
   lastName?: string;
   email?: string;
-  hasCompletedOverviewTour: boolean;
-  hasCompletedCaloriesTour: boolean;
+  hasCompletedHomeFallbackTour: boolean;
+  hasCompletedCalorieFallbackTour: boolean;
+  hasCompletedCalorieTour: boolean;
+  hasCompletedWorkoutFallbackTour: boolean;
   hasCompletedWorkoutTour: boolean;
-  hasCompletedWeightTour: boolean;
 };
 
 export type userProfileContextProps = {
